@@ -19,7 +19,7 @@ public class RequestedCode {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "sender_id")
     private Member sender;
 
     @ManyToOne
