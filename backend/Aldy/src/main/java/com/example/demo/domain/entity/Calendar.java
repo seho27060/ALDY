@@ -16,7 +16,7 @@ public class Calendar {
     private Long id;
 
 //    수정 필요
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
 
