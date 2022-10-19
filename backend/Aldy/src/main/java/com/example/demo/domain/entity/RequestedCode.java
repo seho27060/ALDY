@@ -19,11 +19,11 @@ public class RequestedCode {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(referencedColumnName = "member_id",name = "sender_id", nullable = false)
     private Member sender;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(referencedColumnName = "member_id",name = "receiver_id", nullable = false)
     private Member receiver;
 
     @OneToOne
