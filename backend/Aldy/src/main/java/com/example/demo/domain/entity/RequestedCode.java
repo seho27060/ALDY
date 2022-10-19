@@ -23,7 +23,7 @@ public class RequestedCode {
     private Member sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "receiver_id")
     private Member receiver;
 
     @OneToOne
