@@ -17,12 +17,12 @@ public class EditedCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "member_id",name = "sender_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
     private Member sender;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "member_id",name = "receiver_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
     private Member receiver;
 
     @OneToOne
