@@ -17,6 +17,8 @@ public class EditedCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String text;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     private Member sender;

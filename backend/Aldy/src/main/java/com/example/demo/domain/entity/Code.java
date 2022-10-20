@@ -1,5 +1,6 @@
 package com.example.demo.domain.entity;
 
+import com.example.demo.domain.dto.CodeSaveRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class Code {
 
     private String code;
 
-    private int level;
+    private int process;
 
     private Long problemId;
 
@@ -41,4 +42,12 @@ public class Code {
     private String problemName;
 
     private int problemTier;
+
+    public Code(CodeSaveRequestDto codeSaveRequestDto){
+        this.code = codeSaveRequestDto.getCode();
+        this.process = codeSaveRequestDto.getProcess();
+        this.problemId = codeSaveRequestDto.getProblem_id();
+        this.problemName = codeSaveRequestDto.getProblem_name();
+        this.problemTier = codeSaveRequestDto.getProblem_tier();
+    }
 }
