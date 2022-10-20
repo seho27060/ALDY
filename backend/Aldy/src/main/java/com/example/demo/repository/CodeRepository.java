@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CodeRepository extends JpaRepository<Code, Long> {
-    List<Code> findByStudy_idAndProblem_idAndMember_id(long study_id, long problem_id, long member_id);
-    Optional<Code> findByStudy_idAndProblem_idAndMember_idAndLevel(long study_id, long problem_id, long member_id, int level);
+    List<Code> findByStudy_idAndProblemIdAndWriter_id(long study_id, long problem_id, long member_id);
+    Optional<Code> findByStudy_idAndProblemIdAndWriter_idAndProcess(long study_id, long problem_id, long member_id, int level);
 }

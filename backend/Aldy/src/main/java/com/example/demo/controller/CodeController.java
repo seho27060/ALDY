@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
+import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequestMapping("/api/code")
@@ -33,17 +34,17 @@ public class CodeController {
 //      원래는 리퀘스트로부터 토큰값에서 멤버 아이디 식별
         long member_id = 4;
 
-        CodeReviewResponseDto codeReviewResponseDto = codeService.getCodesByMember_id(member_id);
-        return new ResponseEntity(codeReviewResponseDto, HttpStatus.OK);
+        CodeReviewPageResponseDto codeReviewPageResponseDto = codeService.getCodesByMember_id(member_id);
+        return new ResponseEntity(codeReviewPageResponseDto, HttpStatus.OK);
     }
     @PostMapping("/reply")
-    private ResponseEntity code03(HttpRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto){
-        EditedCodeDto editedCodeDto = codeService.replyEditedCode(codeReviewRequestDto);
+    private ResponseEntity code03(HttpRequest request, @RequestBody CodeReviewReplyDto codeReviewReplyDto){
+        EditedCodeDto editedCodeDto = codeService.replyEditedCode(codeReviewReplyDto);
         return new ResponseEntity(editedCodeDto, HttpStatus.OK);
     }
 
     @PostMapping("/process")
-    private ResponseEntity code04(HttpRequest request, @RequestBody CodeSaveRequestDto codeSaveRequestDto){
+    private ResponseEntity code04(HttpServletRequest request, @RequestBody CodeSaveRequestDto codeSaveRequestDto){
         // 원래는.. ㅇㅇ
         long member_id = 3;
 
@@ -52,14 +53,11 @@ public class CodeController {
     }
 
     @PostMapping("/request")
-    private ResponseEntity code05(HttpRequest request, @RequestBody CodeSaveRequestDto codeSaveRequestDto){
+    private ResponseEntity code05(HttpRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto){
         // 원래는.. ㅇㅇ
         long member_id = 3;
-
-        CodeDto codeDto = codeService.saveCode(codeSaveRequestDto);
-        RequestedCodeDto requestedCodeDto = codeService.requestCode(codeSaveRequestDto);
-
-
+        RequestedCodeDto requestedCodeDto = codeService.requestCode(codeReviewRequestDto);
         return new ResponseEntity(requestedCodeDto, HttpStatus.OK);
     }
+
 }

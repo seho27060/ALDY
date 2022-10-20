@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.*;
 
+// Enum <- enumeration 타입 열거형
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
