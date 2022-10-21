@@ -18,6 +18,8 @@ public class MemberInStudy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int auth;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
@@ -25,4 +27,10 @@ public class MemberInStudy {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public MemberInStudy(Study study, Member member, int auth) {
+        this.study = study;
+        this.member = member;
+        this.auth = auth;
+    }
 }

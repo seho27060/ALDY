@@ -27,4 +27,7 @@ public class CreateStudyPostDto {
     @Schema(description = "스터디 공개범위")
     private int visibility;
 
+    @Schema(description = "스터디 방장 백준 아이디")
+    private String leaderBackjoonId;
+
 }
