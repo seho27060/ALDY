@@ -20,6 +20,9 @@ public class MemberInStudy {
 
     private int auth;
 
+    // null 허용
+    private String message;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
@@ -32,5 +35,12 @@ public class MemberInStudy {
         this.study = study;
         this.member = member;
         this.auth = auth;
+    }
+
+    public MemberInStudy(Study study, Member member, int auth, String message) {
+        this.study = study;
+        this.member = member;
+        this.auth = auth;
+        this.message = message;
     }
 }

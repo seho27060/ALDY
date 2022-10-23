@@ -12,4 +12,5 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
 
     Page<Study> findAllByNameContaining(String name, Pageable pageable);
 
+
 }

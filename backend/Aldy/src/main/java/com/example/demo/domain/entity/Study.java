@@ -1,7 +1,6 @@
 package com.example.demo.domain.entity;
 
-
-import com.example.demo.domain.dto.CreateStudyPostDto;
+import com.example.demo.domain.dto.CreateStudyRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,12 +43,11 @@ public class Study {
     @OneToMany(mappedBy = "study",cascade = CascadeType.ALL)
     private List<MemberInStudy> memberList;
 
-    public Study(CreateStudyPostDto requestDto) {
+    public Study(CreateStudyRequestDto requestDto) {
         this.name = requestDto.getName();
         this.upperLimit = requestDto.getUpperLimit();
         this.introduction = requestDto.getIntroduction();
         this.threshold = requestDto.getThreshold();
         this.visibility = requestDto.getVisibility();
     }
-
 }

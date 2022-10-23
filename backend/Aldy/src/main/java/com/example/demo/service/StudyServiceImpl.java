@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.CreateStudyPostDto;
+import com.example.demo.domain.dto.CreateStudyRequestDto;
 import com.example.demo.domain.dto.StudyDto;
 import com.example.demo.domain.entity.Member;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.Study;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.MemberInStudyRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.StudyRepository;
@@ -30,15 +32,15 @@ public class StudyServiceImpl implements StudyService {
     private final MemberInStudyRepository memberInStudyRepository;
 
     @Override
-    public StudyDto createStudy(CreateStudyPostDto requestDto) {
+    public StudyDto createStudy(CreateStudyRequestDto requestDto) {
 
         Study study = studyRepository.save(new Study(requestDto));
         StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
 
         ///////////////////////////////////////////////////////////////
 
-        // Member가 null인데 에러가 안뜬다!?
-        Member member = memberRepository.findByBackjoonId(requestDto.getLeaderBackjoonId());
+        Member member = memberRepository.findByBackjoonId(requestDto.getLeaderBackjoonId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         MemberInStudy memberInStudy = new MemberInStudy(study, member, 1);
 
         memberInStudyRepository.save(memberInStudy);
@@ -61,13 +63,33 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyDto getById(Long studyID) {
+    public Page<StudyDto> getMyStudyPage(int page, int size, String keyword, Long memberId) {
 
-        Optional<Study> study = studyRepository.findById(studyID);
+        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_Id(memberId,
+                PageRequest.of(page, size).withSort(Sort.by("id").descending()));
+
+        Page<StudyDto> studyDtoPage = memberInStudyPage.map(e ->
+                new StudyDto(e.getStudy(), countMember(e.getStudy().getId())));
+
+        return studyDtoPage;
+    }
+
+    @Override
+    public StudyDto getById(Long studyId) {
+
+        Optional<Study> study = studyRepository.findById(studyId);
         StudyDto studyDto = new StudyDto(study.get(), countMember(study.get().getId()));
 
         return studyDto;
 
+    }
+
+    @Override
+    public void deleteById(Long studyId) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(()-> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+
+        studyRepository.delete(study);
     }
 
 

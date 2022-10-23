@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateStudyPostDto {
+public class CreateStudyRequestDto {
 
     @Schema(description = "스터디 이름")
     private String name;
