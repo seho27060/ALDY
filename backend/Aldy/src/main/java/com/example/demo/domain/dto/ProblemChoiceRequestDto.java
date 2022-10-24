@@ -5,14 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class CodeReviewRequestDto {
-    private String backjoon_id;
-    private String code;
-    private String receiver_id;
-    private long problem_id;
+public class ProblemChoiceRequestDto {
     private long study_id;
+    private List<Integer> problemList;
+    private int year;
+    private int month;
+    private int day;
 }

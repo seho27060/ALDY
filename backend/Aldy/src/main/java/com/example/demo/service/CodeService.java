@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.*;
-import org.springframework.http.ResponseEntity;
 
 // edited, request 모두 여기서 처리할 것.
 public interface CodeService {
@@ -9,9 +8,9 @@ public interface CodeService {
 
     CodeReviewResponseDto getCodesByMember_id(long member_id);
 
-    EditedCodeDto replyEditedCode(CodeReviewRequestDto codeReviewRequestDto);
+    EditedCodeDto replyEditedCode(CodeReviewDto codeReviewDto);
 
     CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto);
 
-    RequestedCodeDto requestCode(CodeSaveRequestDto codeSaveRequestDto);
+    RequestedCodeDto requestCode(CodeReviewDto codeReviewDto);
 }

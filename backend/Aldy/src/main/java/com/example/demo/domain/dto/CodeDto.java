@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
-public class CodeDto {
+public class CodeDto implements Comparable<CodeDto>{
     private Long id;
 
     private LocalDateTime createdDate;
 
     private String code;
 
-    private int level;
+    private int process;
 
     private Long problemId;
 
@@ -31,9 +31,14 @@ public class CodeDto {
         this.code= code.getCode();
         this.createdDate = code.getCreatedDate();
         this.id = code.getId();
-        this.level = code.getProcess();
+        this.process = code.getProcess();
         this.problemId = code.getProblemId();
         this.problemName = code.getProblemName();
         this.problemTier = code.getProblemTier();
+    }
+
+    @Override
+    public int compareTo(CodeDto codeDto){
+        return this.process - codeDto.getProcess();
     }
 }

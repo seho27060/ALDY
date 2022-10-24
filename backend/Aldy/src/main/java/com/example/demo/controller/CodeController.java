@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-
 @RestController
 @RequestMapping("/api/code")
 @RequiredArgsConstructor
@@ -37,8 +35,8 @@ public class CodeController {
         return new ResponseEntity(codeReviewResponseDto, HttpStatus.OK);
     }
     @PostMapping("/reply")
-    private ResponseEntity code03(HttpRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto){
-        EditedCodeDto editedCodeDto = codeService.replyEditedCode(codeReviewRequestDto);
+    private ResponseEntity code03(HttpRequest request, @RequestBody CodeReviewDto codeReviewDto){
+        EditedCodeDto editedCodeDto = codeService.replyEditedCode(codeReviewDto);
         return new ResponseEntity(editedCodeDto, HttpStatus.OK);
     }
 
@@ -52,12 +50,11 @@ public class CodeController {
     }
 
     @PostMapping("/request")
-    private ResponseEntity code05(HttpRequest request, @RequestBody CodeSaveRequestDto codeSaveRequestDto){
+    private ResponseEntity code05(HttpRequest request, @RequestBody CodeReviewDto codeReviewDto){
         // 원래는.. ㅇㅇ
         long member_id = 3;
 
-        CodeDto codeDto = codeService.saveCode(codeSaveRequestDto);
-        RequestedCodeDto requestedCodeDto = codeService.requestCode(codeSaveRequestDto);
+        RequestedCodeDto requestedCodeDto = codeService.requestCode(codeReviewDto);
 
 
         return new ResponseEntity(requestedCodeDto, HttpStatus.OK);
