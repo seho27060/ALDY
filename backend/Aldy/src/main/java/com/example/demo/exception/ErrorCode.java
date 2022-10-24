@@ -24,6 +24,7 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
     CODE_NOT_FOUND(NOT_FOUND, "해당 코드를 찾을 수 없습니다"),
     STUDY_NOT_FOUND(NOT_FOUND, "해당 스터디를 찾을 수 없습니다"),
+    MEMBERINSTUDY_NOT_FOUND(NOT_FOUND, "해당 스터디를 찾을 수 없습니다"),
     REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "로그아웃 된 사용자입니다"),
     NOT_FOLLOW(NOT_FOUND, "팔로우 중이지 않습니다"),
 

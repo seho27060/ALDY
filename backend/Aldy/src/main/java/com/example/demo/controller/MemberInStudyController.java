@@ -47,4 +47,45 @@ public class MemberInStudyController {
         return new ResponseEntity(memberInStudyDtoList, HttpStatus.OK);
 
     }
+
+    @Operation(summary = "스터디원 가입 수락 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보], [loginMemberId : 로그인 한 유저 정보]")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    @PatchMapping("accept/{loginMemberId}")
+    public ResponseEntity acceptMember(@RequestBody ApplicateStudyRequestDto requestDto,
+                                       @PathVariable("loginMemberId") Long memberId) {
+
+        MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, memberId, 2);
+
+        return new ResponseEntity(memberInStudyDto, HttpStatus.OK);
+
+    }
+
+    @Operation(summary = "스터디원 강퇴 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보], [loginMemberId : 로그인 한 유저 정보]")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    @PatchMapping("reject/{loginMemberId}")
+    public ResponseEntity kickMember(@RequestBody ApplicateStudyRequestDto requestDto,
+                                        @PathVariable("loginMemberId") Long memberId) {
+
+        MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, memberId, 0);
+
+        return new ResponseEntity(memberInStudyDto, HttpStatus.OK);
+    }
+
+    @Operation(summary = "스터디원 가입 거절 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보], [loginMemberId : 로그인 한 유저 정보]")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    @DeleteMapping("reject/{loginMemberId}")
+    public ResponseEntity rejectMember(@RequestBody ApplicateStudyRequestDto requestDto,
+                                       @PathVariable("loginMemberId") Long memberId) {
+
+        MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, memberId, 4);
+
+        return new ResponseEntity(memberInStudyDto, HttpStatus.OK);
+    }
+
 }

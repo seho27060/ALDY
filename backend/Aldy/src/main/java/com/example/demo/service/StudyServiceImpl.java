@@ -95,7 +95,7 @@ public class StudyServiceImpl implements StudyService {
 
     private int countMember(Long studyId) {
 
-        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findByStudy_Id(studyId);
+        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthNot(studyId, 0);
 
         return memberInStudyList.size();
 

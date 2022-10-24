@@ -37,10 +37,7 @@ public class MemberInStudy {
         this.auth = auth;
     }
 
-    public MemberInStudy(Study study, Member member, int auth, String message) {
-        this.study = study;
-        this.member = member;
+    public void setAuth(int auth) {
         this.auth = auth;
-        this.message = message;
     }
 }

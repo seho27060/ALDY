@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ApplicateStudyRequestDto {
 
-    private String backjoonId;
+    private Long memberId;
 
     private Long studyId;
 

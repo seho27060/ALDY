@@ -10,4 +10,7 @@ public interface MemberInStudyService {
     MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto);
 
     List<MemberInStudyDto> getAllMemberInStudy(Long studyId);
+
+    MemberInStudyDto changeAuth(ApplicateStudyRequestDto requestDto, Long loginMemberId, int auth);
+
 }
