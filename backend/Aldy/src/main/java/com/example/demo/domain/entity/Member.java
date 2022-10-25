@@ -1,5 +1,6 @@
 package com.example.demo.domain.entity;
 
+import com.example.demo.domain.dto.member.MemberJoinRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,11 @@ public class Member {
 
     private String password;
 
+    // 연략처 전화번호 or 이메일
+    private String contact;
+
+    private String nickname;
+
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<MemberInStudy> studyList;
 
@@ -36,4 +42,11 @@ public class Member {
     private List<RequestedCode> seedRequestedCodeList;
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<RequestedCode> receiveRequestedCodeList;
+
+    public Member(MemberJoinRequestDto memberJoinRequestDto, String encodedPassword){
+        this.backjoonId = memberJoinRequestDto.getBackjoonId();
+        this.nickname = memberJoinRequestDto.getNickname();
+        this.password = encodedPassword;
+        this.contact = memberJoinRequestDto.getContact();
+    }
 }
