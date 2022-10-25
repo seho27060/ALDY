@@ -53,6 +53,8 @@ public class MemberController {
     }
 
     @PutMapping("/modify")
-    public void modifyMember(MemberRe)
+    public void modifyMember(){
+
+    }
 
 }

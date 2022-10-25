@@ -16,6 +16,14 @@ public class PrincipalDetails implements UserDetails {
     }
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    public Member getMember(){
+        return member;
+    }
+    @Override
     public String getPassword(){
         return member.getPassword();
     }
