@@ -17,7 +17,9 @@ const CodeReviewList = () => {
           <span className='highlight'>공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <h2 className='underline-orange'>지금 바로 코드리뷰를 해보세요!</h2>
+        <h2 className='underline-orange'>
+          지금 바로 코드리뷰를 해보세요!
+        </h2>
       </section>
       <section className='description'>
         <div className='description-detail'>

@@ -40,8 +40,8 @@ h2 {
 h2.underline-orange {
     box-shadow: inset 0 -12px 0 #FFE1AA;
     line-height: 42px;
-    width: 35%;
     margin: auto;
+    width: 25%;
 }
 
 h2.underline-green {
@@ -82,6 +82,11 @@ button.tabBtn {
     outline: none;
     font-weight: bold;
     font-size: 20px;
+    transition: transform 30ms ease-in;
+}
+
+button.tabBtn:hover {
+    transform: scale(1.1);
 }
 
 button.active {
