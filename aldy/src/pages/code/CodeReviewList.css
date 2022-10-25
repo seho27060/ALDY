@@ -1,3 +1,11 @@
+p {
+  user-select: none;
+}
+
+span {
+  user-select: none;
+}
+
 section.main-banner {
   background-color: #d7eaba;
   padding: 80px;
@@ -26,6 +34,7 @@ span.highlight {
 
 h2 {
   font-weight: bold;
+  user-select: none;
 }
 
 h2.underline-orange {
@@ -49,10 +58,10 @@ h2.underline-green {
   padding: 20px;
 }
 
-button {
+button.correctBtn {
   width: 170px;
   border-radius: 8px;
-  background-color: red;
+  background-color: #e63246;
   border: none;
   outline: none;
   color: white;
@@ -60,7 +69,7 @@ button {
   transition: transform 30ms ease-in;
 }
 
-button:hover {
+button.correctBtn:hover {
   transform: scale(1.1);
 }
 

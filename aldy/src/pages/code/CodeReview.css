@@ -1,0 +1,85 @@
+.review-main {
+    background-color: #DCF0BE;
+}
+
+.review-header {
+    padding: 60px;
+}
+
+h2.review-orange {
+    box-shadow: inset 0 -12px 0 #FFE1AA;
+    line-height: 42px;
+    width: 26%;
+    margin: auto;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.review-board {
+    width: 80%;
+    margin: auto;
+    background-color: #2B6E30;
+    border: 8px solid #FFE1AA;
+    border-radius: 10px;
+}
+
+.review-step {
+    padding: 40px;
+    background-color: #28500F;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review-step-btn {
+    border: none;
+    outline: none;
+    margin: 0 10px;
+    width: 170px;
+    border-radius: 8px;
+    background-color: #E63246;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    transition: transform 30ms ease-in;
+}
+
+.review-step-btn:hover {
+    transform: scale(1.1);
+}
+
+.review-code {
+    background-color: #28500F;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.review-btns {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* .reviewBtn {
+    border: none;
+    outline: none;
+    margin: 0 10px;
+    width: 170px;
+    border-radius: 8px;
+    background-color: #E63246;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    transition: transform 30ms ease-in;
+}
+
+.reviewBtn:hover {
+    transform: scale(1.1);
+} */

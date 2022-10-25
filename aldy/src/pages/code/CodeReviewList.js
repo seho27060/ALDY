@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
   return (
-    <div>
+    <main>
       <section className='main-banner'>
         <img className='main-img' src="/studyIcon.png" alt="코드리뷰 메인 이미지"></img>
         <p>
@@ -74,7 +74,7 @@ const CodeReviewList = () => {
         }
         </div>
       </section>
-    </div>
+    </main>
   )
 };
 
@@ -153,7 +153,7 @@ const Card = (props) => {
         <Col>{item.problemnumber}</Col>
         <Col>{item.problemname}</Col>
         <Col>{item.date}</Col>
-        <Col>{item.proccess === '완료' ? item.proccess : <button>코드 첨삭하기</button>}</Col>
+        <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn'>코드 첨삭하기</button>}</Col>
       </Row>
     </Container>
   )
