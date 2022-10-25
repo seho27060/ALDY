@@ -1,3 +1,4 @@
+import "./MainPage.css";
 import styled from "styled-components";
 
 const RedButton = styled.button`
@@ -25,17 +26,19 @@ const WhiteButton = styled.button`
 const MainPage = () => {
   return (
     <main>
-      <section>
+      <section className="main-page-banner">
         <img src={process.env.PUBLIC_URL + "/MainDinosaur.png"} alt=""></img>
+        <br></br>
+        <br></br>
         <div>코드리뷰를 통해 공룡 키우기</div>
-        <div> ALDY</div>
+        <h1> ALDY</h1>
         <div>
           <div>✨ 스터디 레벨에 따라 성장하는 공룡 ✨</div>
           <div>스터디원들과 함께 공룡을 키워봐요!</div>
         </div>
         <RedButton>스터디 생성하기</RedButton>
       </section>
-      <section>
+      <section className="main-page-description">
         <div>ALDY만의 코드리뷰 이용하기</div>
         <div>
           <p>

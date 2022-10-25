@@ -1,0 +1,11 @@
+section.main-page-banner {
+  background-image: url(../../public/background.jpg);
+  background-size: 100%;
+  padding: 80px;
+}
+
+section.main-page-description {
+  background-color: #373737;
+  color: white;
+  padding: 40px;
+}
