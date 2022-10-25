@@ -14,7 +14,10 @@ const MainPage = () => {
       <section>
         <div>ALDY만의 코드리뷰 이용하기</div>
         <div>
-          <div>문제풀이 과정을 4단계로 세분화!</div>
+          <p>
+            <span>문제풀이 과정을</span>
+            <span>4단계로 세분화!</span>
+          </p>
           <button>회원가입 하러가기</button>
         </div>
       </section>
