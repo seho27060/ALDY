@@ -16,7 +16,7 @@ const WhiteButton = styled.button`
   width: 170px;
   border-radius: 8px;
   background-color: white;
-  border: none;
+  border: 2px solid red;
   outline: none;
   color: red;
   font-weight: bold;
