@@ -7,9 +7,10 @@
 }
 
 h2.review-orange {
-    box-shadow: inset 0 -12px 0 #FFE1AA;
-    line-height: 42px;
-    width: 26%;
+    text-decoration-line: underline;
+    text-decoration-color: #FFE1AA;
+    text-decoration-thickness: 10px;
+    text-underline-offset: -5px;
     margin: auto;
 }
 
@@ -19,12 +20,24 @@ h2.review-orange {
     justify-content: space-evenly;
 }
 
+.review-title {
+    margin: 30px auto;
+    padding: 10px;
+    width: fit-content;
+    background-color: #28500F;
+    border-radius: 30px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+}
+
 .review-board {
     width: 80%;
     margin: auto;
     background-color: #2B6E30;
-    border: 8px solid #FFE1AA;
+    border: 10px solid #FFE1AA;
     border-radius: 10px;
+    color: white;
 }
 
 .review-step {
@@ -39,19 +52,23 @@ h2.review-orange {
 .review-step-btn {
     border: none;
     outline: none;
-    margin: 0 10px;
+    margin: 10px 10px;
     width: 170px;
-    border-radius: 8px;
-    background-color: #E63246;
+    background: none;
     border: none;
     outline: none;
     color: white;
-    font-weight: bold;
-    transition: transform 30ms ease-in;
+    font-size: 20px;
+    transition: transform 100ms ease-in;
 }
 
 .review-step-btn:hover {
     transform: scale(1.1);
+}
+
+.act {
+    text-decoration-line: underline;
+    text-decoration-thickness: 8px;
 }
 
 .review-code {
@@ -66,10 +83,11 @@ h2.review-orange {
     justify-content: flex-end;
 }
 
-/* .reviewBtn {
+.reviewBtn {
     border: none;
     outline: none;
     margin: 0 10px;
+    padding: 10px;
     width: 170px;
     border-radius: 8px;
     background-color: #E63246;
@@ -77,9 +95,10 @@ h2.review-orange {
     outline: none;
     color: white;
     font-weight: bold;
-    transition: transform 30ms ease-in;
+    font-size: 18px;
+    transition: transform 100ms ease-in;
 }
 
 .reviewBtn:hover {
     transform: scale(1.1);
-} */
+} 
