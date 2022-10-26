@@ -1,6 +1,6 @@
 package com.example.demo.domain.dto.member;
 
-import com.example.demo.domain.entity.Member;
+import com.example.demo.domain.entity.Member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

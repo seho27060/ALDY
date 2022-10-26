@@ -9,5 +9,4 @@ public class LoginRequestDto {
 
     private String backjoonId;
     private String password;
-    private String nickname;
 }

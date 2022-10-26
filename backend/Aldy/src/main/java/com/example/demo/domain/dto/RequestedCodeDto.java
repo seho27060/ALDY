@@ -1,13 +1,9 @@
 package com.example.demo.domain.dto;
 
 
-import com.example.demo.domain.entity.Code;
-import com.example.demo.domain.entity.Member;
 import com.example.demo.domain.entity.RequestedCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor

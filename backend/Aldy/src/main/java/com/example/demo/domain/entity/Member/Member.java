@@ -1,6 +1,9 @@
-package com.example.demo.domain.entity;
+package com.example.demo.domain.entity.Member;
 
 import com.example.demo.domain.dto.member.MemberJoinRequestDto;
+import com.example.demo.domain.entity.EditedCode;
+import com.example.demo.domain.entity.MemberInStudy;
+import com.example.demo.domain.entity.RequestedCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
