@@ -1,0 +1,101 @@
+section.main-page-banner {
+  background-image: url(../../public/background.jpg);
+  background-size: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-position-x: center;
+  position: relative;
+  min-height: 559px;
+  padding: 80px;
+}
+
+section.main-page-description {
+  background-color: #373737;
+  color: white;
+  padding: 40px;
+}
+
+.main-page-banner-text {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 27px;
+  letter-spacing: -0.005em;
+  color: #649655;
+}
+
+h1 {
+  font-weight: bold;
+  user-select: none;
+  color: #28500f;
+}
+
+.board {
+  position: relative;
+  /* width: 310px; */
+  height: 97px;
+  -webkit-box-flex: 0;
+  /* -webkit-flex-grow: 0;
+  -ms-flex-positive: 0; */
+  flex-grow: 0;
+  /* padding: 26px 21.7px 15px 22px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox; */
+  display: flex;
+  /* -webkit-flex-direction: column; */
+  /* -ms-flex-direction: column; */
+  flex-direction: column;
+  /* -webkit-align-items: center; */
+  -webkit-box-align: center;
+  /* -ms-flex-align: center; */
+  align-items: center;
+  gap: 6px;
+  /* min-height: 197px; */
+}
+
+.board-image {
+  position: absolute;
+}
+
+.board-title {
+  position: relative;
+  /* display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox; */
+  display: inline-flex;
+  /* -webkit-flex-direction: row;
+  -ms-flex-direction: row; */
+  flex-direction: row;
+  -webkit-box-pack: center;
+  /* -ms-flex-pack: center;
+  -webkit-justify-content: center; */
+  justify-content: center;
+  /* -webkit-align-items: center; */
+  -webkit-box-align: center;
+  /* -ms-flex-align: center; */
+  align-items: center;
+  padding: 6px 14px 7px;
+  background: #1e5b24;
+  border-radius: 81.7073px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 6%;
+}
+
+.board-text {
+  position: relative;
+  /* font-family: Pretendard, serif;
+  font-style: normal; */
+  font-weight: 800;
+  line-height: 150%;
+  text-align: center;
+  color: #ffffff;
+  font-size: 19px;
+}
