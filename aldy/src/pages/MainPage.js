@@ -32,9 +32,19 @@ const MainPage = () => {
         <br></br>
         <div className="main-page-banner-text">코드리뷰를 통해 공룡 키우기</div>
         <h1> ALDY</h1>
-        <div>
-          <div>✨ 스터디 레벨에 따라 성장하는 공룡 ✨</div>
-          <div>스터디원들과 함께 공룡을 키워봐요!</div>
+        <div className="board">
+          <div className="board-image">
+            <span>
+              <img
+                src={process.env.PUBLIC_URL + "/blackboard.png"}
+                alt=""
+              ></img>
+            </span>
+          </div>
+          <div className="board-title">
+            ✨ 스터디 레벨에 따라 성장하는 공룡 ✨
+          </div>
+          <div className="board-text">스터디원들과 함께 공룡을 키워봐요!</div>
         </div>
         <RedButton>스터디 생성하기</RedButton>
       </section>
