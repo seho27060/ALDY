@@ -30,7 +30,7 @@ const MainPage = () => {
         <img src={process.env.PUBLIC_URL + "/MainDinosaur.png"} alt=""></img>
         <br></br>
         <br></br>
-        <div>코드리뷰를 통해 공룡 키우기</div>
+        <div className="main-page-banner-text">코드리뷰를 통해 공룡 키우기</div>
         <h1> ALDY</h1>
         <div>
           <div>✨ 스터디 레벨에 따라 성장하는 공룡 ✨</div>

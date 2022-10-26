@@ -1,6 +1,13 @@
 section.main-page-banner {
   background-image: url(../../public/background.jpg);
   background-size: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-position-x: center;
+  position: relative;
+  min-height: 559px;
   padding: 80px;
 }
 
@@ -8,4 +15,18 @@ section.main-page-description {
   background-color: #373737;
   color: white;
   padding: 40px;
+}
+
+.main-page-banner-text {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 27px;
+  letter-spacing: -0.005em;
+  color: #649655;
+}
+
+h1 {
+  font-weight: bold;
+  user-select: none;
+  color: #28500f;
 }
