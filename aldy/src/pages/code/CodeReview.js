@@ -43,7 +43,9 @@ const CodeReview = () => {
         </div>
         <div className='review-btns'>
           <button className="reviewBtn">백준 연동</button>
-          <button className="reviewBtn">코드 제출하기</button>
+          {
+            step === 4 ? <button className="reviewBtn">리뷰 요청하기</button> : <button className="reviewBtn">코드 제출하기</button>
+          }
         </div>
       </section>
     </main>
