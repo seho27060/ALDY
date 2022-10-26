@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,8 @@ public class StudyServiceImpl implements StudyService {
     private final MemberRepository memberRepository;
 
     private final MemberInStudyRepository memberInStudyRepository;
+
+    private List<Integer> authList = List.of(1, 2);
 
     @Override
     public StudyDto createStudy(CreateStudyRequestDto requestDto) {
@@ -77,8 +80,9 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public StudyDto getById(Long studyId) {
 
-        Optional<Study> study = studyRepository.findById(studyId);
-        StudyDto studyDto = new StudyDto(study.get(), countMember(study.get().getId()));
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
 
         return studyDto;
 
@@ -93,9 +97,9 @@ public class StudyServiceImpl implements StudyService {
     }
 
 
-    private int countMember(Long studyId) {
+    public int countMember(Long studyId) {
 
-        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthNot(studyId, 0);
+        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList);
 
         return memberInStudyList.size();
 

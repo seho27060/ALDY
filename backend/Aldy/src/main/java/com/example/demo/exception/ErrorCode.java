@@ -20,6 +20,9 @@ public enum ErrorCode {
     INVALID_AUTH_TOKEN(UNAUTHORIZED, "권한 정보가 없는 토큰입니다"),
     UNAUTHORIZED_MEMBER(UNAUTHORIZED, "현재 내 계정 정보가 존재하지 않습니다"),
 
+    /* 403 LIMIT_EXCEEDED : 데이터 개수 초과 */
+    MEMBER_LIMIT_EXCEEDED(FORBIDDEN, "스터디 제한 인원이 초과했습니다."),
+
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     MEMBER_NOT_FOUND(NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
     CODE_NOT_FOUND(NOT_FOUND, "해당 코드를 찾을 수 없습니다"),

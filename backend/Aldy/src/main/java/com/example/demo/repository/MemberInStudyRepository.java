@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Long> {
 
-    List<MemberInStudy> findAllByStudyIdAndAuthNot(Long studyId, int auth);
+    List<MemberInStudy> findAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
 
     Page<MemberInStudy> findAllByMember_Id(Long memberId, Pageable pageable);
 

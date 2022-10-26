@@ -29,6 +29,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
     private final StudyRepository studyRepository;
 
+    private List<Integer> authList = List.of(1, 2);
+
     @Override
     public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto) {
 
@@ -44,11 +46,16 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
             throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
         });
 
+        // 인원 수 체크
+        int currentMember = memberInStudyRepository.findAllByStudyIdAndAuthIn(study.getId(), authList).size();
+        if(currentMember >= study.getUpperLimit()) {
+            throw new CustomException(ErrorCode.MEMBER_LIMIT_EXCEEDED);
+        }
+
         // save
         MemberInStudyDto memberInStudyDto = new MemberInStudyDto(
                 memberInStudyRepository.save(new MemberInStudy(study, member, 3))
         );
-
 
         return memberInStudyDto;
 
@@ -57,7 +64,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     @Override
     public List<MemberInStudyDto> getAllMemberInStudy(Long studyId) {
 
-        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthNot(studyId, 0);
+        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList);
 
         List<MemberInStudyDto> memberInStudyDtoList = memberInStudyList.stream().map(e ->
                 new MemberInStudyDto(e)).collect(Collectors.toList());
