@@ -9,16 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
-
-    @PostMapping("/login")
-    public void login(){
-
-    }
+//
+//    @PostMapping("/login")
+//    public void login(){
+//    }
     @GetMapping("/logout")
     public void logout() {
 
