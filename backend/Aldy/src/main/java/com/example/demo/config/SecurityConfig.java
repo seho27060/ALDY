@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/member/token","/api/member/find/**","/api/member/modify").authenticated()
+                .antMatchers("/api/member/token/**","/api/member/find/**","/api/member/modify/**").authenticated()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .and()

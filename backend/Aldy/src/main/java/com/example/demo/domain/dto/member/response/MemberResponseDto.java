@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto.member;
+package com.example.demo.domain.dto.member.response;
 
 import com.example.demo.domain.entity.Member.Member;
 import lombok.Getter;

@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.member.LoginRequestDto;
-import com.example.demo.domain.dto.member.MemberJoinRequestDto;
-import com.example.demo.domain.dto.member.MemberResponseDto;
+import com.example.demo.domain.dto.member.request.LoginRequestDto;
+import com.example.demo.domain.dto.member.request.MemberJoinRequestDto;
+import com.example.demo.domain.dto.member.request.WithdrawalRequestDto;
+import com.example.demo.domain.dto.member.response.MemberResponseDto;
+import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Member.Token;
 import com.example.demo.service.member.JwtService;
 import com.example.demo.service.member.MemberService;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,11 +63,11 @@ public class MemberController {
         return "TEST_TOKEN";
     }
 
-    @DeleteMapping("/withdrawal/{backjoonId}")
-    public ResponseEntity memberWithdrawal(@PathVariable String backjoonId){
-        String response = memberService.withdrawal(backjoonId);
+    @PostMapping("/withdrawal")
+    public ResponseEntity withdrawalMember(@RequestBody WithdrawalRequestDto withdrawalRequestDto, HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.withdrawal(withdrawalRequestDto, request);
 
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(memberResponseDto,HttpStatus.OK);
     }
 
     @GetMapping("/find/{backjoonId}")
@@ -74,8 +77,8 @@ public class MemberController {
     }
 
     @PutMapping("/modify")
-    public void modifyMember(){
-
+    public void modifyMember(@RequestBody MemberJoinRequestDto memberModifyRequestDto){
+        MemberResponseDto memberResponseDto = memberService.modifyMember(memberModifyRequestDto);
     }
 
 }

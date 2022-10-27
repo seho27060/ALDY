@@ -123,7 +123,7 @@ public class JwtTokenProvider {
 
     // 토큰에서 회원정보 추출
     public String getBackjoonId(String token){
-        return Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(token.replaceAll("^Bearer( )*","")).getBody().getSubject();
     }
 
     // Request 의 Header에서 token의 값을 가져옴
@@ -132,8 +132,10 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String jwtToken){
+        System.out.println("validate :" + jwtToken);
+        System.out.println("validate replace:" + jwtToken.replaceAll("^Bearer( )*",""));
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(jwtToken);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(jwtToken.replaceAll("^Bearer( )*",""));
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e){
             System.out.println("유효하지 않은 토큰입니다. exception : "+e);

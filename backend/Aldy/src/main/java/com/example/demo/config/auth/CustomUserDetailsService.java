@@ -1,5 +1,7 @@
 package com.example.demo.config.auth;
 
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new UserDetailsImpl
                 (
                 memberRepository.findByBackjoonId(username).
-                        orElseThrow(() -> new UsernameNotFoundException("존재하지 않은 사용자 입니다."))
+                        orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND))
                 );
     }
 }

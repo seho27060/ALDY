@@ -1,11 +1,14 @@
 package com.example.demo.service.member;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
-import com.example.demo.domain.dto.member.LoginRequestDto;
-import com.example.demo.domain.dto.member.MemberJoinRequestDto;
-import com.example.demo.domain.dto.member.MemberResponseDto;
+import com.example.demo.domain.dto.member.request.LoginRequestDto;
+import com.example.demo.domain.dto.member.request.MemberJoinRequestDto;
+import com.example.demo.domain.dto.member.request.WithdrawalRequestDto;
+import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Member.Token;
 import com.example.demo.domain.entity.Member.Member;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,8 +43,13 @@ public class MemberServiceImpl implements MemberService{
         System.out.println("get :"+memberJoinRequestDto.getContact());
         System.out.println("get :"+memberJoinRequestDto.getPassword());
         System.out.println("get :"+memberJoinRequestDto.getNickname());
+
         String rawPassword = memberJoinRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
+
+        if(memberRepository.existsByBackjoonId(memberJoinRequestDto.getBackjoonId())){
+            throw new CustomException(ErrorCode.ALREADY_JOIN);
+        }
 
         Member member = new Member(memberJoinRequestDto,encodedPassword);
         memberRepository.save(member);
@@ -54,9 +62,7 @@ public class MemberServiceImpl implements MemberService{
         System.out.println(String.format("memberService login : %s, password : %s",loginRequestDto.getBackjoonId(),loginRequestDto.getPassword()));
         Member member = memberRepository.findByBackjoonId(loginRequestDto.getBackjoonId())
                 .orElseThrow(
-                        () -> new IllegalArgumentException(
-                                loginRequestDto.getBackjoonId()+"가입되지 않은 backjoonId 입니다."
-                        )
+                        () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
                 );
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getBackjoonId(),loginRequestDto.getPassword());
         try {
@@ -68,33 +74,45 @@ public class MemberServiceImpl implements MemberService{
             jwtService.login(tokenDto);
             return tokenDto;
         }catch (DisabledException | LockedException | BadCredentialsException e){
-            String status;
             if (e.getClass().equals(BadCredentialsException.class)) {
-                status = "invalid-password";
+                throw new BadCredentialsException("잘못된 비밀번호입니다");
             } else if (e.getClass().equals(DisabledException.class)) {
-                status = "locked";
+                throw new DisabledException("사용할 수 없는 계정입니다");
             } else if (e.getClass().equals(LockedException.class)) {
-                status = "disable";
+                throw new LockedException("잠긴 계정입니다");
             } else {
-                status = "unknown";
+                throw e;
             }
-            System.out.println("인증 예외 : "+status);
         }
-        return null;
     }
 
     @Override
-    public String withdrawal(String backjoonId) {
-        Member member = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new IllegalArgumentException(backjoonId+"는 가입되지 않은 backjoonId 입니다."));
-        memberRepository.delete(member);
-        return null;
+    public MemberResponseDto withdrawal(WithdrawalRequestDto withdrawalRequestDto, HttpServletRequest request) {
+        String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBackjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        MemberResponseDto response;
+
+        if(bCryptPasswordEncoder.matches( withdrawalRequestDto.getPassword(),member.getPassword())){
+            memberRepository.delete(member);
+            response = new MemberResponseDto(member);
+        } else {
+            throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
+        }
+
+        return response;
     }
 
     @Override
     public MemberResponseDto findMember(String backjoonId) {
-        Member member = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new IllegalArgumentException(">>>>"+backjoonId+"는 가입되지 않은 backjoonId 입니다."));
+        Member member = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         MemberResponseDto memberResponseDto = new MemberResponseDto(member);
         return memberResponseDto;
+    }
+
+    @Override
+    public MemberResponseDto modifyMember(MemberJoinRequestDto memberModifyRequestDto) {
+        return null;
     }
 
 //    @Override
