@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.domain.dto.member.LoginRequestDto;
 import com.example.demo.domain.dto.member.MemberJoinRequestDto;
 import com.example.demo.domain.dto.member.MemberResponseDto;
+import com.example.demo.domain.entity.Member.Token;
 import com.example.demo.service.member.JwtService;
 import com.example.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,9 @@ public class MemberController {
     private final JwtService jwtService;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto){
-        String token = memberService.login(loginRequestDto);
+    public Token login(@RequestBody LoginRequestDto loginRequestDto){
+        Token token = memberService.login(loginRequestDto);
         return token;
-    }
-    @GetMapping("/logout")
-    public void logout() {
-
     }
 
     @PostMapping("/join")
@@ -42,14 +39,15 @@ public class MemberController {
     public ResponseEntity validateRefreshToken(@RequestBody HashMap<String, String> bodyJson){
         Map<String, String> map = jwtService.validateRefreshToken(bodyJson.get("refreshToken"));
 
-        if(map.get("status").equals("402")){
-            RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
-            return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.UNAUTHORIZED);
-        }
+//        if(map.get("status").equals("402")){
+//            RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
+//            return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
+//        return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.OK);
 
-        RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
-        return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.OK);
-
+        return new ResponseEntity(map,HttpStatus.OK);
     }
     // 백준 연동
     @PostMapping("/interlock")
@@ -62,14 +60,17 @@ public class MemberController {
         return "TEST_TOKEN";
     }
 
-    @DeleteMapping("/delete/{backjoonId}")
-    public void memberWithdrawal(@PathVariable String bacjoonId){
+    @DeleteMapping("/withdrawal/{backjoonId}")
+    public ResponseEntity memberWithdrawal(@PathVariable String backjoonId){
+        String response = memberService.withdrawal(backjoonId);
 
+        return new ResponseEntity(response,HttpStatus.OK);
     }
 
     @GetMapping("/find/{backjoonId}")
-    public void findMember(@PathVariable String backjoonId){
-
+    public ResponseEntity findMember(@PathVariable String backjoonId){
+        MemberResponseDto memberResponseDto = memberService.findMember(backjoonId);
+        return new ResponseEntity(memberResponseDto, HttpStatus.OK);
     }
 
     @PutMapping("/modify")
