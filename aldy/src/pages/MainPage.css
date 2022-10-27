@@ -86,7 +86,7 @@ h1 {
   line-height: 17px;
   text-align: center;
   color: #ffffff;
-  margin-top: 6%;
+  margin-top: 40px;
 }
 
 .board-text {
@@ -97,5 +97,5 @@ h1 {
   line-height: 150%;
   text-align: center;
   color: #ffffff;
-  font-size: 19px;
+  font-size: 25px;
 }
