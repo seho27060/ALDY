@@ -99,3 +99,15 @@ h1 {
   color: #ffffff;
   font-size: 25px;
 }
+
+.main-page-description-title {
+  font-family: GmarketSans;
+  font-style: normal;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
