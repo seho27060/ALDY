@@ -111,3 +111,8 @@ h1 {
   position: relative;
   z-index: 1;
 }
+
+.main-page-highlight {
+  color: #c8e687;
+  font-size: 20px;
+}

@@ -61,7 +61,7 @@ const MainPage = () => {
         <div>
           <p>
             <span>문제풀이 과정을 </span>
-            <span>4단계로 세분화!</span>
+            <span className="main-page-highlight">4단계로 세분화!</span>
           </p>
           <WhiteButton onClick={navigateSignUp}>회원가입 하러가기</WhiteButton>
         </div>
