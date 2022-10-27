@@ -16,21 +16,28 @@ const Signup = () => {
   return (
     <main className="signup-page-main">
       <div className="signup-page-bg">
-        <section>
-          <div className="left-title">Sign Up</div>
-          <div>
-            <div>아이디</div>
-            <input></input>
-            <RedButton>인증하기</RedButton>
-          </div>
-          <div>
-            <div>비밀번호</div>
-            <input></input>
-          </div>
-          <div>
-            <div>비밀번호 확인</div>
-            <input></input>
-          </div>
+        <section className="signup-page-left">
+          <div className="nnnnnn">Sign Up</div>
+          <form>
+            <div className="form-title">
+              <div>아이디</div>
+              <div className="form-title-id">
+                <input placeholder="아이디를 입력해주세요."></input>
+                <RedButton>인증하기</RedButton>
+              </div>
+            </div>
+            <div className="form-title">
+              <div>비밀번호</div>
+              <input placeholder="비밀번호를 입력해주세요."></input>
+            </div>
+            <div className="form-title">
+              <div>비밀번호 확인</div>
+              <input placeholder="비밀번호를 다시 입력해주세요."></input>
+            </div>
+            <div className="signup-submit-btn">
+              <RedButton>제출하기</RedButton>
+            </div>
+          </form>
         </section>
         <section className="signup-page-right">
           <div className="signup-page-right-title">✨Welcome to Aldy✨</div>
