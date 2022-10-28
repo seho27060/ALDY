@@ -1,4 +1,5 @@
 import "./MainPage.css";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const RedButton = styled.button`
@@ -24,6 +25,11 @@ const WhiteButton = styled.button`
 `;
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
+  const navigateSignUp = () => {
+    navigate("/signup");
+  };
   return (
     <main>
       <section className="main-page-banner">
@@ -49,13 +55,15 @@ const MainPage = () => {
         <RedButton>스터디 생성하기</RedButton>
       </section>
       <section className="main-page-description">
-        <div>ALDY만의 코드리뷰 이용하기</div>
+        <div className="main-page-description-title">
+          ALDY만의 코드리뷰 이용하기
+        </div>
         <div>
           <p>
-            <span>문제풀이 과정을</span>
-            <span>4단계로 세분화!</span>
+            <span>문제풀이 과정을 </span>
+            <span className="main-page-highlight">4단계로 세분화!</span>
           </p>
-          <WhiteButton>회원가입 하러가기</WhiteButton>
+          <WhiteButton onClick={navigateSignUp}>회원가입 하러가기</WhiteButton>
         </div>
       </section>
     </main>
