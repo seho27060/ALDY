@@ -54,7 +54,7 @@ const CodeReviewList = () => {
           className={`tabBtn ${tab === 'requestByMe' ? 'active': ""}`}>내가 보낸 요청</button>
         </div>
         <div>
-        <Container className='list-header'>
+        <Container className='review-list-header'>
           <Row>
             <Col>스터디 이름</Col>
             <Col>보낸 사람</Col>
@@ -148,7 +148,7 @@ const ReviewedCode = () => {
 const Card = (props) => {
   const item = props.item;
   return (
-    <Container className='list-item'>
+    <Container className='review-list-item'>
       <Row>
         <Col>{item.studyname}</Col>
         <Col>{item.reviewer}</Col>
