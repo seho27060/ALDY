@@ -1,5 +1,5 @@
-import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage.js";
 import Changepw from "./pages/auth/Changepw";
 import Login from "./pages/auth/Login";
@@ -13,12 +13,12 @@ import StudySelect from "./pages/study/StudySelect";
 import CodeCorrect from "./pages/code/CodeCorrect";
 import CodeReview from "./pages/code/CodeReview";
 import CodeReviewList from "./pages/code/CodeReviewList";
-import Nav from "./components/Nav";
+import AldyNav from "./components/AldyNav";
 
 function App() {
   return (
     <div className="App">
-      <Nav />
+      <AldyNav />
       <Routes>
         <Route element={<MainPage />} path="/"></Route>
         <Route element={<Login />} path="/login"></Route>

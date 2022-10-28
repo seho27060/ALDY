@@ -32,16 +32,16 @@ span.highlight {
   margin-bottom: 40px;
 }
 
-h2 {
-  font-weight: bold;
-  user-select: none;
-}
 
 h2.underline-orange {
   box-shadow: inset 0 -12px 0 #ffe1aa;
   line-height: 42px;
   margin: auto;
-  width: 25%;
+  width: fit-content;
+  font-size: bold;
+  user-select: none;
+  font-weight: bold;
+  user-select: none;
 }
 
 h2.underline-green {
@@ -49,6 +49,8 @@ h2.underline-green {
   line-height: 42px;
   width: 80%;
   margin: auto;
+  font-weight: bold;
+  user-select: none;
 }
 
 .description-detail {
@@ -97,7 +99,7 @@ button.active {
   margin: auto;
 }
 
-.list-header {
+.review-list-header {
   background-color: #d7eaba;
   border-radius: 8px;
   font-size: large;
@@ -106,7 +108,7 @@ button.active {
   margin-bottom: 14px;
 }
 
-.list-item {
+.review-list-item {
   background-color: white;
   border-radius: 8px;
   font-size: medium;
