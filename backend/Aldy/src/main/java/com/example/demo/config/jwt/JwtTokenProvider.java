@@ -27,11 +27,11 @@ public class JwtTokenProvider {
 
     private long tokenValidTime = 30 * 60 * 1000L;
 
-    private String accessSecretKey = "killtheSpringSecurity2";
+    private final String accessSecretKey = "killtheSpringSecurity2";
 
-    private long accessTokenValidTime = 30 * 60 * 1000L;
+    private final long accessTokenValidTime = 30 * 60 * 1000L;
 
-    private String refreshSecretKey = "killtheSpringSecurity3";
+    private final String refreshSecretKey = "killtheSpringSecurity3";
 
     private long refreshTokenValidTime = 14 * 24 *30 * 60 * 1000L;
     private final CustomUserDetailsService userDetailsService;

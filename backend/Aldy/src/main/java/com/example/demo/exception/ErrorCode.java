@@ -20,6 +20,9 @@ public enum ErrorCode {
     INVALID_AUTH_TOKEN(UNAUTHORIZED, "권한 정보가 없는 토큰입니다"),
     UNAUTHORIZED_MEMBER(UNAUTHORIZED, "현재 내 계정 정보가 존재하지 않습니다"),
 
+    /* 403      */
+//    TEST_TEST(HttpStatus.),
+
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     CALENDAR_NOT_FOUND(NOT_FOUND, "해당 캘린더를 찾을 수 없습니다"),
     STUDY_NOT_FOUND(NOT_FOUND, "해당 스터디 정보를 찾을 수 없습니다"),

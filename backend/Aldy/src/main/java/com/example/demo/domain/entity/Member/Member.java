@@ -1,6 +1,8 @@
 package com.example.demo.domain.entity.Member;
 
-import com.example.demo.domain.dto.member.request.MemberJoinRequestDto;
+import com.example.demo.domain.dto.member.request.MemberModifyRequestDto;
+import com.example.demo.domain.dto.member.request.MemberPasswordRequestDto;
+import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.entity.EditedCode;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.RequestedCode;
@@ -46,10 +48,12 @@ public class Member {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<RequestedCode> receiveRequestedCodeList;
 
-    public Member(MemberJoinRequestDto memberJoinRequestDto, String encodedPassword){
-        this.backjoonId = memberJoinRequestDto.getBackjoonId();
-        this.nickname = memberJoinRequestDto.getNickname();
-        this.password = encodedPassword;
-        this.contact = memberJoinRequestDto.getContact();
+    public void modifyInfo(MemberModifyRequestDto memberModifyRequestDto){
+        this.nickname = memberModifyRequestDto.getNickname();
+        this.contact = memberModifyRequestDto.getContact();
+    }
+    public void modifyPassword(String password){
+        this.password = password;
     }
 }
+
