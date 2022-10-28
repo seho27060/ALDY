@@ -1,9 +1,10 @@
 .review-main {
     background-color: #DCF0BE;
+    padding: 50px;
 }
 
 .review-header {
-    padding: 60px;
+    padding-bottom: 70px;
 }
 
 h2.review-orange {
@@ -36,7 +37,7 @@ h2.review-orange {
     margin: auto;
     background-color: #2B6E30;
     border: 10px solid #FFE1AA;
-    border-radius: 10px;
+    border-radius: 14px;
     color: white;
 }
 
@@ -47,6 +48,7 @@ h2.review-orange {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: 14px;
 }
 
 .review-step-btn {
@@ -74,13 +76,15 @@ h2.review-orange {
 .review-code {
     background-color: #28500F;
     border-radius: 10px;
-    width: 80%;
+    width: fit-content;
+    padding: 14px;
+    margin-left: 14px;
 }
 
 .review-btns {
-    padding: 20px;
     display: flex;
     justify-content: flex-end;
+    padding: 24px;
 }
 
 .reviewBtn {
@@ -101,4 +105,101 @@ h2.review-orange {
 
 .reviewBtn:hover {
     transform: scale(1.1);
-} 
+}
+
+.review-modal-body {
+    background-color: #FFFAF0;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.review-modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-modal-title {
+    margin: 0;
+    font-size: 26px;
+    font-weight: bold;
+    text-decoration-line: underline;
+    text-decoration-color: #FFE1AA;
+    text-decoration-thickness: 10px;
+    text-underline-offset: -5px;
+    margin: auto;
+}
+
+.review-modal-close-btn {
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    padding: 0 8px;
+    background-color: #E63246;
+    color: white;
+    width: fit-content;
+    transition: transfrom 30ms ease-in;
+}
+
+.review-modal-close-btn:hover {
+    transform: scale(1.1);
+}
+
+.review-modal-content {
+    text-align: center;
+}
+
+.review-modal-request-btn {
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    background-color: #E63246;
+    color: white;
+    width: fit-content;
+    font-weight: bold;
+    margin-top: 16px;
+    transition: transfrom 30ms ease-in;
+}
+
+.review-modal-request-btn:hover {
+    transform: scale(1.08);
+}
+
+.review-modal-item {
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    padding: 6px 14px;
+    margin-bottom: 10px;
+}
+
+.review-modal-selectBtn {
+    border: none;
+    outline: none;
+    background-color: #C9C2B3;
+    color: white;
+    border-radius: 6px;
+    margin-left: 20px;
+}
+
+.review-method {
+    width: 80%;
+    margin: auto;
+    text-align: end;
+}
+
+.review-method-btn {
+    border: 2px solid #E63246;
+    outline: none;
+    color: #E63246;
+    background: white;
+    border-radius: 8px;
+    padding: 8px 30px 8px 10px;
+}
+
+.review-method-img {
+    width: 80px;
+    transform: translate(-30px, -18px)
+}
