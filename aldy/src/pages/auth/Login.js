@@ -1,5 +1,7 @@
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { FcLike } from "react-icons/fc";
 
 const RedButton = styled.button`
   width: 170px;
@@ -13,6 +15,12 @@ const RedButton = styled.button`
 `;
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const navigateSignup = () => {
+    navigate("/signup");
+  };
+
   return (
     <main className="login-page-main">
       <div className="login-page-bg">
@@ -33,16 +41,24 @@ const Login = () => {
               <RedButton>Log In</RedButton>
             </div>
           </form>
-          <div>
-            <p>아직 계정이 없으신가요? </p>
-            <p> 회원가입 하러 가기</p>
+          <div className="login-page-join">
+            <div>아직 계정이 없으신가요? </div>
+            <div className="login-page-link" onClick={navigateSignup}>
+              <FcLike />
+              회원가입 하러 가기
+              <FcLike />
+            </div>
           </div>
         </section>
         <section className="login-page-right">
           <div className="login-page-right-title">✨Welcome to Aldy✨</div>
           <div className="login-page-right-text">
-            if (not a member?)
-            {<button>JOIN US</button>}
+            if (not a member?) '
+            {
+              <button className="join-btn" onClick={navigateSignup}>
+                JOIN US
+              </button>
+            }
           </div>
           <img
             src={process.env.PUBLIC_URL + "/login_dinosaur.png"}
