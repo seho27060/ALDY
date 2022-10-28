@@ -1,5 +1,5 @@
-import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage.js";
 import Changepw from "./pages/auth/Changepw";
 import Login from "./pages/auth/Login";
@@ -14,6 +14,7 @@ import CodeCorrect from "./pages/code/CodeCorrect";
 import CodeReview from "./pages/code/CodeReview";
 import CodeReviewList from "./pages/code/CodeReviewList";
 import Nav from "./components/Nav";
+import AldyFooter from "./components/AldyFooter";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route element={<CodeCorrect />} path="/correct/:id"></Route>
         <Route element={<CodeReview />} path="/review"></Route>
       </Routes>
+      <AldyFooter />
     </div>
   );
 }
