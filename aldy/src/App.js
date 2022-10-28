@@ -5,6 +5,7 @@ import Changepw from "./pages/auth/Changepw";
 import Login from "./pages/auth/Login";
 import Mypage from "./pages/auth/Mypage";
 import Signup from "./pages/auth/Signup";
+import Userinfo from "./pages/auth/Userinfo"
 import StudyCreate from "./pages/study/StudyCreate";
 import StudyDetail from "./pages/study/StudyDetail";
 import StudyList from "./pages/study/StudyList";
@@ -26,6 +27,7 @@ function App() {
         <Route element={<Signup />} path="/signup"></Route>
         <Route element={<Mypage />} path="/mypage"></Route>
         <Route element={<Changepw />} path="/changepw"></Route>
+        <Route element={<Userinfo />} path="/userinfo"></Route>
         <Route element={<StudyList />} path="/study/list"></Route>
         <Route element={<StudyCreate />} path="/study/create"></Route>
         <Route element={<StudyDetail />} path="/study/detail/:id"></Route>
