@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap");
+
+.navbar {
+  padding: 0;
+}
+
+.navbar-brand {
+  padding-bottom: 0;
+  margin-left: 1rem;
+}
+
+.nav-title {
+  font-family: "Teko", sans-serif;
+  cursor: pointer;
+  font-size: 40px;
+  color: rgb(40, 80, 15);
+  text-align: center;
+}
+
+.nav-title:hover {
+  color: rgb(40, 80, 15, 0.8);
+}
+
+.nav-link {
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 25px;
+}
+
+.nav-link-active {
+  color: rgb(230, 50, 70);
+}
+
+.nav-link:hover {
+  color: black;
+}
+
+/* offcanvas */
+.offcanvas-header {
+  align-items: baseline;
+}
