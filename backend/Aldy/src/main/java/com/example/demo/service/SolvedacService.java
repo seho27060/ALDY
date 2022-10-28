@@ -9,4 +9,6 @@ public interface SolvedacService {
 
     List<ProblemDto> filter(String query);
 
+    List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList);
+
 }

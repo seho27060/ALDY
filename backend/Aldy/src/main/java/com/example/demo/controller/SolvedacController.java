@@ -35,9 +35,13 @@ public class SolvedacController {
             @RequestParam List<Integer> tierList,
             @RequestParam List<String> backjoonIdList) {
 
-        List<ProblemDto> test = solvedacService.filter("(tier:g1|tier:g2|tier:g3)&(tag:bfs|tag:dfs)&!(solved_by:seho27060|solved_by:min61037)");
+//        List<ProblemDto> test = solvedacService.filter("(tier:g1|tier:g2|tier:g3)&(tag:bfs|tag:dfs)&!(solved_by:seho27060|solved_by:min61037)");
+//
+//        return new ResponseEntity(test, HttpStatus.OK);
 
-        return new ResponseEntity(test, HttpStatus.OK);
+        List<ProblemDto> problemDtoList = solvedacService.filter(algoList, tierList, backjoonIdList);
+
+        return new ResponseEntity(problemDtoList, HttpStatus.OK);
 
     }
 

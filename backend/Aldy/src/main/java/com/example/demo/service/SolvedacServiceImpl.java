@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.ProblemDto;
-import com.example.demo.domain.entity.Problem;
-import com.example.demo.repository.ProblemRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ import javax.transaction.Transactional;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,10 +20,11 @@ public class SolvedacServiceImpl implements SolvedacService {
 
     private final WebClient webClient;
 
-    private final ProblemRedisRepository problemRedisRepository;
-
     @Override
-    public List<ProblemDto> filter(String query) {
+    public List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList) {
+//    public List<ProblemDto> filter(String query) {
+
+        String query = makeQuery(algoList, tierList, backjoonIdList);
 
         final int[] count = new int[1];
         List<ProblemDto> problemDtoList = new ArrayList<>();
@@ -37,6 +35,8 @@ public class SolvedacServiceImpl implements SolvedacService {
                             uriBuilder.path("/search/problem")
                                     .queryParam("query", query)
                                     .queryParam("page", problemDtoList.size() / 50 + 1)
+                                    .queryParam("sort", "solved")
+                                    .queryParam("direction", "desc")
                                     .build())
                     .acceptCharset(Charset.forName("UTF-8"))
                     .accept(MediaType.APPLICATION_JSON)
@@ -82,14 +82,43 @@ public class SolvedacServiceImpl implements SolvedacService {
 
         } while(problemDtoList.size() <= count[0]);
 
-        Collections.sort(problemDtoList);
-
-        problemDtoList.forEach(p -> {
-            problemRedisRepository.save(new Problem(p));
-        });
-
-        System.out.println(problemRedisRepository.count());
-
         return problemDtoList;
+    }
+
+    private String makeQuery(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList) {
+//        StringBuffer 사용법 검색
+        String query = "";
+
+        // "(tier:g1|tier:g2|tier:g3)&"
+        if(!tierList.isEmpty()) {
+            query += "(";
+            tierList.forEach(t -> {
+
+                System.out.println(t);
+            });
+            query += ")&";
+        }
+        // "(tag:bfs|tag:dfs)&"
+        if(!algoList.isEmpty()) {
+            query += "(";
+            algoList.forEach(a -> {
+                query += "tag:";
+                query += a;
+
+            });
+            query += ")&";
+        }
+        // "!(solved_by:seho27060|solved_by:min61037)"
+        if(!backjoonIdList.isEmpty()) {
+            query += "!(";
+            backjoonIdList.forEach(b -> {
+                query += "solved_by:";
+                query += b;
+            });
+            query += ")";
+        }
+
+
+        return query;
     }
 }

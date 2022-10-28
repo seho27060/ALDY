@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @NoArgsConstructor
-public class ProblemDto implements Comparable<ProblemDto> {
+public class ProblemDto {
 
     private int num;
 
@@ -19,10 +19,5 @@ public class ProblemDto implements Comparable<ProblemDto> {
         this.num = num;
         this.name = name;
         this.acceptedUserCount = acceptedUserCount;
-    }
-
-    @Override
-    public int compareTo(ProblemDto o) {
-        return o.getAcceptedUserCount() - getAcceptedUserCount();
     }
 }

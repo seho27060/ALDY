@@ -31,9 +31,3 @@ springdoc:
     operations-sorter: alpha
     tags-sorter: alpha
     path: /swagger-ui.html
-
-# Redis
-springs :
-  redis :
-    host : 13.125.116.59
-    port : 6379
