@@ -20,9 +20,9 @@ const Signup = () => {
           <div className="nnnnnn">Sign Up</div>
           <form>
             <div className="form-title">
-              <div>아이디</div>
+              <div>백준 아이디</div>
               <div className="form-title-id">
-                <input placeholder="아이디를 입력해주세요."></input>
+                <input placeholder="백준 아이디를 입력해주세요."></input>
                 <RedButton>인증하기</RedButton>
               </div>
             </div>
