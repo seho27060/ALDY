@@ -31,9 +31,9 @@ public class SolvedacController {
     @Operation(summary = "스터디 문제 추천 API", description = "[algoList : 알고리즘 목록], [tierList : 티어 목록], [backjoonIdList : 유저 목록]")
     @GetMapping()
     public ResponseEntity filterProblem(
-            @RequestParam List<String> algoList,
-            @RequestParam List<Integer> tierList,
-            @RequestParam List<String> backjoonIdList) {
+            @RequestParam(required = false) List<String> algoList,
+            @RequestParam(required = false) List<Integer> tierList,
+            @RequestParam(required = false) List<String> backjoonIdList) {
 
 //        List<ProblemDto> test = solvedacService.filter("(tier:g1|tier:g2|tier:g3)&(tag:bfs|tag:dfs)&!(solved_by:seho27060|solved_by:min61037)");
 //

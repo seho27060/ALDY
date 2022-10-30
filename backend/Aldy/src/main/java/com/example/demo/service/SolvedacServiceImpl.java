@@ -87,38 +87,35 @@ public class SolvedacServiceImpl implements SolvedacService {
 
     private String makeQuery(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList) {
 //        StringBuffer 사용법 검색
-        String query = "";
+        StringBuilder query = new StringBuilder("");
 
         // "(tier:g1|tier:g2|tier:g3)&"
         if(!tierList.isEmpty()) {
-            query += "(";
+            query.append("(");
             tierList.forEach(t -> {
-
-                System.out.println(t);
+                query.append("tier:").append(t).append("|");
             });
-            query += ")&";
+            query.deleteCharAt(query.length() - 1);
+            query.append(")&");
         }
         // "(tag:bfs|tag:dfs)&"
         if(!algoList.isEmpty()) {
-            query += "(";
+            query.append("(");
             algoList.forEach(a -> {
-                query += "tag:";
-                query += a;
-
+                query.append("tag:").append(a).append("|");
             });
-            query += ")&";
+            query.deleteCharAt(query.length() - 1);
+            query.append(")&");
         }
         // "!(solved_by:seho27060|solved_by:min61037)"
         if(!backjoonIdList.isEmpty()) {
-            query += "!(";
+            query.append("!(");
             backjoonIdList.forEach(b -> {
-                query += "solved_by:";
-                query += b;
+                query.append("solved_by:").append(b).append("|");
             });
-            query += ")";
+            query.append(")");
         }
 
-
-        return query;
+        return query.toString();
     }
 }
