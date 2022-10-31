@@ -1,12 +1,17 @@
 import "./CodeReview.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
+import Editor from '@monaco-editor/react'
 
 const CodeReview = () => {
   const [step, setStep] = useState(1);
   const [requestModalShow, setRequestModalShow] = useState(false);
-  const [linkModalShow, setLinkModalShow] = useState(false);
+  const editorRef = useRef(null)
+  function handleEditorChange(editor, monaco) {
+    editorRef.current = editor;
+    console.log(editorRef.current.getValue())
+  }
 
   return (
     <main className="review-main">
@@ -15,14 +20,10 @@ const CodeReview = () => {
         onHide={() => setRequestModalShow(false)}
       />
       <section className="review-header">
-        <p>
-          <span>다른 사람들과 함께</span>
-          <span className="highlight">코드리뷰</span>
-          <span>를 하며</span>
-          <span className="highlight">공룡</span>
-          <span>을 키워볼 기회</span>
-        </p>
-        <h2 className="review-orange">이번 주 스터디 선정 문제</h2>
+        {step === 1 && <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드 제출하기 ✨</h2>}
+        {step === 2 && <h2 className="review-orange">✨ 코드리뷰 2단계 : 코드 주석달기 ✨</h2>}
+        {step === 3 && <h2 className="review-orange">✨ 코드리뷰 3단계 : 코드 하이라이팅 ✨</h2>}
+        {step === 4 && <h2 className="review-orange">✨ 코드리뷰 4단계 : 최종 코드 제출하기 ✨</h2>}
       </section>
       <section className="review-board">
         <div className="review-title">
@@ -67,11 +68,21 @@ const CodeReview = () => {
             </button>
           </div>
           <div className="review-code">
-            코드영역 코드영역 코드영역 코드영역 코드영역 코드영역 코드영역
-            코드영역 코드영역 코드영역 코드영역 코드영역 코드영역 코드영역
-            코드영역
+            <Editor className='review-code-editor'
+              height='100%'
+              language='javascript'
+              theme='vs-dark'
+              defaultValue={null}
+              onMount={handleEditorChange}
+              options={{
+                fontSize:20,
+                minimap:{ enabled: false},
+                scrollbar:{
+                  vertical: 'auto',
+                  horizontal: 'auto'
+              }
+            }}></Editor>
           </div>
-          <div className="review-code">코드영역</div>
         </div>
         <div className="review-btns">
           {step === 1 ? <button className="reviewBtn">백준 연동</button> : null}
