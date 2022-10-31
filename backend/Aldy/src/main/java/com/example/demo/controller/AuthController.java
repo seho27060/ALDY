@@ -4,6 +4,7 @@ import com.example.demo.domain.dto.member.request.LoginRequestDto;
 import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.response.AuthStringResonseDto;
 import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
+import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Member.Token;
 import com.example.demo.service.member.AuthService;
@@ -34,15 +35,16 @@ public class AuthController {
         MemberResponseDto memberResponseDto = authService.memberJoin(memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
-    @GetMapping("/token")
-    public ResponseEntity<AuthStringResonseDto> issueAuthString(HttpServletRequest request) {
-        return new ResponseEntity<>(new AuthStringResonseDto("TEST_AUTH_STRING"), HttpStatus.OK);
+    @PostMapping("/token")
+    public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody String  backjoonId) {
+        AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(backjoonId));
+        return new ResponseEntity<>(authStringResonseDto, HttpStatus.OK);
     }
-
     // 백준 연동
     @GetMapping("/interlock/{backjoonId}")
-    public void interlock(@PathVariable String backjoonId){
-       authService.interlock(backjoonId);
+    public ResponseEntity<InterlockResponseDto> interlock(@PathVariable String backjoonId){
+       InterlockResponseDto interlockResponseDto = authService.interlock(backjoonId);
+        return new ResponseEntity<>(interlockResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/nickname/{nickname}")

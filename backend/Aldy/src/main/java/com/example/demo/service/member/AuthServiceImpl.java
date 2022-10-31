@@ -4,6 +4,7 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.request.LoginRequestDto;
 import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
+import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Member.Token;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -89,8 +91,34 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public void interlock(String backjoonId) {
+    public String issueAuthString(String backjoonId) {
+        Random random = new Random();
+        int length = random.nextInt(5)+5;
 
+        StringBuilder newWord = new StringBuilder("");
+        for (int i = 0; i < length; i++) {
+            int choice = random.nextInt(3);
+            switch(choice) {
+                case 0:
+                    newWord.append((char)((int)random.nextInt(25)+97));
+                    break;
+                case 1:
+                    newWord.append((char)((int)random.nextInt(25)+65));
+                    break;
+                case 2:
+                    newWord.append((char)((int)random.nextInt(10)+48));
+                    break;
+                default:
+                    break;
+            }
+        }
+        return newWord.toString();
+    }
+
+    @Override
+    public InterlockResponseDto interlock(String backjoonId) {
+        // api 로 요청 후 반환값에서
+        return new InterlockResponseDto(false);
     }
 
     @Override
