@@ -1,4 +1,5 @@
 import "./Userinfo.css";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const RedButton = styled.button`
@@ -13,6 +14,39 @@ const RedButton = styled.button`
 `;
 
 const Userinfo = () => {
+  const [emailShow, setEmailShow] = useState(false);
+  const [nicknameShow, setNicknameShow] = useState(false);
+
+  const onClickEmail = (e) => {
+    e.preventDefault();
+    setEmailShow((prev) => !prev);
+  };
+
+  const onClickNickname = (e) => {
+    e.preventDefault();
+    setNicknameShow(!nicknameShow);
+  };
+
+  const ChangeEmail = () => (
+    <div className="form-title">
+      <div>이메일</div>
+      <div className="form-title-id">
+        <input placeholder="zmmmm111@gmail.com"></input>
+        <RedButton>중복확인</RedButton>
+      </div>
+    </div>
+  );
+
+  const ChangeNickname = () => (
+    <div className="form-title">
+      <div>닉네임</div>
+      <div className="form-title-id">
+        <input placeholder="세룽룽"></input>
+        <RedButton>중복확인</RedButton>
+      </div>
+    </div>
+  );
+
   return (
     <main className="userinfo-page-main">
       <div className="userinfo-page-bg">
@@ -22,18 +56,20 @@ const Userinfo = () => {
           <form>
             <div className="form-title">
               <div>이메일</div>
-              <div className="form-title-id">
-                <input placeholder="zmmmm111@gmail.com"></input>
-                <RedButton>수정하기</RedButton>
+              <div className="userinfo-form-title-id">
+                <div>zmmmm111@gmail.com</div>
+                <RedButton onClick={onClickEmail}>수정하기</RedButton>
               </div>
             </div>
+            {emailShow ? <ChangeEmail /> : null}
             <div className="form-title">
               <div>닉네임</div>
-              <div className="form-title-id">
-                <input placeholder="세룽룽"></input>
-                <RedButton>수정하기</RedButton>
+              <div className="userinfo-form-title-id">
+                <div>세룽룽</div>
+                <RedButton onClick={onClickNickname}>수정하기</RedButton>
               </div>
             </div>
+            {nicknameShow ? <ChangeNickname /> : null}
           </form>
         </section>
         <section className="userinfo-page-right">
