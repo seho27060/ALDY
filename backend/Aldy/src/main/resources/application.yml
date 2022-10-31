@@ -15,6 +15,12 @@ spring:
   h2:
     console:
       enabled: true
+# redis
+  redis:
+    host: k7c206.p.ssafy.io
+    port: 6379
+#    password: c206
+
 
 logging.level:
   org.hibernate.SQL: debug
@@ -31,3 +37,5 @@ springdoc:
     operations-sorter: alpha
     tags-sorter: alpha
     path: /swagger-ui.html
+
+# Redis
