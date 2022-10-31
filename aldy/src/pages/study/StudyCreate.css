@@ -93,6 +93,10 @@
   line-height: 29px;
 }
 
+.StudyCreate-form-second {
+  display: flex;
+}
+
 .form-title-id {
   display: flex;
 }

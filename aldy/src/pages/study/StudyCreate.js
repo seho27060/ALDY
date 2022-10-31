@@ -28,6 +28,34 @@ const StudyCreate = () => {
                 <input placeholder="스터디 이름을 입력해 주세요."></input>
               </div>
             </div>
+            <div className="StudyCreate-form-second">
+              <div className="StudyCreate-form-title">
+                <div>스터디 제한 인원</div>
+                <input
+                  type="number"
+                  min="2"
+                  max="6"
+                  step="1"
+                  name="number"
+                  placeholder="2~6명"
+                ></input>
+              </div>
+              <div className="StudyCreate-form-title">
+                <div>스터디 공개 범위</div>
+                {/* <input placeholder="공개, 비공개"></input> */}
+                <label>
+                  <input type="radio" name="radio" value="yes" /> 공개
+                </label>
+                <label>
+                  <input type="radio" name="radio" value="no" /> 비공개
+                </label>
+              </div>
+            </div>
+            <div className="StudyCreate-form-title">
+              <div>스터디 설명</div>
+              <textarea placeholder="스터디 설명을 입력해 주세요."></textarea>
+              {/* <input placeholder="스터디 설명을 입력해 주세요."></input> */}
+            </div>
             <div className="StudyCreate-form-title">
               <div>스터디 가입 요건</div>
               <input placeholder="스터디 가입 요건을 입력해 주세요."></input>
