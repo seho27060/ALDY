@@ -82,14 +82,14 @@
   padding-bottom: 15%;
 }
 
-.form-title {
+.signup-form-title {
   text-align: left;
-  padding: 20px;
+  padding: 10px;
   color: #787878;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 29px;
 }
 
