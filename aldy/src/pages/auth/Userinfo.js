@@ -1,5 +1,5 @@
 import "./Userinfo.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 const RedButton = styled.button`
@@ -15,7 +15,12 @@ const RedButton = styled.button`
 
 const Userinfo = () => {
   const [emailShow, setEmailShow] = useState(false);
+  const onSubmit = (e) => {
+    // e.preventDefault();
+  };
   const [nicknameShow, setNicknameShow] = useState(false);
+  const emailInput = useRef();
+  const nicknameInput = useRef();
 
   const onClickEmail = (e) => {
     e.preventDefault();
@@ -31,7 +36,12 @@ const Userinfo = () => {
     <div className="form-title">
       <div>이메일</div>
       <div className="form-title-id">
-        <input placeholder="zmmmm111@gmail.com"></input>
+        <input
+          name="email"
+          ref={emailInput}
+          placeholder="zmmmm111@gmail.com"
+          onClick={onSubmit}
+        ></input>
         <RedButton>중복확인</RedButton>
       </div>
     </div>
@@ -41,7 +51,12 @@ const Userinfo = () => {
     <div className="form-title">
       <div>닉네임</div>
       <div className="form-title-id">
-        <input placeholder="세룽룽"></input>
+        <input
+          name="nickname"
+          ref={nicknameInput}
+          placeholder="세룽룽"
+          onClick={onSubmit}
+        ></input>
         <RedButton>중복확인</RedButton>
       </div>
     </div>
