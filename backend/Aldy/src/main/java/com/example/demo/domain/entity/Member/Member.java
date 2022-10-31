@@ -29,11 +29,12 @@ public class Member {
     private String backjoonId;
 
     private String password;
-
     // 연략처 전화번호 or 이메일
     private String contact;
 
     private String nickname;
+
+    private int tier;
 
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<MemberInStudy> studyList;

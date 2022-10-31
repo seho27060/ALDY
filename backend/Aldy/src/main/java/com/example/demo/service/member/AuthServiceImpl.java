@@ -6,6 +6,7 @@ import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
 import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
+import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Member.Token;
 import com.example.demo.exception.CustomException;
@@ -13,14 +14,21 @@ import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -28,9 +36,9 @@ import java.util.Random;
 @Transactional
 public class AuthServiceImpl implements AuthService{
     private final MemberRepository memberRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final WebClient webClient;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -116,8 +124,36 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public InterlockResponseDto interlock(String backjoonId) {
+//        https://solved.ac/api/v3/user/show
+        Optional<SolvedacResponseDto> mono;
+        mono = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/user/show")
+                                .queryParam("handle", backjoonId)
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(status ->
+                        status.is4xxClientError() || status.is5xxServerError(),
+                        clientResponse ->
+                                clientResponse
+                                        .bodyToMono(String.class)
+                                        .map(body -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)))
+                .bodyToMono(SolvedacResponseDto.class)
+                .flux()
+                .toStream()
+                .findFirst();
+        System.out.println(mono);
+        SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        System.out.println(solvedacResponseDto.getBio());
+
+        List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
+        String testAuthString = "TEST_AUTH_STRING";
+        System.out.printf("test AuthString :%s get AuthString :%s%n",testAuthString,solvedacBio.get(solvedacBio.size()-1));
         // api 로 요청 후 반환값에서
-        return new InterlockResponseDto(false);
+
+        return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(testAuthString));
     }
 
     @Override
