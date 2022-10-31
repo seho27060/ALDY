@@ -1,4 +1,6 @@
 import "./Signup.css";
+import React, { useState } from "react";
+import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 
 const RedButton = styled.button`
@@ -13,8 +15,47 @@ const RedButton = styled.button`
 `;
 
 const Signup = () => {
+  const [bojModalShow, setBojModalShow] = useState(false);
+
+  const handleBojModalShow = (e) => {
+    e.preventDefault();
+    setBojModalShow((prev) => !prev);
+  };
+
+  const solvedAc = () => {
+    window.open("https://solved.ac/", "_blank");
+  };
+  // () => window.open("https://solved.ac/")
+
   return (
     <main className="signup-page-main">
+      <Modal size="lg" show={bojModalShow} onHide={handleBojModalShow}>
+        <Modal.Body className="review-modal-body">
+          <div className="review-modal-header">
+            <div>
+              <p className="review-modal-title">인증 코드 : 2dk@wk</p>
+              <p style={{ fontSize: "12px", color: "#646464" }}>
+                solved.ac 가입 후, solved.ac 자기소개 끝에 인증코드를
+                추가해주세요.
+              </p>
+            </div>
+            <div>
+              <button
+                className="review-modal-close-btn"
+                onClick={handleBojModalShow}
+              >
+                X
+              </button>
+            </div>
+          </div>
+          <div className="review-modal-content">
+            <img src={process.env.PUBLIC_URL + "/solved.png"} alt=""></img>
+          </div>
+          <div className="solved-btn">
+            <RedButton onClick={solvedAc}>solved.ac로 이동</RedButton>
+          </div>
+        </Modal.Body>
+      </Modal>
       <div className="signup-page-bg">
         <section className="signup-page-left">
           <div className="nnnnnn">Sign Up</div>
@@ -23,7 +64,7 @@ const Signup = () => {
               <div>백준 아이디</div>
               <div className="form-title-id">
                 <input placeholder="백준 아이디를 입력해주세요."></input>
-                <RedButton>인증하기</RedButton>
+                <RedButton onClick={handleBojModalShow}>인증하기</RedButton>
               </div>
             </div>
             <div className="form-title">
