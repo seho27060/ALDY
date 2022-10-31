@@ -6,11 +6,11 @@ import com.example.demo.domain.dto.*;
 public interface CodeService {
     CodeResponseDto getCodesByStudy_idAndProblem_idAndMember_id(long study_id, long problem_id, long member_id);
 
-    CodeReviewResponseDto getCodesByMember_id(long member_id);
+    CodeReviewPageResponseDto getCodesByMember_id(long member_id);
 
-    EditedCodeDto replyEditedCode(CodeReviewDto codeReviewDto);
+    EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto);
 
     CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto);
 
-    RequestedCodeDto requestCode(CodeReviewDto codeReviewDto);
+    RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto);
 }

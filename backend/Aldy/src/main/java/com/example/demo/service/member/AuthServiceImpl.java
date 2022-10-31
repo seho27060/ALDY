@@ -27,8 +27,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Transactional
 public class AuthServiceImpl implements AuthService{
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 

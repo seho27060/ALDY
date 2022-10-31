@@ -29,8 +29,8 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService{
 
     private final JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 

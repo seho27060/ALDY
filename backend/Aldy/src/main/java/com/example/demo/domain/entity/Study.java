@@ -1,11 +1,12 @@
 package com.example.demo.domain.entity;
 
-
+import com.example.demo.domain.dto.CreateStudyRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Study {
 
     @Id
@@ -41,4 +43,11 @@ public class Study {
     @OneToMany(mappedBy = "study",cascade = CascadeType.ALL)
     private List<MemberInStudy> memberList;
 
+    public Study(CreateStudyRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.upperLimit = requestDto.getUpperLimit();
+        this.introduction = requestDto.getIntroduction();
+        this.threshold = requestDto.getThreshold();
+        this.visibility = requestDto.getVisibility();
+    }
 }

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:file:C:\Users\multicampus\Desktop\Project_ALDY\DB\h2db
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -10,8 +10,8 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        show_sql: false
+        format_sql: false
   h2:
     console:
       enabled: true
