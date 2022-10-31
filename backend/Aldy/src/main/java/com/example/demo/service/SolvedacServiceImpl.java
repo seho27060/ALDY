@@ -9,9 +9,7 @@ import reactor.core.publisher.Flux;
 
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -22,7 +20,6 @@ public class SolvedacServiceImpl implements SolvedacService {
 
     @Override
     public List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList) {
-//    public List<ProblemDto> filter(String query) {
 
         String query = makeQuery(algoList, tierList, backjoonIdList);
 
@@ -88,12 +85,13 @@ public class SolvedacServiceImpl implements SolvedacService {
     private String makeQuery(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList) {
 //        StringBuffer 사용법 검색
         StringBuilder query = new StringBuilder("");
+        String tier = "bsgpdr";
 
         // "(tier:g1|tier:g2|tier:g3)&"
-        if(!tierList.isEmpty()) {
+        if(tierList != null) {
             query.append("(");
             tierList.forEach(t -> {
-                query.append("tier:").append(t).append("|");
+                query.append("tier:").append(tier.charAt(t / 5)).append(t % 5).append("|");
             });
             query.deleteCharAt(query.length() - 1);
             query.append(")&");
@@ -113,8 +111,11 @@ public class SolvedacServiceImpl implements SolvedacService {
             backjoonIdList.forEach(b -> {
                 query.append("solved_by:").append(b).append("|");
             });
-            query.append(")");
+            query.deleteCharAt(query.length() - 1);
+            query.append(")&");
         }
+
+        query.deleteCharAt(query.length() - 1);
 
         return query.toString();
     }
