@@ -22,13 +22,13 @@ const StudyCreate = () => {
           {/* 여기 수정 */}
           <div className="nnnnnn">스터디 생성</div>
           <form>
-            <div className="form-title">
+            <div className="StudyCreate-form-title">
               <div>스터디 이름</div>
               <div className="form-title-id">
                 <input placeholder="스터디 이름을 입력해 주세요."></input>
               </div>
             </div>
-            <div className="form-title">
+            <div className="StudyCreate-form-title">
               <div>스터디 가입 요건</div>
               <input placeholder="스터디 가입 요건을 입력해 주세요."></input>
             </div>
