@@ -55,6 +55,4 @@ public class AuthController {
         DoubleCheckResponseDto doubleCheckResponseDto  = authService.doubleCheckContact(contact);
         return new ResponseEntity<>(doubleCheckResponseDto, HttpStatus.OK);
     }
-
-
 }

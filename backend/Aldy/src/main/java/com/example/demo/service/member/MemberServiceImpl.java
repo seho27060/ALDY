@@ -2,9 +2,7 @@ package com.example.demo.service.member;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.request.*;
-import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.entity.Member.Token;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -13,15 +11,12 @@ import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
 
         MemberResponseDto response;
 
-        if(bCryptPasswordEncoder.matches( memberWithdrawalRequestDto.getPassword(),member.getPassword())){
+        if(bCryptPasswordEncoder.matches(memberWithdrawalRequestDto.getPassword(),member.getPassword())){
             memberRepository.delete(member);
             response = new MemberResponseDto(member);
         } else {
