@@ -110,3 +110,9 @@ input:focus {
 .signup-submit-btn {
   padding: 30px;
 }
+
+.solved-btn {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
