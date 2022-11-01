@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.dto.CreateStudyRequestDto;
 import com.example.demo.domain.dto.StudyDto;
+import com.example.demo.service.CalendarService;
 import com.example.demo.service.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudyController {
 
     private final StudyService studyService;
-
+    private final CalendarService calendarService;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
@@ -89,4 +91,13 @@ public class StudyController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+    @Operation(summary = "문제 선정된 요일 반환 API", description = "문제가 설정된 요일들을 반환하는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    @GetMapping("/{study_id}/{year}/{month}")
+    public ResponseEntity getCalendar(@PathVariable long study_id, @PathVariable int year, @PathVariable int month){
+        return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
+    }
+
 }
