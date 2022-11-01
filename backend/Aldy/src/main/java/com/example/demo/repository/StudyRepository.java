@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface StudyRepository extends JpaRepository<Study, Long> {
 
-    Page<Study> findAllByNameContaining(String name, Pageable pageable);
-
+    Optional<Page<Study>> findAllByNameContaining(String name, Pageable pageable);
 
 }

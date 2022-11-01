@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 
 public interface StudyService {
 
-    StudyDto createStudy(CreateStudyRequestDto createStudyPostDto);
+    Long createStudy(CreateStudyRequestDto createStudyPostDto);
 
-    Page<StudyDto> getAllStudyPage(int page, int size, String keyword);
+    Page<StudyDto> getAllStudyPage(int page, String keyword);
 
-    Page<StudyDto> getMyStudyPage(int page, int size, String keyword, Long memberId);
+    Page<StudyDto> getMyStudyPage(int page, String backjoonId);
 
     StudyDto getById(Long studyId);
 
