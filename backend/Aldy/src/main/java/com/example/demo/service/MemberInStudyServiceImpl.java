@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.ApplicateStudyRequestDto;
+import com.example.demo.domain.dto.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.MemberInStudyDto;
+import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.Study;
@@ -11,9 +13,12 @@ import com.example.demo.repository.Member.MemberRepository;
 import com.example.demo.repository.MemberInStudyRepository;
 import com.example.demo.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +28,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class MemberInStudyServiceImpl implements MemberInStudyService {
 
-    private  final MemberInStudyRepository memberInStudyRepository;
+    private final WebClient webClient;
+
+    private final MemberInStudyRepository memberInStudyRepository;
 
     private final MemberRepository memberRepository;
 
@@ -32,7 +39,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     private final List<Integer> authList = List.of(1, 2);
 
     @Override
-    public MemberInStudyDto setRoomLeader(Long studyId, String backjoonId) {
+    public void setRoomLeader(Long studyId, String backjoonId) {
 
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
@@ -40,9 +47,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         Member member = memberRepository.findByBackjoonId(backjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        return new MemberInStudyDto(
-                memberInStudyRepository.save(new MemberInStudy(study, member, 1))
-        );
+        memberInStudyRepository.save(new MemberInStudy(study, member, 1));
 
     }
 
@@ -56,9 +61,9 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
 
     @Override
-    public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto) {
+    public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String backjoonId) {
 
-        Member member = memberRepository.findById(requestDto.getMemberId())
+        Member member = memberRepository.findByBackjoonId(backjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Study study = studyRepository.findById(requestDto.getStudyId())
@@ -76,13 +81,26 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
             throw new CustomException(ErrorCode.MEMBER_LIMIT_EXCEEDED);
         }
 
+        // tier 체크
+        SolvedacResponseDto solvedacResponseDto = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/user/show")
+                                .queryParam("handle", backjoonId)
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(SolvedacResponseDto.class)
+                .blockOptional().get();
+
+        if( solvedacResponseDto.getTier() < study.getThreshold() ) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
+        }
+
         // save
-        MemberInStudyDto memberInStudyDto = new MemberInStudyDto(
+        return new MemberInStudyDto(
                 memberInStudyRepository.save(new MemberInStudy(study, member, 3))
         );
-
-        return memberInStudyDto;
-
     }
 
     @Override
@@ -90,27 +108,43 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
         List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList);
 
-        List<MemberInStudyDto> memberInStudyDtoList = memberInStudyList.stream().map(e ->
-                new MemberInStudyDto(e)).collect(Collectors.toList());
-
-        return memberInStudyDtoList;
+        return memberInStudyList.stream().map(e ->
+                new MemberInStudyDto(e)).collect(Collectors.toList()
+        );
 
     }
 
     @Override
-    public MemberInStudyDto changeAuth(ApplicateStudyRequestDto requestDto, Long loginMemberId, int auth) {
+    public MemberInStudyDto changeAuth(MemberInStudyChangeAuthDto requestDto, String loginMemberBackjoonId, int auth) {
 
-        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(requestDto.getStudyId(), loginMemberId)
+        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BackjoonId(requestDto.getStudyId(), loginMemberBackjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
 
         MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(requestDto.getStudyId(), requestDto.getMemberId())
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
 
-        if(loginMemberInStudy.getAuth() == 1) {
-            memberInStudy.setAuth(auth);
+        if(loginMemberInStudy.getAuth() != 1) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
         }
 
         return new MemberInStudyDto(memberInStudy);
+
+    }
+
+    @Override
+    public void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBackjoonId) {
+
+        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BackjoonId(requestDto.getStudyId(), loginMemberBackjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
+
+        MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(requestDto.getStudyId(), requestDto.getMemberId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
+
+        if(loginMemberInStudy.getAuth() != 1) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
+        }
+
+        memberInStudyRepository.delete(memberInStudy);
 
     }
 
