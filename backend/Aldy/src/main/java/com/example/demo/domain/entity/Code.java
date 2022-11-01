@@ -1,9 +1,8 @@
 package com.example.demo.domain.entity;
 
 import com.example.demo.domain.dto.CodeSaveRequestDto;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.domain.entity.Member.Member;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;

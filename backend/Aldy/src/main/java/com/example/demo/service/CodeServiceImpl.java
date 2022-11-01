@@ -3,21 +3,19 @@ package com.example.demo.service;
 import com.example.demo.domain.dto.*;
 import com.example.demo.domain.entity.Code;
 import com.example.demo.domain.entity.EditedCode;
-import com.example.demo.domain.entity.Member;
+import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.RequestedCode;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.CodeRepository;
 import com.example.demo.repository.EditedCodeRepository;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.Member.MemberRepository;
 import com.example.demo.repository.RequestedCodeRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
