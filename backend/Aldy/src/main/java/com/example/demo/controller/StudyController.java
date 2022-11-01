@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.CreateStudyRequestDto;
-import com.example.demo.domain.dto.MemberInStudyDto;
 import com.example.demo.domain.dto.StudyDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Study API", description = "스터디 관련 API")
+@Tag(name = "Study API", description = "스터디 관련 API, [담당자 : 홍석호]")
 @RequestMapping(value = "/api/study")
 public class StudyController {
 
@@ -43,15 +42,15 @@ public class StudyController {
 
         String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
 
-        Long studyId = studyService.createStudy(requestDto);
+        StudyDto studyDto = studyService.createStudy(requestDto);
 
-        MemberInStudyDto MemberInStudyDto = memberInStudyService.setRoomLeader(studyId, loginMember);
+        memberInStudyService.setRoomLeader(studyDto.getId(), loginMember);
 
-        return new ResponseEntity(MemberInStudyDto, HttpStatus.OK);
+        return new ResponseEntity(studyDto, HttpStatus.OK);
 
     }
 
-    @Operation(summary = "전체 스터디 목록 조회 API", description = "[page : 페이지], [keyword : 검색어]")
+    @Operation(summary = "전체 스터디 목록 조회 API", description = "[page : 페이지], [size : 페이지 당 정보 개수], [keyword : 검색어]")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
@@ -59,28 +58,31 @@ public class StudyController {
     @GetMapping()
     public ResponseEntity getAllStudyPage(
             @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
             @RequestParam(value = "keyword", defaultValue = "") String keyword
     ) {
 
-        Page<StudyDto> studyDtoPage = studyService.getAllStudyPage(page, keyword);
+        Page<StudyDto> studyDtoPage = studyService.getAllStudyPage(page, size, keyword);
 
         return new ResponseEntity(studyDtoPage, HttpStatus.OK);
 
     }
 
-    @Operation(summary = "내 스터디 목록 조회 API", description = "[page : 페이지]")
+    @Operation(summary = "내 스터디 목록 조회 API", description = "[page : 페이지], [size : 페이지 당 정보 개수]")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping("/mystudy")
     public ResponseEntity getMyStudyPage(
-            @RequestParam(value = "page", defaultValue = "0") int page, HttpServletRequest request
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            HttpServletRequest request
     ) {
 
         String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
 
-        Page<StudyDto> studyDtoPage = studyService.getMyStudyPage(page, loginMember);
+        Page<StudyDto> studyDtoPage = studyService.getMyStudyPage(page, size, loginMember);
 
         return new ResponseEntity(studyDtoPage, HttpStatus.OK);
     }

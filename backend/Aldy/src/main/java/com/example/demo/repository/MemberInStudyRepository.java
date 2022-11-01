@@ -1,8 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.MemberInStudy;
-import com.example.demo.domain.entity.Study;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +16,7 @@ public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Lo
 
     int countAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
 
-    Optional<Page<MemberInStudy>> findAllByMember_BackjoonId(String backjoonId, Pageable pageable);
+    Page<MemberInStudy> findAllByMember_BackjoonId(String backjoonId, Pageable pageable);
 
     Optional<MemberInStudy> findByStudy_IdAndMember_Id(Long studyId, Long memberId);
 
