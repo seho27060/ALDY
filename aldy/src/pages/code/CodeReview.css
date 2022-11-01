@@ -77,16 +77,24 @@ h2.review-orange {
     text-decoration-thickness: 8px;
 }
 
+.review-language-select {
+    display: flex;
+    justify-content: flex-end;
+    color: black;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+#language-select {
+    border-radius: 8px;
+}
+
 .review-code {
     background-color: #28500F;
     border-radius: 10px;
     width: 70%;
     padding: 14px;
     margin-left: 14px;
-}
-
-.review-code-editor {
-    padding: 10px;
 }
 
 .review-btns {
