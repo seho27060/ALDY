@@ -7,7 +7,7 @@ import com.example.demo.domain.dto.member.response.AuthStringResonseDto;
 import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
 import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.entity.Member.Token;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.ErrorResponse;
 import com.example.demo.service.member.AuthService;
 
@@ -33,14 +33,14 @@ public class AuthController {
 
     @Operation(summary = "로그인 API", description = "입력정보로 로그인을 진행합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = Token.class))),
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = TokenDto.class))),
             @ApiResponse(responseCode = "401", description = "비밀번호가 일치하지 않습니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "404", description = "가입되지 않은 아이디입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping("/login")
-    public ResponseEntity<Token> login(@RequestBody LoginRequestDto loginRequestDto){
-        Token token = authService.login(loginRequestDto);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto loginRequestDto){
+        TokenDto tokenDto = authService.login(loginRequestDto);
+        return new ResponseEntity<>(tokenDto, HttpStatus.OK);
     }
 
     @Operation(summary = "회원 가입 API", description = "입력된 정보로 회원가입을 진행합니다.")

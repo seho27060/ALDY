@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.dto.member.request.*;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.entity.Member.Token;
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.ErrorResponse;
 import com.example.demo.service.member.JwtService;
 import com.example.demo.service.member.MemberService;
@@ -76,17 +74,19 @@ public class MemberController {
             @ApiResponse(responseCode = "401", description = "비밀번호가 일치하지 않습니다."),
     })
     @PostMapping("/refresh")
-    public ResponseEntity<Map<String, String>> validateRefreshToken(@RequestBody HashMap<String, String> bodyJson){
+    public ResponseEntity<TokenDto> validateRefreshToken(@RequestBody HashMap<String, String> bodyJson){
+
         Map<String, String> map = jwtService.validateRefreshToken(bodyJson.get("refreshToken"));
 
-//        if(map.get("status").equals("402")){
-//            RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
-//            return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.UNAUTHORIZED);
-//        }
-//
-//        RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
-//        return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.OK);
+        if(map.get("status").equals("402")){
+            TokenDto refreshApiResponseMessage = new RefreshApiResponseMessage(map);
+            return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.UNAUTHORIZED);
+        }
 
-        return new ResponseEntity<>(map,HttpStatus.OK);
+        log.info("RefreshController - Refresh Token이 유효.");
+        RefreshApiResponseMessage refreshApiResponseMessage = new RefreshApiResponseMessage(map);
+        return new ResponseEntity<RefreshApiResponseMessage>(refreshApiResponseMessage, HttpStatus.OK);
+
     }
+}
 }

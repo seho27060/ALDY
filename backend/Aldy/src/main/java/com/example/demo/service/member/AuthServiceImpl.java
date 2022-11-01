@@ -8,12 +8,11 @@ import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
 import com.example.demo.domain.entity.Member.Member;
-import com.example.demo.domain.entity.Member.Token;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -21,11 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +64,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public Token login(LoginRequestDto loginRequestDto) {
+    public TokenDto login(LoginRequestDto loginRequestDto) {
         System.out.printf("memberService login : %s, password : %s%n",loginRequestDto.getBackjoonId(),loginRequestDto.getPassword());
         Member member = memberRepository.findByBackjoonId(loginRequestDto.getBackjoonId())
                 .orElseThrow(
@@ -78,7 +74,7 @@ public class AuthServiceImpl implements AuthService{
         try {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            Token tokenDto = jwtTokenProvider.createAccessToken(member.getBackjoonId(), List.of("ROLE_USER"));
+            TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBackjoonId(), List.of("ROLE_USER"));
             System.out.println(">>>>>>member :"+member);
             System.out.println(">>>>>>token :"+tokenDto);
             jwtService.login(tokenDto);

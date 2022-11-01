@@ -1,7 +1,7 @@
 package com.example.demo.config.jwt;
 
 import com.example.demo.config.auth.CustomUserDetailsService;
-import com.example.demo.domain.entity.Member.Token;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.domain.entity.Member.RefreshToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -53,7 +52,7 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
-    public Token createAccessToken(String backjoonId, List<String> roles) {
+    public TokenDto createAccessToken(String backjoonId, List<String> roles) {
 
         Claims claims = Jwts.claims().setSubject(backjoonId); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
@@ -77,7 +76,7 @@ public class JwtTokenProvider {
                 // signature 에 들어갈 secret값 세팅
                 .compact();
 
-        return Token.builder().accessToken(accessToken).refreshToken(refreshToken).key(backjoonId).build();
+        return TokenDto.builder().accessToken(accessToken).refreshToken(refreshToken).key(backjoonId).build();
 
     }
     public String validateRefreshToken(RefreshToken refreshTokenObj){
