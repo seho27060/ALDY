@@ -1,5 +1,18 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.dto.CreateStudyRequestDto;
+import com.example.demo.domain.dto.StudyDto;
+import org.springframework.data.domain.Page;
+
 public interface StudyService {
-    Object saveStudy();
+
+    StudyDto createStudy(CreateStudyRequestDto createStudyPostDto);
+
+    Page<StudyDto> getAllStudyPage(int page, int size, String keyword);
+
+    Page<StudyDto> getMyStudyPage(int page, int size, String backjoonId);
+
+    StudyDto getById(Long studyId);
+
+    void deleteById(Long studyId);
 }

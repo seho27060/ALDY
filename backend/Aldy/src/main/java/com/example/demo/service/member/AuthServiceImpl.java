@@ -4,32 +4,37 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.request.LoginRequestDto;
 import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
+import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
+import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
 import com.example.demo.domain.entity.Member.Member;
-import com.example.demo.domain.entity.Member.Token;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AuthServiceImpl implements AuthService{
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MemberRepository memberRepository;
 
+    private final WebClient webClient;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -59,7 +64,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public Token login(LoginRequestDto loginRequestDto) {
+    public TokenDto login(LoginRequestDto loginRequestDto) {
         System.out.printf("memberService login : %s, password : %s%n",loginRequestDto.getBackjoonId(),loginRequestDto.getPassword());
         Member member = memberRepository.findByBackjoonId(loginRequestDto.getBackjoonId())
                 .orElseThrow(
@@ -69,7 +74,7 @@ public class AuthServiceImpl implements AuthService{
         try {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            Token tokenDto = jwtTokenProvider.createAccessToken(member.getBackjoonId(), List.of("ROLE_USER"));
+            TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBackjoonId(), List.of("ROLE_USER"));
             System.out.println(">>>>>>member :"+member);
             System.out.println(">>>>>>token :"+tokenDto);
             jwtService.login(tokenDto);
@@ -77,29 +82,93 @@ public class AuthServiceImpl implements AuthService{
         }catch (DisabledException | LockedException | BadCredentialsException e){
             System.out.println("로그인 예외 : "+e);
             if (e.getClass().equals(BadCredentialsException.class)) {
-                throw new BadCredentialsException("잘못된 비밀번호입니다");
+                System.out.println(e.getClass());
+                throw new CustomException(ErrorCode.WRONG_PASSWORD);
             } else if (e.getClass().equals(DisabledException.class)) {
-                throw new DisabledException("사용할 수 없는 계정입니다");
+                System.out.println(e.getClass());
+                throw new CustomException(ErrorCode.DISABLED);
             } else if (e.getClass().equals(LockedException.class)) {
-                throw new LockedException("잠긴 계정입니다");
+                System.out.println(e.getClass());
+                throw new CustomException(ErrorCode.LOCKED);
             } else {
-                throw e;
+                throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
             }
         }
     }
 
     @Override
-    public void interlock(String backjoonId) {
+    public String issueAuthString(String backjoonId) {
+        Optional<SolvedacResponseDto> mono;
+        mono = SolvedacMemberFindAPI(backjoonId);
+        SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
+        Random random = new Random();
+        int length = random.nextInt(5)+5;
+
+        StringBuilder newWord = new StringBuilder("");
+        for (int i = 0; i < length; i++) {
+            int choice = random.nextInt(3);
+            switch(choice) {
+                case 0:
+                    newWord.append((char)((int)random.nextInt(25)+97));
+                    break;
+                case 1:
+                    newWord.append((char)((int)random.nextInt(25)+65));
+                    break;
+                case 2:
+                    newWord.append((char)((int)random.nextInt(10)+48));
+                    break;
+                default:
+                    break;
+            }
+        }
+        return newWord.toString();
     }
 
     @Override
-    public DoubleCheckResponseDto doubleCheckNickname(String Nickname) {
-        return new DoubleCheckResponseDto(memberRepository.existsByNickname(Nickname));
+    public InterlockResponseDto interlock(String backjoonId) {
+        Optional<SolvedacResponseDto> mono;
+        mono = SolvedacMemberFindAPI(backjoonId);
+        System.out.println(mono);
+        SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        System.out.println(solvedacResponseDto.getBio());
+
+        List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
+        String testAuthString = "TEST_AUTH_STRING";
+        System.out.printf("test AuthString :%s get AuthString :%s%n",testAuthString,solvedacBio.get(solvedacBio.size()-1));
+        // api 로 요청 후 반환값에서
+
+        return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(testAuthString));
+    }
+    private Optional<SolvedacResponseDto> SolvedacMemberFindAPI(String backjoonId){
+        Optional<SolvedacResponseDto> mono;
+        mono = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/user/show")
+                                .queryParam("handle", backjoonId)
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(status ->
+                                status.is4xxClientError() || status.is5xxServerError(),
+                        clientResponse ->
+                                clientResponse
+                                        .bodyToMono(String.class)
+                                        .map(body -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)))
+                .bodyToMono(SolvedacResponseDto.class)
+                .flux()
+                .toStream()
+                .findFirst();
+        return mono;
+    }
+    @Override
+    public DoubleCheckResponseDto doubleCheckNickname(String nickname) {
+        return new DoubleCheckResponseDto(!memberRepository.existsByNickname(nickname));
     }
 
     @Override
     public DoubleCheckResponseDto doubleCheckContact(String contact) {
-        return new DoubleCheckResponseDto(memberRepository.existsByContact(contact));
+        return new DoubleCheckResponseDto(!memberRepository.existsByContact(contact));
     }
 }

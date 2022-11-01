@@ -17,27 +17,26 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class MemberServiceImpl implements MemberService{
 
     private final JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
-    public MemberResponseDto withdrawal(MemberWithdrawalRequestDto memberWithdrawalRequestDto, HttpServletRequest request) {
+    public MemberResponseDto withdrawal(MemberPasswordRequestDto memberPasswordRequestDto, HttpServletRequest request) {
         String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
         Member member = memberRepository.findByBackjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         MemberResponseDto response;
 
-        if(bCryptPasswordEncoder.matches(memberWithdrawalRequestDto.getPassword(),member.getPassword())){
+        if(bCryptPasswordEncoder.matches( memberPasswordRequestDto.getPassword(),member.getPassword())){
             memberRepository.delete(member);
             response = new MemberResponseDto(member);
         } else {
