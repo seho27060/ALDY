@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
+
 public class MemberInStudy {
 
     @Id

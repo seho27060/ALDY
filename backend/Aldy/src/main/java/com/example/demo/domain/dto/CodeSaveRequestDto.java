@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CodeSaveRequestDto {
 
-    private String backjoon_id;
+//    private String backjoon_id;
     private String code;
     private int process;
     private long study_id;

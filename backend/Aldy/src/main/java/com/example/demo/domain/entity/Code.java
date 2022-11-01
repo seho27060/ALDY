@@ -4,6 +4,7 @@ import com.example.demo.domain.dto.CodeSaveRequestDto;
 import com.example.demo.domain.entity.Member.Member;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Code {
 
 //     골프공 == 서비스 구현체
