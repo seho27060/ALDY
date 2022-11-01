@@ -132,8 +132,8 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String jwtToken){
-        System.out.println("validate :" + jwtToken);
-        System.out.println("validate replace:" + jwtToken.replaceAll("^Bearer( )*",""));
+//        System.out.println("validate :" + jwtToken);
+//        System.out.println("validate replace:" + jwtToken.replaceAll("^Bearer( )*",""));
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(jwtToken.replaceAll("^Bearer( )*",""));
             return !claims.getBody().getExpiration().before(new Date());

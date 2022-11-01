@@ -86,19 +86,26 @@ public class AuthServiceImpl implements AuthService{
         }catch (DisabledException | LockedException | BadCredentialsException e){
             System.out.println("로그인 예외 : "+e);
             if (e.getClass().equals(BadCredentialsException.class)) {
-                throw new BadCredentialsException("잘못된 비밀번호입니다");
+                System.out.println(e.getClass());
+                throw new CustomException(ErrorCode.WRONG_PASSWORD);
             } else if (e.getClass().equals(DisabledException.class)) {
-                throw new DisabledException("사용할 수 없는 계정입니다");
+                System.out.println(e.getClass());
+                throw new CustomException(ErrorCode.DISABLED);
             } else if (e.getClass().equals(LockedException.class)) {
-                throw new LockedException("잠긴 계정입니다");
+                System.out.println(e.getClass());
+                throw new CustomException(ErrorCode.LOCKED);
             } else {
-                throw e;
+                throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
             }
         }
     }
 
     @Override
     public String issueAuthString(String backjoonId) {
+        Optional<SolvedacResponseDto> mono;
+        mono = SolvedacMemberFindAPI(backjoonId);
+        SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
         Random random = new Random();
         int length = random.nextInt(5)+5;
 
@@ -124,26 +131,8 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public InterlockResponseDto interlock(String backjoonId) {
-//        https://solved.ac/api/v3/user/show
         Optional<SolvedacResponseDto> mono;
-        mono = webClient.get()
-                .uri(uriBuilder ->
-                        uriBuilder.path("/user/show")
-                                .queryParam("handle", backjoonId)
-                                .build())
-                .acceptCharset(StandardCharsets.UTF_8)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(status ->
-                        status.is4xxClientError() || status.is5xxServerError(),
-                        clientResponse ->
-                                clientResponse
-                                        .bodyToMono(String.class)
-                                        .map(body -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)))
-                .bodyToMono(SolvedacResponseDto.class)
-                .flux()
-                .toStream()
-                .findFirst();
+        mono = SolvedacMemberFindAPI(backjoonId);
         System.out.println(mono);
         SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         System.out.println(solvedacResponseDto.getBio());
@@ -155,14 +144,35 @@ public class AuthServiceImpl implements AuthService{
 
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(testAuthString));
     }
-
+    private Optional<SolvedacResponseDto> SolvedacMemberFindAPI(String backjoonId){
+        Optional<SolvedacResponseDto> mono;
+        mono = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/user/show")
+                                .queryParam("handle", backjoonId)
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(status ->
+                                status.is4xxClientError() || status.is5xxServerError(),
+                        clientResponse ->
+                                clientResponse
+                                        .bodyToMono(String.class)
+                                        .map(body -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)))
+                .bodyToMono(SolvedacResponseDto.class)
+                .flux()
+                .toStream()
+                .findFirst();
+        return mono;
+    }
     @Override
-    public DoubleCheckResponseDto doubleCheckNickname(String Nickname) {
-        return new DoubleCheckResponseDto(memberRepository.existsByNickname(Nickname));
+    public DoubleCheckResponseDto doubleCheckNickname(String nickname) {
+        return new DoubleCheckResponseDto(!memberRepository.existsByNickname(nickname));
     }
 
     @Override
     public DoubleCheckResponseDto doubleCheckContact(String contact) {
-        return new DoubleCheckResponseDto(memberRepository.existsByContact(contact));
+        return new DoubleCheckResponseDto(!memberRepository.existsByContact(contact));
     }
 }
