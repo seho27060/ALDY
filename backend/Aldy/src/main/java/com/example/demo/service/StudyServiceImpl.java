@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.domain.dto.CreateStudyRequestDto;
 import com.example.demo.domain.dto.StudyDto;
 
-import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.Study;
 
@@ -43,18 +42,9 @@ public class StudyServiceImpl implements StudyService {
     public StudyDto createStudy(CreateStudyRequestDto requestDto) {
 
         Study study = studyRepository.save(new Study(requestDto));
-        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
 
-        ///////////////////////////////////////////////////////////////
-        Member member = memberRepository.findByBackjoonId(requestDto.getLeaderBackjoonId())
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        MemberInStudy memberInStudy = new MemberInStudy(study, member, 1);
+        return new StudyDto(study);
 
-        memberInStudyRepository.save(memberInStudy);
-
-        ///////////////////////////////////////////////////////////////
-
-        return studyDto;
     }
 
     @Override
@@ -63,22 +53,30 @@ public class StudyServiceImpl implements StudyService {
         Page<Study> studyPage = studyRepository.findAllByNameContaining(keyword,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
 
-        Page<StudyDto> studyDtoPage = studyPage.map(e ->
-                new StudyDto(e, countMember(e.getId())));
+        if(studyPage.isEmpty()) {
+            throw new CustomException(ErrorCode.STUDY_NOT_FOUND);
+        }
 
-        return studyDtoPage;
+        return studyPage.map(e ->
+                new StudyDto(e, countMember(e.getId()))
+        );
+
     }
 
     @Override
-    public Page<StudyDto> getMyStudyPage(int page, int size, String keyword, Long memberId) {
+    public Page<StudyDto> getMyStudyPage(int page, int size, String backjoonId) {
 
-        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_Id(memberId,
+        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BackjoonId(backjoonId,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
 
-        Page<StudyDto> studyDtoPage = memberInStudyPage.map(e ->
-                new StudyDto(e.getStudy(), countMember(e.getStudy().getId())));
+        if(memberInStudyPage.isEmpty()) {
+            throw new CustomException(ErrorCode.STUDY_NOT_FOUND);
+        }
 
-        return studyDtoPage;
+        return memberInStudyPage.map(e ->
+                new StudyDto(e.getStudy(), countMember(e.getStudy().getId()))
+        );
+
     }
 
     @Override
@@ -86,9 +84,8 @@ public class StudyServiceImpl implements StudyService {
 
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
-        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
 
-        return studyDto;
+        return new StudyDto(study, countMember(study.getId()));
 
     }
 
@@ -103,11 +100,8 @@ public class StudyServiceImpl implements StudyService {
 
     public int countMember(Long studyId) {
 
-        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList);
-
-        return memberInStudyList.size();
+        return memberInStudyRepository.countAllByStudyIdAndAuthIn(studyId, authList);
 
     }
-
 
 }

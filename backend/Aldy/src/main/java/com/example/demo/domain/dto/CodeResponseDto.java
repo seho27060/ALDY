@@ -1,10 +1,12 @@
 package com.example.demo.domain.dto;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @NoArgsConstructor
+@Getter
 public class CodeResponseDto {
     private CodeDto firstLevelCode;
     private CodeDto secondLevelCode;

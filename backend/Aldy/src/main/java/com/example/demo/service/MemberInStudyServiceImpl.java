@@ -29,7 +29,31 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
     private final StudyRepository studyRepository;
 
-    private List<Integer> authList = List.of(1, 2);
+    private final List<Integer> authList = List.of(1, 2);
+
+    @Override
+    public MemberInStudyDto setRoomLeader(Long studyId, String backjoonId) {
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+
+        Member member = memberRepository.findByBackjoonId(backjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        return new MemberInStudyDto(
+                memberInStudyRepository.save(new MemberInStudy(study, member, 1))
+        );
+
+    }
+
+    @Override
+    public int getAuthByBackjoonId(String backjoonId, Long studyId) {
+        MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BackjoonId(studyId, backjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
+
+        return memberInStudy.getAuth();
+    }
+
 
     @Override
     public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto) {
@@ -47,8 +71,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         });
 
         // 인원 수 체크
-        int currentMember = memberInStudyRepository.findAllByStudyIdAndAuthIn(study.getId(), authList).size();
-        if(currentMember >= study.getUpperLimit()) {
+        int currentMember = memberInStudyRepository.countAllByStudyIdAndAuthIn(study.getId(), authList);
+        if( currentMember >= study.getUpperLimit() ) {
             throw new CustomException(ErrorCode.MEMBER_LIMIT_EXCEEDED);
         }
 

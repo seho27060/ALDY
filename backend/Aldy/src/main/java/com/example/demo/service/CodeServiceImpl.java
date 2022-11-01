@@ -1,20 +1,25 @@
 package com.example.demo.service;
 
+import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.*;
 import com.example.demo.domain.entity.Code;
 import com.example.demo.domain.entity.EditedCode;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.RequestedCode;
+import com.example.demo.domain.entity.Study;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.CodeRepository;
 import com.example.demo.repository.EditedCodeRepository;
 import com.example.demo.repository.Member.MemberRepository;
 import com.example.demo.repository.RequestedCodeRepository;
+import com.example.demo.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,23 +28,38 @@ import java.util.stream.Collectors;
 @Transactional
 public class CodeServiceImpl implements CodeService {
 
+    private final JwtTokenProvider jwtTokenProvider;
     private final CodeRepository codeRepository;
     private final EditedCodeRepository ecRepository;
     private final RequestedCodeRepository rcRepository;
 
     private final MemberRepository memberRepository;
 
-    @Override
-    public CodeResponseDto getCodesByStudy_idAndProblem_idAndMember_id(long study_id, long problem_id, long member_id) {
+    private final StudyRepository studyRepository;
 
-        List<Code> codeList = codeRepository.findByStudy_idAndProblemIdAndWriter_id(study_id, problem_id, member_id);
+    private final RequestedCodeRepository requestedCodeRepository;
+
+    @Override
+    public CodeResponseDto getCodesByStudy_idAndProblem_idAndMember_id(long study_id, long problem_id, HttpServletRequest request) {
+
+        String backjoonId = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        Member writer = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        System.out.println("잘 됨?");
+        List<Code> codeList = codeRepository.findByStudy_idAndProblemIdAndWriter_id(study_id, problem_id, writer.getId());
+        System.out.println("잘 됨??????");
         List<CodeDto> codeDtoList = codeList.stream().map(o -> new CodeDto(o)).collect(Collectors.toList());
         CodeResponseDto codeResponseDto = new CodeResponseDto(codeDtoList);
         return codeResponseDto;
     }
 
     @Override
-    public CodeReviewPageResponseDto getCodesByMember_id(long member_id) {
+    public CodeReviewPageResponseDto getCodesByMember_id(HttpServletRequest request) {
+
+        String backjoonId = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        long member_id = member.getId();
+
         List<EditedCode> editingCode = ecRepository.findBySender_id(member_id);
         List<EditedCodeDto> editingCodeList = editingCode.stream().map(o -> new EditedCodeDto(o)).collect(Collectors.toList());
         List<EditedCode> editedCode = ecRepository.findByReceiver_id(member_id);
@@ -57,11 +77,14 @@ public class CodeServiceImpl implements CodeService {
 
 //    첨삭된 코드는 3단계 코드에 종속되어야 함.
     @Override
-    public EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto) {
+    public EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto, HttpServletRequest request) {
         // 첨삭한 코드 내용
         String text = codeReviewReplyDto.getCode();
+
+
         // 첨삭한 사람 아이디
-        String sender_id = codeReviewReplyDto.getBackjoon_id();
+        String sender_id = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+
         // 첨삭한 사람
         Member sender = memberRepository.findByBackjoonId(sender_id).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
@@ -96,17 +119,22 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto) {
+    public CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto, HttpServletRequest request) {
         // 작성자 min61037
-        Member writer = memberRepository.findByBackjoonId(codeSaveRequestDto.getBackjoon_id())
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
+        String backjoonId = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        Member writer = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Study study = studyRepository.findById(codeSaveRequestDto.getStudy_id()).orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
+        System.out.println(study.getId());
 //        Code 객체를 생성할 때, 생성자 vs 빌더패턴,
 //        OCP Open-Closed-principle
 //        Code code = new Code(codeSaveRequestDto, writer);
         Code code = Code.builder()
                 .code(codeSaveRequestDto.getCode())
                 .writer(writer)
+                .study(study)
+                .process(codeSaveRequestDto.getProcess())
                 .problemId(codeSaveRequestDto.getProblem_id())
                 .problemName(codeSaveRequestDto.getProblem_name())
                 .problemTier(codeSaveRequestDto.getProblem_tier())
@@ -120,10 +148,14 @@ public class CodeServiceImpl implements CodeService {
         return new CodeDto(code);
     }
     @Override
-    public RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto) {
-        Member sender = memberRepository.findByBackjoonId(codeReviewRequestDto.getSender_id()).orElseThrow(
-                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
-        );
+    public RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) {
+
+        String backjoonId = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        Member sender = memberRepository.findByBackjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+//        Member sender = memberRepository.findByBackjoonId(codeReviewRequestDto.getSender_id()).orElseThrow(
+//                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
+//        );
         Member receiver = memberRepository.findByBackjoonId(codeReviewRequestDto.getReceiver_id()).orElseThrow(
                 () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
         );
@@ -136,6 +168,9 @@ public class CodeServiceImpl implements CodeService {
                 .receiver(receiver)
                 .sender(sender)
                 .build();
+
+        requestedCodeRepository.save(requestedCode);
+
         return new RequestedCodeDto(requestedCode);
     }
 }
