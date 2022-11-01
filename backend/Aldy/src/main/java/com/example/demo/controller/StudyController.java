@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.CreateStudyRequestDto;
+import com.example.demo.domain.dto.MailDto;
 import com.example.demo.domain.dto.StudyDto;
 import com.example.demo.service.CalendarService;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +15,7 @@ import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +26,8 @@ public class StudyController {
 
     private final StudyService studyService;
     private final CalendarService calendarService;
+
+    private final EmailService emailService;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
@@ -100,4 +105,10 @@ public class StudyController {
         return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
     }
 
+    @PostMapping("/mail/send")
+    public String sendMail(MailDto mailDto) {
+        emailService.sendSimpleMessage(mailDto);
+        System.out.println("메일 전송 완료");
+        return "AfterMail.html";
+    }
 }
