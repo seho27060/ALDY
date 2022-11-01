@@ -77,6 +77,18 @@ h2.review-orange {
   text-decoration-thickness: 8px;
 }
 
+.review-language-select {
+    display: flex;
+    justify-content: flex-end;
+    color: black;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+#language-select {
+    border-radius: 8px;
+}
+
 .review-code {
   background-color: #28500f;
   border-radius: 10px;
@@ -209,6 +221,27 @@ h2.review-orange {
 }
 
 .review-method-img {
-  width: 80px;
-  transform: translate(-30px, -18px);
+    width: 80px;
+    transform: translate(-30px, -18px)
+}
+
+.review-method-btn {
+    transition: transform 100ms ease-in;
+}
+
+.review-method-btn:hover {
+    transform: scale(1.1);
+}
+
+.step-modal-body {
+    text-align: center;
+    border-radius: 8px;
+    border: 4px solid #E63246;
+}
+
+.step-modal-title {
+    box-shadow: inset 0 -12px 0 #FFE1AA;
+    line-height: 42px;
+    margin-bottom: 30px;
+    font-weight: bold;
 }
