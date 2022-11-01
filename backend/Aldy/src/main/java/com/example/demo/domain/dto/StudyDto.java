@@ -31,4 +31,14 @@ public class StudyDto {
         this.countMember = countMember;
     }
 
+    public StudyDto(Study study) {
+        this.id = study.getId();
+        this.createdDate = study.getCreatedDate();
+        this.name = study.getName();
+        this.upperLimit = study.getUpperLimit();
+        this.introduction = study.getIntroduction();
+        this.threshold = study.getThreshold();
+        this.visibility = study.getVisibility();
+    }
+
 }

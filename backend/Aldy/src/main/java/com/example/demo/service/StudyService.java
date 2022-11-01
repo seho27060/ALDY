@@ -10,7 +10,7 @@ public interface StudyService {
 
     Page<StudyDto> getAllStudyPage(int page, int size, String keyword);
 
-    Page<StudyDto> getMyStudyPage(int page, int size, String keyword, Long memberId);
+    Page<StudyDto> getMyStudyPage(int page, int size, String backjoonId);
 
     StudyDto getById(Long studyId);
 

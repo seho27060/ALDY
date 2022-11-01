@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface MemberInStudyService {
 
+    MemberInStudyDto setRoomLeader(Long studyId, String backjoonId);
+
+    int getAuthByBackjoonId(String backjoonId, Long studyId);
+
     MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto);
 
     List<MemberInStudyDto> getAllMemberInStudy(Long studyId);
