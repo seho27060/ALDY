@@ -11,7 +11,7 @@ const CodeReviewList = () => {
       <section className='main-banner'>
         <img className='main-img' src="/studyIcon.png" alt="코드리뷰 메인 이미지"></img>
         <p>
-          <span>다른 사람들과 함꼐</span>
+          <span>다른 사람들과 함께</span>
           <span className='highlight'>코드리뷰</span>
           <span>를 하며</span>
           <span className='highlight'>공룡</span>

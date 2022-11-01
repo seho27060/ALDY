@@ -7,10 +7,20 @@ import Editor from '@monaco-editor/react'
 const CodeReview = () => {
   const [step, setStep] = useState(1);
   const [requestModalShow, setRequestModalShow] = useState(false);
+  const [stepModalShow1, setStepModalShow1] = useState(false);
+  const [stepModalShow2, setStepModalShow2] = useState(false);
+  const [stepModalShow3, setStepModalShow3] = useState(false);
+  const [stepModalShow4, setStepModalShow4] = useState(false);
   const editorRef = useRef(null)
   function handleEditorChange(editor, monaco) {
     editorRef.current = editor;
     console.log(editorRef.current.getValue())
+  }
+  const modals = {
+    1:<StepModal1 show={stepModalShow1} onHide={()=>{setStepModalShow1(false)}}></StepModal1>,
+    2:<StepModal2 show={stepModalShow2} onHide={()=>{setStepModalShow2(false)}}></StepModal2>,
+    3:<StepModal3 show={stepModalShow3} onHide={()=>{setStepModalShow3(false)}}></StepModal3>,
+    4:<StepModal4 show={stepModalShow4} onHide={()=>{setStepModalShow4(false)}}></StepModal4>
   }
 
   return (
@@ -19,6 +29,9 @@ const CodeReview = () => {
         show={requestModalShow}
         onHide={() => setRequestModalShow(false)}
       />
+      {
+        modals[step]
+      }
       <section className="review-header">
         {step === 1 && <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드 제출하기 ✨</h2>}
         {step === 2 && <h2 className="review-orange">✨ 코드리뷰 2단계 : 코드 주석달기 ✨</h2>}
@@ -108,7 +121,17 @@ const CodeReview = () => {
         </div>
       </section>
       <section className="review-method">
-        <button className="review-method-btn">이용방법</button>
+        <button className="review-method-btn" onClick={()=>{
+          if (step === 1) {
+            setStepModalShow1(true)
+          } else if (step === 2) {
+            setStepModalShow2(true)
+          } else if (step === 3) {
+            setStepModalShow3(true)
+          } else if (step === 4) {
+            setStepModalShow4(true)
+          }
+        }}>이용방법</button>
         <img src="/dinosaur.png" className="review-method-img"></img>
       </section>
     </main>
@@ -176,5 +199,115 @@ function RequestModal(props) {
     </Modal>
   );
 }
+
+function StepModal1(props) {
+  return (
+    <Modal
+      {...props}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Body className="step-modal-body">
+        <div className="step-modal-header">
+          <h2 className="step-modal-title">코드 리뷰 1단계 방법 알아보기</h2>
+        </div>
+        <div className="step-modal-content">
+          <p>
+            <span>백준에서</span>
+            <span className='highlight'>풀었던 코드</span>
+            <span>를 제출해주세요.</span><br></br>
+            <span>해당 문제의 풀이코드를</span>
+            <span className='highlight'> 공개</span>
+            <span>로 설정하였을 경우</span><br></br>
+            <span className='highlight'>백준연동</span>
+            <span>으로 코드를 가져올 수 있습니다.</span>
+          </p>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
+function StepModal2(props) {
+  return (
+    <Modal
+      {...props}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Body className="step-modal-body">
+        <div className="step-modal-header">
+            <h2 className="step-modal-title">코드 리뷰 2단계 방법 알아보기</h2>
+        </div>
+        <div className="step-modal-content">
+            <p>
+              <span>스터디원들이 이해하기 편하도록</span><br></br>
+              <span className='highlight'>코드설명</span>
+              <span>이 필요한 부분에</span>
+              <span className='highlight'> 주석</span>
+              <span>을 달아주세요.</span>
+            </p>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
+function StepModal3(props) {
+  return (
+    <Modal
+      {...props}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Body className="step-modal-body">
+        <div className="step-modal-header">
+          <h2 className="step-modal-title">코드 리뷰 3단계 방법 알아보기</h2>
+        </div>
+        <div className="step-modal-content">
+          <p>
+            <span className='highlight'>코드리뷰</span>
+            <span>를 받고싶은 부분을</span><br></br>
+            <span className='highlight'>하이라이팅</span>
+            <span>을 사용해 선택해주세요!</span><br></br>
+            <span>선택을 완료한 후 리뷰요청 버튼을 누르고</span><br></br>
+            <span>리뷰요청 창에서 스터디원을 선택한 후 요청해주세요.</span>
+          </p>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
+function StepModal4(props) {
+  return (
+    <Modal
+      {...props}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Body className="step-modal-body">
+        <div className="step-modal-header">
+          <h2 className="step-modal-title">코드 리뷰 4단계 방법 알아보기</h2>
+        </div>
+        <div className="step-modal-content">
+          <p>
+            <span className='highlight'>코드리뷰</span>
+            <span>를 받은 부분과</span><br></br>
+            <span className='highlight'>내가 작성한 코드</span>
+            <span>를 비교해보세요!</span><br></br>
+            <span>코드리뷰를 받은 내용을 바탕으로</span><br></br>
+            <span>최종코드를 완성해서 제출해보세요.</span>
+          </p>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
 
 export default CodeReview;
