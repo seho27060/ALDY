@@ -105,6 +105,11 @@ public class StudyController {
         return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
     }
 
+    @Operation(summary = "이메일 발송 테스트 API", description = "스웨거에서만 테스트 용도로 사용, 실제로는 서비스 단에서 끌어서 사용할 것")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
+    })
     @PostMapping("/mail/send")
     public String sendMail(MailDto mailDto) {
         emailService.sendSimpleMessage(mailDto);

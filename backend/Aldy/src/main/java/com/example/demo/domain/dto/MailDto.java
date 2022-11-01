@@ -9,6 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MailDto {
     private String address;
-    private String title;
-    private String content;
+//    request, reply, evict
+    private String type;
+    private String nickname;
+    private String StudyName;
 }
