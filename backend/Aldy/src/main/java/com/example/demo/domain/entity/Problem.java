@@ -2,8 +2,10 @@ package com.example.demo.domain.entity;
 
 import com.example.demo.domain.dto.ProblemDto;
 import lombok.Getter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.redis.core.RedisHash;
 
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 
 @Getter
