@@ -1,15 +1,23 @@
 import "./CodeCorrect.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Editor from '@monaco-editor/react'
 
 const CodeCorrect = () => {
   let { params } = useParams();
   const [code, setCode] = useState("");
+  const [language, setLanguage] = useState('python')
+  const [reply, setReply] = useState(null)
+  const editorRef = useRef(null)
+  function handleEditorChange(editor, monaco) {
+    editorRef.current = editor;
+    setReply(editorRef.current.getValue())
+  }
   useEffect(() => {
-    // params를 활용해 서버로 부터 코드를 가져온다.
+    // params를 활용해 서버로 부터 요청받은 코드를 가져온다.
     // 가져온 코드를 state에 저장한다.
   }, []);
   return (
@@ -47,16 +55,56 @@ const CodeCorrect = () => {
           <p style={{ margin: "0 25px" }}>✨ 3017번</p>
           <p style={{ margin: "0 25px" }}>가까운 수 찾기 ✨</p>
         </div>
+        <div className="correct-language-select">
+          <select name='language' id='language-select' onChange={(e)=>{setLanguage(e.target.value)}}>
+            <option value=''>--사용할 언어를 선택해주세요--</option>
+            <option value='c++'>C++</option>
+            <option value='java'>Java</option>
+            <option value='python'>Python</option>
+            <option value='javascript'>Javascript</option>
+            <option value='sql'>SQL</option>
+          </select>
+        </div>
         <div className="correct-content">
-          <div className="correct-your-code">
-            요청한 코드영역 요청한 코드영역 요청한 코드영역 요청한 코드영역
-            요청한 코드영역 요청한 코드영역 요청한 코드영역 요청한 코드영역
-            요청한 코드영역 요청한 코드영역 요청한 코드영역
+          <div className="correct-your-code-box">
+            <div className="correct-code-type">요청 받은 코드</div>
+            <div className="correct-your-code">
+              <Editor
+              className='review-code-editor'
+              language={language}
+              height='100%'
+              theme='vs-dark'
+              defaultValue={code}
+              options={{
+                fontSize:20,
+                minimap:{ enabled: false},
+                scrollbar:{
+                  vertical: 'auto',
+                  horizontal: 'auto'
+              }
+            }}
+              ></Editor>
+            </div>
           </div>
-          <div className="correct-my-code">
-            첨삭한 코드영역 첨삭한 코드영역 첨삭한 코드영역 첨삭한 코드영역
-            첨삭한 코드영역 첨삭한 코드영역 첨삭한 코드영역 첨삭한 코드영역
-            첨삭한 코드영역 첨삭한 코드영역 첨삭한 코드영역 첨삭한 코드영역
+          <div className="correct-my-code-box">
+            <div className="correct-code-type">내가 첨삭한 코드</div>
+            <div className="correct-my-code">
+              <Editor
+              className='review-code-editor'
+                language={language}
+                height='100%'
+                theme='vs-dark'
+                defaultValue={code}
+                onMount={handleEditorChange}
+                options={{
+                  fontSize:20,
+                  minimap:{ enabled: false},
+                  scrollbar:{
+                    vertical: 'auto',
+                    horizontal: 'auto'
+                }
+              }}></Editor>
+            </div>
           </div>
         </div>
         <div className="correct-btns">
@@ -65,7 +113,6 @@ const CodeCorrect = () => {
       </section>
     </main>
   );
-  return <div>CodeCorrect</div>;
 };
 
 export default CodeCorrect;
