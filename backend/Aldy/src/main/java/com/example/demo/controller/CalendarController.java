@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "달력에 문제 추가/삭제/반환 API", description = "달력에 문제를 추가하거나 삭제, 반환하는 API")
+@Tag(name = "달력에 문제 추가/삭제/반환 API - 담당자 조성민", description = "달력에 문제를 추가하거나 삭제, 반환하는 API")
 @RequestMapping("/calendar")
 public class CalendarController {
     private final CalendarService calendarService;

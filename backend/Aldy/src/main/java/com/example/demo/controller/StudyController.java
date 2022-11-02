@@ -96,7 +96,7 @@ public class StudyController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
-    @Operation(summary = "문제 선정된 요일 반환 API", description = "문제가 설정된 요일들을 반환하는 API")
+    @Operation(summary = "문제 선정된 요일 반환 API - 담당자 조성민", description = "문제가 설정된 요일들을 반환하는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
@@ -105,7 +105,7 @@ public class StudyController {
         return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
     }
 
-    @Operation(summary = "이메일 발송 테스트 API", description = "스웨거에서만 테스트 용도로 사용, 실제로는 서비스 단에서 끌어서 사용할 것")
+    @Operation(summary = "이메일 발송 테스트 API - 담당자 조성민", description = "스웨거에서만 테스트 용도로 사용, 실제로는 서비스 단에서 끌어서 사용할 것")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
