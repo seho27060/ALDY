@@ -1,15 +1,12 @@
 package com.example.demo.service.member;
 
 import com.example.demo.repository.Member.MemberRepository;
-import org.hibernate.service.spi.InjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 
 // 가짜 객체 도입

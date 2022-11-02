@@ -15,6 +15,6 @@ import java.io.IOException;
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_FORBIDDEN,"인가되지 않은 요청입니다.");
+        response.sendError(HttpServletResponse.SC_FORBIDDEN,"만료된 액세스 토큰입니다.");
     }
 }

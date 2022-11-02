@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberModifyRequestDto {
     private String nickname;
-    private String contact;
+    private String email;
 }

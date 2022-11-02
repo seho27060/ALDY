@@ -37,7 +37,7 @@ public class Member {
 
     private String password;
     // 연략처 전화번호 or 이메일
-    private String contact;
+    private String email;
 
     private String nickname;
 
@@ -58,7 +58,7 @@ public class Member {
 
     public void modifyInfo(MemberModifyRequestDto memberModifyRequestDto){
         this.nickname = memberModifyRequestDto.getNickname();
-        this.contact = memberModifyRequestDto.getContact();
+        this.email = memberModifyRequestDto.getEmail();
     }
     public void modifyPassword(String password){
         this.password = password;

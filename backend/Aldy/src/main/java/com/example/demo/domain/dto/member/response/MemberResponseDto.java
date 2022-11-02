@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 public class MemberResponseDto {
     private String backjoonId;
     private String nickname;
-    private String contact;
+    private String email;
 
     public MemberResponseDto(Member member){
         this.backjoonId = member.getBackjoonId();
-        this.contact = member.getContact();
+        this.email = member.getEmail();
         this.nickname = member.getNickname();
     }
 }

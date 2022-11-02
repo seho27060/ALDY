@@ -4,15 +4,11 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.domain.dto.member.response.ValidateTokenResponseDto;
 import com.example.demo.domain.entity.Member.RefreshToken;
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

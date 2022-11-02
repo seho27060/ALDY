@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.ProblemChoiceRequestDto;
-import com.example.demo.domain.entity.Calendar;
 import com.example.demo.service.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

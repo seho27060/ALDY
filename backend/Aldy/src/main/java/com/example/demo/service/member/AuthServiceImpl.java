@@ -40,10 +40,10 @@ public class AuthServiceImpl implements AuthService{
     private final JwtTokenProvider jwtTokenProvider;
     @Override
     public MemberResponseDto memberJoin(MemberRequestDto memberRequestDto) {
-        System.out.println("get :"+ memberRequestDto.getBackjoonId());
-        System.out.println("get :"+ memberRequestDto.getContact());
-        System.out.println("get :"+ memberRequestDto.getPassword());
-        System.out.println("get :"+ memberRequestDto.getNickname());
+//        System.out.println("get :"+ memberRequestDto.getBackjoonId());
+//        System.out.println("get :"+ memberRequestDto.getEmail());
+//        System.out.println("get :"+ memberRequestDto.getPassword());
+//        System.out.println("get :"+ memberRequestDto.getNickname());
 
         String rawPassword = memberRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService{
                 .backjoonId(memberRequestDto.getBackjoonId())
                 .nickname(memberRequestDto.getNickname())
                 .password(encodedPassword)
-                .contact(memberRequestDto.getContact()).build();
+                .email(memberRequestDto.getEmail()).build();
 
         memberRepository.save(member);
 
@@ -169,6 +169,6 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public DoubleCheckResponseDto doubleCheckContact(String contact) {
-        return new DoubleCheckResponseDto(!memberRepository.existsByContact(contact));
+        return new DoubleCheckResponseDto(!memberRepository.existsByEmail(contact));
     }
 }

@@ -10,12 +10,10 @@ import com.example.demo.repository.CalendarRepository;
 import com.example.demo.repository.ProblemTableRepository;
 import com.example.demo.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

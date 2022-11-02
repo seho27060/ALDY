@@ -15,7 +15,6 @@ import com.example.demo.repository.Member.MemberRepository;
 import com.example.demo.repository.RequestedCodeRepository;
 import com.example.demo.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

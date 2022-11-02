@@ -3,13 +3,13 @@ package com.example.demo.controller;
 import com.example.demo.domain.dto.member.request.LoginRequestDto;
 import com.example.demo.domain.dto.member.request.MemberBackjoonIdRequestDto;
 import com.example.demo.domain.dto.member.request.MemberRequestDto;
-import com.example.demo.domain.dto.member.response.AuthStringResonseDto;
-import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
-import com.example.demo.domain.dto.member.response.InterlockResponseDto;
-import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.dto.member.response.TokenDto;
+import com.example.demo.domain.dto.member.request.ValidateTokenRequestDto;
+import com.example.demo.domain.dto.member.response.*;
+
 import com.example.demo.exception.ErrorResponse;
+
 import com.example.demo.service.member.AuthService;
+import com.example.demo.service.member.JwtService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,19 +17,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Auth API", description = "담당자 : 박세호 \n회원가입, 로그인, Solved 연동, 중복체크")
+@Tag(name = "Auth API", description = "회원가입, 로그인, Solved 연동, 중복체크 [담당자 : 박세호]")
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final JwtService jwtService;
 
     @Operation(summary = "로그인 API", description = "입력정보로 로그인을 진행합니다.")
     @ApiResponses({
@@ -58,7 +60,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = AuthStringResonseDto.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 backjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @PostMapping("/token")
+    @PostMapping("/verification")
     public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBackjoonIdRequestDto memberBackjoonIdRequestDto) {
         AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(memberBackjoonIdRequestDto.getBackjoonId()));
         return new ResponseEntity<>(authStringResonseDto, HttpStatus.OK);
@@ -84,13 +86,28 @@ public class AuthController {
         return new ResponseEntity<>(doubleCheckResponseDto, HttpStatus.OK);
     }
 
-    @Operation(summary = "contact 중복체크", description = "가입된 사용자중에 동일한 contact가 있는지 확인합니다.")
+    @Operation(summary = "email 중복체크", description = "가입된 사용자중에 동일한 email가 있는지 확인합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = DoubleCheckResponseDto.class))),
     })
-    @GetMapping("/contact/{contact}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<DoubleCheckResponseDto> doubleCheckContact(@PathVariable String contact){
         DoubleCheckResponseDto doubleCheckResponseDto  = authService.doubleCheckContact(contact);
         return new ResponseEntity<>(doubleCheckResponseDto, HttpStatus.OK);
+    }
+
+    @Operation(summary = "리프레쉬 토큰 재발급 API", description = "액세스 토큰이 만료됐을시, 리프레쉬토큰을 유효한지 확인 후 액세스 토큰 재발급/ 리프레쉬 토큰이 만료시 재로그인을 요청하는 예외 반환")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "401", description = "비밀번호가 일치하지 않습니다."),
+    })
+    // refreshtoken 받음 -> 만료안되면 새로운 accesstoken 발급/ 만료된거면 다시 로그인하라고 예외던지기
+    @PostMapping("/refresh")
+    public ResponseEntity<ValidateTokenResponseDto> validateRefreshToken(@RequestBody ValidateTokenRequestDto validateRefreshtokenRequestDto){
+        System.out.println(validateRefreshtokenRequestDto.getRefreshtoken());
+
+        ValidateTokenResponseDto validateTokenResponseDto = jwtService.validateRefreshToken(validateRefreshtokenRequestDto.getRefreshtoken());
+        System.out.println(validateTokenResponseDto);
+        return new ResponseEntity<>(validateTokenResponseDto,HttpStatus.OK);
     }
 }
