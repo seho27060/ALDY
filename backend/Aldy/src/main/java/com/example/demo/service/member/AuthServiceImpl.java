@@ -17,6 +17,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +44,7 @@ public class AuthServiceImpl implements AuthService{
     private final JwtService jwtService;
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
+
     @Override
     public MemberResponseDto memberJoin(MemberRequestDto memberRequestDto) {
         String rawPassword = memberRequestDto.getPassword();
@@ -93,7 +96,6 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    @Cacheable(value = "String",key = "#backjoonId", cacheManager = "cacheManager")
     public String issueAuthString(String backjoonId) {
         Optional<SolvedacResponseDto> mono;
         mono = SolvedacMemberFindAPI(backjoonId);
@@ -119,6 +121,9 @@ public class AuthServiceImpl implements AuthService{
                     break;
             }
         }
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        valueOperations.set(backjoonId, String.valueOf(newWord));
+        stringRedisTemplate.expire(backjoonId, 5L, TimeUnit.MINUTES);
         return newWord.toString();
     }
 
@@ -127,23 +132,17 @@ public class AuthServiceImpl implements AuthService{
     public InterlockResponseDto interlock(String backjoonId) {
         Optional<SolvedacResponseDto> mono;
         mono = SolvedacMemberFindAPI(backjoonId);
-        String testAuthString = stringRedisTemplate.opsForValue().get(backjoonId);
-        String testAuthString1 = stringRedisTemplate.opsForValue().get(backjoonId.toString());
-
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        String authString = valueOperations.getAndDelete(backjoonId);
 
         SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
-        String testAuthString2 = stringRedisTemplate.opsForValue().get(solvedacBio.get(solvedacBio.size()-1));
 
-        System.out.println("solvedacBio " + solvedacBio.get(solvedacBio.size()-1));
-        System.out.println("testAuthString " + testAuthString);
-        System.out.println("testAuthString1 " + testAuthString1);
-        System.out.println("testAuthString2 " + testAuthString2);
         // api 로 요청 후 반환값에서
-        System.out.printf("test AuthString :%s get AuthString :%s%n",testAuthString,solvedacBio.get(solvedacBio.size()-1));
+//        System.out.printf("test AuthString :%s get AuthString :%s%n",authString,solvedacBio.get(solvedacBio.size()-1));
 
-        return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(testAuthString));
+        return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
     private Optional<SolvedacResponseDto> SolvedacMemberFindAPI(String backjoonId){
         Optional<SolvedacResponseDto> mono;

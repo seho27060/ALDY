@@ -21,6 +21,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +58,7 @@ public class AuthController {
         MemberResponseDto memberResponseDto = authService.memberJoin(memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
-    @Operation(summary = "인증용 문자열 발급", description = "요청된 backjoonId를 검색 후, {backjoonId:인증용 문자열} 형식으로 서버에 캐시 저장합니다. ")
+    @Operation(summary = "인증용 문자열 발급", description = "요청 backjoonId의 solved.ac 가입 확인과 알디에 가입한 적 있는지 확인 후, 인증용 문자열을 발급합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = AuthStringResonseDto.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 backjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -64,9 +66,10 @@ public class AuthController {
     @PostMapping("/verification")
     public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBackjoonIdRequestDto memberBackjoonIdRequestDto) {
         AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(memberBackjoonIdRequestDto.getBackjoonId()));
+
         return new ResponseEntity<>(authStringResonseDto, HttpStatus.OK);
     }
-    @Operation(summary = "solved.ac 연동", description = "요청된 backjoonId를 검색 후, 캐시로 저장된 {backjoonId:인증용 문자열}의 인증용 문자열과 입력 문자열을 비교합니다.")
+    @Operation(summary = "solved.ac 연동", description = "요청 backjoonId의 solved.ac 의 자기소개의 마지막 7자리를 확인하여 이전에 발급된 인증용 문자열과 비교하여 연동 인증을 확인합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = InterlockResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 backjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
