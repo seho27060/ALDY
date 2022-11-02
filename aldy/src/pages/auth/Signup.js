@@ -123,6 +123,7 @@ const Signup = () => {
               <div>백준 아이디</div>
               <div className="form-title-id">
                 <input
+                  type="text"
                   name="id"
                   ref={idInput}
                   placeholder="백준 아이디를 입력해주세요."
@@ -133,6 +134,7 @@ const Signup = () => {
             <div className="signup-form-title">
               <div>비밀번호</div>
               <input
+                type="password"
                 name="password"
                 ref={passwordInput}
                 placeholder="비밀번호를 입력해주세요."
@@ -141,6 +143,7 @@ const Signup = () => {
             <div className="signup-form-title">
               <div>비밀번호 확인</div>
               <input
+                type="password"
                 name="passwordCheck"
                 ref={passwordCheckInput}
                 placeholder="비밀번호를 다시 입력해주세요."
@@ -150,6 +153,7 @@ const Signup = () => {
               <div>이메일</div>
               <div className="form-title-id">
                 <input
+                  type="email"
                   name="email"
                   ref={emailInput}
                   placeholder="이메일을 입력해주세요."
@@ -161,6 +165,7 @@ const Signup = () => {
               <div>닉네임</div>
               <div className="form-title-id">
                 <input
+                  type="text"
                   name="nickname"
                   ref={nicknameInput}
                   placeholder="닉네임을 입력해주세요."
