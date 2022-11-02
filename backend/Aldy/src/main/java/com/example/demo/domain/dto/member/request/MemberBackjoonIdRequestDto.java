@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MemberWithdrawalRequestDto {
-    private String password;
+public class MemberBackjoonIdRequestDto {
+    private String backjoonId;
 }

@@ -10,5 +10,5 @@ public class MemberRequestDto {
     private String backjoonId;
     private String nickname;
     private String password;
-    private String contact;
+    private String email;
 }

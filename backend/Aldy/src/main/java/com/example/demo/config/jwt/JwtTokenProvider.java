@@ -1,8 +1,10 @@
 package com.example.demo.config.jwt;
 
 import com.example.demo.config.auth.CustomUserDetailsService;
-import com.example.demo.domain.entity.Member.Token;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.domain.entity.Member.RefreshToken;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -11,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -23,37 +25,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    private String secretKey = "killtheSpringSecurity";
-
-    private long tokenValidTime = 30 * 60 * 1000L;
-
     private final String accessSecretKey = "killtheSpringSecurity2";
 
-    private final long accessTokenValidTime = 30 * 60 * 1000L;
+    private final long accessTokenValidTime = Duration.ofMinutes(60).toMillis();;
 
     private final String refreshSecretKey = "killtheSpringSecurity3";
 
-    private long refreshTokenValidTime = 14 * 24 *30 * 60 * 1000L;
+    private long refreshTokenValidTime = Duration.ofDays(7).toMillis();;
     private final CustomUserDetailsService userDetailsService;
 
-    // secretKey 를 base64로 encoding
-    @PostConstruct
-    protected void init(){
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-    }
 
-    public String createToken(String backjoonId, List<String> roles){
-        Claims claims = Jwts.claims().setSubject(backjoonId);
-        claims.put("roles", roles);
-        Date now = new Date();
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-    }
-    public Token createAccessToken(String backjoonId, List<String> roles) {
+    public TokenDto createAccessToken(String backjoonId, List<String> roles) {
 
         Claims claims = Jwts.claims().setSubject(backjoonId); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
@@ -77,7 +59,7 @@ public class JwtTokenProvider {
                 // signature 에 들어갈 secret값 세팅
                 .compact();
 
-        return Token.builder().accessToken(accessToken).refreshToken(refreshToken).key(backjoonId).build();
+        return TokenDto.builder().accessToken(accessToken).refreshToken(refreshToken).key(backjoonId).build();
 
     }
     public String validateRefreshToken(RefreshToken refreshTokenObj){
@@ -93,8 +75,8 @@ public class JwtTokenProvider {
                 return recreationAccessToken(claims.getBody().get("sub").toString(), claims.getBody().get("roles"));
             }
         }catch (Exception e) {
+            throw new CustomException(ErrorCode.REFRESHTOKEN_EXPIRED);
             //refresh 토큰이 만료되었을 경우, 로그인이 필요합니다.
-            return null;
         }
         return null;
     }
@@ -132,15 +114,12 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String jwtToken){
-        System.out.println("validate :" + jwtToken);
-        System.out.println("validate replace:" + jwtToken.replaceAll("^Bearer( )*",""));
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(jwtToken.replaceAll("^Bearer( )*",""));
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e){
-            System.out.println("유효하지 않은 토큰입니다. exception : "+e);
+            System.out.println("만료된 토큰입니다. exception : "+e);
             return false;
         }
     }
-
 }
