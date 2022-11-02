@@ -71,7 +71,7 @@ public class CodeController {
     @Operation(summary = "코드 리뷰 요청 API", description = "실제로 체크된 사람에게 코드 리뷰 요청을 보낸다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "404", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
     })
     private ResponseEntity code05(HttpServletRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto){
 
