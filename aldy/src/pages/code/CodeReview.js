@@ -11,6 +11,14 @@ const CodeReview = () => {
   const [stepModalShow2, setStepModalShow2] = useState(false);
   const [stepModalShow3, setStepModalShow3] = useState(false);
   const [stepModalShow4, setStepModalShow4] = useState(false);
+  const [language, setLanguage] = useState('python')
+  const [languages] = useState([
+    {value:'c++', label:'C++'},
+    {value:'java', label:'Java'},
+    {value:'python', label:'Python'},
+    {value:'javascript', label:'Javascript'},
+    {value:'sql', label:'SQL'}
+  ])
   const editorRef = useRef(null)
   function handleEditorChange(editor, monaco) {
     editorRef.current = editor;
@@ -43,6 +51,16 @@ const CodeReview = () => {
           <p style={{ margin: "0 25px" }}>✨ 스터디이름: ssafy</p>
           <p style={{ margin: "0 25px" }}>3017번</p>
           <p style={{ margin: "0 25px" }}>가까운 수 찾기 ✨</p>
+        </div>
+        <div className="review-language-select">
+          <select name='language' id='language-select' onChange={(e)=>{setLanguage(e.target.value)}}>
+            <option value=''>--사용할 언어를 선택해주세요--</option>
+            <option value='c++'>C++</option>
+            <option value='java'>Java</option>
+            <option value='python'>Python</option>
+            <option value='javascript'>Javascript</option>
+            <option value='sql'>SQL</option>
+          </select>
         </div>
         <div className="review-content">
           <div className="review-step">
@@ -83,7 +101,7 @@ const CodeReview = () => {
           <div className="review-code">
             <Editor className='review-code-editor'
               height='100%'
-              language='javascript'
+              language={language}
               theme='vs-dark'
               defaultValue={null}
               onMount={handleEditorChange}

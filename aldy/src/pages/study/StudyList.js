@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 
 const RedButton = styled.button`
@@ -18,13 +19,19 @@ const RedButton = styled.button`
 
 const StudyList = () => {
   const [tab, setTab] = useState("studyListAll");
+  const navigate = useNavigate();
+
+  const navigateStudyCreate = () => {
+    navigate("/study/create");
+  };
+
   return (
     <main>
       <section className="study-list-banner">
         <img
           className="study-main-img"
           src="/dinosaur.png"
-          alt="코드리뷰 메인 이미지"
+          alt="스터디 메인 이미지"
         ></img>
         <p>
           <span>다른 사람들과 함께 </span>
@@ -36,7 +43,9 @@ const StudyList = () => {
         <h2 className="study-underline-green">
           지금 바로 스터디를 만들어보세요!
         </h2>
-        <RedButton className="study-button">스터디 생성하기</RedButton>
+        <RedButton onClick={navigateStudyCreate} className="study-button">
+          스터디 생성하기
+        </RedButton>
       </section>
       <section className="study-search">
         <p>
