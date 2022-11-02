@@ -1,0 +1,174 @@
+/* title */
+.study-select-title-box {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 10%;
+  width: 80%;
+}
+
+.study-select-title {
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.study-select-title > span {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(220, 240, 190, 1) 40%
+  );
+  font-weight: 900;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: black;
+}
+
+.study-select-title-box > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.study-select-small-title {
+  color: #646464;
+}
+
+.study-select-date {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 250, 240, 1) 40%
+  );
+  /* text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  color: black;
+  font-weight: 700;
+}
+
+/* search - 검색 */
+.study-select-search-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 10% 10px;
+  width: 80%;
+}
+
+.study-select-option {
+  border: 5px solid #dcf0be;
+  border-radius: 30px;
+  width: 32%;
+  padding: 5px 20px 10px 20px;
+}
+
+.green-line {
+  border-bottom: 1px solid rgba(220, 240, 190, 1);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.green-line > div {
+  padding-bottom: 15px;
+  color: #28500f;
+  font-weight: 700;
+  font-size: large;
+}
+
+.green-line > img {
+  width: 60px;
+  margin-left: 1%;
+}
+
+/* checkbox */
+tr > th > input[type="checkbox"] {
+  display: none;
+}
+tr > td > input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background-color: rgba(220, 220, 220, 1);
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background-color: rgba(40, 80, 15, 0.5);
+}
+
+label {
+  cursor: pointer;
+}
+
+/* scroll */
+.option-scroll {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.option-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+
+.option-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(220, 240, 190, 1);
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+
+.option-scroll::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+/* 담긴 문제 */
+.study-select-problem-box {
+  margin: 30px 10%;
+  width: 80%;
+  border: 5px solid #dcf0be;
+  border-radius: 30px;
+  padding: 15px 20px 10px 20px;
+  background-color: rgba(245, 255, 230, 1);
+}
+
+.problem-number-box {
+  display: flex;
+}
+
+.problem-number-box > :nth-child(1) {
+  display: none;
+}
+
+.problem-number {
+  background: #ffffff;
+  border: 3px solid #dcf0be;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin: 7px;
+}
+
+/* 문제 선택 */
+.study-select-result {
+  margin: 30px 10%;
+  width: 80%;
+  border: 5px solid #dcf0be;
+  border-radius: 30px;
+  padding: 5px 20px 10px 20px;
+}
+
+.right {
+  color: #646464;
+  font-weight: 500;
+  font-size: x-small;
+  text-align: end;
+  margin-left: auto;
+}
+
+.second-row {
+  width: 100%;
+}
