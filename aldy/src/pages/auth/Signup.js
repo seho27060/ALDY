@@ -1,5 +1,6 @@
 import "./Signup.css";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import axios from "axios";
@@ -16,6 +17,29 @@ const RedButton = styled.button`
 `;
 
 const Signup = () => {
+  // const { signInList, setSignInList, articleNumber } = props;
+
+  // 일단 여기까지가.....아오아오 여기 위에가 다시 해보는 코드
+  const navigate = useNavigate();
+
+  const navigateMain = () => {
+    navigate("/");
+  };
+
+  const credentials = {
+    id: "",
+    password: "",
+    email: "",
+    nickname: "",
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(idInput.current);
+    console.log(credentials);
+    // navigateMain();
+  };
+
   const [bojModalShow, setBojModalShow] = useState(false);
 
   const handleBojModalShow = (e) => {
@@ -23,10 +47,43 @@ const Signup = () => {
     setBojModalShow((prev) => !prev);
   };
 
+  const idInput = useRef(null);
+  const passwordInput = useRef(null);
+  const passwordCheckInput = useRef(null);
+  const emailInput = useRef(null);
+  const nicknameInput = useRef(null);
+  //Ref 안의 값에 접근 할 땐 idInput.current
+
+  const signUpByRef = () => {
+    const newSignInForm = {
+      id: idInput.current.value,
+      password: passwordInput.current.value,
+      email: emailInput.current.value,
+      nickname: nicknameInput.current.value,
+    };
+
+    console.log(newSignInForm);
+
+    // setSignInList([...signInList, newSignInForm]);
+
+    alert("회원가입되셨습니다.");
+
+    idInput.current.value = "";
+    passwordInput.current.value = "";
+    emailInput.current.value = "";
+    nicknameInput.current.value = "";
+  };
+
+  // const reset = () => {
+  //   idInput.current.value = "";
+  //   passwordInput.current.value = "";
+  //   emailInput.current.value = "";
+  //   nicknameInput.current.value = "";
+  // };
+
   const solvedAc = () => {
     window.open("https://solved.ac/", "_blank");
   };
-  // () => window.open("https://solved.ac/")
 
   return (
     <main className="signup-page-main">
@@ -61,12 +118,13 @@ const Signup = () => {
       <div className="signup-page-bg">
         <section className="signup-page-left">
           <div className="nnnnnn">Sign Up</div>
-          <form>
+          <div>
             <div className="signup-form-title">
               <div>백준 아이디</div>
               <div className="form-title-id">
                 <input
                   name="id"
+                  ref={idInput}
                   placeholder="백준 아이디를 입력해주세요."
                 ></input>
                 <RedButton onClick={handleBojModalShow}>인증하기</RedButton>
@@ -74,30 +132,46 @@ const Signup = () => {
             </div>
             <div className="signup-form-title">
               <div>비밀번호</div>
-              <input placeholder="비밀번호를 입력해주세요."></input>
+              <input
+                name="password"
+                ref={passwordInput}
+                placeholder="비밀번호를 입력해주세요."
+              ></input>
             </div>
             <div className="signup-form-title">
               <div>비밀번호 확인</div>
-              <input placeholder="비밀번호를 다시 입력해주세요."></input>
+              <input
+                name="passwordCheck"
+                ref={passwordCheckInput}
+                placeholder="비밀번호를 다시 입력해주세요."
+              ></input>
             </div>
             <div className="signup-form-title">
               <div>이메일</div>
               <div className="form-title-id">
-                <input placeholder="이메일을 입력해주세요."></input>
+                <input
+                  name="email"
+                  ref={emailInput}
+                  placeholder="이메일을 입력해주세요."
+                ></input>
                 <RedButton>중복확인</RedButton>
               </div>
             </div>
             <div className="signup-form-title">
               <div>닉네임</div>
               <div className="form-title-id">
-                <input placeholder="닉네임을 입력해주세요."></input>
+                <input
+                  name="nickname"
+                  ref={nicknameInput}
+                  placeholder="닉네임을 입력해주세요."
+                ></input>
                 <RedButton>중복확인</RedButton>
               </div>
             </div>
             <div className="signup-submit-btn">
-              <RedButton>Sign Up</RedButton>
+              <RedButton onClick={signUpByRef}>Sign Up</RedButton>
             </div>
-          </form>
+          </div>
         </section>
         <section className="signup-page-right">
           <div className="signup-page-right-title">✨Welcome to Aldy✨</div>
