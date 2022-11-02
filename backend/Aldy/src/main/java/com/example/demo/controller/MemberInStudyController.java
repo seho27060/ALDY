@@ -43,7 +43,7 @@ public class MemberInStudyController {
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.applicateStudy(requestDto, loginMember);
 
-        return new ResponseEntity(memberInStudyDto, HttpStatus.OK);
+        return new ResponseEntity<>(memberInStudyDto, HttpStatus.OK);
 
     }
 
@@ -56,7 +56,7 @@ public class MemberInStudyController {
 
         List<MemberInStudyDto> memberInStudyDtoList = memberInStudyService.getAllMemberInStudy(studyId);
 
-        return new ResponseEntity(memberInStudyDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(memberInStudyDtoList, HttpStatus.OK);
 
     }
 
@@ -66,14 +66,14 @@ public class MemberInStudyController {
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
-    @PatchMapping("accept/{loginMemberId}")
+    @PatchMapping("accept")
     public ResponseEntity acceptMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, loginMember, 2);
 
-        return new ResponseEntity(memberInStudyDto, HttpStatus.OK);
+        return new ResponseEntity<>(memberInStudyDto, HttpStatus.OK);
 
     }
 
@@ -83,14 +83,14 @@ public class MemberInStudyController {
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
-    @PatchMapping("kick/{loginMemberId}")
+    @PatchMapping("kick")
     public ResponseEntity kickMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, loginMember, 0);
 
-        return new ResponseEntity(memberInStudyDto, HttpStatus.OK);
+        return new ResponseEntity<>(memberInStudyDto, HttpStatus.OK);
 
     }
 
@@ -100,14 +100,14 @@ public class MemberInStudyController {
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
-    @DeleteMapping("reject/{loginMemberId}")
+    @DeleteMapping("reject")
     public ResponseEntity rejectMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
 
         memberInStudyService.rejectMember(requestDto, loginMember);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
