@@ -2,6 +2,7 @@ import "./Signup.css";
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
+import axios from "axios";
 
 const RedButton = styled.button`
   width: 170px;
@@ -53,6 +54,7 @@ const Signup = () => {
           </div>
           <div className="solved-btn">
             <RedButton onClick={solvedAc}>solved.ac로 이동</RedButton>
+            <RedButton onClick={solvedAc}>인증완료 하기</RedButton>
           </div>
         </Modal.Body>
       </Modal>
@@ -63,7 +65,10 @@ const Signup = () => {
             <div className="signup-form-title">
               <div>백준 아이디</div>
               <div className="form-title-id">
-                <input placeholder="백준 아이디를 입력해주세요."></input>
+                <input
+                  name="id"
+                  placeholder="백준 아이디를 입력해주세요."
+                ></input>
                 <RedButton onClick={handleBojModalShow}>인증하기</RedButton>
               </div>
             </div>

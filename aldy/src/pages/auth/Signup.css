@@ -113,6 +113,6 @@ input:focus {
 
 .solved-btn {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 15px;
 }
