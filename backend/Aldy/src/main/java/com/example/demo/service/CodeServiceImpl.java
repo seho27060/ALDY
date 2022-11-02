@@ -117,7 +117,7 @@ public class CodeServiceImpl implements CodeService {
         }
 
         Study study = studyRepository.findById(study_id).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
-        emailService.sendCodeAlertEmail(study, receiver.getContact(), sender.getNickname(), receiver.getNickname(), "reply");
+        emailService.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "reply");
         return new EditedCodeDto(editedCode);
     }
 
@@ -174,7 +174,7 @@ public class CodeServiceImpl implements CodeService {
         requestedCodeRepository.save(requestedCode);
 
         Study study = studyRepository.findById(codeReviewRequestDto.getStudy_id()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
-        emailService.sendCodeAlertEmail(study, receiver.getContact(), sender.getNickname(), receiver.getNickname(), "request");
+        emailService.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");
         return new RequestedCodeDto(requestedCode);
     }
 }
