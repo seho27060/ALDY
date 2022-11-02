@@ -34,7 +34,7 @@ class MemberServiceImplTest {
 
     @Test
     void findMember() {
-        doReturn()
+//        doReturn();
     }
 
     @Test
