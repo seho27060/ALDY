@@ -33,6 +33,15 @@ const StudyManage = () => {
                 <td style={{ color: "#B4E196" }}>공룡레벨</td>
                 <td>lv.20</td>
                 <td rowSpan="4">
+                  <div
+                    style={{
+                      color: "#B4E196",
+                      fontWeight: "700",
+                      paddingBottom: "7px",
+                    }}
+                  >
+                    스터디 소개글
+                  </div>
                   ✨ 다들 열심히 달려봅시다!! ✨ <br></br>저희 스터디는 알고리즘
                   스터디입니다. <br></br>매주 월 수 금 문제를 풀어 올려야
                   합니다~~{" "}
