@@ -1,0 +1,47 @@
+spring:
+  #  datasource:
+  #    url: jdbc:h2:mem:test
+  #    username: sa
+  #    password:
+  #    driver-class-name: org.h2.Driver
+  datasource:
+    driver-class-name : org.mariadb.jdbc.Driver
+    url : jdbc:mariadb://k7c206.p.ssafy.io:3306/test
+    username : test
+    password : c206
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  # redis
+  redis:
+    host: k7c206.p.ssafy.io
+    port: 6379
+#    password: c206
+
+
+logging.level:
+  org.hibernate.SQL: debug
+
+# swaggerdoc
+springdoc:
+  api-docs:
+    path: /api-docs
+    groups:
+      enabled: 'true'
+  default-produces-media-type: application/json;charset=UTF-8
+  default-consumes-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+
+# Redis
