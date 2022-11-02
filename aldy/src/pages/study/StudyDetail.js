@@ -151,8 +151,8 @@ const StudyDetail = () => {
           </div>
           <div className="review-modal-content">
             <div className="problem-list-box">
-              {problemList?.map((item) => (
-                <ProblemListItem item={item} />
+              {problemList?.map((item, problemId) => (
+                <ProblemListItem key={problemId} item={item} />
               ))}
             </div>
           </div>
