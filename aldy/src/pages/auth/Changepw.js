@@ -1,4 +1,4 @@
-import "./ChangePW.css";
+import "./Changepw.css";
 import styled from "styled-components";
 
 const RedButton = styled.button`
