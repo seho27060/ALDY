@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.CreateStudyRequestDto;
 import com.example.demo.domain.dto.StudyDto;
+import com.example.demo.service.CalendarService;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.service.MemberInStudyService;
@@ -31,6 +32,7 @@ public class StudyController {
 
     private final MemberInStudyService memberInStudyService;
 
+    private final CalendarService calendarService;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
@@ -121,4 +123,13 @@ public class StudyController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+    @Operation(summary = "문제 선정된 요일 반환 API", description = "문제가 설정된 요일들을 반환하는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    @GetMapping("/{study_id}/{year}/{month}")
+    public ResponseEntity getCalendar(@PathVariable long study_id, @PathVariable int year, @PathVariable int month){
+        return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
+    }
+
 }

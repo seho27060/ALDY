@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.dto.CalendarDto;
 import com.example.demo.domain.dto.ProblemChoiceRequestDto;
 import com.example.demo.domain.entity.Calendar;
 import com.example.demo.domain.entity.ProblemTable;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,5 +70,26 @@ public class CalendarServiceImpl implements CalendarService{
                 () -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND)
         );
         problemTableRepository.deleteByCalendar_idAndProblemIdAndProblemDay(calendar.getId(), problem_id, day);
+    }
+
+    @Override
+    public CalendarDto getCalendar(long study_id, int year, int month) {
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study_id, year, month).orElseThrow(
+                () -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND)
+        );
+        List<ProblemTable> problemTableList = problemTableRepository.findByCalendar_id(calendar.getId());
+
+        String year_str = String.valueOf(year);
+        String month_str = String.format("%02d", month);
+
+        List<String> dayList = new ArrayList<>();
+        for(ProblemTable problemTable : problemTableList){
+            String day_str = String.format("%02d", problemTable.getProblemDay());
+            dayList.add(day_str+"-"+month_str+"-"+year_str);
+        }
+        CalendarDto calendarDto = CalendarDto.builder()
+                .days(dayList)
+                .build();
+        return calendarDto;
     }
 }
