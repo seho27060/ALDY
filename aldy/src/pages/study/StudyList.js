@@ -144,8 +144,8 @@ const StudyListAll = () => {
 
   return (
     <div className="study-list-box">
-      {studyList?.map((item) => (
-        <StudyListItem item={item} />
+      {studyList?.map((item, studyId) => (
+        <StudyListItem key={studyId} item={item} />
       ))}
     </div>
   );
@@ -242,8 +242,8 @@ const StudyListMy = () => {
 
   return (
     <div className="study-list-box">
-      {myStudyList?.map((item) => (
-        <MyStudyListItem item={item} />
+      {myStudyList?.map((item, studyId) => (
+        <MyStudyListItem key={studyId} item={item} />
       ))}
     </div>
   );

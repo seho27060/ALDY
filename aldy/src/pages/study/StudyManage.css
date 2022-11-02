@@ -1,0 +1,111 @@
+/* top */
+.study-manage-top {
+  background-image: url(../../../public/background.jpg);
+  background-size: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-position-x: center;
+  position: relative;
+  /* min-height: 500px; */
+  padding: 50px;
+}
+
+.study-manage-top > h1 {
+  color: rgba(40, 80, 15);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 900;
+}
+
+.study-manage-top > h5 {
+  color: rgba(40, 80, 15, 0.7);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 700;
+}
+
+.study-manage-img {
+  position: absolute;
+  width: 20%;
+  left: 15%;
+  bottom: 10%;
+  z-index: 1;
+}
+
+.study-manage-blackboard {
+  background: #2b6e30;
+  border: 10px solid #d9ae81;
+  border-radius: 10px;
+  margin: 50px 20% 50px 20%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  padding-left: 12%;
+}
+
+.study-manage-blackboard > table {
+  width: 100%;
+}
+
+.study-manage-blackboard > table > tbody > tr > td {
+  padding: 5px 15px;
+  color: #ffffff;
+}
+
+.study-manage-blackboard > table > tbody > tr > td:nth-child(1) {
+  font-weight: 700;
+  text-align: start;
+  white-space: nowrap;
+  width: 20%;
+}
+
+.study-manage-blackboard > table > tbody > tr > td:nth-child(2) {
+  font-weight: 700;
+  text-align: start;
+  width: 20%;
+  border-right: 1px dashed rgb(250, 250, 250);
+}
+
+.study-manage-blackboard > table > tbody > tr > td:nth-child(3) {
+  width: 60%;
+  text-align: center;
+}
+
+/* info */
+
+/* member */
+.study-manage-member {
+  background: #fffaf0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+
+  margin: 50px 5%;
+}
+
+.study-list-item {
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.penalty-white {
+  background-color: white;
+}
+.penalty-green {
+  background-color: rgba(35, 255, 0, 0.3);
+}
+.penalty-orange {
+  background-color: rgba(255, 170, 0, 0.3);
+}
+.penalty-red {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+/* join */
