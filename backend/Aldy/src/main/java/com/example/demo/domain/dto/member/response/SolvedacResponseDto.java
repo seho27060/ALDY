@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class SolvedacResponseDto {
     private String handle;
     private String bio;
+    private int tier;
 }

@@ -43,7 +43,7 @@ public class StudyServiceImpl implements StudyService {
 
         Study study = studyRepository.save(new Study(requestDto));
 
-        return new StudyDto(study);
+        return new StudyDto(study, countMember(study.getId()));
 
     }
 
