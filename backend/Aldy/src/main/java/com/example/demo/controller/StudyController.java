@@ -2,11 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.CreateStudyRequestDto;
+import com.example.demo.domain.dto.MailDto;
 import com.example.demo.domain.dto.StudyDto;
 import com.example.demo.service.CalendarService;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.service.MemberInStudyService;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +36,8 @@ public class StudyController {
     private final MemberInStudyService memberInStudyService;
 
     private final CalendarService calendarService;
+
+    private final EmailService emailService;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
@@ -123,7 +128,7 @@ public class StudyController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
-    @Operation(summary = "문제 선정된 요일 반환 API", description = "문제가 설정된 요일들을 반환하는 API")
+    @Operation(summary = "문제 선정된 요일 반환 API - 담당자 조성민", description = "문제가 설정된 요일들을 반환하는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
@@ -132,4 +137,15 @@ public class StudyController {
         return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
     }
 
+    @Operation(summary = "이메일 발송 테스트 API - 담당자 조성민", description = "스웨거에서만 테스트 용도로 사용, 실제로는 서비스 단에서 끌어서 사용할 것")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
+    })
+    @PostMapping("/mail/send")
+    public String sendMail(MailDto mailDto) {
+        emailService.sendSimpleMessage(mailDto);
+        System.out.println("메일 전송 완료");
+        return "AfterMail.html";
+    }
 }
