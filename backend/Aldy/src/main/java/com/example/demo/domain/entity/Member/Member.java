@@ -1,8 +1,6 @@
 package com.example.demo.domain.entity.Member;
 
 import com.example.demo.domain.dto.member.request.MemberModifyRequestDto;
-import com.example.demo.domain.dto.member.request.MemberPasswordRequestDto;
-import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.entity.EditedCode;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.RequestedCode;
