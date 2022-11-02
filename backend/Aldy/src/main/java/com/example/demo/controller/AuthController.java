@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Auth API", description = "회원가입, 로그인, Solved 연동, 중복체크 [담당자 : 박세호]")
+@Tag(name = "Auth API - [담당자 : 박세호]", description = "회원가입, 로그인, Solved 연동, 중복체크")
 
 @RestController
 @RequestMapping("/api/auth")

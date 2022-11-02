@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Tag(name = "Member API", description = "회원정보 조회, 수정, 탈퇴 [담당자 : 박세호]")
+@Tag(name = "Member API - [담당자 : 박세호]", description = "회원정보 조회, 수정, 탈퇴")
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
