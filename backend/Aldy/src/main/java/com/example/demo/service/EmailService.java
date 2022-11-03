@@ -2,12 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.dto.MailDto;
 import com.example.demo.domain.entity.Study;
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -44,20 +39,20 @@ public class EmailService {
         switch(type) {
             case "request":
                 title = title_type_1;
-                text = String.format(template_1, mailDto.getReceiver_nickname(),
+                text = String.format(template_1, mailDto.getReceiverNickname(),
                         mailDto.getStudyName(),
-                        mailDto.getSender_nickname());
+                        mailDto.getSenderNickname());
                 break;
             case "reply":
                 title = title_type_2;
-                text = String.format(template_2, mailDto.getReceiver_nickname(),
+                text = String.format(template_2, mailDto.getReceiverNickname(),
                         mailDto.getStudyName(),
-                        mailDto.getSender_nickname());
+                        mailDto.getSenderNickname());
                 break;
             case "evict":
                 title = title_type_3;
-                text = String.format(template_3, mailDto.getReceiver_nickname(),
-                        mailDto.getReceiver_nickname(),
+                text = String.format(template_3, mailDto.getReceiverNickname(),
+                        mailDto.getReceiverNickname(),
                         mailDto.getStudyName());
                 break;
         }
@@ -69,10 +64,10 @@ public class EmailService {
         // 실제 서비스단에서 코드 리뷰 요청, 응답 시 메일 발송 함수
     public void sendCodeAlertEmail(Study study, String mail_address, String sender_nickname, String receiver_nickname, String type){
         MailDto mailDto = MailDto.builder()
-            .StudyName(study.getName())
+            .studyName(study.getName())
             .address(mail_address)
-            .receiver_nickname(receiver_nickname)
-            .sender_nickname(sender_nickname)
+            .receiverNickname(receiver_nickname)
+            .senderNickname(sender_nickname)
             .type(type)
             .build();
         sendSimpleMessage(mailDto);
@@ -81,9 +76,9 @@ public class EmailService {
     // 실제 서비스단에서 강제 퇴장 시 사용되는 메일 발송 함수
     public void sendEvictionMail(Study study, String mail_address, String receiver_nickname, String type){
         MailDto mailDto = MailDto.builder()
-                .StudyName(study.getName())
+                .studyName(study.getName())
                 .address(mail_address)
-                .receiver_nickname(receiver_nickname)
+                .receiverNickname(receiver_nickname)
                 .type(type)
                 .build();
         sendSimpleMessage(mailDto);
