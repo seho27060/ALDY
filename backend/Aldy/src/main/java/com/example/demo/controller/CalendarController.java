@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/calendar")
 public class CalendarController {
     private final CalendarService calendarService;
-
     @PostMapping("/problem")
     @Operation(summary = "달력에 문제 추가 API", description = "달력 특정 요일에 문제를 추가하는 API")
     @ApiResponses({

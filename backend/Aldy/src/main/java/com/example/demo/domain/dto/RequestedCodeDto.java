@@ -1,6 +1,7 @@
 package com.example.demo.domain.dto;
 
 
+import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Code;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.RequestedCode;
@@ -24,13 +25,13 @@ import javax.persistence.*;
 public class RequestedCodeDto {
     private Long id;
 
-//    private MemberDto sender;
-//    private MemberDto receiver;
+    private MemberResponseDto sender;
+    private MemberResponseDto receiver;
     private CodeDto codeDto;
     public RequestedCodeDto(RequestedCode requestedCode){
         this.id = requestedCode.getId();
         this.codeDto = new CodeDto(requestedCode.getCode());
-//        this.sender = new MemberDto(requestedCode.getSender());
-//        this.receiver = new MemberDto(requestedCode.getReceiver());
+        this.sender = new MemberResponseDto(requestedCode.getSender());
+        this.receiver = new MemberResponseDto(requestedCode.getReceiver());
     }
 }
