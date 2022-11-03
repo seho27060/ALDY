@@ -1,10 +1,7 @@
 package com.example.demo.domain.entity;
 
 import com.example.demo.domain.entity.Member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-
+@Setter
 public class MemberInStudy {
 
     @Id
@@ -24,6 +21,8 @@ public class MemberInStudy {
 
     // null 허용
     private String message;
+
+    private int numberOfAlerts;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
@@ -37,9 +36,7 @@ public class MemberInStudy {
         this.study = study;
         this.member = member;
         this.auth = auth;
+        this.numberOfAlerts = 0;
     }
 
-    public void setAuth(int auth) {
-        this.auth = auth;
-    }
 }
