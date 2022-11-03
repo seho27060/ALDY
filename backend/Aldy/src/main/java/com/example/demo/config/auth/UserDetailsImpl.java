@@ -10,7 +10,7 @@ import java.util.Collection;
 public class UserDetailsImpl implements UserDetails {
 
     private Long id;
-    private String backjoonId;
+    private String baeckjoonId;
     private String nickname;
     private String password;
 
@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(Member member){
         this.id = member.getId();
-        this.backjoonId = member.getBackjoonId();
+        this.baeckjoonId = member.getBaekjoonId();
         this.nickname = member.getNickname();
         this.password = member.getPassword();
         this.authority = new SimpleGrantedAuthority("USER_ROLE");
@@ -36,7 +36,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return backjoonId;
+        return baeckjoonId;
     }
 
     @Override

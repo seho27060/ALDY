@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface MemberInStudyService {
 
-    void setRoomLeader(Long studyId, String backjoonId);
+    void setRoomLeader(Long studyId, String baekjoonId);
 
-    int getAuthByBackjoonId(String backjoonId, Long studyId);
+    int getAuthByBaekjoonId(String baekjoonId, Long studyId);
 
-    MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String backjoonId);
+    MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String baekjoonId);
 
     List<MemberInStudyDto> getAllMemberInStudy(Long studyId);
 
-    MemberInStudyDto changeAuth(MemberInStudyChangeAuthDto requestDto, String loginMemberBackjoonId, int auth);
+    MemberInStudyDto changeAuth(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId, int auth);
 
-    void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBackjoonId);
+    void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId);
 
 }
