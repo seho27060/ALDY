@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { BsPerson, BsPower } from "react-icons/bs";
+import { useRecoilState } from 'recoil'
+import { isLoggedIn, userName } from "../store/states";
 
 import "./AldyNav.css";
 import styled from "styled-components";
@@ -29,6 +31,8 @@ const RedButton = styled.button`
 const AldyNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [logged, setLogged] = useRecoilState(isLoggedIn)
+  const [username] = useRecoilState(userName)
 
   const navigateMain = () => {
     navigate("/");
@@ -42,6 +46,9 @@ const AldyNav = () => {
   const navigateMypage = () => {
     navigate("/mypage");
   };
+  const navigateLogin = () => {
+    navigate('/login')
+  }
 
   const [userObject, setUserObject] = useState(true);
 
@@ -117,22 +124,27 @@ const AldyNav = () => {
               >
                 코드리뷰
               </Nav.Link>
-              {userObject ? (
+              {logged ? (
                 <NavDropdown
-                  title="ssafy123"
+                  title={username}
                   id="offcanvasNavbarDropdown-expand-md"
                 >
                   <NavDropdown.Item onClick={navigateMypage}>
                     <BsPerson />
                     마이페이지
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">
+                  <NavDropdown.Item href="#action4" onClick={()=>{
+                    sessionStorage.clear()
+                    setLogged(false)
+                  }}>
                     <BsPower />
                     로그아웃
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                ""
+                <RedButton onClick={()=>{
+                  navigateLogin()
+                }}>로그인</RedButton>
               )}
             </Nav>
             {!userObject ? <RedButton>로그인</RedButton> : ""}

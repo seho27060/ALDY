@@ -129,6 +129,7 @@ input:focus {
   line-height: 22px;
   color: #2b6e30;
   padding-left: 3px;
+  cursor: pointer;
 }
 
 .join-btn {
