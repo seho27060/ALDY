@@ -37,7 +37,7 @@ const MainPage = () => {
         <br></br>
         <br></br>
         <div className="main-page-banner-text">코드리뷰를 통해 공룡 키우기</div>
-        <h1> ALDY</h1>
+        <h1>ALDY</h1>
         <div className="board">
           <div className="board-image">
             <span>
