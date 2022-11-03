@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CodeReviewDto {
-    private String backjoon_id;
+    private String backjoonId;
     private String code;
-    private String receiver_id;
-    private long problem_id;
-    private long study_id;
+    private String receiverId;
+    private long problemId;
+    private long studyId;
 }
