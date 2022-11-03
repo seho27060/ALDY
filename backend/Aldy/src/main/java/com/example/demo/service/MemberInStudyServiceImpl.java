@@ -82,6 +82,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         }
 
         // tier 체크
+//        tier Member Entity에 추가
         SolvedacResponseDto solvedacResponseDto = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
@@ -126,6 +127,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         if(loginMemberInStudy.getAuth() != 1) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
         }
+
+        memberInStudy.setAuth(auth);
 
         return new MemberInStudyDto(memberInStudy);
 
