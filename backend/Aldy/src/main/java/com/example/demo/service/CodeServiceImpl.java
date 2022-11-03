@@ -45,9 +45,7 @@ public class CodeServiceImpl implements CodeService {
 
         String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member writer = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        System.out.println("잘 됨?");
         List<Code> codeList = codeRepository.findByStudy_idAndProblemIdAndWriter_id(study_id, problem_id, writer.getId());
-        System.out.println("잘 됨??????");
         List<CodeDto> codeDtoList = codeList.stream().map(o -> new CodeDto(o)).collect(Collectors.toList());
         CodeResponseDto codeResponseDto = new CodeResponseDto(codeDtoList);
         return codeResponseDto;
@@ -116,6 +114,10 @@ public class CodeServiceImpl implements CodeService {
             throw new CustomException(ErrorCode.SAVE_ERROR);
         }
 
+        RequestedCode requestedCode = rcRepository.findByCode_idAndSender_idAndReceiver_id(code.getId(), receiver.getId(),
+                sender.getId()).orElseThrow(()->new CustomException(ErrorCode.CODE_NOT_FOUND));
+        requestedCode.replyCheck();
+
         Study study = studyRepository.findById(study_id).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
         emailServiceImpl.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "reply");
         return new EditedCodeDto(editedCode);
@@ -169,6 +171,7 @@ public class CodeServiceImpl implements CodeService {
                 .code(original_code)
                 .receiver(receiver)
                 .sender(sender)
+                .isDone(false)
                 .build();
 
         requestedCodeRepository.save(requestedCode);
