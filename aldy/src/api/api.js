@@ -29,11 +29,12 @@ api.interceptors.response.use(
       error.response.data.code === "ACCESSTOKEN_EXPIRED"
     ) {
       // a) 갱신 요청
-      const body = { refreshToken: sessionStorage.getItem("refreshToken") };
-      const res = await axios.post(baseURL + "/auth/refresh", body);
+      const body = {refreshToken : sessionStorage.getItem('refreshToken')}
+      const res = await axios.post(baseURL + '/auth/refresh',
+      body);
       if (res.status === 200) {
         sessionStorage.setItem("accessToken", res.data.accessToken);
-        console.log("토큰이 갱신되었습니다."); // 나중에 지울것
+        console.log('토큰이 갱신되었습니다.') // 나중에 지울것
 
         // 원래 요청에서 토큰 변경 후 다시 요청하기
         const originalRequest = error.config;
