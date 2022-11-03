@@ -1,7 +1,7 @@
-package com.example.demo.domain.dto;
+package com.example.demo.domain.dto.code;
 
+import com.example.demo.domain.dto.code.CodeDto;
 import com.example.demo.domain.entity.EditedCode;
-import com.example.demo.domain.entity.RequestedCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

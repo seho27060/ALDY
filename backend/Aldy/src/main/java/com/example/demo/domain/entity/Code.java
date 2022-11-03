@@ -1,6 +1,6 @@
 package com.example.demo.domain.entity;
 
-import com.example.demo.domain.dto.CodeSaveRequestDto;
+import com.example.demo.domain.dto.code.CodeSaveRequestDto;
 import com.example.demo.domain.entity.Member.Member;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.member.request.*;
+import com.example.demo.domain.dto.member.response.CodeNumberRelatedMemberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
 import com.example.demo.exception.ErrorResponse;
@@ -45,10 +46,16 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "회원 정보를 찾을 수 없습니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @GetMapping("/find/{backjoonId}")
-    public ResponseEntity<MemberResponseDto> findMember(@PathVariable String backjoonId){
-        MemberResponseDto memberResponseDto = memberService.findMember(backjoonId);
+    @GetMapping("/find/{baekjoonId}")
+    public ResponseEntity<MemberResponseDto> findMember(@PathVariable String baekjoonId){
+        MemberResponseDto memberResponseDto = memberService.findMember(baekjoonId);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+    @GetMapping("/code/{baekjoonId}")
+    public ResponseEntity<CodeNumberRelatedMemberResponseDto> findCodeNumberRelatedMember(@PathVariable String baekjoonId){
+        CodeNumberRelatedMemberResponseDto codeNumberRelatedMemberResponseDto = memberService.findCodeNumberRelatedMember(baekjoonId);
+
+        return new ResponseEntity<>(codeNumberRelatedMemberResponseDto, HttpStatus.OK);
     }
     @Operation(summary = "회원 정보 수정 API", description = "로그인 유저의 nickname, contact 수정합니다.")
     @ApiResponses({

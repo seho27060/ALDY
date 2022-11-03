@@ -1,13 +1,10 @@
 package com.example.demo.domain.dto;
 
 
-import com.example.demo.domain.entity.Code;
-import com.example.demo.domain.entity.Member.Member;
+import com.example.demo.domain.dto.code.CodeDto;
 import com.example.demo.domain.entity.RequestedCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 // 독립적 테이블이 별로 없음.
 // 9개 API 분류

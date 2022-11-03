@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto;
+package com.example.demo.domain.dto.code;
 
 import com.example.demo.domain.entity.Code;
 import com.example.demo.domain.entity.Member.Member;

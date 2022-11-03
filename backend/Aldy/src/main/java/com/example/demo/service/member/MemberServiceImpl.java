@@ -2,12 +2,15 @@ package com.example.demo.service.member;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.request.*;
+import com.example.demo.domain.dto.member.response.CodeNumberRelatedMemberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
+import com.example.demo.repository.EditedCodeRepository;
 import com.example.demo.repository.Member.MemberRepository;
 
+import com.example.demo.repository.RequestedCodeRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +26,10 @@ import javax.transaction.Transactional;
 public class MemberServiceImpl implements MemberService{
 
     private final JwtTokenProvider jwtTokenProvider;
-
     private final MemberRepository memberRepository;
+    private final EditedCodeRepository editedCodeRepository;
+    private final RequestedCodeRepository requestedCodeRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -72,6 +77,11 @@ public class MemberServiceImpl implements MemberService{
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.modifyPassword(encodedPassword);
         return new MemberResponseDto(member);
+    }
+
+    @Override
+    public CodeNumberRelatedMemberResponseDto findCodeNumberRelatedMember(String baekjoonId) {
+        return null;
     }
 
 

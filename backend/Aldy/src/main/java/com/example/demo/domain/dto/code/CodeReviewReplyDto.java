@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto;
+package com.example.demo.domain.dto.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CodeReviewDto {
-    private String baeckjoonId;
+public class CodeReviewReplyDto {
+//    private String backjoon_id;
     private String code;
     private String receiverId;
     private long problemId;
