@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +46,7 @@ public class StudyController {
     @PostMapping()
     public ResponseEntity createStudy(@RequestBody CreateStudyRequestDto requestDto, HttpServletRequest request) {
 
-        String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
 
         StudyDto studyDto = studyService.createStudy(requestDto);
 
@@ -87,7 +86,7 @@ public class StudyController {
             HttpServletRequest request
     ) {
 
-        String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
 
         Page<StudyDto> studyDtoPage = studyService.getMyStudyPage(page, size, loginMember);
 
@@ -118,9 +117,9 @@ public class StudyController {
     @DeleteMapping("/{studyId}")
     public ResponseEntity deleteStudy(@PathVariable("studyId") Long studyId, HttpServletRequest request) {
 
-        String loginMember = jwtTokenProvider.getBackjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
 
-        if(memberInStudyService.getAuthByBackjoonId(loginMember, studyId) != 1) {
+        if(memberInStudyService.getAuthByBaeckjoonId(loginMember, studyId) != 1) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
         }
 

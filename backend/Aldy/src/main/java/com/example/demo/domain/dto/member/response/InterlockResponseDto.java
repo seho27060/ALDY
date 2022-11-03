@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InterlockResponseDto {
     private boolean isInterlock;
-
     public InterlockResponseDto(boolean isInterlock){
         this.isInterlock = isInterlock;
     }

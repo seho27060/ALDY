@@ -15,10 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -27,18 +25,17 @@ import java.util.List;
 public class JwtTokenProvider {
     private final String accessSecretKey = "killtheSpringSecurity2";
 
-//    private final long accessTokenValidTime = Duration.ofMinutes(60).toMillis();;
-    private final long accessTokenValidTime = Duration.ofSeconds(5).toMillis();;
+    private final long accessTokenValidTime = Duration.ofMinutes(60).toMillis();
 
     private final String refreshSecretKey = "killtheSpringSecurity3";
 
-    private long refreshTokenValidTime = Duration.ofDays(7).toMillis();;
+    private long refreshTokenValidTime = Duration.ofDays(7).toMillis();
     private final CustomUserDetailsService userDetailsService;
 
 
-    public TokenDto createAccessToken(String backjoonId, List<String> roles) {
+    public TokenDto createAccessToken(String baeckjoonId, List<String> roles) {
 
-        Claims claims = Jwts.claims().setSubject(backjoonId); // JWT payload 에 저장되는 정보단위
+        Claims claims = Jwts.claims().setSubject(baeckjoonId); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
 
@@ -60,7 +57,7 @@ public class JwtTokenProvider {
                 // signature 에 들어갈 secret값 세팅
                 .compact();
 
-        return TokenDto.builder().accessToken(accessToken).refreshToken(refreshToken).key(backjoonId).build();
+        return TokenDto.builder().accessToken(accessToken).refreshToken(refreshToken).key(baeckjoonId).build();
 
     }
     public String validateRefreshToken(RefreshToken refreshTokenObj){
@@ -81,9 +78,9 @@ public class JwtTokenProvider {
         }
         return null;
     }
-    public String recreationAccessToken(String backjoonid, Object roles){
+    public String recreationAccessToken(String baeckjoonid, Object roles){
 
-        Claims claims = Jwts.claims().setSubject(backjoonid); // JWT payload 에 저장되는 정보단위
+        Claims claims = Jwts.claims().setSubject(baeckjoonid); // JWT payload 에 저장되는 정보단위
         claims.put("roles", "ROLE_USER"); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
 
@@ -100,12 +97,12 @@ public class JwtTokenProvider {
     }
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getBackjoonId(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getBaeckjoonId(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원정보 추출
-    public String getBackjoonId(String token){
+    public String getBaeckjoonId(String token){
         return Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(token.replaceAll("^Bearer( )*","")).getBody().getSubject();
     }
 

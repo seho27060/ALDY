@@ -9,11 +9,10 @@ import com.example.demo.domain.dto.member.response.TokenDto;
 
 public interface AuthService {
     MemberResponseDto memberJoin(MemberRequestDto memberRequestDto);
-    //    MemberResponseDto findByBackjoonId(LoginRequestDto loginRequestDto);
     TokenDto login(LoginRequestDto loginRequestDto);
 
-    String issueAuthString(String backjoonId);
-    InterlockResponseDto interlock(String backjoonId);
+    String issueAuthString(String baeckjoonId);
+    InterlockResponseDto interlock(String baeckjoonId);
 
     DoubleCheckResponseDto doubleCheckNickname(String nickname);
 

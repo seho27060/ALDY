@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface MemberService {
 
     MemberResponseDto withdrawal(MemberPasswordRequestDto password, HttpServletRequest request);
-    MemberResponseDto findMember(String backjoonId);
+    MemberResponseDto findMember(String baeckjoonId);
     MemberResponseDto modifyInfo(MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request);
     MemberResponseDto modifyPassword(MemberPasswordRequestDto memberPasswordRequestDto, HttpServletRequest request);
 

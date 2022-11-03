@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new UserDetailsImpl
                 (
-                memberRepository.findByBackjoonId(username).
+                memberRepository.findByBaeckjoonId(username).
                         orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND))
                 );
     }

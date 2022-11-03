@@ -13,8 +13,7 @@ import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -29,6 +28,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -50,32 +50,44 @@ public class AuthServiceImpl implements AuthService{
         String rawPassword = memberRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
 
-        if(memberRepository.existsByBackjoonId(memberRequestDto.getBackjoonId())){
+        if(memberRepository.existsByBaeckjoonId(memberRequestDto.getBaeckjoonId())){
             throw new CustomException(ErrorCode.ALREADY_JOIN);
         }
 
+        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
+        Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaeckjoonId());
+        int tier = Integer.parseInt(Optional.ofNullable(entries.get("tier"))
+                .orElse(String.valueOf(0)));
+//        try{
+//            tier = Integer.parseInt(entries.get("tier"));
+//        } catch (Exception e ){
+//            tier = 0;
+//        }
+
         Member member = Member.builder()
-                .backjoonId(memberRequestDto.getBackjoonId())
+                .baeckjoonId(memberRequestDto.getBaeckjoonId())
                 .nickname(memberRequestDto.getNickname())
                 .password(encodedPassword)
-                .email(memberRequestDto.getEmail()).build();
+                .email(memberRequestDto.getEmail())
+                .tier(tier)
+                .build();
 
         memberRepository.save(member);
-
+        valueOperations.delete(memberRequestDto.getBaeckjoonId(),"tier");
         return new MemberResponseDto(member);
     }
 
     @Override
     public TokenDto login(LoginRequestDto loginRequestDto) {
-        Member member = memberRepository.findByBackjoonId(loginRequestDto.getBackjoonId())
+        Member member = memberRepository.findByBaeckjoonId(loginRequestDto.getBaeckjoonId())
                 .orElseThrow(
                         () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
                 );
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getBackjoonId(),loginRequestDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getBaeckjoonId(),loginRequestDto.getPassword());
         try {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBackjoonId(), List.of("ROLE_USER"));
+            TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBaeckjoonId(), List.of("ROLE_USER"));
             jwtService.login(tokenDto);
             return tokenDto;
         }catch (DisabledException | LockedException | BadCredentialsException e){
@@ -96,10 +108,9 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public String issueAuthString(String backjoonId) {
-        Optional<SolvedacResponseDto> mono;
-        mono = SolvedacMemberFindAPI(backjoonId);
-        SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+    public String issueAuthString(String baeckjoonId) {
+        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baeckjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Random random = new Random();
         int length = 7;
@@ -121,35 +132,35 @@ public class AuthServiceImpl implements AuthService{
                     break;
             }
         }
-        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
-        valueOperations.set(backjoonId, String.valueOf(newWord));
-        stringRedisTemplate.expire(backjoonId, 5L, TimeUnit.MINUTES);
+        HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
+        hashOperations.put(baeckjoonId,"authString", String.valueOf(newWord));
+        hashOperations.put(baeckjoonId,"tier", String.valueOf(solvedacResponseDto.getTier()));
+        hashOperations.getOperations().expire(baeckjoonId,5L, TimeUnit.MINUTES);
+//        hashOperations.(backjoonId, 5L, TimeUnit.MINUTES);
         return newWord.toString();
     }
 
     @Override
-//    @CacheEvict(value = "String",key = "#backjoonId")
-    public InterlockResponseDto interlock(String backjoonId) {
-        Optional<SolvedacResponseDto> mono;
-        mono = SolvedacMemberFindAPI(backjoonId);
-        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
-        String authString = valueOperations.getAndDelete(backjoonId);
+//    @CacheEvict(value = "String",key = "#baeckjoonId")
+    public InterlockResponseDto interlock(String baeckjoonId) {
 
-        SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-
+        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baeckjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
 
-        // api 로 요청 후 반환값에서
-//        System.out.printf("test AuthString :%s get AuthString :%s%n",authString,solvedacBio.get(solvedacBio.size()-1));
+        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
+        Map<String, String> entries = valueOperations.entries(baeckjoonId);
+        String authString = entries.get("authString");
+        valueOperations.delete(baeckjoonId,"authString");
 
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
-    private Optional<SolvedacResponseDto> SolvedacMemberFindAPI(String backjoonId){
+    private Optional<SolvedacResponseDto> solvedacMemberFindAPI(String baeckjoonId){
         Optional<SolvedacResponseDto> mono;
         mono = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
-                                .queryParam("handle", backjoonId)
+                                .queryParam("handle", baeckjoonId)
                                 .build())
                 .acceptCharset(StandardCharsets.UTF_8)
                 .accept(MediaType.APPLICATION_JSON)

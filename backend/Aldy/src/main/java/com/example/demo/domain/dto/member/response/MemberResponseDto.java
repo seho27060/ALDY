@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MemberResponseDto {
-    private String backjoonId;
+    private String baeckjoonId;
     private String nickname;
     private String email;
 
     public MemberResponseDto(Member member){
-        this.backjoonId = member.getBackjoonId();
+        this.baeckjoonId = member.getBaeckjoonId();
         this.email = member.getEmail();
         this.nickname = member.getNickname();
     }

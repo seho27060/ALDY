@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequestDto {
 
-    private String backjoonId;
+    private String baeckjoonId;
     private String password;
 }
