@@ -36,6 +36,10 @@ public class RedisConfig {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new StringRedisSerializer());
+
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
@@ -45,6 +49,10 @@ public class RedisConfig {
         final StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
         stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
         stringRedisTemplate.setValueSerializer(new StringRedisSerializer());
+        // Hash를 사용할 경우 시리얼라이저
+        stringRedisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        stringRedisTemplate.setHashValueSerializer(new StringRedisSerializer());
+
         stringRedisTemplate.setConnectionFactory(redisConnectionFactory());
         return stringRedisTemplate;
     }

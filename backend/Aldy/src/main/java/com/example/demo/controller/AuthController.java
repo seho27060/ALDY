@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.member.request.LoginRequestDto;
-import com.example.demo.domain.dto.member.request.MemberBackjoonIdRequestDto;
+import com.example.demo.domain.dto.member.request.MemberBaekjoonIdRequestDto;
 import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.request.ValidateTokenRequestDto;
 import com.example.demo.domain.dto.member.response.*;
@@ -20,9 +20,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,25 +55,25 @@ public class AuthController {
         MemberResponseDto memberResponseDto = authService.memberJoin(memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
-    @Operation(summary = "인증용 문자열 발급", description = "요청 backjoonId의 solved.ac 가입 확인과 알디에 가입한 적 있는지 확인 후, 인증용 문자열을 발급합니다.")
+    @Operation(summary = "인증용 문자열 발급", description = "요청 baekjoonId의 solved.ac 가입 확인과 알디에 가입한 적 있는지 확인 후, 인증용 문자열을 발급합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = AuthStringResonseDto.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 backjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 baekjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping("/verification")
-    public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBackjoonIdRequestDto memberBackjoonIdRequestDto) {
-        AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(memberBackjoonIdRequestDto.getBackjoonId()));
+    public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBaekjoonIdRequestDto memberBaekjoonIdRequestDto) {
+        AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(memberBaekjoonIdRequestDto.getBaekjoonId()));
 
         return new ResponseEntity<>(authStringResonseDto, HttpStatus.OK);
     }
-    @Operation(summary = "solved.ac 연동", description = "요청 backjoonId의 solved.ac 의 자기소개의 마지막 7자리를 확인하여 이전에 발급된 인증용 문자열과 비교하여 연동 인증을 확인합니다.")
+    @Operation(summary = "solved.ac 연동", description = "요청 baekjoonId의 solved.ac 의 자기소개의 마지막 7자리를 확인하여 이전에 발급된 인증용 문자열과 비교하여 연동 인증을 확인합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = InterlockResponseDto.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 backjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 baekjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @GetMapping("/interlock/{backjoonId}")
-    public ResponseEntity<InterlockResponseDto> interlock(@PathVariable String backjoonId){
-       InterlockResponseDto interlockResponseDto = authService.interlock(backjoonId);
+    @GetMapping("/interlock/{baekjoonId}")
+    public ResponseEntity<InterlockResponseDto> interlock(@PathVariable String baekjoonId){
+       InterlockResponseDto interlockResponseDto = authService.interlock(baekjoonId);
         return new ResponseEntity<>(interlockResponseDto, HttpStatus.OK);
     }
 
@@ -85,7 +82,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = DoubleCheckResponseDto.class))),
     })
     @GetMapping("/nickname/{nickname}")
-    public ResponseEntity<DoubleCheckResponseDto> doubleCheckBackjoonId(@PathVariable String nickname){
+    public ResponseEntity<DoubleCheckResponseDto> doubleCheckNickname(@PathVariable String nickname){
         DoubleCheckResponseDto doubleCheckResponseDto  = authService.doubleCheckNickname(nickname);
         return new ResponseEntity<>(doubleCheckResponseDto, HttpStatus.OK);
     }
@@ -95,8 +92,8 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = DoubleCheckResponseDto.class))),
     })
     @GetMapping("/email/{email}")
-    public ResponseEntity<DoubleCheckResponseDto> doubleCheckContact(@PathVariable String contact){
-        DoubleCheckResponseDto doubleCheckResponseDto  = authService.doubleCheckContact(contact);
+    public ResponseEntity<DoubleCheckResponseDto> doubleCheckEmail(@PathVariable String email){
+        DoubleCheckResponseDto doubleCheckResponseDto  = authService.doubleCheckContact(email);
         return new ResponseEntity<>(doubleCheckResponseDto, HttpStatus.OK);
     }
 
@@ -108,9 +105,9 @@ public class AuthController {
     // refreshtoken 받음 -> 만료안되면 새로운 accesstoken 발급/ 만료된거면 다시 로그인하라고 예외던지기
     @PostMapping("/refresh")
     public ResponseEntity<ValidateTokenResponseDto> validateRefreshToken(@RequestBody ValidateTokenRequestDto validateRefreshtokenRequestDto){
-        System.out.println(validateRefreshtokenRequestDto.getRefreshtoken());
+        System.out.println(validateRefreshtokenRequestDto.getRefreshToken());
 
-        ValidateTokenResponseDto validateTokenResponseDto = jwtService.validateRefreshToken(validateRefreshtokenRequestDto.getRefreshtoken());
+        ValidateTokenResponseDto validateTokenResponseDto = jwtService.validateRefreshToken(validateRefreshtokenRequestDto.getRefreshToken());
         System.out.println(validateTokenResponseDto);
         return new ResponseEntity<>(validateTokenResponseDto,HttpStatus.OK);
     }

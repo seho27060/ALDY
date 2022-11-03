@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ValidateTokenRequestDto {
-    private String refreshtoken;
-    public ValidateTokenRequestDto(String refreshtoken){
-        this.refreshtoken = refreshtoken;
+    private String refreshToken;
+    public ValidateTokenRequestDto(String refreshToken){
+        this.refreshToken = refreshToken;
     }
 }

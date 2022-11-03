@@ -39,12 +39,12 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     private final List<Integer> authList = List.of(1, 2);
 
     @Override
-    public void setRoomLeader(Long studyId, String backjoonId) {
+    public void setRoomLeader(Long studyId, String baekjoonId) {
 
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
-        Member member = memberRepository.findByBackjoonId(backjoonId)
+        Member member = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         memberInStudyRepository.save(new MemberInStudy(study, member, 1));
@@ -52,8 +52,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     }
 
     @Override
-    public int getAuthByBackjoonId(String backjoonId, Long studyId) {
-        MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BackjoonId(studyId, backjoonId)
+    public int getAuthByBaekjoonId(String baekjoonId, Long studyId) {
+        MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(studyId, baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
 
         return memberInStudy.getAuth();
@@ -61,9 +61,9 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
 
     @Override
-    public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String backjoonId) {
+    public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String baekjoonId) {
 
-        Member member = memberRepository.findByBackjoonId(backjoonId)
+        Member member = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Study study = studyRepository.findById(requestDto.getStudyId())
@@ -85,7 +85,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         SolvedacResponseDto solvedacResponseDto = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
-                                .queryParam("handle", backjoonId)
+                                .queryParam("handle", baekjoonId)
                                 .build())
                 .acceptCharset(StandardCharsets.UTF_8)
                 .accept(MediaType.APPLICATION_JSON)
@@ -115,9 +115,9 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     }
 
     @Override
-    public MemberInStudyDto changeAuth(MemberInStudyChangeAuthDto requestDto, String loginMemberBackjoonId, int auth) {
+    public MemberInStudyDto changeAuth(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId, int auth) {
 
-        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BackjoonId(requestDto.getStudyId(), loginMemberBackjoonId)
+        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(requestDto.getStudyId(), loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
 
         MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(requestDto.getStudyId(), requestDto.getMemberId())
@@ -132,9 +132,9 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     }
 
     @Override
-    public void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBackjoonId) {
+    public void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId) {
 
-        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BackjoonId(requestDto.getStudyId(), loginMemberBackjoonId)
+        MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(requestDto.getStudyId(), loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
 
         MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(requestDto.getStudyId(), requestDto.getMemberId())
