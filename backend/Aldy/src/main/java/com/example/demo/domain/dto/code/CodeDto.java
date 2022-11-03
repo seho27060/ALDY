@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto.code;
 
+import com.example.demo.domain.dto.StudyDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Code;
 import com.example.demo.domain.entity.Member.Member;

@@ -33,9 +33,6 @@ public class StudyController {
     private final StudyService studyService;
     private final MemberInStudyService memberInStudyService;
     private final CalendarService calendarService;
-    private final EmailService emailService;
-
-
     private final EmailServiceImpl emailServiceImpl;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({

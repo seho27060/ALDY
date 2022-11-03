@@ -88,8 +88,8 @@ public class MemberServiceImpl implements MemberService{
 
         long member_id = member.getId();
 
-        Long answerReviewNumber = Optional.ofNullable(requestedCodeRepository.countByReceiver_idAndDone(member_id,true)).orElse(0L);
-        Long replyCodeReviewNumber = Optional.ofNullable(requestedCodeRepository.countBySender_idAndDone(member_id,true)).orElse(0L);
+        Long answerReviewNumber = Optional.ofNullable(requestedCodeRepository.countByReceiver_idAndIsDone(member_id,true)).orElse(0L);
+        Long replyCodeReviewNumber = Optional.ofNullable(requestedCodeRepository.countBySender_idAndIsDone(member_id,true)).orElse(0L);
 
         CodeReviewNumberResponseDto codeReviewNumberResponseDto = new CodeReviewNumberResponseDto(answerReviewNumber,replyCodeReviewNumber);
         return codeReviewNumberResponseDto;

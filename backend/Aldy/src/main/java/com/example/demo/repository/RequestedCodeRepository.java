@@ -11,8 +11,8 @@ public interface RequestedCodeRepository extends JpaRepository<RequestedCode, Lo
 
     List<RequestedCode> findByReceiver_id(long member_id);
 
-    Long countBySender_idAndDone(long member_id, Boolean isdone);
-    Long countByReceiver_idAndDone(long member_id, Boolean isdone);
+    Long countBySender_idAndIsDone(long member_id, Boolean isdone);
+    Long countByReceiver_idAndIsDone(long member_id, Boolean isdone);
 
     Optional<RequestedCode> findByCode_idAndSender_idAndReceiver_id(long codeId, long senderId, long receiverId);
 }
