@@ -13,6 +13,11 @@ import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -26,25 +31,22 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AuthServiceImpl implements AuthService{
     private final MemberRepository memberRepository;
-
     private final WebClient webClient;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final StringRedisTemplate stringRedisTemplate;
+
     @Override
     public MemberResponseDto memberJoin(MemberRequestDto memberRequestDto) {
-//        System.out.println("get :"+ memberRequestDto.getBackjoonId());
-//        System.out.println("get :"+ memberRequestDto.getEmail());
-//        System.out.println("get :"+ memberRequestDto.getPassword());
-//        System.out.println("get :"+ memberRequestDto.getNickname());
-
         String rawPassword = memberRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
 
@@ -65,7 +67,6 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public TokenDto login(LoginRequestDto loginRequestDto) {
-        System.out.printf("memberService login : %s, password : %s%n",loginRequestDto.getBackjoonId(),loginRequestDto.getPassword());
         Member member = memberRepository.findByBackjoonId(loginRequestDto.getBackjoonId())
                 .orElseThrow(
                         () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
@@ -75,8 +76,6 @@ public class AuthServiceImpl implements AuthService{
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBackjoonId(), List.of("ROLE_USER"));
-            System.out.println(">>>>>>member :"+member);
-            System.out.println(">>>>>>token :"+tokenDto);
             jwtService.login(tokenDto);
             return tokenDto;
         }catch (DisabledException | LockedException | BadCredentialsException e){
@@ -103,7 +102,7 @@ public class AuthServiceImpl implements AuthService{
         SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Random random = new Random();
-        int length = random.nextInt(5)+5;
+        int length = 7;
 
         StringBuilder newWord = new StringBuilder("");
         for (int i = 0; i < length; i++) {
@@ -122,23 +121,28 @@ public class AuthServiceImpl implements AuthService{
                     break;
             }
         }
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        valueOperations.set(backjoonId, String.valueOf(newWord));
+        stringRedisTemplate.expire(backjoonId, 5L, TimeUnit.MINUTES);
         return newWord.toString();
     }
 
     @Override
+//    @CacheEvict(value = "String",key = "#backjoonId")
     public InterlockResponseDto interlock(String backjoonId) {
         Optional<SolvedacResponseDto> mono;
         mono = SolvedacMemberFindAPI(backjoonId);
-        System.out.println(mono);
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        String authString = valueOperations.getAndDelete(backjoonId);
+
         SolvedacResponseDto solvedacResponseDto = mono.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        System.out.println(solvedacResponseDto.getBio());
 
         List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
-        String testAuthString = "TEST_AUTH_STRING";
-        System.out.printf("test AuthString :%s get AuthString :%s%n",testAuthString,solvedacBio.get(solvedacBio.size()-1));
-        // api 로 요청 후 반환값에서
 
-        return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(testAuthString));
+        // api 로 요청 후 반환값에서
+//        System.out.printf("test AuthString :%s get AuthString :%s%n",authString,solvedacBio.get(solvedacBio.size()-1));
+
+        return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
     private Optional<SolvedacResponseDto> SolvedacMemberFindAPI(String backjoonId){
         Optional<SolvedacResponseDto> mono;
