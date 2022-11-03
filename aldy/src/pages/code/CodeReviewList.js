@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { getMyStudy } from '../../api/study'
 
 const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
@@ -155,7 +156,9 @@ const Card = (props) => {
         <Col>{item.problemnumber}</Col>
         <Col>{item.problemname}</Col>
         <Col>{item.date}</Col>
-        <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn'>코드 첨삭하기</button>}</Col>
+        <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn' onClick={()=>{
+          getMyStudy()
+        }}>코드 첨삭하기</button>}</Col>
       </Row>
     </Container>
   )
