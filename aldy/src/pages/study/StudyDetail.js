@@ -4,6 +4,7 @@ import Calendar from "react-calendar";
 import styled from "styled-components";
 import Modal from "react-bootstrap/Modal";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
 
 const RedButton = styled.button`
@@ -30,10 +31,14 @@ const WhiteButton = styled.button`
 `;
 
 const StudyDetail = () => {
+  const navigate = useNavigate();
+  const navigateStudySelect = () => {
+    navigate("/study/select", { state: { date: problemDay } });
+  };
+
   // 달력 날짜
   const [value, onChange] = useState(new Date());
   const [problemDay, setProblemDay] = useState(null);
-
   // 모달창
   const [studyJoinModalShow, setStudyJoiModalShow] = useState(false);
   const [problemModalShow, setProblemJoiModalShow] = useState(false);
@@ -44,19 +49,15 @@ const StudyDetail = () => {
   const handleProblemModalShow = (e) => {
     setProblemJoiModalShow((prev) => !prev);
   };
-
   // 문제풀이 리스트
   const [problemList, setProblemList] = useState(null);
-
   useEffect(() => {
     const year = value.getFullYear();
     const month = value.getMonth();
     const date = value.getDate();
     const day = value.getDay();
     const week = ["일", "월", "화", "수", "목", "금", "토"];
-
     setProblemDay(`${year}년 ${month + 1}월 ${date}일 ${week[day]}요일`);
-
     handleProblemModalShow();
   }, [value]);
 
@@ -157,7 +158,7 @@ const StudyDetail = () => {
             </div>
           </div>
           <div className="study-join-btn">
-            <RedButton>문제 선정하기</RedButton>
+            <RedButton onClick={navigateStudySelect}>문제 선정하기</RedButton>
           </div>
         </Modal.Body>
       </Modal>

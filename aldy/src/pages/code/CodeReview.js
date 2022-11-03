@@ -1,5 +1,5 @@
 import "./CodeReview.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import Editor from '@monaco-editor/react'
@@ -12,17 +12,13 @@ const CodeReview = () => {
   const [stepModalShow3, setStepModalShow3] = useState(false);
   const [stepModalShow4, setStepModalShow4] = useState(false);
   const [language, setLanguage] = useState('python')
-  const [languages] = useState([
-    {value:'c++', label:'C++'},
-    {value:'java', label:'Java'},
-    {value:'python', label:'Python'},
-    {value:'javascript', label:'Javascript'},
-    {value:'sql', label:'SQL'}
-  ])
+  const [subimtCode, setSumbitCode] = useState(null)
+  const [myCode, setMyCode] = useState("")
+  const [yourCode, setYourCode] = useState("")
   const editorRef = useRef(null)
   function handleEditorChange(editor, monaco) {
     editorRef.current = editor;
-    console.log(editorRef.current.getValue())
+    setSumbitCode(editorRef.current.getValue())
   }
   const modals = {
     1:<StepModal1 show={stepModalShow1} onHide={()=>{setStepModalShow1(false)}}></StepModal1>,
@@ -93,12 +89,50 @@ const CodeReview = () => {
               className={`review-step-btn ${step === 4 ? "act" : ""}`}
               onClick={() => {
                 setStep(4);
+                // 4단계 클릭하면 axios로 내가 첨삭받은 코드 원래 내코드 불러와서 usestate의 myCode, yourCode에 저장한다.
               }}
             >
               4단계
             </button>
           </div>
           <div className="review-code">
+            {
+              step === 4 ? 
+              <div className="step-four-main">
+                <div className="step-four-your-code">
+                  <Editor className='review-code-editor'
+                          height='100%'
+                          language={language}
+                          theme='vs-dark'
+                          defaultValue={yourCode}
+                          onMount={handleEditorChange}
+                          options={{
+                            fontSize:20,
+                            minimap:{ enabled: false},
+                            scrollbar:{
+                              vertical: 'auto',
+                              horizontal: 'auto'
+                          }
+                        }}></Editor>
+                </div>
+                <div className="step-four-my-code">
+                  <Editor className='review-code-editor'
+                        height='100%'
+                        language={language}
+                        theme='vs-dark'
+                        defaultValue={myCode}
+                        onMount={handleEditorChange}
+                        options={{
+                          fontSize:20,
+                          minimap:{ enabled: false},
+                          scrollbar:{
+                            vertical: 'auto',
+                            horizontal: 'auto'
+                        }
+                      }}></Editor>
+                </div>
+              </div>
+              :
             <Editor className='review-code-editor'
               height='100%'
               language={language}
@@ -113,6 +147,7 @@ const CodeReview = () => {
                   horizontal: 'auto'
               }
             }}></Editor>
+            }
           </div>
         </div>
         <div className="review-btns">
@@ -217,6 +252,7 @@ function RequestModal(props) {
     </Modal>
   );
 }
+
 
 function StepModal1(props) {
   return (
