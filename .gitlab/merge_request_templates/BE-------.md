@@ -1,9 +1,9 @@
-/title "[FE]"
-/label ~frontend
+/title "[BE]"
+/label ~backend
 /assign me
-/reviewer @shhhm
-/reviewer @zmmmm111
-/reviewer @joey0319
+/reviewer @seho27060
+/reviewer @chob5864
+/reviewer @wow2867
 
 /remove_reviewer me
 
@@ -11,11 +11,7 @@
 
 (작업 내역 한줄로 요약)
 
-(작업 내역 확인하기 편하도록 gif 첨부 - 선택)
-
-## :paperclip: 관련 JIRA 이슈
-
-- closes (이슈 번호)
+(작업 내역 확인하기 편하도록 gif 첨부 - 선택 사항)
 
 ## :heavy_check_mark: 셀프 체크리스트
 

@@ -1,12 +1,17 @@
+/title "[FE]"
+/label ~frontend
+/assign me
+/reviewer @shhhm
+/reviewer @zmmmm111
+/reviewer @joey0319
+
+/remove_reviewer me
+
 ## :bookmark_tabs: 제목
 
 (작업 내역 한줄로 요약)
 
-(작업 내역 확인하기 편하도록 gif 첨부)
-
-## :paperclip: 관련 이슈
-
-- closes (이슈 번호)
+(작업 내역 확인하기 편하도록 gif 첨부 - 선택)
 
 ## :heavy_check_mark: 셀프 체크리스트
 
