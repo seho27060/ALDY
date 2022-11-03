@@ -154,11 +154,21 @@ const StudyListAll = () => {
 const StudyListItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
 
+  // const navigate = useNavigate();
+  // const navigateStudyDetail = (id) => {
+  //   navigate(`/study/detail/${id}`);
+  // };
+
   return (
     <div className="study-list-item">
       <div className="study-list-title">
         <div className="study-id">{props.item.studyId}</div>
-        <h5 className="study-name">{props.item.studyName}</h5>
+        <h5
+          className="study-name"
+          // onClick={navigateStudyDetail(props.item.studyId)}
+        >
+          {props.item.studyName}
+        </h5>
         <div className="study-number">{props.item.studyNumber}</div>
         {dropdown === "none" && (
           <FaChevronCircleDown
