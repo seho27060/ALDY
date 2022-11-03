@@ -25,12 +25,14 @@ import javax.persistence.*;
 public class RequestedCodeDto {
     private Long id;
 
+    private boolean isDone;
     private MemberResponseDto sender;
     private MemberResponseDto receiver;
     private CodeDto codeDto;
     public RequestedCodeDto(RequestedCode requestedCode){
         this.id = requestedCode.getId();
         this.codeDto = new CodeDto(requestedCode.getCode());
+        this.isDone = requestedCode.getIsDone();
         this.sender = new MemberResponseDto(requestedCode.getSender());
         this.receiver = new MemberResponseDto(requestedCode.getReceiver());
     }
