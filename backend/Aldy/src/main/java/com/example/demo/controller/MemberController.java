@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.member.request.*;
-import com.example.demo.domain.dto.member.response.CodeNumberRelatedMemberResponseDto;
+import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
 import com.example.demo.exception.ErrorResponse;
@@ -51,11 +51,11 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.findMember(baekjoonId);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
-    @GetMapping("/code/{baekjoonId}")
-    public ResponseEntity<CodeNumberRelatedMemberResponseDto> findCodeNumberRelatedMember(@PathVariable String baekjoonId){
-        CodeNumberRelatedMemberResponseDto codeNumberRelatedMemberResponseDto = memberService.findCodeNumberRelatedMember(baekjoonId);
+    @GetMapping("/review")
+    public ResponseEntity<CodeReviewNumberResponseDto> findCodeReviewNumberRelatedMember(HttpServletRequest request){
+        CodeReviewNumberResponseDto codeReviewNumberResponseDto = memberService.findCodeReviewNumberRelatedMember(request);
 
-        return new ResponseEntity<>(codeNumberRelatedMemberResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(codeReviewNumberResponseDto, HttpStatus.OK);
     }
     @Operation(summary = "회원 정보 수정 API", description = "로그인 유저의 nickname, contact 수정합니다.")
     @ApiResponses({

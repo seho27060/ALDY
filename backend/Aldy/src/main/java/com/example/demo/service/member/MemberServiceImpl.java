@@ -2,7 +2,7 @@ package com.example.demo.service.member;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.request.*;
-import com.example.demo.domain.dto.member.response.CodeNumberRelatedMemberResponseDto;
+import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,7 +61,6 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResponseDto modifyInfo(MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request) {
-        System.out.println(">>>>>>>>>>"+jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization")));
         String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -80,8 +80,19 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public CodeNumberRelatedMemberResponseDto findCodeNumberRelatedMember(String baekjoonId) {
-        return null;
+    public CodeReviewNumberResponseDto findCodeReviewNumberRelatedMember(HttpServletRequest request) {
+// 리뷰 한거 -> 받는 사람이 나이고, done
+// 리뷰 받은거 -> 보내는 사람이 나이고, done
+        String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        long member_id = member.getId();
+
+        Long answerReviewNumber = Optional.ofNullable(requestedCodeRepository.countByReceiver_idAndDone(member_id,true)).orElse(0L);
+        Long replyCodeReviewNumber = Optional.ofNullable(requestedCodeRepository.countBySender_idAndDone(member_id,true)).orElse(0L);
+
+        CodeReviewNumberResponseDto codeReviewNumberResponseDto = new CodeReviewNumberResponseDto(answerReviewNumber,replyCodeReviewNumber);
+        return codeReviewNumberResponseDto;
     }
 
 
