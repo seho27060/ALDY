@@ -3,7 +3,6 @@ package com.example.demo.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProblemChoiceRequestDto {
-    private long study_id;
+    private long studyId;
     private List<Integer> problemList;
     private int year;
     private int month;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CodeReviewRequestDto {
 //    private String sender_id;
-    private String receiver_id;
-    private long study_id;
-    private long problem_id;
+    private String receiverId;
+    private long studyId;
+    private long problemId;
 }

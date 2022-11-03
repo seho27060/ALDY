@@ -90,13 +90,13 @@ public class CodeServiceImpl implements CodeService {
         Member sender = memberRepository.findByBaeckjoonId(sender_id).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         // 첨삭 받은 사람 아이디
-        String receiver_id = codeReviewReplyDto.getReceiver_id();
+        String receiver_id = codeReviewReplyDto.getReceiverId();
         // 첨삭 받은 사람
         Member receiver = memberRepository.findByBaeckjoonId(codeReviewReplyDto.getReceiver_id()).orElseThrow(()-> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         // 어떤 스터디의 어떤 문제의 누가 푼 코드에 종속되는지 알기 위해 필요한 변수들
         long receiver_index = receiver.getId();
-        long study_id = codeReviewReplyDto.getStudy_id();
-        long problem_id = codeReviewReplyDto.getProblem_id();
+        long study_id = codeReviewReplyDto.getStudyId();
+        long problem_id = codeReviewReplyDto.getProblemId();
 
         // 어떤 코드를 보고 첨삭했는지
         Code code = codeRepository.findByStudy_idAndProblemIdAndWriter_idAndProcess(study_id, problem_id, receiver_index,3).orElseThrow(
@@ -128,7 +128,7 @@ public class CodeServiceImpl implements CodeService {
         String backjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
         Member writer = memberRepository.findByBaeckjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Study study = studyRepository.findById(codeSaveRequestDto.getStudy_id()).orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
+        Study study = studyRepository.findById(codeSaveRequestDto.getStudyId()).orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
         System.out.println(study.getId());
 //        Code 객체를 생성할 때, 생성자 vs 빌더패턴,
 //        OCP Open-Closed-principle
@@ -138,9 +138,9 @@ public class CodeServiceImpl implements CodeService {
                 .writer(writer)
                 .study(study)
                 .process(codeSaveRequestDto.getProcess())
-                .problemId(codeSaveRequestDto.getProblem_id())
-                .problemName(codeSaveRequestDto.getProblem_name())
-                .problemTier(codeSaveRequestDto.getProblem_tier())
+                .problemId(codeSaveRequestDto.getProblemId())
+                .problemName(codeSaveRequestDto.getProblemName())
+                .problemTier(codeSaveRequestDto.getProblemTier())
                 .build();
 
         try{
@@ -163,7 +163,7 @@ public class CodeServiceImpl implements CodeService {
         );
 
         Code original_code = codeRepository.findByStudy_idAndProblemIdAndWriter_idAndProcess(
-            codeReviewRequestDto.getStudy_id(),codeReviewRequestDto.getProblem_id(),sender.getId(),3
+            codeReviewRequestDto.getStudyId(),codeReviewRequestDto.getProblemId(),sender.getId(),3
                 ).orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
         RequestedCode requestedCode = RequestedCode.builder()
                 .code(original_code)
@@ -173,7 +173,7 @@ public class CodeServiceImpl implements CodeService {
 
         requestedCodeRepository.save(requestedCode);
 
-        Study study = studyRepository.findById(codeReviewRequestDto.getStudy_id()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+        Study study = studyRepository.findById(codeReviewRequestDto.getStudyId()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
         emailService.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");
         return new RequestedCodeDto(requestedCode);
     }
