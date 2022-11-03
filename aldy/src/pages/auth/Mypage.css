@@ -1,0 +1,5 @@
+.Mypage-section1-userinfo {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+}

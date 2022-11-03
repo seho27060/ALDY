@@ -21,9 +21,6 @@ const Mypage = () => {
   const [tab, setTab] = useState("studyListAll");
   const navigate = useNavigate();
 
-  const navigateStudyCreate = () => {
-    navigate("/study/create");
-  };
   const navigateUserinfo = () => {
     navigate("/userinfo");
   };
@@ -37,7 +34,7 @@ const Mypage = () => {
         <img
           className="study-main-img"
           src="/dinosaur.png"
-          alt="마이 이미지"
+          alt="마이 페이지"
         ></img>
         <p>
           <span>✨내가 활동하고 있는 </span>
@@ -45,64 +42,50 @@ const Mypage = () => {
           <span>모아보기✨ </span>
         </p>
         <h2 className="study-underline-green">회원정보</h2>
-        <RedButton onClick={navigateUserinfo} className="study-button">
-          회원정보 수정
-        </RedButton>
-        <RedButton onClick={navigateChangePw} className="study-button">
-          비밀번호 수정
-        </RedButton>
-      </section>
-      <section className="study-search">
-        <p>
-          <span>다른 사람들과 함께 </span>
-          <span className="study-highlight-orange">코드리뷰</span>
-          <span>를 하며 </span>
-          <span className="study-highlight-orange">공룡</span>
-          <span>을 키워볼 기회</span>
-        </p>
-        <h2 className="study-underline-orange">
-          원하는 스터디 페이지로 들어가 가입신청을 해주세요!
-        </h2>
-        <div className="search-box">
-          <Form className="d-flex search-bar">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success" className="search-button">
-              Search
-            </Button>
-          </Form>
-        </div>
-      </section>
-      <section className="study-list">
-        <div className="study-tab-list">
-          <button
-            onClick={() => {
-              setTab("studyListAll");
-            }}
-            className={`study-tab ${
-              tab === "studyListAll" ? "study-tab-active" : ""
-            }`}
-          >
-            전체 스터디 목록
-          </button>
-          <button
-            onClick={() => {
-              setTab("studyListMy");
-            }}
-            className={`study-tab ${
-              tab === "studyListMy" ? "study-tab-active" : ""
-            }`}
-          >
-            내 스터디 목록
-          </button>
+        <div className="Mypage-section1-userinfo">
+          <div>
+            <h2>유저아이디</h2>
+          </div>
+          <div>
+            <RedButton onClick={navigateUserinfo} className="study-button">
+              회원정보 수정
+            </RedButton>
+            <RedButton onClick={navigateChangePw} className="study-button">
+              비밀번호 수정
+            </RedButton>
+          </div>
         </div>
         <div>
-          {tab === "studyListAll" && <StudyListAll />}
-          {tab === "studyListMy" && <StudyListMy />}
+          <div className="study-list-item">
+            <div className="study-list-title">
+              <div className="study-id"></div>
+              <h5 className="study-name">내가 리뷰한 코드 수</h5>
+              <div className="study-number">34</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="study-list-item">
+            <div className="study-list-title">
+              <div className="study-id"></div>
+              <h5 className="study-name">내가 리뷰한 받은 코드 수</h5>
+              <div className="study-number">36</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="study-search">
+        <img src={process.env.PUBLIC_URL + "/mypageStudyList.png"} alt=""></img>
+        <h2 className="study-underline-orange">내가 가입한 스터디 목록</h2>
+        <p>
+          <span>✨스터디에 참여해 문제를 풀고 </span>
+          <span className="study-highlight-orange">코드리뷰</span>
+          <span>를 해주세요.✨</span>
+        </p>
+      </section>
+      <section className="study-list">
+        <div>
+          <StudyListMy />
         </div>
       </section>
     </main>
