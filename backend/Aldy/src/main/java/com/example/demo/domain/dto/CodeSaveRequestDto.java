@@ -13,8 +13,8 @@ public class CodeSaveRequestDto {
 //    private String backjoon_id;
     private String code;
     private int process;
-    private long study_id;
-    private long problem_id;
-    private String problem_name;
-    private int problem_tier;
+    private long studyId;
+    private long problemId;
+    private String problemName;
+    private int problemTier;
 }

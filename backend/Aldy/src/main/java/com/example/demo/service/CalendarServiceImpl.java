@@ -28,7 +28,7 @@ public class CalendarServiceImpl implements CalendarService{
     // 문제를 등록한다. 캘린더가 존재하지 않으면 존재하게 만들어준다.
     @Override
     public void registerProblem(ProblemChoiceRequestDto problemChoiceRequestDto) {
-        long study_id = problemChoiceRequestDto.getStudy_id();
+        long study_id = problemChoiceRequestDto.getStudyId();
         // 문제가 어느 스터디에서 선택된 건지 알아냄.
         Study study = studyRepository.findById(study_id).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
@@ -36,7 +36,7 @@ public class CalendarServiceImpl implements CalendarService{
         int month = problemChoiceRequestDto.getMonth();;
         int day = problemChoiceRequestDto.getDay();
         // 달력이 있으면 가져오고 달력이 없으면 하나 만들어줌.
-        Calendar calendar = calendarRepository.findById(problemChoiceRequestDto.getStudy_id()).orElse(
+        Calendar calendar = calendarRepository.findById(problemChoiceRequestDto.getStudyId()).orElse(
                 calendarRepository.save(Calendar.builder()
                         .calendarMonth(month)
                         .calendarYear(year)

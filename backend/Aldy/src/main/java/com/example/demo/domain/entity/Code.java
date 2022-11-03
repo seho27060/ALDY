@@ -54,9 +54,9 @@ public class Code {
         this.code = codeSaveRequestDto.getCode();
         this.writer = writer;
         this.process = codeSaveRequestDto.getProcess();
-        this.problemId = codeSaveRequestDto.getProblem_id();
-        this.problemName = codeSaveRequestDto.getProblem_name();
-        this.problemTier = codeSaveRequestDto.getProblem_tier();
+        this.problemId = codeSaveRequestDto.getProblemId();
+        this.problemName = codeSaveRequestDto.getProblemName();
+        this.problemTier = codeSaveRequestDto.getProblemTier();
     }
 
 }
