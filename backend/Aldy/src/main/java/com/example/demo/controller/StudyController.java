@@ -8,7 +8,7 @@ import com.example.demo.service.CalendarService;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.service.MemberInStudyService;
-import com.example.demo.service.EmailService;
+import com.example.demo.service.EmailServiceImpl;
 import com.example.demo.service.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +36,7 @@ public class StudyController {
 
     private final CalendarService calendarService;
 
-    private final EmailService emailService;
+    private final EmailServiceImpl emailServiceImpl;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
@@ -144,7 +143,7 @@ public class StudyController {
     })
     @PostMapping("/mail/send")
     public String sendMail(MailDto mailDto) {
-        emailService.sendSimpleMessage(mailDto);
+        emailServiceImpl.sendSimpleMessage(mailDto);
         System.out.println("메일 전송 완료");
         return "AfterMail.html";
     }

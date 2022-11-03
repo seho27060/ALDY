@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CodeServiceImpl implements CodeService {
 
-    private final EmailService emailService;
+    private final EmailServiceImpl emailServiceImpl;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final CodeRepository codeRepository;
@@ -117,7 +117,7 @@ public class CodeServiceImpl implements CodeService {
         }
 
         Study study = studyRepository.findById(study_id).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
-        emailService.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "reply");
+        emailServiceImpl.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "reply");
         return new EditedCodeDto(editedCode);
     }
 
@@ -174,7 +174,7 @@ public class CodeServiceImpl implements CodeService {
         requestedCodeRepository.save(requestedCode);
 
         Study study = studyRepository.findById(codeReviewRequestDto.getStudyId()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
-        emailService.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");
+        emailServiceImpl.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");
         return new RequestedCodeDto(requestedCode);
     }
 }

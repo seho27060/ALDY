@@ -82,6 +82,11 @@ public class SolvedacServiceImpl implements SolvedacService {
         return problemDtoList;
     }
 
+    @Override
+    public List<String> getProblemInfo(int problemId) {
+        return null;
+    }
+
     private String makeQuery(List<String> algoList, List<Integer> tierList, List<String> backjoonIdList) {
 //        StringBuffer 사용법 검색
         StringBuilder query = new StringBuilder("");

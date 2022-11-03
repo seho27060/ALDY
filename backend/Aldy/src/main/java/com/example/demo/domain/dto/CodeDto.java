@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto;
 
+import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Code;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Study;
@@ -17,6 +18,10 @@ public class CodeDto {
 
     private LocalDateTime createdDate;
 
+    private MemberResponseDto writer;
+
+    private StudyDto studyDto;
+
     private String code;
 
     private int level;
@@ -30,6 +35,8 @@ public class CodeDto {
     public CodeDto(Code code){
         this.code= code.getCode();
         this.createdDate = code.getCreatedDate();
+        this.writer = new MemberResponseDto(code.getWriter());
+        this.studyDto = new StudyDto(code.getStudy(),0);
         this.id = code.getId();
         this.level = code.getProcess();
         this.problemId = code.getProblemId();
