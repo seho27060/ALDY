@@ -23,7 +23,10 @@ public class RequestedCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // private Boolean isDone=false;
     private Boolean isDone=false;
+
+    private Boolean isChecked;
 
     @CreatedDate
     private LocalDateTime requestDate;
@@ -41,7 +44,18 @@ public class RequestedCode {
     @JoinColumn(name = "code_id")
     private Code code;
 
+    @PrePersist
+    public void prePersist() {
+        this.isChecked = false;
+        this.isDone = false;
+    }
+
     public void replyCheck(){
         this.isDone = true;
     }
+
+    public void batchCheck() {
+        this.isChecked = true;
+    }
+
 }

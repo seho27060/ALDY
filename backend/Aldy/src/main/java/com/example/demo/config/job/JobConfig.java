@@ -5,7 +5,7 @@ import com.example.demo.domain.entity.RequestedCode;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.MemberInStudyRepository;
-import com.example.demo.service.EmailService;
+import com.example.demo.service.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -37,7 +37,7 @@ public class JobConfig {
 
     private final MemberInStudyRepository memberInStudyRepository;
 
-    private final EmailService emailService;
+    private final EmailServiceImpl emailService;
 
     private int chunkSize = 5;
 
@@ -81,7 +81,13 @@ public class JobConfig {
                 // 데이터 필터
                 LocalDateTime now = LocalDateTime.now();
 
-                if(item.getIsEditing() != 0) {
+                if(item.getIsChecked()) {
+                    item.batchCheck();
+                    return null;
+                }
+                item.batchCheck();
+
+                if(!item.getIsDone()) {
                     return null;
                 }
 

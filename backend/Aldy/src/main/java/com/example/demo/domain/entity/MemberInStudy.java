@@ -32,11 +32,12 @@ public class MemberInStudy {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public MemberInStudy(Study study, Member member, int auth) {
+    public MemberInStudy(Study study, Member member, int auth, String message) {
         this.study = study;
         this.member = member;
         this.auth = auth;
         this.numberOfAlerts = 0;
+        this.message = message;
     }
 
 }

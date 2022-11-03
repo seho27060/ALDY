@@ -61,9 +61,17 @@ public class SolvedacServiceImpl implements SolvedacService {
 
                     int acceptedUserCount;
                     try {
-                        acceptedUserCount = Integer.parseInt(s.get(8).split(":")[1]);
+                        acceptedUserCount = Integer.parseInt(s.get(6).split(":")[1]);
                     } catch (NumberFormatException e) {
-                        acceptedUserCount = Integer.parseInt(s.get(11).split(":")[1]);
+                        try {
+                            acceptedUserCount = Integer.parseInt(s.get(8).split(":")[1]);
+                        } catch (NumberFormatException ee) {
+                            try {
+                                acceptedUserCount = Integer.parseInt(s.get(11).split(":")[1]);
+                            } catch (NumberFormatException eee) {
+                                acceptedUserCount = Integer.parseInt(s.get(14).split(":")[1]);
+                            }
+                        }
                     }
 
                     problemDtoList.add(new ProblemDto(num, name, acceptedUserCount));
@@ -97,7 +105,7 @@ public class SolvedacServiceImpl implements SolvedacService {
             query.append(")&");
         }
         // "(tag:bfs|tag:dfs)&"
-        if(!algoList.isEmpty()) {
+        if(algoList != null) {
             query.append("(");
             algoList.forEach(a -> {
                 query.append("tag:").append(a).append("|");
@@ -106,7 +114,7 @@ public class SolvedacServiceImpl implements SolvedacService {
             query.append(")&");
         }
         // "!(solved_by:seho27060|solved_by:min61037)"
-        if(!baekjoonIdList.isEmpty()) {
+        if(baekjoonIdList != null) {
             query.append("!(");
             baekjoonIdList.forEach(b -> {
                 query.append("solved_by:").append(b).append("|");
@@ -115,7 +123,9 @@ public class SolvedacServiceImpl implements SolvedacService {
             query.append(")&");
         }
 
-        query.deleteCharAt(query.length() - 1);
+        if(query.length() > 0) {
+            query.deleteCharAt(query.length() - 1);
+        }
 
         return query.toString();
     }

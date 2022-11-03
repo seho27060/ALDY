@@ -47,7 +47,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         Member member = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        memberInStudyRepository.save(new MemberInStudy(study, member, 1));
+        memberInStudyRepository.save(new MemberInStudy(study, member, 1, "Leader"));
 
     }
 
@@ -100,7 +100,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
         // save
         return new MemberInStudyDto(
-                memberInStudyRepository.save(new MemberInStudy(study, member, 3))
+                memberInStudyRepository.save(new MemberInStudy(study, member, 3, requestDto.getMessage()))
         );
     }
 
