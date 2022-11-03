@@ -11,6 +11,14 @@ section.main-page-banner {
   padding: 80px;
 }
 
+.main-page-banner > h1 {
+  font-family: "Teko", sans-serif;
+  cursor: pointer;
+  font-size: 60px;
+  color: rgb(40, 80, 15);
+  text-align: center;
+}
+
 section.main-page-description {
   background-color: #373737;
   color: white;
@@ -23,6 +31,7 @@ section.main-page-description {
   line-height: 27px;
   letter-spacing: -0.005em;
   color: #649655;
+  font-family: "uhbeeBold";
 }
 
 h1 {
@@ -81,7 +90,7 @@ h1 {
   border-radius: 81.7073px;
   font-family: "Pretendard";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 14px;
   line-height: 17px;
   text-align: center;
@@ -97,7 +106,8 @@ h1 {
   line-height: 150%;
   text-align: center;
   color: #ffffff;
-  font-size: 25px;
+  font-size: 30px;
+  font-family: "uhbeeBold";
 }
 
 .main-page-description-title {
