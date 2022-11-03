@@ -21,13 +21,13 @@ public class JwtServiceImpl implements JwtService{
     @Override
     public void login(TokenDto tokenDto) {
         RefreshToken refreshToken = RefreshToken.builder()
-                .baeckjoonId(tokenDto.getKey())
+                .baekjoonId(tokenDto.getKey())
                 .refreshToken(tokenDto.getRefreshToken())
                 .build();
 
-        String loginUserBaeckjoonId = refreshToken.getBaeckjoonId();
-        if(refreshTokenRepository.existsByBaeckjoonId(loginUserBaeckjoonId)){
-            refreshTokenRepository.deleteByBaeckjoonId(loginUserBaeckjoonId);
+        String loginUserBaekjoonId = refreshToken.getBaekjoonId();
+        if(refreshTokenRepository.existsByBaekjoonId(loginUserBaekjoonId)){
+            refreshTokenRepository.deleteByBaekjoonId(loginUserBaekjoonId);
         }
         refreshTokenRepository.save(refreshToken);
     }

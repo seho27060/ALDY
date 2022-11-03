@@ -43,8 +43,8 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public CodeResponseDto getCodesByStudy_idAndProblem_idAndMember_id(long study_id, long problem_id, HttpServletRequest request) {
 
-        String backjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member writer = memberRepository.findByBaeckjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member writer = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         System.out.println("잘 됨?");
         List<Code> codeList = codeRepository.findByStudy_idAndProblemIdAndWriter_id(study_id, problem_id, writer.getId());
         System.out.println("잘 됨??????");
@@ -56,8 +56,8 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public CodeReviewPageResponseDto getCodesByMember_id(HttpServletRequest request) {
 
-        String backjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member member = memberRepository.findByBaeckjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         long member_id = member.getId();
 
@@ -84,15 +84,15 @@ public class CodeServiceImpl implements CodeService {
 
 
         // 첨삭한 사람 아이디
-        String sender_id = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
+        String sender_id = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
         // 첨삭한 사람
-        Member sender = memberRepository.findByBaeckjoonId(sender_id).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member sender = memberRepository.findByBaekjoonId(sender_id).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         // 첨삭 받은 사람 아이디
         String receiver_id = codeReviewReplyDto.getReceiverId();
         // 첨삭 받은 사람
-        Member receiver = memberRepository.findByBaeckjoonId(codeReviewReplyDto.getReceiverId()).orElseThrow(()-> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member receiver = memberRepository.findByBaekjoonId(codeReviewReplyDto.getReceiverId()).orElseThrow(()-> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         // 어떤 스터디의 어떤 문제의 누가 푼 코드에 종속되는지 알기 위해 필요한 변수들
         long receiver_index = receiver.getId();
         long study_id = codeReviewReplyDto.getStudyId();
@@ -125,8 +125,8 @@ public class CodeServiceImpl implements CodeService {
     public CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto, HttpServletRequest request) {
         // 작성자 min61037
 
-        String backjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member writer = memberRepository.findByBaeckjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member writer = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Study study = studyRepository.findById(codeSaveRequestDto.getStudyId()).orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
         System.out.println(study.getId());
@@ -155,10 +155,10 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) {
 
-        String backjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member sender = memberRepository.findByBaeckjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member sender = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Member receiver = memberRepository.findByBaeckjoonId(codeReviewRequestDto.getReceiverId()).orElseThrow(
+        Member receiver = memberRepository.findByBaekjoonId(codeReviewRequestDto.getReceiverId()).orElseThrow(
                 () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
         );
 

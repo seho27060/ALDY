@@ -31,7 +31,7 @@ public class Member {
     private LocalDateTime createdDate;
 
     @Column(length = 50)
-    private String baeckjoonId;
+    private String baekjoonId;
 
     private String password;
     // 연략처 전화번호 or 이메일

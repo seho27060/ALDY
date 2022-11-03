@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MemberBaeckjoonIdRequestDto {
-    private String baeckjoonId;
+public class MemberBaekjoonIdRequestDto {
+    private String baekjoonId;
 }

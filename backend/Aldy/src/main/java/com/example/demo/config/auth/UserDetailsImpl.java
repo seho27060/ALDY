@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(Member member){
         this.id = member.getId();
-        this.baeckjoonId = member.getBaeckjoonId();
+        this.baeckjoonId = member.getBaekjoonId();
         this.nickname = member.getNickname();
         this.password = member.getPassword();
         this.authority = new SimpleGrantedAuthority("USER_ROLE");

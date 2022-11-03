@@ -22,6 +22,6 @@ public class RefreshToken {
 
     private String refreshToken;
 
-    private String baeckjoonId;
+    private String baekjoonId;
 
 }

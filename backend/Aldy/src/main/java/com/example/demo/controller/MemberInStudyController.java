@@ -39,7 +39,7 @@ public class MemberInStudyController {
     @PostMapping()
     public ResponseEntity applicateStudy(@RequestBody ApplicateStudyRequestDto requestDto, HttpServletRequest request) {
 
-        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.applicateStudy(requestDto, loginMember);
 
@@ -69,7 +69,7 @@ public class MemberInStudyController {
     @PatchMapping("accept")
     public ResponseEntity acceptMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
-        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, loginMember, 2);
 
@@ -86,7 +86,7 @@ public class MemberInStudyController {
     @PatchMapping("kick")
     public ResponseEntity kickMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
-        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, loginMember, 0);
 
@@ -103,7 +103,7 @@ public class MemberInStudyController {
     @DeleteMapping("reject")
     public ResponseEntity rejectMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
-        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
         memberInStudyService.rejectMember(requestDto, loginMember);
 

@@ -25,7 +25,7 @@ public class MemberInStudyDto {
         this.auth = memberInStudy.getAuth();
         this.message = memberInStudy.getMessage();
         this.studyId = memberInStudy.getStudy().getId();
-        this.baeckjoonId = memberInStudy.getMember().getBaeckjoonId();
+        this.baeckjoonId = memberInStudy.getMember().getBaekjoonId();
     }
 
 }

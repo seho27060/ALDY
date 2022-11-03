@@ -11,8 +11,8 @@ public interface AuthService {
     MemberResponseDto memberJoin(MemberRequestDto memberRequestDto);
     TokenDto login(LoginRequestDto loginRequestDto);
 
-    String issueAuthString(String baeckjoonId);
-    InterlockResponseDto interlock(String baeckjoonId);
+    String issueAuthString(String baekjoonId);
+    InterlockResponseDto interlock(String baekjoonId);
 
     DoubleCheckResponseDto doubleCheckNickname(String nickname);
 

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SolvedacService {
 
-    List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> baeckjoonIdList);
+    List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList);
 
 }

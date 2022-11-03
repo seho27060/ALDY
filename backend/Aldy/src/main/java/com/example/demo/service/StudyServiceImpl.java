@@ -64,9 +64,9 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Page<StudyDto> getMyStudyPage(int page, int size, String baeckjoonId) {
+    public Page<StudyDto> getMyStudyPage(int page, int size, String baekjoonId) {
 
-        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BaeckjoonId(baeckjoonId,
+        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BaekjoonId(baekjoonId,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
 
         if(memberInStudyPage.isEmpty()) {

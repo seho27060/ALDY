@@ -97,12 +97,12 @@ public class JwtTokenProvider {
     }
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getBaeckjoonId(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getBaekjoonId(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원정보 추출
-    public String getBaeckjoonId(String token){
+    public String getBaekjoonId(String token){
         return Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(token.replaceAll("^Bearer( )*","")).getBody().getSubject();
     }
 

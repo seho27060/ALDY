@@ -31,8 +31,8 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResponseDto withdrawal(MemberPasswordRequestDto memberPasswordRequestDto, HttpServletRequest request) {
-        String loginMember = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member member = memberRepository.findByBaeckjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         MemberResponseDto response;
 
@@ -47,17 +47,17 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberResponseDto findMember(String baeckjoonId) {
-        Member member = memberRepository.findByBaeckjoonId(baeckjoonId)
+    public MemberResponseDto findMember(String baekjoonId) {
+        Member member = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         return new MemberResponseDto(member);
     }
 
     @Override
     public MemberResponseDto modifyInfo(MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request) {
-        System.out.println(">>>>>>>>>>"+jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization")));
-        String loginMemberBaeckjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member member = memberRepository.findByBaeckjoonId(loginMemberBaeckjoonId)
+        System.out.println(">>>>>>>>>>"+jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization")));
+        String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         member.modifyInfo(memberModifyRequestDto);
         return new MemberResponseDto(member);
@@ -65,8 +65,8 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResponseDto modifyPassword(MemberPasswordRequestDto memberPasswordRequestDto, HttpServletRequest request) {
-        String loginMemberBaeckjoonId = jwtTokenProvider.getBaeckjoonId(request.getHeader("Authorization"));
-        Member member = memberRepository.findByBaeckjoonId(loginMemberBaeckjoonId)
+        String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         String rawPassword = memberPasswordRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);

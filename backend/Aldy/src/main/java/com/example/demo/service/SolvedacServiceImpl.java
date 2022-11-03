@@ -19,9 +19,9 @@ public class SolvedacServiceImpl implements SolvedacService {
     private final WebClient webClient;
 
     @Override
-    public List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> baeckjoonIdList) {
+    public List<ProblemDto> filter(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList) {
 
-        String query = makeQuery(algoList, tierList, baeckjoonIdList);
+        String query = makeQuery(algoList, tierList, baekjoonIdList);
 
         final int[] count = new int[1];
         List<ProblemDto> problemDtoList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class SolvedacServiceImpl implements SolvedacService {
         return problemDtoList;
     }
 
-    private String makeQuery(List<String> algoList, List<Integer> tierList, List<String> baeckjoonIdList) {
+    private String makeQuery(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList) {
 //        StringBuffer 사용법 검색
         StringBuilder query = new StringBuilder("");
         String tier = "bsgpdr";
@@ -106,9 +106,9 @@ public class SolvedacServiceImpl implements SolvedacService {
             query.append(")&");
         }
         // "!(solved_by:seho27060|solved_by:min61037)"
-        if(!baeckjoonIdList.isEmpty()) {
+        if(!baekjoonIdList.isEmpty()) {
             query.append("!(");
-            baeckjoonIdList.forEach(b -> {
+            baekjoonIdList.forEach(b -> {
                 query.append("solved_by:").append(b).append("|");
             });
             query.deleteCharAt(query.length() - 1);

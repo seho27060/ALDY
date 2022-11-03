@@ -14,9 +14,7 @@ import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -50,12 +48,12 @@ public class AuthServiceImpl implements AuthService{
         String rawPassword = memberRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
 
-        if(memberRepository.existsByBaeckjoonId(memberRequestDto.getBaeckjoonId())){
+        if(memberRepository.existsByBaekjoonId(memberRequestDto.getBaekjoonId())){
             throw new CustomException(ErrorCode.ALREADY_JOIN);
         }
 
         HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
-        Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaeckjoonId());
+        Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaekjoonId());
         int tier = Integer.parseInt(Optional.ofNullable(entries.get("tier"))
                 .orElse(String.valueOf(0)));
 //        try{
@@ -65,7 +63,7 @@ public class AuthServiceImpl implements AuthService{
 //        }
 
         Member member = Member.builder()
-                .baeckjoonId(memberRequestDto.getBaeckjoonId())
+                .baekjoonId(memberRequestDto.getBaekjoonId())
                 .nickname(memberRequestDto.getNickname())
                 .password(encodedPassword)
                 .email(memberRequestDto.getEmail())
@@ -73,21 +71,21 @@ public class AuthServiceImpl implements AuthService{
                 .build();
 
         memberRepository.save(member);
-        valueOperations.delete(memberRequestDto.getBaeckjoonId(),"tier");
+        valueOperations.delete(memberRequestDto.getBaekjoonId(),"tier");
         return new MemberResponseDto(member);
     }
 
     @Override
     public TokenDto login(LoginRequestDto loginRequestDto) {
-        Member member = memberRepository.findByBaeckjoonId(loginRequestDto.getBaeckjoonId())
+        Member member = memberRepository.findByBaekjoonId(loginRequestDto.getBaekjoonId())
                 .orElseThrow(
                         () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
                 );
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getBaeckjoonId(),loginRequestDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getBaekjoonId(),loginRequestDto.getPassword());
         try {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBaeckjoonId(), List.of("ROLE_USER"));
+            TokenDto tokenDto = jwtTokenProvider.createAccessToken(member.getBaekjoonId(), List.of("ROLE_USER"));
             jwtService.login(tokenDto);
             return tokenDto;
         }catch (DisabledException | LockedException | BadCredentialsException e){
@@ -108,9 +106,9 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public String issueAuthString(String baeckjoonId) {
-        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baeckjoonId)
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+    public String issueAuthString(String baekjoonId) {
+        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_MEMBER));
 
         Random random = new Random();
         int length = 7;
@@ -133,34 +131,33 @@ public class AuthServiceImpl implements AuthService{
             }
         }
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
-        hashOperations.put(baeckjoonId,"authString", String.valueOf(newWord));
-        hashOperations.put(baeckjoonId,"tier", String.valueOf(solvedacResponseDto.getTier()));
-        hashOperations.getOperations().expire(baeckjoonId,5L, TimeUnit.MINUTES);
+        hashOperations.put(baekjoonId,"authString", String.valueOf(newWord));
+        hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacResponseDto.getTier()));
+        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
 //        hashOperations.(backjoonId, 5L, TimeUnit.MINUTES);
         return newWord.toString();
     }
 
     @Override
-//    @CacheEvict(value = "String",key = "#baeckjoonId")
-    public InterlockResponseDto interlock(String baeckjoonId) {
+    public InterlockResponseDto interlock(String baekjoonId) {
 
-        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baeckjoonId)
+        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
 
         HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
-        Map<String, String> entries = valueOperations.entries(baeckjoonId);
+        Map<String, String> entries = valueOperations.entries(baekjoonId);
         String authString = entries.get("authString");
-        valueOperations.delete(baeckjoonId,"authString");
+        valueOperations.delete(baekjoonId,"authString");
 
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
-    private Optional<SolvedacResponseDto> solvedacMemberFindAPI(String baeckjoonId){
+    private Optional<SolvedacResponseDto> solvedacMemberFindAPI(String baekjoonId){
         Optional<SolvedacResponseDto> mono;
         mono = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
-                                .queryParam("handle", baeckjoonId)
+                                .queryParam("handle", baekjoonId)
                                 .build())
                 .acceptCharset(StandardCharsets.UTF_8)
                 .accept(MediaType.APPLICATION_JSON)
@@ -170,7 +167,7 @@ public class AuthServiceImpl implements AuthService{
                         clientResponse ->
                                 clientResponse
                                         .bodyToMono(String.class)
-                                        .map(body -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)))
+                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
                 .bodyToMono(SolvedacResponseDto.class)
                 .flux()
                 .toStream()

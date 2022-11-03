@@ -10,13 +10,13 @@ import java.util.Optional;
 
 public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Long> {
 
-    Optional<MemberInStudy> findByStudy_IdAndMember_BaeckjoonId(Long studyId, String baeckjoonId);
+    Optional<MemberInStudy> findByStudy_IdAndMember_BaekjoonId(Long studyId, String baekjoonId);
 
     List<MemberInStudy> findAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
 
     int countAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
 
-    Page<MemberInStudy> findAllByMember_BaeckjoonId(String baeckjoonId, Pageable pageable);
+    Page<MemberInStudy> findAllByMember_BaekjoonId(String baekjoonId, Pageable pageable);
 
     Optional<MemberInStudy> findByStudy_IdAndMember_Id(Long studyId, Long memberId);
 

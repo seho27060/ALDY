@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.member.request.LoginRequestDto;
-import com.example.demo.domain.dto.member.request.MemberBaeckjoonIdRequestDto;
+import com.example.demo.domain.dto.member.request.MemberBaekjoonIdRequestDto;
 import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.request.ValidateTokenRequestDto;
 import com.example.demo.domain.dto.member.response.*;
@@ -55,25 +55,25 @@ public class AuthController {
         MemberResponseDto memberResponseDto = authService.memberJoin(memberRequestDto);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
-    @Operation(summary = "인증용 문자열 발급", description = "요청 baeckjoonId의 solved.ac 가입 확인과 알디에 가입한 적 있는지 확인 후, 인증용 문자열을 발급합니다.")
+    @Operation(summary = "인증용 문자열 발급", description = "요청 baekjoonId의 solved.ac 가입 확인과 알디에 가입한 적 있는지 확인 후, 인증용 문자열을 발급합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = AuthStringResonseDto.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 baeckjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 baekjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping("/verification")
-    public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBaeckjoonIdRequestDto memberBaeckjoonIdRequestDto) {
-        AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(memberBaeckjoonIdRequestDto.getBaeckjoonId()));
+    public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBaekjoonIdRequestDto memberBaekjoonIdRequestDto) {
+        AuthStringResonseDto authStringResonseDto = new AuthStringResonseDto(authService.issueAuthString(memberBaekjoonIdRequestDto.getBaekjoonId()));
 
         return new ResponseEntity<>(authStringResonseDto, HttpStatus.OK);
     }
-    @Operation(summary = "solved.ac 연동", description = "요청 baeckjoonId의 solved.ac 의 자기소개의 마지막 7자리를 확인하여 이전에 발급된 인증용 문자열과 비교하여 연동 인증을 확인합니다.")
+    @Operation(summary = "solved.ac 연동", description = "요청 baekjoonId의 solved.ac 의 자기소개의 마지막 7자리를 확인하여 이전에 발급된 인증용 문자열과 비교하여 연동 인증을 확인합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = InterlockResponseDto.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 baeckjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 baekjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @GetMapping("/interlock/{baeckjoonId}")
-    public ResponseEntity<InterlockResponseDto> interlock(@PathVariable String baeckjoonId){
-       InterlockResponseDto interlockResponseDto = authService.interlock(baeckjoonId);
+    @GetMapping("/interlock/{baekjoonId}")
+    public ResponseEntity<InterlockResponseDto> interlock(@PathVariable String baekjoonId){
+       InterlockResponseDto interlockResponseDto = authService.interlock(baekjoonId);
         return new ResponseEntity<>(interlockResponseDto, HttpStatus.OK);
     }
 
