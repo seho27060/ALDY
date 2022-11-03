@@ -15,12 +15,13 @@ import javax.persistence.*;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-
 public class RequestedCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Boolean isDone=false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
@@ -33,4 +34,8 @@ public class RequestedCode {
     @OneToOne
     @JoinColumn(name = "code_id")
     private Code code;
+
+    public void replyCheck(){
+        this.isDone = true;
+    }
 }

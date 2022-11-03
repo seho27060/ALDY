@@ -2,9 +2,14 @@ package com.example.demo.domain.dto;
 
 
 import com.example.demo.domain.dto.code.CodeDto;
+import com.example.demo.domain.dto.member.response.MemberResponseDto;
+import com.example.demo.domain.entity.Code;
+import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.RequestedCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 // 독립적 테이블이 별로 없음.
 // 9개 API 분류
@@ -21,13 +26,15 @@ import lombok.NoArgsConstructor;
 public class RequestedCodeDto {
     private Long id;
 
-//    private MemberDto sender;
-//    private MemberDto receiver;
+    private boolean isDone;
+    private MemberResponseDto sender;
+    private MemberResponseDto receiver;
     private CodeDto codeDto;
     public RequestedCodeDto(RequestedCode requestedCode){
         this.id = requestedCode.getId();
         this.codeDto = new CodeDto(requestedCode.getCode());
-//        this.sender = new MemberDto(requestedCode.getSender());
-//        this.receiver = new MemberDto(requestedCode.getReceiver());
+        this.isDone = requestedCode.getIsDone();
+        this.sender = new MemberResponseDto(requestedCode.getSender());
+        this.receiver = new MemberResponseDto(requestedCode.getReceiver());
     }
 }

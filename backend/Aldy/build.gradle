@@ -30,6 +30,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Crwaling
+	implementation 'org.jsoup:jsoup:1.15.3'
+
 	// Swagger
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.9'
 	// WebClient

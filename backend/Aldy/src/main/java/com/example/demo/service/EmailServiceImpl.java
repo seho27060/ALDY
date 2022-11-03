@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 //@AllArgsConstructor
 @RequiredArgsConstructor
-public class EmailService {
+public class EmailServiceImpl {
 
     private final JavaMailSender emailSender;
     private String title_type_1 = "알디 코드 리뷰 요청 메일 알림";
