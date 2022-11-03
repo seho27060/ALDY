@@ -98,8 +98,8 @@ const Signup = () => {
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
             <div>
-              <p className="review-modal-title">
-                인증 코드 : {bojValidationCode}
+              <p className="beakjonn-modal-title">
+                인증 코드 : <span>{bojValidationCode}</span>
               </p>
               <p style={{ fontSize: "12px", color: "#646464" }}>
                 solved.ac 가입 후, solved.ac 자기소개 끝에 인증코드를

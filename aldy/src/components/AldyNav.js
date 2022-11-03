@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { BsPerson, BsPower } from "react-icons/bs";
-import { useRecoilState } from 'recoil'
+import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../store/states";
 
 import "./AldyNav.css";
@@ -26,13 +26,14 @@ const RedButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  margin-left: 20px;
 `;
 
 const AldyNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [logged, setLogged] = useRecoilState(isLoggedIn)
-  const [username] = useRecoilState(userName)
+  const [logged, setLogged] = useRecoilState(isLoggedIn);
+  const [username] = useRecoilState(userName);
 
   const navigateMain = () => {
     navigate("/");
@@ -47,8 +48,8 @@ const AldyNav = () => {
     navigate("/mypage");
   };
   const navigateLogin = () => {
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   const [userObject, setUserObject] = useState(true);
 
@@ -133,18 +134,26 @@ const AldyNav = () => {
                     <BsPerson />
                     마이페이지
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action4" onClick={()=>{
-                    sessionStorage.clear()
-                    setLogged(false)
-                  }}>
+                  <NavDropdown.Item
+                    href="#action4"
+                    onClick={() => {
+                      sessionStorage.clear();
+                      setLogged(false);
+                      alert("로그아웃 되었습니다.");
+                    }}
+                  >
                     <BsPower />
                     로그아웃
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <RedButton onClick={()=>{
-                  navigateLogin()
-                }}>로그인</RedButton>
+                <RedButton
+                  onClick={() => {
+                    navigateLogin();
+                  }}
+                >
+                  로그인
+                </RedButton>
               )}
             </Nav>
             {!userObject ? <RedButton>로그인</RedButton> : ""}
