@@ -52,7 +52,22 @@ export const delteStudy = (studyId) => {
     return api.delete(`/study/${studyId}`)
 }
 
+// 알림 이메일 전송
+export const sendEmail = (data) => {
+    return api.post('/study/mail/send', data)
+}
+
 // 내 스터디 목록 조회
 export const getMyStudy = () => {
     return api.get('/study/mystudy')
+}
+
+// 달력에 문제 추가
+export const addProblem = (data) => {
+    return api.post('/calendar/problem', data)
+}
+
+// 달력에서 문제 삭제
+export const deleteProblem = (studyId, date, problemId) => {
+    return api.delete(`/calendar/problem/${studyId}/${date}/${problemId}`)
 }
