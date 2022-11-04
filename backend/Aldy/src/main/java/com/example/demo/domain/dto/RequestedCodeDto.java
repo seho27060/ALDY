@@ -3,8 +3,6 @@ package com.example.demo.domain.dto;
 
 import com.example.demo.domain.dto.code.CodeDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.entity.Code;
-import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.RequestedCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -41,17 +41,17 @@ class StudyTest {
     private final List<Calendar> calendarList = new ArrayList<>();
     @Test
     public void saveStudy(){
-        calendarList.add(calendar);
-
-        Study study = studyRepository.save(Study.builder()
-                .name(name)
-                .threshold(threshold)
-                .introduction(introduction)
-                .upperLimit(upperLimit)
-                .visibility(visibility)
-                .calendarList(calendarList)
-                .build());
-        System.out.println(">>>>>"+calendarRepository.findAll().get(0).toString());
+//        calendarList.add(calendar);
+//
+//        Study study = studyRepository.save(Study.builder()
+//                .name(name)
+//                .threshold(threshold)
+//                .introduction(introduction)
+//                .upperLimit(upperLimit)
+//                .visibility(visibility)
+//                .calendarList(calendarList)
+//                .build());
+//        System.out.println(">>>>>"+calendarRepository.findAll().get(0).toString());
     }
 
 }
