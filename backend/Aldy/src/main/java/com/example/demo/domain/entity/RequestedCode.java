@@ -24,7 +24,7 @@ public class RequestedCode {
     private Long id;
 
     // private Boolean isDone=false;
-    private Boolean isDone=false;
+    private Boolean isDone;
 
     private Boolean isChecked;
 
