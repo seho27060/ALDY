@@ -15,8 +15,11 @@ const MyStudyListItem = (props) => {
   return (
     <div className="study-list-item">
       <div className="study-list-title">
-        <div className="study-id">{props.num}</div>
-        <h5 className="study-name" onClick={navigateMyStudyDetail}>
+        <div className="study-id">공룡</div>
+        <h5
+          className={`study-name ${dropdown === "active" ? "big-size" : ""}`}
+          onClick={navigateMyStudyDetail}
+        >
           {props.item.name}
         </h5>
         <div className="study-number">
