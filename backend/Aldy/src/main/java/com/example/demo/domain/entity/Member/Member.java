@@ -4,10 +4,12 @@ import com.example.demo.domain.dto.member.request.MemberModifyRequestDto;
 import com.example.demo.domain.entity.EditedCode;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.RequestedCode;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

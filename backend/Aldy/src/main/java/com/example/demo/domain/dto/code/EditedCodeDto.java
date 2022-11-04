@@ -1,5 +1,6 @@
-package com.example.demo.domain.dto;
+package com.example.demo.domain.dto.code;
 
+import com.example.demo.domain.dto.code.CodeDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.EditedCode;
 import lombok.Getter;

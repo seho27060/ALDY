@@ -1,6 +1,7 @@
 package com.example.demo.domain.dto;
 
 
+import com.example.demo.domain.dto.code.CodeDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.RequestedCode;
 import lombok.Getter;

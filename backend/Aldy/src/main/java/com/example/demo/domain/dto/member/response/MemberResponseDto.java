@@ -10,10 +10,12 @@ public class MemberResponseDto {
     private String baekjoonId;
     private String nickname;
     private String email;
+    private int tier;
 
     public MemberResponseDto(Member member){
         this.baekjoonId = member.getBaekjoonId();
         this.email = member.getEmail();
         this.nickname = member.getNickname();
+        this.tier = member.getTier();
     }
 }

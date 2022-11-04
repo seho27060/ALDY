@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.CreateStudyRequestDto;
 import com.example.demo.domain.dto.MailDto;
+import com.example.demo.domain.dto.ProblemChoiceRequestDto;
 import com.example.demo.domain.dto.StudyDto;
 import com.example.demo.service.CalendarService;
 import com.example.demo.exception.CustomException;
@@ -29,13 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 public class StudyController {
 
     private final JwtTokenProvider jwtTokenProvider;
-
     private final StudyService studyService;
-
     private final MemberInStudyService memberInStudyService;
-
     private final CalendarService calendarService;
-
     private final EmailServiceImpl emailServiceImpl;
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
@@ -127,7 +124,7 @@ public class StudyController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
-    @Operation(summary = "문제 선정된 요일 반환 API - 담당자 조성민", description = "문제가 설정된 요일들을 반환하는 API")
+    @Operation(summary = "문제 선정된 요일 반환 API - [담당자 조성민]", description = "문제가 설정된 요일들을 반환하는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
@@ -136,7 +133,7 @@ public class StudyController {
         return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
     }
 
-    @Operation(summary = "이메일 발송 테스트 API - 담당자 조성민", description = "스웨거에서만 테스트 용도로 사용, 실제로는 서비스 단에서 끌어서 사용할 것")
+    @Operation(summary = "이메일 발송 테스트 API - [담당자 조성민]", description = "스웨거에서만 테스트 용도로 사용, 실제로는 서비스 단에서 끌어서 사용할 것")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
@@ -146,5 +143,26 @@ public class StudyController {
         emailServiceImpl.sendSimpleMessage(mailDto);
         System.out.println("메일 전송 완료");
         return "AfterMail.html";
+    }
+
+    @PostMapping("/problem")
+    @Operation(summary = "달력에 문제 추가 API - [담당자 조성민]", description = "달력 특정 요일에 문제를 추가하는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    private ResponseEntity study12(@RequestBody ProblemChoiceRequestDto problemChoiceRequestDto){
+
+        calendarService.registerProblem(problemChoiceRequestDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/problem/{study_id}/{date}/{problem_id}")
+    @Operation(summary = "달력에서 문제 삭제 API - [담당자 조성민]", description = "달력에서 문제를 하나씩 삭제시키는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    private ResponseEntity study14(@PathVariable long study_id, @PathVariable int problem_id, @PathVariable String date){
+        calendarService.deleteProblem(study_id, problem_id, date);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

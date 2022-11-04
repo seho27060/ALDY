@@ -1,7 +1,5 @@
 package com.example.demo.config.auth;
 
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

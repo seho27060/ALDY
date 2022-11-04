@@ -1,6 +1,7 @@
 package com.example.demo.service.member;
 
 import com.example.demo.domain.dto.member.request.*;
+import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,9 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface MemberService {
 
     MemberResponseDto withdrawal(MemberPasswordRequestDto password, HttpServletRequest request);
-    MemberResponseDto findMember(String baekjoonId);
+    MemberResponseDto findMember(HttpServletRequest request);
     MemberResponseDto modifyInfo(MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request);
     MemberResponseDto modifyPassword(MemberPasswordRequestDto memberPasswordRequestDto, HttpServletRequest request);
-
-
+    CodeReviewNumberResponseDto findCodeReviewNumberRelatedMember(HttpServletRequest request);
 }
