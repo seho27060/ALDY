@@ -1,9 +1,10 @@
 import './CodeReviewList.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { getMyStudy } from '../../api/study'
+import { getReviewList } from '../../api/code'
 
 const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
@@ -81,73 +82,143 @@ const CodeReviewList = () => {
   )
 };
 
-
+// 내가 요청 받은 코드
 const RequestToMe = () => {
   const [list, setList] = useState(null);
   useEffect(()=>{
     // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    setList([
-      {
-      studyname:'알스알스',
-      reviewer: '백준',
-      problemnumber: '28483',
-      problemname: '설탕배달',
-      date: '12329',
-      proccess: '완료'
-      },
-      {
-      studyname:'알스알스',
-      reviewer: 'baekjoon',
-      problemnumber: '28483',
-      problemname: '설탕배달',
-      date: '12329',
-      proccess: '미완료'
-      },
-      {
-      studyname:'알스알스',
-      reviewer: 'dowicksl',
-      problemnumber: '28483',
-      problemname: '설탕배달',
-      date: '12329',
-      proccess: '완료'
-      },
-      {
-      studyname:'알스알스',
-      reviewer: 'qioicmlsl',
-      problemnumber: '28483',
-      problemname: '설탕배달',
-      date: '12329',
-      proccess: '미완료'
-      },
-    ])
+    getReviewList()
+    .then((res)=>{
+      setList(res.data.requestedCodeList)
+      console.log(res)
+    }).catch((err)=>{
+      console.log(err)
+      alert('코드 리스트를 불러올 수 없습니다.')
+    })
+    // setList([
+    //   {
+    //   studyname:'알스알스',
+    //   reviewer: '백준',
+    //   problemnumber: '28483',
+    //   problemname: '설탕배달',
+    //   date: '12329',
+    //   proccess: '완료'
+    //   },
+    //   {
+    //   studyname:'알스알스',
+    //   reviewer: 'baekjoon',
+    //   problemnumber: '28483',
+    //   problemname: '설탕배달',
+    //   date: '12329',
+    //   proccess: '미완료'
+    //   },
+    //   {
+    //   studyname:'알스알스',
+    //   reviewer: 'dowicksl',
+    //   problemnumber: '28483',
+    //   problemname: '설탕배달',
+    //   date: '12329',
+    //   proccess: '완료'
+    //   },
+    //   {
+    //   studyname:'알스알스',
+    //   reviewer: 'qioicmlsl',
+    //   problemnumber: '28483',
+    //   problemname: '설탕배달',
+    //   date: '12329',
+    //   proccess: '미완료'
+    //   },
+    // ])
   }, [])
   return (
     <div>
       {
-        list?.map((item) => <Card item={item}/>)
+        list?.map((item) => <CardRequestToMe item={item}/>)
       }
     </div>
   )
 }
-
+// 내가 요청한 코드
 const RequestByMe = () => {
+  const [list, setList] = useState(null)
+  useEffect(()=>{
+    getReviewList()
+    .then((res)=>{
+      setList(res.data.requestingCodeList)
+    }).catch((err)=>{
+      console.log(err)
+      alert('코드 리스트를 불러올 수 없습니다.')
+    })
+  }, [])
   return (
     <div>
-
+      {
+        list?.map((item) => <CardRequestByMe item={item}/>)
+      }
     </div>
   )
 }
-
+// 내가 리뷰 받은 코드
 const ReviewedCode = () => {
+  const [list, setList] = useState(null)
+  useEffect(()=>{
+    getReviewList()
+    .then((res)=>{
+      setList(res.data.editedCodeList)
+    }).catch((err)=>{
+      console.log(err)
+      alert('코드 리스트를 불러올 수 없습니다.')
+    })
+  }, [])
   return (
     <div>
-
+      {
+        list?.map((item) => <CardReviewdCode item={item}/>)
+      }
     </div>
   )
 }
+// 리뷰 요청받은 코드 카드 컴포넌트
+const CardRequestToMe = (props) => {
+  const item = props.item.codeDto;
+  console.log(item)
+  const navigate = useNavigate();
+  return (
+    <Container className='review-list-item'>
+      <Row>
+        <Col>{item.studyDto.name}</Col>
+        <Col>{item.writer.baekjoonId}</Col>
+        <Col>{item.problemId}</Col>
+        <Col>{item.problemName}</Col>
+        <Col>{item.createdDate.substring(0,10)}</Col>
+        <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn' onClick={()=>{
+            // 코드 첨삭 페이지로 이동
+            navigate(`/correct/1`)
+        }}>코드 첨삭하기</button>}</Col>
+      </Row>
+    </Container>
+  )
+}
+// 요청 한 코드 카드 컴포넌트
+const CardRequestByMe = (props) => {
+  const item = props.item.codeDto;
+  const navigate = useNavigate();
+  return (
+    <Container className='review-list-item'>
+      <Row>
+        <Col>{item.studyname}</Col>
+        <Col>{item.reviewer}</Col>
+        <Col>{item.problemnumber}</Col>
+        <Col>{item.problemname}</Col>
+        <Col>{item.date}</Col>
+      </Row>
+    </Container>
+  )
+}
 
-const Card = (props) => {
-  const item = props.item;
+const CardReviewdCode = (props) => {
+  const item = props.item.codeDto;
+  const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
       <Row>
@@ -157,11 +228,11 @@ const Card = (props) => {
         <Col>{item.problemname}</Col>
         <Col>{item.date}</Col>
         <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn' onClick={()=>{
-          getMyStudy()
-        }}>코드 첨삭하기</button>}</Col>
+          navigate('/review')
+        }}>코드리뷰 4단계</button>}</Col>
       </Row>
     </Container>
-  )
+  ) 
 }
 
 export default CodeReviewList;
