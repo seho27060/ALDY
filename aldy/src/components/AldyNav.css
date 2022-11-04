@@ -24,7 +24,8 @@
 .nav-link {
   font-size: 15px;
   font-weight: bold;
-  margin-left: 25px;
+  margin-left: 12px;
+  margin-right: 13px;
 }
 
 .nav-link-active {
@@ -38,4 +39,8 @@
 /* offcanvas */
 .offcanvas-header {
   align-items: baseline;
+}
+
+.nav_info {
+  display: flex;
 }
