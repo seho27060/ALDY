@@ -37,8 +37,8 @@ public class CalendarServiceImpl implements CalendarService{
         int month = problemChoiceRequestDto.getMonth();;
         int day = problemChoiceRequestDto.getDay();
         // 달력이 있으면 가져오고 달력이 없으면 하나 만들어줌.
-        Calendar calendar = calendarRepository.findById(problemChoiceRequestDto.getStudyId()).orElse(
-                calendarRepository.save(Calendar.builder()
+        Calendar calendar = calendarRepository.findById(problemChoiceRequestDto.getStudyId()).orElseGet(
+                () -> calendarRepository.save(Calendar.builder()
                         .calendarMonth(month)
                         .calendarYear(year)
                         .study(study)
