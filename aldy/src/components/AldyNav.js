@@ -126,26 +126,34 @@ const AldyNav = () => {
                 코드리뷰
               </Nav.Link>
               {logged ? (
-                <NavDropdown
-                  title={username}
-                  id="offcanvasNavbarDropdown-expand-md"
-                >
-                  <NavDropdown.Item onClick={navigateMypage}>
-                    <BsPerson />
-                    마이페이지
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                    href="#action4"
-                    onClick={() => {
-                      sessionStorage.clear();
-                      setLogged(false);
-                      alert("로그아웃 되었습니다.");
-                    }}
+                <div className="nav_info">
+                  <img
+                    src={process.env.PUBLIC_URL + "/navzookeeper.png"}
+                    alt=""
+                    width="37px"
+                    height="40px"
+                  ></img>
+                  <NavDropdown
+                    title={username}
+                    id="offcanvasNavbarDropdown-expand-md"
                   >
-                    <BsPower />
-                    로그아웃
-                  </NavDropdown.Item>
-                </NavDropdown>
+                    <NavDropdown.Item onClick={navigateMypage}>
+                      <BsPerson />
+                      마이페이지
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      href="#action4"
+                      onClick={() => {
+                        sessionStorage.clear();
+                        setLogged(false);
+                        alert("로그아웃 되었습니다.");
+                      }}
+                    >
+                      <BsPower />
+                      로그아웃
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
               ) : (
                 <RedButton
                   onClick={() => {
