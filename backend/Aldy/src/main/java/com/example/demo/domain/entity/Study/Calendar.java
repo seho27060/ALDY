@@ -16,11 +16,12 @@ public class Calendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
 
     @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL)
-    private List<ProblemTable> problemTableList;
+    private List<Problem> problemList;
 
     private int calendarMonth;
     private int calendarYear;

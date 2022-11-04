@@ -4,7 +4,7 @@ import com.example.demo.domain.dto.study.CalendarDto;
 import com.example.demo.domain.dto.study.ProblemChoiceRequestDto;
 import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.entity.Study.Calendar;
-import com.example.demo.domain.entity.Study.ProblemTable;
+import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -48,7 +48,7 @@ public class CalendarServiceImpl implements CalendarService{
         List<ProblemDto> problemList = problemChoiceRequestDto.getProblemList();
         // 문제들을 하나씩 문제테이블에 넣어줌.
         for(ProblemDto problem : problemList){
-            ProblemTable problemTable = ProblemTable.builder()
+            Problem problemTable = Problem.builder()
                     .problemId(problem.getProblemId())
                     .problemTier(problem.getLevel())
                     .problemName(problem.getTitleKo())
@@ -77,14 +77,14 @@ public class CalendarServiceImpl implements CalendarService{
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study_id, year, month).orElseThrow(
                 () -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND)
         );
-        List<ProblemTable> problemTableList = problemTableRepository.findByCalendar_id(calendar.getId());
+        List<Problem> problemList = problemTableRepository.findByCalendar_id(calendar.getId());
 
         String year_str = String.valueOf(year);
         String month_str = String.format("%02d", month);
 
         List<String> dayList = new ArrayList<>();
-        for(ProblemTable problemTable : problemTableList){
-            String day_str = String.format("%02d", problemTable.getProblemDay());
+        for(Problem problem : problemList){
+            String day_str = String.format("%02d", problem.getProblemDay());
             dayList.add(day_str+"-"+month_str+"-"+year_str);
         }
         CalendarDto calendarDto = CalendarDto.builder()

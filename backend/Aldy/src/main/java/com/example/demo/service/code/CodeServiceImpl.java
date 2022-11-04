@@ -7,7 +7,7 @@ import com.example.demo.domain.entity.Code.EditedCode;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Code.RequestedCode;
 import com.example.demo.domain.entity.Study.Calendar;
-import com.example.demo.domain.entity.Study.ProblemTable;
+import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -144,7 +143,7 @@ public class CodeServiceImpl implements CodeService {
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(study.getId(),month, year)
                 .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
 
-        ProblemTable problemTable = problemTableRepository.
+        Problem problem = problemTableRepository.
                 findByCalendar_idAndProblemId(calendar.getId(), codeSaveRequestDto.getProblemId())
                 .orElseThrow(()->new CustomException(ErrorCode.PROBLEMTABLE_NOT_FOUND));
 
@@ -153,7 +152,7 @@ public class CodeServiceImpl implements CodeService {
                 .writer(writer)
                 .study(study)
                 .process(codeSaveRequestDto.getProcess())
-                .problemTable(problemTable)
+                .problem(problem)
 //                .problemName(codeSaveRequestDto.getProblemName())
 //                .problemTier(codeSaveRequestDto.getProblemTier())
                 .build();

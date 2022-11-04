@@ -39,7 +39,7 @@ public class CodeDto {
         this.studyDto = new StudyDto(code.getStudy(),0);
         this.id = code.getId();
         this.process = code.getProcess();
-        this.problem = new ProblemTableDto(code.getProblemTable());
+        this.problem = new ProblemTableDto(code.getProblem());
 //        this.problemId = code.getProblemId();
 //        this.problemName = code.getProblemName();
 //        this.problemTier = code.getProblemTier();
