@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import StudyListItem from "../../components/StudyListItem";
 import MyStudyListItem from "../../components/MyStudyListItem";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
 
 const RedButton = styled.button`
@@ -29,7 +29,8 @@ const StudyList = () => {
   // Pagination
   const [studyPageNum, setStudyPageNum] = useState(1);
   const [myStudyPageNum, setMyStudyPageNum] = useState(1);
-  // const [totalCount, setTotalCount] = useState(1);
+  const [studyTotal, setStudyTotal] = useState(0);
+  const [myStudyTotal, setMyStudyTotal] = useState(0);
 
   const navigateStudyCreate = () => {
     navigate("/study/create");
@@ -38,8 +39,10 @@ const StudyList = () => {
   useEffect(() => {
     getStudyList(studyPageNum)
       .then((res) => {
-        console.log(res.data.content);
-        setStudyList(res.data.content);
+        const data = res.data.studyDtoPage;
+        // console.log(data);
+        setStudyList(data.content);
+        setStudyTotal(data.totalElements);
       })
       .catch((err) => {
         console.log(err);
@@ -49,8 +52,10 @@ const StudyList = () => {
   useEffect(() => {
     getMyStudy(myStudyPageNum)
       .then((res) => {
-        console.log(res.data.content);
-        setMyStudyList(res.data.content);
+        const data = res.data.studyDtoPage;
+        // console.log(data);
+        setMyStudyList(data.content);
+        setMyStudyTotal(data.totalElements);
       })
       .catch((err) => {
         console.log(err);
@@ -131,15 +136,25 @@ const StudyList = () => {
           {tab === "studyListAll" && (
             <div className="study-list-box">
               {studyList?.map((item, i) => (
-                <StudyListItem key={i} num={i + 1} item={item} />
+                <StudyListItem key={i} item={item} />
               ))}
+              <Paging
+                page={studyPageNum}
+                setPage={setStudyPageNum}
+                totalElements={studyTotal}
+              />
             </div>
           )}
           {tab === "studyListMy" && (
             <div className="study-list-box">
               {myStudyList?.map((item, i) => (
-                <MyStudyListItem key={i} num={i + 1} item={item} />
+                <MyStudyListItem key={i} item={item} />
               ))}
+              <Paging
+                page={myStudyPageNum}
+                setPage={setMyStudyPageNum}
+                totalElements={myStudyTotal}
+              />
             </div>
           )}
         </div>
