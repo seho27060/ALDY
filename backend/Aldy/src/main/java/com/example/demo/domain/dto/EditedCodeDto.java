@@ -14,8 +14,11 @@ public class EditedCodeDto {
     private MemberResponseDto sender;
     private MemberResponseDto receiver;
     private CodeDto codeDto;
+
+    private String editedCode;
     public EditedCodeDto(EditedCode editedCode){
         this.id = editedCode.getId();
+        this.editedCode = editedCode.getText();
         this.codeDto = new CodeDto(editedCode.getCode());
         this.sender = new MemberResponseDto(editedCode.getSender());
         this.receiver = new MemberResponseDto(editedCode.getReceiver());
