@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto;
 
+import com.example.demo.domain.dto.solvedac.ProblemDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

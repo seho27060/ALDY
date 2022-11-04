@@ -1,20 +1,28 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.ProblemDto;
+
+import com.example.demo.config.jwt.JwtTokenProvider;
+import com.example.demo.domain.dto.solvedac.ProblemDto;
 import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.dto.ProblemFilterDto;
+import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -22,7 +30,8 @@ import java.util.*;
 public class SolvedacServiceImpl implements SolvedacService {
 
     private final WebClient webClient;
-
+    private final CrawlingServiceImpl crawlingService;
+    private final JwtTokenProvider jwtTokenProvider;
     @Override
     public ProblemFilterDto filter(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList, int page) {
 
@@ -106,5 +115,77 @@ public class SolvedacServiceImpl implements SolvedacService {
                 .toStream()
                 .findFirst();
         return mono;
+    }
+
+    @Override
+    public SolvedacSearchProblemDto recommendProblemFoMember(HttpServletRequest request) throws IOException {
+        String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        int page = 1;
+        Long tier = 9L;
+        String query = "";
+
+        StringBuilder problemsIds = new StringBuilder("");
+
+        // 로그인 사용자의 최근 푼 문제 번호 20개 가져오기
+        ArrayList<Integer> latestSolvedProblemIdList = crawlingService.getRecentProblems(baekjoonId);
+
+        for(int latestSolvedProblemId : latestSolvedProblemIdList){
+            problemsIds.append(latestSolvedProblemId);
+            problemsIds.append(",");
+        }
+        problemsIds.deleteCharAt(problemsIds.length()-1);
+        // 문제 번호 20개로 문제 20개 불러오기
+        System.out.println("latestSolvedProblemIdList"+ latestSolvedProblemIdList);
+        System.out.println("problemIds"+ problemsIds);
+
+        List<ProblemDto> problemDtoList;
+        problemDtoList = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/problem/lookup")
+                                .queryParam("problemIds", problemsIds)
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(status ->
+                                status.is4xxClientError() || status.is5xxServerError(),
+                        clientResponse ->
+                                clientResponse
+                                        .bodyToMono(String.class)
+                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
+                .bodyToFlux(ProblemDto.class)
+                .toStream()
+                .collect(Collectors.toList());;
+
+//        System.out.println(problemDtoList.get(0).getProblemId());
+//        System.out.println(problemDtoList.get(problemDtoList.size()-1).getProblemId());
+        // 가져온 문제들의 알고리즘 분류 카운트
+        Map<String,Long> tagMap;
+        
+        // 카운트 상위 최대 3개의 알고리즘 분류 가져오기
+        // 쿼리 생성
+        // 옵션 주고 문제 api
+        // 최대 50개중 랜덤으로 반환
+//        Flux<ProblemDto> flux;
+//
+//        flux = webClient.get()
+//                .uri(uriBuilder ->
+//                        uriBuilder.path("/search/problem")
+//                                .queryParam("query", query)
+//                                .queryParam("page", page)
+//                                .queryParam("sort", "solved")
+//                                .queryParam("direction", "desc")
+//                                .build())
+//                .acceptCharset(StandardCharsets.UTF_8)
+//                .accept(MediaType.APPLICATION_JSON)
+//                .retrieve()
+//                .onStatus(status ->
+//                                status.is4xxClientError() || status.is5xxServerError(),
+//                        clientResponse ->
+//                                clientResponse
+//                                        .bodyToMono(String.class)
+//                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
+//                .bodyToFlux(ProblemDto.class);
+        return null;
     }
 }

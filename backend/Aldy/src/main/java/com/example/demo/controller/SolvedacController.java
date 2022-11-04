@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.ProblemDto;
 import com.example.demo.domain.dto.ProblemFilterDto;
 import com.example.demo.service.SolvedacService;
 import io.swagger.v3.oas.annotations.Operation;

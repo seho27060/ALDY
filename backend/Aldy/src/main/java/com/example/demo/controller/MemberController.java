@@ -4,8 +4,10 @@ import com.example.demo.domain.dto.member.request.*;
 import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
+import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.exception.ErrorResponse;
 
+import com.example.demo.service.SolvedacService;
 import com.example.demo.service.member.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Tag(name = "Member API - [담당자 : 박세호]", description = "회원정보 조회, 수정, 탈퇴")
 @RestController
@@ -29,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final SolvedacService solvedacService;
 
     @Operation(summary = "회원 탈퇴 API", description = "로그인 유저의 회원 정보 삭제합니다.")
     @ApiResponses({
@@ -91,7 +95,14 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto,HttpStatus.OK);
     }
 
+    @Operation(summary = "로그인 사용자 문제 추천", description = "로그인 유저의 최근 푼 20개 문제를 기준으로 1개의 문제를 추천합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = SolvedacSearchProblemDto.class))),
+    })
     @GetMapping("/recommendation")
-    public
+    public ResponseEntity<SolvedacSearchProblemDto> recommendProblemFoMember(HttpServletRequest request) throws IOException {
+        SolvedacSearchProblemDto solvedacSearchProblemDto = solvedacService.recommendProblemFoMember(request);
+        return new ResponseEntity<>(solvedacSearchProblemDto, HttpStatus.OK);
+    }
 }
 

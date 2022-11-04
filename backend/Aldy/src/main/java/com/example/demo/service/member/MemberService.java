@@ -14,4 +14,5 @@ public interface MemberService {
     MemberResponseDto modifyPassword(MemberPasswordRequestDto memberPasswordRequestDto, HttpServletRequest request);
     CodeReviewNumberResponseDto findCodeReviewNumberRelatedMember(HttpServletRequest request);
     MemberResponseDto renewTier(HttpServletRequest request);
+
 }
