@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
-import com.example.demo.domain.dto.CreateStudyRequestDto;
-import com.example.demo.domain.dto.MailDto;
-import com.example.demo.domain.dto.ProblemChoiceRequestDto;
-import com.example.demo.domain.dto.StudyDto;
+import com.example.demo.domain.dto.*;
 import com.example.demo.service.CalendarService;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -60,12 +57,12 @@ public class StudyController {
     })
     @GetMapping()
     public ResponseEntity getAllStudyPage(
-            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             @RequestParam(value = "keyword", defaultValue = "") String keyword
     ) {
 
-        Page<StudyDto> studyDtoPage = studyService.getAllStudyPage(page, size, keyword);
+        StudyPageResponseDto studyDtoPage = studyService.getAllStudyPage(page - 1, size, keyword);
 
         return new ResponseEntity(studyDtoPage, HttpStatus.OK);
 
@@ -78,14 +75,14 @@ public class StudyController {
     })
     @GetMapping("/mystudy")
     public ResponseEntity getMyStudyPage(
-            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             HttpServletRequest request
     ) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
-        Page<StudyDto> studyDtoPage = studyService.getMyStudyPage(page, size, loginMember);
+        StudyPageResponseDto studyDtoPage = studyService.getMyStudyPage(page - 1, size, loginMember);
 
         return new ResponseEntity(studyDtoPage, HttpStatus.OK);
     }

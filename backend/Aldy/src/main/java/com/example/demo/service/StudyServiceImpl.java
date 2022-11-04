@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.dto.CreateStudyRequestDto;
 import com.example.demo.domain.dto.StudyDto;
 
+import com.example.demo.domain.dto.StudyPageResponseDto;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.Study;
 
@@ -48,7 +49,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Page<StudyDto> getAllStudyPage(int page, int size, String keyword) {
+    public StudyPageResponseDto getAllStudyPage(int page, int size, String keyword) {
 
         Page<Study> studyPage = studyRepository.findAllByNameContaining(keyword,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
@@ -57,14 +58,16 @@ public class StudyServiceImpl implements StudyService {
             throw new CustomException(ErrorCode.STUDY_NOT_FOUND);
         }
 
-        return studyPage.map(e ->
+        Page<StudyDto> studyDtoPage =  studyPage.map(e ->
                 new StudyDto(e, countMember(e.getId()))
         );
+
+        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage);
 
     }
 
     @Override
-    public Page<StudyDto> getMyStudyPage(int page, int size, String baekjoonId) {
+    public StudyPageResponseDto getMyStudyPage(int page, int size, String baekjoonId) {
 
         Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BaekjoonId(baekjoonId,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
@@ -73,9 +76,11 @@ public class StudyServiceImpl implements StudyService {
             throw new CustomException(ErrorCode.STUDY_NOT_FOUND);
         }
 
-        return memberInStudyPage.map(e ->
+        Page<StudyDto> studyDtoPage = memberInStudyPage.map(e ->
                 new StudyDto(e.getStudy(), countMember(e.getStudy().getId()))
         );
+
+        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage);
 
     }
 
