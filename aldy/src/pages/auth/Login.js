@@ -61,6 +61,7 @@ const Login = () => {
                   sessionStorage.setItem('accessToken', res.data.accessToken)
                   sessionStorage.setItem('refreshToken', res.data.refreshToken)
                   setLogged(true)
+                  sessionStorage.setItem('userName', idInput.current.value)
                   setUsername(idInput.current.value)
                   navigateMain()
                 })

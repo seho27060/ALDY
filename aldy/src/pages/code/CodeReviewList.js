@@ -5,6 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { getReviewList } from '../../api/code'
+import { useRecoilState } from "recoil";
+import { correctCode, recoilMyCode, recoilStep } from "../../store/states";
 
 const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
@@ -59,7 +61,7 @@ const CodeReviewList = () => {
         <Container className='review-list-header'>
           <Row>
             <Col>스터디 이름</Col>
-            <Col>보낸 사람</Col>
+            <Col>{ tab === 'requestToMe' ? "요청한 사람" : "리뷰한 사람" }</Col>
             <Col>문제 번호</Col>
             <Col>문제 이름</Col>
             <Col>날짜</Col>
@@ -95,40 +97,6 @@ const RequestToMe = () => {
       console.log(err)
       alert('코드 리스트를 불러올 수 없습니다.')
     })
-    // setList([
-    //   {
-    //   studyname:'알스알스',
-    //   reviewer: '백준',
-    //   problemnumber: '28483',
-    //   problemname: '설탕배달',
-    //   date: '12329',
-    //   proccess: '완료'
-    //   },
-    //   {
-    //   studyname:'알스알스',
-    //   reviewer: 'baekjoon',
-    //   problemnumber: '28483',
-    //   problemname: '설탕배달',
-    //   date: '12329',
-    //   proccess: '미완료'
-    //   },
-    //   {
-    //   studyname:'알스알스',
-    //   reviewer: 'dowicksl',
-    //   problemnumber: '28483',
-    //   problemname: '설탕배달',
-    //   date: '12329',
-    //   proccess: '완료'
-    //   },
-    //   {
-    //   studyname:'알스알스',
-    //   reviewer: 'qioicmlsl',
-    //   problemnumber: '28483',
-    //   problemname: '설탕배달',
-    //   date: '12329',
-    //   proccess: '미완료'
-    //   },
-    // ])
   }, [])
   return (
     <div>
@@ -165,6 +133,7 @@ const ReviewedCode = () => {
     getReviewList()
     .then((res)=>{
       setList(res.data.editedCodeList)
+      console.log('리뷰받은', res.data.editedCodeList)
     }).catch((err)=>{
       console.log(err)
       alert('코드 리스트를 불러올 수 없습니다.')
@@ -180,20 +149,23 @@ const ReviewedCode = () => {
 }
 // 리뷰 요청받은 코드 카드 컴포넌트
 const CardRequestToMe = (props) => {
-  const item = props.item.codeDto;
+  const item = props.item;
+  const [code, setCode] = useRecoilState(correctCode)
   console.log(item)
   const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
       <Row>
-        <Col>{item.studyDto.name}</Col>
-        <Col>{item.writer.baekjoonId}</Col>
-        <Col>{item.problemId}</Col>
-        <Col>{item.problemName}</Col>
-        <Col>{item.createdDate.substring(0,10)}</Col>
-        <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn' onClick={()=>{
+        <Col>{item.codeDto.studyDto.name}</Col>
+        <Col>{item.sender.baekjoonId}</Col>
+        <Col>{item.codeDto.problemId}</Col>
+        <Col>{item.codeDto.problemName}</Col>
+        <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
+        <Col>{item.done ? "완료" : <button className='correctBtn' onClick={()=>{
             // 코드 첨삭 페이지로 이동
-            navigate(`/correct/1`)
+            sessionStorage.setItem('correctCode', item.codeDto.code)
+            setCode(item.codeDto.code)
+            navigate('/correct')
         }}>코드 첨삭하기</button>}</Col>
       </Row>
     </Container>
@@ -201,35 +173,43 @@ const CardRequestToMe = (props) => {
 }
 // 요청 한 코드 카드 컴포넌트
 const CardRequestByMe = (props) => {
-  const item = props.item.codeDto;
+  const item = props.item;
   const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
       <Row>
-        <Col>{item.studyname}</Col>
-        <Col>{item.reviewer}</Col>
-        <Col>{item.problemnumber}</Col>
-        <Col>{item.problemname}</Col>
-        <Col>{item.date}</Col>
+        <Col>{item.codeDto.studyDto.name}</Col>
+        <Col>{item.receiver.baekjoonId}</Col>
+        <Col>{item.codeDto.problemId}</Col>
+        <Col>{item.codeDto.problemName}</Col>
+        <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
+        <Col>{item.done ? "완료" : "미완료"}</Col>
       </Row>
     </Container>
   )
 }
-
+// 리뷰받은 코드 카드 컴포넌트
 const CardReviewdCode = (props) => {
-  const item = props.item.codeDto;
+  const item = props.item;
+  const [process, setProcess] = useRecoilState(recoilStep)
+  const [myCode, setMyCode] = useRecoilState(recoilMyCode)
   const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
       <Row>
-        <Col>{item.studyname}</Col>
-        <Col>{item.reviewer}</Col>
-        <Col>{item.problemnumber}</Col>
-        <Col>{item.problemname}</Col>
-        <Col>{item.date}</Col>
-        <Col>{item.proccess === '완료' ? item.proccess : <button className='correctBtn' onClick={()=>{
+        <Col>{item.codeDto.studyDto.name}</Col>
+        <Col>{item.sender.baekjoonId}</Col>
+        <Col>{item.codeDto.problemId}</Col>
+        <Col>{item.codeDto.problemName}</Col>
+        <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
+        <Col><button className='correctBtn' onClick={()=>{
           navigate('/review')
-        }}>코드리뷰 4단계</button>}</Col>
+          setProcess(4)
+          setMyCode(item.codeDto.code)
+          sessionStorage.setItem('problemId', item.codeDto.problemId)
+          sessionStorage.setItem('studyId', item.codeDto.studyDto.id)
+          sessionStorage.setItem('editedCode', item.editedCode)
+        }}>코드리뷰 4단계</button></Col>
       </Row>
     </Container>
   ) 

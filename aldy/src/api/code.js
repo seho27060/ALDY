@@ -24,3 +24,8 @@ export const reviewRequest = (data) => {
 export const getReviewList = () => {
     return api.get('/code/review-page')
 }
+
+// 첨삭받은 코드 리스트 조회
+export const getEditedCodes = (studyId, problemId) => {
+    return api.get(`/code/getEditedCodes/${studyId}/${problemId}`)
+}
