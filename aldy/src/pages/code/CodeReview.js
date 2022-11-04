@@ -3,19 +3,28 @@ import { useState, useRef, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import Editor from '@monaco-editor/react'
+import { useRecoilState } from "recoil";
+import { recoilMyCode, recoilStep } from "../../store/states";
+import { getEditedCodes } from "../../api/code";
+import { useNavigate } from "react-router-dom";
 
 const CodeReview = () => {
-  const [step, setStep] = useState(1);
+  const [selected, setSelected] = useState(null)
+  const [editedCode, setEditedCode] = useState(null)
+  const sessionEditCode = sessionStorage.getItem('editedCode')
+  const [step, setStep] = useRecoilState(recoilStep);
   const [requestModalShow, setRequestModalShow] = useState(false);
   const [stepModalShow1, setStepModalShow1] = useState(false);
   const [stepModalShow2, setStepModalShow2] = useState(false);
   const [stepModalShow3, setStepModalShow3] = useState(false);
   const [stepModalShow4, setStepModalShow4] = useState(false);
   const [language, setLanguage] = useState('python')
+  const [editedCodeList, setEditedCodeList] = useState([])
   const [subimtCode, setSumbitCode] = useState(null)
-  const [myCode, setMyCode] = useState("")
+  const [myCode, setMyCode] = useRecoilState(recoilMyCode)
   const [yourCode, setYourCode] = useState("")
   const editorRef = useRef(null)
+  const navigate = useNavigate();
   function handleEditorChange(editor, monaco) {
     editorRef.current = editor;
     setSumbitCode(editorRef.current.getValue())
@@ -26,6 +35,16 @@ const CodeReview = () => {
     3:<StepModal3 show={stepModalShow3} onHide={()=>{setStepModalShow3(false)}}></StepModal3>,
     4:<StepModal4 show={stepModalShow4} onHide={()=>{setStepModalShow4(false)}}></StepModal4>
   }
+
+  useEffect(()=>{
+    const studyId = sessionStorage.getItem('studyId')
+    const problemId = sessionStorage.getItem('problemId')
+    getEditedCodes(studyId, problemId)
+    .then((res)=>{
+      console.log(res.data)
+      setEditedCodeList(res.data)
+    })
+  }, [])
 
   return (
     <main className="review-main">
@@ -98,13 +117,44 @@ const CodeReview = () => {
           <div className="review-code">
             {
               step === 4 ? 
-              <div className="step-four-main">
-                <div className="step-four-your-code">
-                  <Editor className='review-code-editor'
-                          height='100%'
+                <div className="step-four-main">
+                  <div className="step-four-your-code">
+                    <div className="step-four-type">
+                      <span>리뷰 받은 코드 
+                        {/* <select className="reviewer-select" onChange={(e)=>{
+                          setEditedCode(e.target.value)
+                          sessionStorage.setItem('editedCode', e.target.value)
+                          navigate('/review')
+                          }}>
+                          <option>---선택하기</option>
+                          {
+                            editedCodeList?.map((item)=><option value={item.editedCode}>{item.sender.baekjoonId}</option>)
+                          }
+                        </select> */}
+                      </span>
+                    </div>
+                    <Editor className='review-code-editor'
+                            height='95%'
+                            language={language}
+                            theme='vs-dark'
+                            defaultValue={sessionEditCode}
+                            onMount={handleEditorChange}
+                            options={{
+                              fontSize:20,
+                              minimap:{ enabled: false},
+                              scrollbar:{
+                                vertical: 'auto',
+                                horizontal: 'auto'
+                            }
+                          }}></Editor>
+                  </div>
+                  <div className="step-four-my-code">
+                  <div className="step-four-type">내가 작성했던 코드</div>
+                    <Editor className='review-code-editor'
+                          height='95%'
                           language={language}
                           theme='vs-dark'
-                          defaultValue={yourCode}
+                          defaultValue={myCode}
                           onMount={handleEditorChange}
                           options={{
                             fontSize:20,
@@ -114,27 +164,11 @@ const CodeReview = () => {
                               horizontal: 'auto'
                           }
                         }}></Editor>
+                  </div>
                 </div>
-                <div className="step-four-my-code">
-                  <Editor className='review-code-editor'
-                        height='100%'
-                        language={language}
-                        theme='vs-dark'
-                        defaultValue={myCode}
-                        onMount={handleEditorChange}
-                        options={{
-                          fontSize:20,
-                          minimap:{ enabled: false},
-                          scrollbar:{
-                            vertical: 'auto',
-                            horizontal: 'auto'
-                        }
-                      }}></Editor>
-                </div>
-              </div>
               :
             <Editor className='review-code-editor'
-              height='100%'
+              height='95%'
               language={language}
               theme='vs-dark'
               defaultValue={null}

@@ -5,10 +5,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Editor from '@monaco-editor/react'
+import { useRecoilState } from "recoil";
+import { correctCode } from "../../store/states";
 
 const CodeCorrect = () => {
   let { params } = useParams();
-  const [code, setCode] = useState("");
+  const [code, setCode] = useRecoilState(correctCode);
   const [language, setLanguage] = useState('python')
   const [reply, setReply] = useState(null)
   const editorRef = useRef(null)
