@@ -55,8 +55,9 @@ h2.underline-green {
 .description-detail {
   width: 380px;
   background-color: white;
-  box-shadow: 5px 10px 10px #c2c2d6;
+  box-shadow: 3px 3px 7px #c2c2d6;
   padding: 20px;
+  border-radius: 10px;
 }
 
 button.correctBtn {

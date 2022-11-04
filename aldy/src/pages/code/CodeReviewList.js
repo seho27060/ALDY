@@ -27,7 +27,7 @@ const CodeReviewList = () => {
       </section>
       <section className='description'>
         <div className='description-detail'>
-          <img src="/CodeReviewIcon.png" alt="코드리뷰 이미지"></img>
+          <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
           <p>다른 사람에게서</p>
           <h2 className='underline-green'>내게 요청 온 목록</h2>
         </div>
@@ -164,6 +164,13 @@ const CardRequestToMe = (props) => {
         <Col>{item.done ? "완료" : <button className='correctBtn' onClick={()=>{
             // 코드 첨삭 페이지로 이동
             sessionStorage.setItem('correctCode', item.codeDto.code)
+            sessionStorage.setItem('studyName', item.codeDto.studyDto.name)
+            sessionStorage.setItem('sender', item.sender.baekjoonId)
+            sessionStorage.setItem('problemId', item.codeDto.problemId)
+            sessionStorage.setItem('problemName', item.codeDto.problemName)
+            sessionStorage.setItem('createDate', item.codeDto.createdDate.substring(0,10))
+            sessionStorage.setItem('receiverId', item.sender.baekjoonId)
+            sessionStorage.setItem('studyId', item.codeDto.studyDto.id)
             setCode(item.codeDto.code)
             navigate('/correct')
         }}>코드 첨삭하기</button>}</Col>
@@ -183,7 +190,7 @@ const CardRequestByMe = (props) => {
         <Col>{item.codeDto.problemId}</Col>
         <Col>{item.codeDto.problemName}</Col>
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
-        <Col>{item.done ? "완료" : "미완료"}</Col>
+        <Col>{item.done ? "완료" : <div style={{'color':'red', 'fontWeight':'bold'}}>미완료</div>}</Col>
       </Row>
     </Container>
   )
@@ -192,7 +199,7 @@ const CardRequestByMe = (props) => {
 const CardReviewdCode = (props) => {
   const item = props.item;
   const [process, setProcess] = useRecoilState(recoilStep)
-  const [myCode, setMyCode] = useRecoilState(recoilMyCode)
+  // const [myCode, setMyCode] = useRecoilState(recoilMyCode)
   const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
@@ -205,9 +212,10 @@ const CardReviewdCode = (props) => {
         <Col><button className='correctBtn' onClick={()=>{
           navigate('/review')
           setProcess(4)
-          setMyCode(item.codeDto.code)
+          // setMyCode(item.codeDto.code)
           sessionStorage.setItem('problemId', item.codeDto.problemId)
           sessionStorage.setItem('studyId', item.codeDto.studyDto.id)
+          sessionStorage.setItem('mycode', item.codeDto.code)
           sessionStorage.setItem('editedCode', item.editedCode)
         }}>코드리뷰 4단계</button></Col>
       </Row>

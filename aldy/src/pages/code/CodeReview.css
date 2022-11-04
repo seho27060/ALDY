@@ -7,6 +7,29 @@
   padding-bottom: 20px;
 }
 
+.review-header-step-img {
+  width: 90px;
+}
+
+
+.review-header-step {
+  display: flex;
+  justify-content: flex-end;
+  margin: auto;
+}
+
+.review-header-step-btn {
+  border: 2px solid #e63246;
+  outline: none;
+  color: #e63246;
+  background: white;
+  border-radius: 8px;
+  padding: 0 30px;
+  transform: translateY(40px);
+  height: 50px;
+}
+
+
 h2.review-orange {
   /* text-decoration-line: underline;
     text-decoration-color: #FFE1AA;
