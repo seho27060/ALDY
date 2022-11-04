@@ -13,10 +13,13 @@ public class StudyPageResponseDto {
 
     private int numberOfPages;
 
+    private long numberOfObject;
+
     private Page<StudyDto> studyDtoPage;
 
-    public StudyPageResponseDto(int numberOfPages, Page<StudyDto> studyDtoPage) {
+    public StudyPageResponseDto(int numberOfPages, long numberOfObject, Page<StudyDto> studyDtoPage) {
         this.numberOfPages = numberOfPages;
+        this.numberOfObject = numberOfObject;
         this.studyDtoPage = studyDtoPage;
     }
 
