@@ -9,4 +9,6 @@ public interface EditedCodeRepository extends JpaRepository<EditedCode, Long> {
     List<EditedCode> findBySender_id(long member_id);
 
     List<EditedCode> findByReceiver_id(long member_id);
+
+    List<EditedCode> findAllByCode_idAndReceiver_id(Long id, Long id1);
 }
