@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -21,7 +23,14 @@ public class RequestedCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // private Boolean isDone=false;
     private Boolean isDone=false;
+
+    private Boolean isChecked;
+
+    @CreatedDate
+    private LocalDateTime requestDate;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
@@ -35,7 +44,18 @@ public class RequestedCode {
     @JoinColumn(name = "code_id")
     private Code code;
 
+    @PrePersist
+    public void prePersist() {
+        this.isChecked = false;
+        this.isDone = false;
+    }
+
     public void replyCheck(){
         this.isDone = true;
     }
+
+    public void batchCheck() {
+        this.isChecked = true;
+    }
+
 }
