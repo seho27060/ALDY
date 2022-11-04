@@ -15,10 +15,10 @@ const RedButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  margin: 10px;
 `;
 
 const Mypage = () => {
-  const [tab, setTab] = useState("studyListAll");
   const navigate = useNavigate();
 
   const navigateUserinfo = () => {
@@ -41,7 +41,9 @@ const Mypage = () => {
           <span className="study-highlight-green"> 스터디 </span>
           <span>모아보기✨ </span>
         </p>
-        <h2 className="study-underline-green">회원정보</h2>
+        <h2 className="Mypage-underline-orange">
+          <span>회원정보</span>
+        </h2>
         <div className="Mypage-section1-userinfo">
           <div>
             <h2>유저아이디</h2>
@@ -76,7 +78,9 @@ const Mypage = () => {
       </section>
       <section className="study-search">
         <img src={process.env.PUBLIC_URL + "/mypageStudyList.png"} alt=""></img>
-        <h2 className="study-underline-orange">내가 가입한 스터디 목록</h2>
+        <h2 className="Mypage-underline-orange">
+          <span>내가 가입한 스터디 목록</span>
+        </h2>
         <p>
           <span>✨스터디에 참여해 문제를 풀고 </span>
           <span className="study-highlight-orange">코드리뷰</span>
@@ -89,92 +93,6 @@ const Mypage = () => {
         </div>
       </section>
     </main>
-  );
-};
-
-const StudyListAll = () => {
-  const [studyList, setStudyList] = useState(null);
-
-  useEffect(() => {
-    // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    setStudyList([
-      {
-        studyId: "1",
-        studyName: "SSAFY ALDY",
-        studyNumber: "5/6",
-        studyRank: "Gold4",
-        studyDescription:
-          "✨ 다들 열심히 달려봅시다!! ✨ 저희 스터디는 알고리즘 스터디입니다. 매주 월 수 금 문제를 풀어 올려야 합니다~~",
-      },
-      {
-        studyId: "2",
-        studyName: "알고리즘 홧팅!",
-        studyNumber: "4/5",
-        studyRank: "Gold3",
-        studyDescription: "알고리즘 화이팅~~",
-      },
-      {
-        studyId: "3",
-        studyName: "다들 열심히 스터디",
-        studyNumber: "3/6",
-        studyRank: "Gold2",
-        studyDescription: "아무말이나 우선 적어보기",
-      },
-      {
-        studyId: "4",
-        studyName: "공룡 키우기",
-        studyNumber: "6/6",
-        studyRank: "Gold1",
-        studyDescription: "우리 스터디는 마감이요",
-      },
-    ]);
-  }, []);
-
-  return (
-    <div className="study-list-box">
-      {studyList?.map((item, studyId) => (
-        <StudyListItem key={studyId} item={item} />
-      ))}
-    </div>
-  );
-};
-
-const StudyListItem = (props) => {
-  const [dropdown, setDropdown] = useState("none");
-
-  return (
-    <div className="study-list-item">
-      <div className="study-list-title">
-        <div className="study-id">{props.item.studyId}</div>
-        <h5 className="study-name">{props.item.studyName}</h5>
-        <div className="study-number">{props.item.studyNumber}</div>
-        {dropdown === "none" && (
-          <FaChevronCircleDown
-            className="down-icon"
-            onClick={() => {
-              setDropdown("active");
-            }}
-          />
-        )}
-        {dropdown === "active" && (
-          <FaChevronCircleUp
-            className="down-icon"
-            onClick={() => {
-              setDropdown("none");
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        className={`study-list-content ${
-          dropdown === "active" ? "content-active" : ""
-        }`}
-      >
-        <div className="study-rank">{props.item.studyRank}</div>
-        <div>{props.item.studyDescription}</div>
-      </div>
-    </div>
   );
 };
 
