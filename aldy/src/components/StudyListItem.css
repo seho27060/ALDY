@@ -1,0 +1,74 @@
+.study-list-item {
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.study-list-title {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.study-id {
+  background-color: #4b3200;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+.study-name {
+  font-weight: 700;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.study-number {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.down-icon {
+  width: 25px;
+  height: 25px;
+  color: #4b3200;
+  cursor: pointer;
+}
+
+.down-icon:hover {
+  color: rgba(75, 50, 0, 0.3);
+}
+
+.study-list-content {
+  flex-direction: column;
+  text-align: start;
+  align-items: flex-start;
+  width: calc(100% - 120px);
+  margin: 7px 0;
+  display: none;
+}
+
+.study-rank {
+  display: flex;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.content-active {
+  display: flex;
+}
+
+.study-rank > img {
+  width: 20px;
+  margin-right: 5px;
+}

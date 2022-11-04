@@ -128,96 +128,48 @@ section.study-list-banner {
   margin: 3% 5%;
 }
 
-.study-list-item {
+/* Pagination */
+/* buttonRedner */
+.pageButtonBox {
+  display: flex;
+  /* position: fixed;
+  bottom: 50px; */
+}
+
+.pageButton {
+  padding: 2px 7px;
+  border: none;
   background-color: white;
-  border-radius: 10px;
-  margin: 10px 0;
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  color: rgb(150, 150, 150);
+  font-size: 13px;
+  cursor: pointer;
+  margin: 0 5px;
+  white-space: nowrap;
+  align-items: baseline;
 }
 
-.study-list-title {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.study-id {
-  background-color: #4b3200;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  margin: 0 10px;
-}
-
-.study-name {
-  font-weight: 700;
-  margin: 0 10px;
+.pageButton:hover {
+  color: rgb(0, 0, 0);
   cursor: pointer;
 }
 
-.study-number {
-  margin-left: auto;
-  margin-right: 10px;
-}
-
-.down-icon {
-  width: 25px;
-  height: 25px;
-  color: #4b3200;
+.pageButtonActive {
+  padding: 2px 7px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: white;
+  color: rgb(0, 0, 0);
+  font-size: 13px;
   cursor: pointer;
+  margin: 0 5px;
+  white-space: nowrap;
 }
 
-.down-icon:hover {
-  color: rgba(75, 50, 0, 0.3);
+.pageIcon {
+  color: rgb(150, 150, 150);
+  padding-bottom: 3px;
+  font-size: 17px;
 }
 
-.study-list-content {
-  flex-direction: column;
-  text-align: start;
-  align-items: flex-start;
-  width: calc(100% - 120px);
-  margin: 7px 0;
-  display: none;
-}
-
-.my-study-list-content {
-  text-align: start;
-  align-items: flex-start;
-  width: calc(100% - 120px);
-  margin: 7px 0;
-  display: none;
-}
-
-.content-active {
-  display: flex;
-}
-
-.my-study-description1 {
-  flex-direction: column;
-  width: 50%;
-  /* border-right: 1px dashed #4b3200; */
-  margin-right: 7px;
-}
-
-.my-study-description2 {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  height: 100%;
-  width: 50%;
-  border-left: 1px dashed #4b3200;
-  padding-left: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.study-rank {
-  font-weight: bold;
+.pageIcon:hover {
+  color: rgb(0, 0, 0);
 }
