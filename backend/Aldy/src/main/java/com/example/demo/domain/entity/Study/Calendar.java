@@ -3,6 +3,7 @@ package com.example.demo.domain.entity.Study;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,13 +16,13 @@ public class Calendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    수정 필요
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
 
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL)
+    private List<ProblemTable> problemTableList;
+
     private int calendarMonth;
     private int calendarYear;
-
 
 }

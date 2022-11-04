@@ -20,7 +20,7 @@ public class ProblemTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "calendar_id")
     private Calendar calendar;
 
