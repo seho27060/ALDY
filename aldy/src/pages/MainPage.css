@@ -23,6 +23,9 @@ section.main-page-description {
   background-color: #373737;
   color: white;
   padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .main-page-banner-text {
@@ -111,7 +114,6 @@ h1 {
 }
 
 .main-page-description-title {
-  font-family: GmarketSans;
   font-style: normal;
   font-size: 30px;
   font-weight: 600;
@@ -120,9 +122,32 @@ h1 {
   color: #ffffff;
   position: relative;
   z-index: 1;
+  /* margin-bottom: 10px; */
+  background-color: #373737;
 }
 
 .main-page-highlight {
   color: #c8e687;
   font-size: 20px;
+}
+
+.main-page-description-text > p > span {
+  font-family: "uhbeeBold";
+  font-size: 25px;
+  margin-top: 10px;
+}
+.aldy_step_info {
+  background-color: #c8e687;
+}
+.aldy_step_info_title {
+  color: #373737;
+  font-family: "onemobile";
+  font-size: 35px;
+  padding-top: 15px;
+}
+.aldy_step_info_text {
+  color: #373737;
+  font-family: "kotra";
+  font-size: 30px;
+  padding-bottom: 15px;
 }

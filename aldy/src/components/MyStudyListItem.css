@@ -2,7 +2,7 @@
   background-color: white;
   border-radius: 10px;
   margin: 10px 0;
-  padding: 5px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -30,6 +30,12 @@
   font-weight: 700;
   margin: 0 10px;
   cursor: pointer;
+  font-size: 20px;
+  align-self: center;
+}
+
+.big-size {
+  font-size: 25px;
 }
 
 .study-number {
