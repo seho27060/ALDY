@@ -12,6 +12,7 @@ import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.Member.MemberRepository;
+import com.example.demo.service.SolvedacService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -42,6 +43,7 @@ public class AuthServiceImpl implements AuthService{
     private final JwtService jwtService;
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
+    private final SolvedacService solvedacService;
 
     @Override
     public MemberResponseDto memberJoin(MemberRequestDto memberRequestDto) {
@@ -107,7 +109,7 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public String issueAuthString(String baekjoonId) {
-        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baekjoonId)
+        SolvedacResponseDto solvedacResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_MEMBER));
 
         Random random = new Random();
@@ -141,7 +143,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public InterlockResponseDto interlock(String baekjoonId) {
 
-        SolvedacResponseDto solvedacResponseDto = solvedacMemberFindAPI(baekjoonId)
+        SolvedacResponseDto solvedacResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
 
@@ -152,28 +154,7 @@ public class AuthServiceImpl implements AuthService{
 
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
-    private Optional<SolvedacResponseDto> solvedacMemberFindAPI(String baekjoonId){
-        Optional<SolvedacResponseDto> mono;
-        mono = webClient.get()
-                .uri(uriBuilder ->
-                        uriBuilder.path("/user/show")
-                                .queryParam("handle", baekjoonId)
-                                .build())
-                .acceptCharset(StandardCharsets.UTF_8)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(status ->
-                                status.is4xxClientError() || status.is5xxServerError(),
-                        clientResponse ->
-                                clientResponse
-                                        .bodyToMono(String.class)
-                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
-                .bodyToMono(SolvedacResponseDto.class)
-                .flux()
-                .toStream()
-                .findFirst();
-        return mono;
-    }
+
     @Override
     public DoubleCheckResponseDto doubleCheckNickname(String nickname) {
         return new DoubleCheckResponseDto(!memberRepository.existsByNickname(nickname));

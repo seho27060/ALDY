@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.ProblemDto;
+import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import reactor.core.publisher.Flux;
 
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -118,5 +122,28 @@ public class SolvedacServiceImpl implements SolvedacService {
         query.deleteCharAt(query.length() - 1);
 
         return query.toString();
+    }
+
+    public Optional<SolvedacResponseDto> solvedacMemberFindAPI(String baekjoonId){
+        Optional<SolvedacResponseDto> mono;
+        mono = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/user/show")
+                                .queryParam("handle", baekjoonId)
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(status ->
+                                status.is4xxClientError() || status.is5xxServerError(),
+                        clientResponse ->
+                                clientResponse
+                                        .bodyToMono(String.class)
+                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
+                .bodyToMono(SolvedacResponseDto.class)
+                .flux()
+                .toStream()
+                .findFirst();
+        return mono;
     }
 }

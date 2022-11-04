@@ -41,16 +41,22 @@ public class MemberController {
 
         return new ResponseEntity<>(memberResponseDto,HttpStatus.OK);
     }
-    @Operation(summary = "회원 조회 API", description = "검색 유저의 회원 정보 조회합니다.")
+    @Operation(summary = "마이페이지", description = "로그인 유저의 회원 정보를 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "회원 정보를 찾을 수 없습니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @GetMapping("/find/{baekjoonId}")
-    public ResponseEntity<MemberResponseDto> findMember(@PathVariable String baekjoonId){
-        MemberResponseDto memberResponseDto = memberService.findMember(baekjoonId);
+    @GetMapping("/mypage")
+    public ResponseEntity<MemberResponseDto> findMember(HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.findMember(request);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
+
+    @Operation(summary = "마이페이지 리뷰한 코드, 리뷰 받은 코드 개수", description = "로그인 사용자가 리뷰한 코드(replyCodeReviewNumber), 로그인 사용자가 리뷰 받은 코드(answerCodeReviewNumber)")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = CodeReviewNumberResponseDto.class))),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 요청입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @GetMapping("/review")
     public ResponseEntity<CodeReviewNumberResponseDto> findCodeReviewNumberRelatedMember(HttpServletRequest request){
         CodeReviewNumberResponseDto codeReviewNumberResponseDto = memberService.findCodeReviewNumberRelatedMember(request);

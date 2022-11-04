@@ -28,8 +28,9 @@ public class MemberServiceImpl implements MemberService{
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
-    private final EditedCodeRepository editedCodeRepository;
     private final RequestedCodeRepository requestedCodeRepository;
+
+    private final EditedCodeRepository editedCodeRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -53,7 +54,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberResponseDto findMember(String baekjoonId) {
+    public MemberResponseDto findMember(HttpServletRequest request) {
+        String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member member = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         return new MemberResponseDto(member);
@@ -88,8 +90,8 @@ public class MemberServiceImpl implements MemberService{
 
         long member_id = member.getId();
 
-        Long answerReviewNumber = Optional.ofNullable(requestedCodeRepository.countByReceiver_idAndIsDone(member_id,true)).orElse(0L);
-        Long replyCodeReviewNumber = Optional.ofNullable(requestedCodeRepository.countBySender_idAndIsDone(member_id,true)).orElse(0L);
+        Long answerReviewNumber = Optional.ofNullable(editedCodeRepository.countByReceiver_id(member_id)).orElse(0L);
+        Long replyCodeReviewNumber = Optional.ofNullable(editedCodeRepository.countBySender_id(member_id)).orElse(0L);
 
         CodeReviewNumberResponseDto codeReviewNumberResponseDto = new CodeReviewNumberResponseDto(answerReviewNumber,replyCodeReviewNumber);
         return codeReviewNumberResponseDto;
