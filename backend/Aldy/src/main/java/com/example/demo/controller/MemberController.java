@@ -81,6 +81,17 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.modifyPassword(memberPasswordRequestDto, request);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
+    @Operation(summary = "로그인 사용자 tier 갱신", description = "로그인 유저의 백준 tier를 갱신합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
+    })
+    @PutMapping("/renew")
+    public ResponseEntity<MemberResponseDto> renewTier(HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.renewTier(request);
+        return new ResponseEntity<>(memberResponseDto,HttpStatus.OK);
+    }
 
+    @GetMapping("/recommendation")
+    public
 }
 

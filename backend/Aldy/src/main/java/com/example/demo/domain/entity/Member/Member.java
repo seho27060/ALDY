@@ -41,7 +41,7 @@ public class Member {
 
     private String nickname;
 
-    private int tier;
+    private Long tier;
 
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<MemberInStudy> studyList;
@@ -62,6 +62,9 @@ public class Member {
     }
     public void modifyPassword(String password){
         this.password = password;
+    }
+    public void renewTier(Long tier){
+        this.tier = tier;
     }
 }
 

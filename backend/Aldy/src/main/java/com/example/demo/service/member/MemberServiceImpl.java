@@ -4,13 +4,14 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.request.*;
 import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
+import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.EditedCodeRepository;
 import com.example.demo.repository.Member.MemberRepository;
 
-import com.example.demo.repository.RequestedCodeRepository;
+import com.example.demo.service.SolvedacService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class MemberServiceImpl implements MemberService{
-
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
-    private final RequestedCodeRepository requestedCodeRepository;
-
     private final EditedCodeRepository editedCodeRepository;
-
+    private final SolvedacService solvedacService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -86,15 +84,33 @@ public class MemberServiceImpl implements MemberService{
 // 리뷰 한거 -> 받는 사람이 나이고, done
 // 리뷰 받은거 -> 보내는 사람이 나이고, done
         String backjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
-        Member member = memberRepository.findByBaekjoonId(backjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member member = memberRepository.findByBaekjoonId(backjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         long member_id = member.getId();
 
-        Long answerReviewNumber = Optional.ofNullable(editedCodeRepository.countByReceiver_id(member_id)).orElse(0L);
-        Long replyCodeReviewNumber = Optional.ofNullable(editedCodeRepository.countBySender_id(member_id)).orElse(0L);
+        Long answerReviewNumber = Optional.ofNullable(editedCodeRepository.countByReceiver_id(member_id))
+                .orElse(0L);
+        Long replyCodeReviewNumber = Optional.ofNullable(editedCodeRepository.countBySender_id(member_id))
+                .orElse(0L);
 
         CodeReviewNumberResponseDto codeReviewNumberResponseDto = new CodeReviewNumberResponseDto(answerReviewNumber,replyCodeReviewNumber);
         return codeReviewNumberResponseDto;
+    }
+
+    @Override
+    public MemberResponseDto renewTier(HttpServletRequest request) {
+        String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        SolvedacMemberResponseDto solvedacMemberResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member loginMember = memberRepository.findByBaekjoonId(baekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        loginMember.renewTier(solvedacMemberResponseDto.getTier());
+
+        MemberResponseDto memberResponseDto = new MemberResponseDto(loginMember);
+
+        return memberResponseDto;
     }
 
 

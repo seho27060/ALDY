@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.dto.ApplicateStudyRequestDto;
 import com.example.demo.domain.dto.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.MemberInStudyDto;
-import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
+import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.MemberInStudy;
 import com.example.demo.domain.entity.Study;
@@ -83,7 +83,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
         // tier 체크
 //        tier Member Entity에 추가
-        SolvedacResponseDto solvedacResponseDto = webClient.get()
+        SolvedacMemberResponseDto solvedacMemberResponseDto = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
                                 .queryParam("handle", baekjoonId)
@@ -91,10 +91,10 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
                 .acceptCharset(StandardCharsets.UTF_8)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(SolvedacResponseDto.class)
+                .bodyToMono(SolvedacMemberResponseDto.class)
                 .blockOptional().get();
 
-        if( solvedacResponseDto.getTier() < study.getThreshold() ) {
+        if( solvedacMemberResponseDto.getTier() < study.getThreshold() ) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
         }
 

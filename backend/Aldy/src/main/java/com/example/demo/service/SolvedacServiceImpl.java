@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.ProblemDto;
-import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
+import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -77,7 +78,6 @@ public class SolvedacServiceImpl implements SolvedacService {
                             }
                         }
                     }
-
                     problemDtoList.add(new ProblemDto(num, name, acceptedUserCount));
                 } else {
                     String tmpCnt = s.get(0).replaceAll("[^0-9]", "");
@@ -134,8 +134,8 @@ public class SolvedacServiceImpl implements SolvedacService {
         return query.toString();
     }
 
-    public Optional<SolvedacResponseDto> solvedacMemberFindAPI(String baekjoonId){
-        Optional<SolvedacResponseDto> mono;
+    public Optional<SolvedacMemberResponseDto> solvedacMemberFindAPI(String baekjoonId){
+        Optional<SolvedacMemberResponseDto> mono;
         mono = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
@@ -150,7 +150,7 @@ public class SolvedacServiceImpl implements SolvedacService {
                                 clientResponse
                                         .bodyToMono(String.class)
                                         .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
-                .bodyToMono(SolvedacResponseDto.class)
+                .bodyToMono(SolvedacMemberResponseDto.class)
                 .flux()
                 .toStream()
                 .findFirst();
