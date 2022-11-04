@@ -2,13 +2,9 @@ package com.example.demo.domain.dto;
 
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Code;
-import com.example.demo.domain.entity.Member.Member;
-import com.example.demo.domain.entity.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -24,7 +20,7 @@ public class CodeDto {
 
     private String code;
 
-    private int level;
+    private int process;
 
     private Long problemId;
 
@@ -38,7 +34,7 @@ public class CodeDto {
         this.writer = new MemberResponseDto(code.getWriter());
         this.studyDto = new StudyDto(code.getStudy(),0);
         this.id = code.getId();
-        this.level = code.getProcess();
+        this.process = code.getProcess();
         this.problemId = code.getProblemId();
         this.problemName = code.getProblemName();
         this.problemTier = code.getProblemTier();
