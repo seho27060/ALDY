@@ -4,6 +4,7 @@ import com.example.demo.domain.dto.*;
 import org.springframework.http.HttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 // edited, request 모두 여기서 처리할 것.
 public interface CodeService {
@@ -16,4 +17,6 @@ public interface CodeService {
     CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto, HttpServletRequest request);
 
     RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request);
+
+    List<EditedCodeDto> getEditedCodes(long studyId, int problemId, HttpServletRequest request);
 }
