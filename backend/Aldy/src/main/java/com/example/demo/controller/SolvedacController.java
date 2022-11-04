@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.ProblemDto;
+import com.example.demo.domain.dto.ProblemFilterDto;
 import com.example.demo.service.SolvedacService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,15 +30,12 @@ public class SolvedacController {
     public ResponseEntity filterProblem(
             @RequestParam(required = false) List<String> algoList,
             @RequestParam(required = false) List<Integer> tierList,
-            @RequestParam(required = false) List<String> backjoonIdList) {
+            @RequestParam(required = false) List<String> backjoonIdList,
+            @RequestParam(defaultValue = "1") int page) {
 
-//        List<ProblemDto> test = solvedacService.filter("(tier:g1|tier:g2|tier:g3)&(tag:bfs|tag:dfs)&!(solved_by:seho27060|solved_by:min61037)");
-//
-//        return new ResponseEntity(test, HttpStatus.OK);
+        ProblemFilterDto problemFilterDto = solvedacService.filter(algoList, tierList, backjoonIdList, page);
 
-        List<ProblemDto> problemDtoList = solvedacService.filter(algoList, tierList, backjoonIdList);
-
-        return new ResponseEntity(problemDtoList, HttpStatus.OK);
+        return new ResponseEntity(problemFilterDto, HttpStatus.OK);
 
     }
 

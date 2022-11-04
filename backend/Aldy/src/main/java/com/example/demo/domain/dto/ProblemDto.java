@@ -5,19 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @NoArgsConstructor
 public class ProblemDto {
 
-    private int num;
-
-    private String name;
-
+    private int problemId;
+    private String titleKo;
     private int acceptedUserCount;
+    private int level;
 
-    public ProblemDto(int num, String name, int acceptedUserCount) {
-        this.num = num;
-        this.name = name;
-        this.acceptedUserCount = acceptedUserCount;
-    }
 }
