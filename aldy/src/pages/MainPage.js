@@ -86,15 +86,20 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      <section>
-        <div>제목입니다.</div>
-        <div>설명입니다.</div>
+      <section className="aldy_step_info">
+        <div className="aldy_step_info_title">Game + Education </div>
+        <img
+          src={process.env.PUBLIC_URL + "/joystick.png"}
+          alt=""
+          width="150px"
+        ></img>
+        <div className="aldy_step_info_text">
+          알디는 게이미피케이션을 활용하여 스터디를 진행합니다.
+        </div>
       </section>
+      <div className="main-page-description-title">ALDY의 메인 캐릭터 소개</div>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-right">
-          <div className="main-page-description-title">
-            ALDY의 메인 캐릭터 소개
-          </div>
+        <div className="section1-left" data-aos="fade-up-right">
           <div className="main-page-description-text">
             <p>
               <span>1단계 </span>
@@ -107,7 +112,7 @@ const MainPage = () => {
             ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-left">
+        <div className="section1-right" data-aos="fade-up-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
@@ -123,7 +128,7 @@ const MainPage = () => {
         </div>
       </section>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-right">
+        <div className="section1-left" data-aos="fade-up-right">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
@@ -131,13 +136,13 @@ const MainPage = () => {
               <span className="main-page-highlight">인사하는 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/step1.gif"}
+              src={process.env.PUBLIC_URL + "/step3.gif"}
               alt=""
-              width="300px"
+              width="200px"
             ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-left">
+        <div className="section1-right" data-aos="fade-up-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
@@ -145,18 +150,18 @@ const MainPage = () => {
               <span className="main-page-highlight">불 뿜는 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/step2.gif"}
+              src={process.env.PUBLIC_URL + "/step4.gif"}
               alt=""
               width="300px"
             ></img>
           </div>
         </div>
       </section>
+      <div className="main-page-description-title">
+        ALDY에 접속한지 오래되었을 경우
+      </div>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-right">
-          <div className="main-page-description-title">
-            ALDY에 접속한지 오래되었을 경우
-          </div>
+        <div className="section1-left" data-aos="fade-up-right">
           <div className="main-page-description-text">
             <p>
               <span>소멸 직전 </span>
@@ -169,7 +174,7 @@ const MainPage = () => {
             ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-left">
+        <div className="section1-right" data-aos="fade-up-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
