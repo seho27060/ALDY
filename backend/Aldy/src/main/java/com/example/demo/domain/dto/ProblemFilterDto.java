@@ -5,16 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProblemDto {
+public class ProblemFilterDto {
 
-    private int problemId;
-    private String titleKo;
-    private int level;
-    private int averageTries;
-    private int acceptedUserCount;
+    private int count;
+
+    private List<ProblemDto> items;
 
 }

@@ -35,6 +35,7 @@ public class Study {
 
     private int threshold;
 
+    // 공개 1, 비공개 0
     private int visibility;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
