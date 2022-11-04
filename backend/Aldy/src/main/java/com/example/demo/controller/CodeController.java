@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
@@ -79,4 +80,14 @@ public class CodeController {
         return new ResponseEntity(requestedCodeDto, HttpStatus.OK);
     }
 
+    @GetMapping("/getEditedCodes/{studyId}/{problemId}")
+    @Operation(summary = "코드 리뷰 첨삭 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 첨삭받은 코드들을 반환해준다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
+    })
+    private ResponseEntity code06(HttpServletRequest request, @PathVariable long studyId, @PathVariable int problemId){
+        List<EditedCodeDto> requestedCodeDtoList = codeService.getEditedCodes(studyId, problemId, request);
+        return new ResponseEntity(requestedCodeDtoList, HttpStatus.OK);
+    }
 }
