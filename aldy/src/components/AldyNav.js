@@ -130,7 +130,7 @@ const AldyNav = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/navzookeeper.png"}
                     alt=""
-                    width="35px"
+                    width="37px"
                     height="40px"
                   ></img>
                   <NavDropdown
