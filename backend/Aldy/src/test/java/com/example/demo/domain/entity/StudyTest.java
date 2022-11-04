@@ -1,17 +1,15 @@
 package com.example.demo.domain.entity;
 
-import com.example.demo.repository.CalendarRepository;
-import com.example.demo.repository.ProblemTableRepository;
-import com.example.demo.repository.StudyRepository;
+import com.example.demo.domain.entity.Study.Calendar;
+import com.example.demo.repository.study.CalendarRepository;
+import com.example.demo.repository.study.ProblemTableRepository;
+import com.example.demo.repository.study.StudyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 //@SpringBootTest

@@ -1,11 +1,11 @@
 package com.example.demo.config.job;
 
-import com.example.demo.domain.entity.MemberInStudy;
-import com.example.demo.domain.entity.RequestedCode;
+import com.example.demo.domain.entity.Study.MemberInStudy;
+import com.example.demo.domain.entity.Code.RequestedCode;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
-import com.example.demo.repository.MemberInStudyRepository;
-import com.example.demo.service.EmailServiceImpl;
+import com.example.demo.repository.study.MemberInStudyRepository;
+import com.example.demo.service.study.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
