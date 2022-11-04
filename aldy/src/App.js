@@ -34,7 +34,7 @@ function App() {
         <Route element={<StudyManage />} path="/study/manage/:id"></Route>
         <Route element={<StudySelect />} path="/study/select"></Route>
         <Route element={<CodeReviewList />} path="/review/list"></Route>
-        <Route element={<CodeCorrect />} path="/correct/:id"></Route>
+        <Route element={<CodeCorrect />} path="/correct"></Route>
         <Route element={<CodeReview />} path="/review"></Route>
       </Routes>
       <AldyFooter />

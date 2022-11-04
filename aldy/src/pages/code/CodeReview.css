@@ -1,6 +1,6 @@
 .review-main {
   background-color: #dcf0be;
-  padding: 50px;
+  padding: 20px;
 }
 
 .review-header {
@@ -23,7 +23,7 @@ h2.review-orange {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  height: 400px;
+  height: 500px;
 }
 
 .review-title {
@@ -38,7 +38,7 @@ h2.review-orange {
 }
 
 .review-board {
-  width: 80%;
+  width: 95%;
   margin: auto;
   background-color: #2b6e30;
   border: 10px solid #ffe1aa;
@@ -47,13 +47,12 @@ h2.review-orange {
 }
 
 .review-step {
-  padding: 5px;
   background-color: #28500f;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 8px;
+  margin-right: 4px;
   justify-content: center;
 }
 
@@ -84,7 +83,7 @@ h2.review-orange {
     justify-content: flex-end;
     color: black;
     margin-bottom: 20px;
-    margin-right: 20px;
+    margin-right: 45px;
 }
 
 #language-select {
@@ -96,7 +95,7 @@ h2.review-orange {
   border-radius: 10px;
   width: 75%;
   padding: 14px;
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .review-code-editor {
@@ -208,7 +207,7 @@ h2.review-orange {
 }
 
 .review-method {
-  width: 80%;
+  width: 100%;
   margin: auto;
   text-align: end;
 }
@@ -223,7 +222,7 @@ h2.review-orange {
 }
 
 .review-method-img {
-    width: 80px;
+    width: 100px;
     transform: translate(-30px, -18px)
 }
 
@@ -260,4 +259,19 @@ h2.review-orange {
 
 .step-four-my-code {
   width: 100%;
+}
+
+.step-four-type {
+  background-color: white;
+  color: black;
+  width: fit-content;
+  margin: auto;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 0 10px;
+}
+
+.reviewer-select {
+  border: none;
+  outline: none;
 }

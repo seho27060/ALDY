@@ -2,10 +2,30 @@ import { atom } from "recoil";
 
 export const isLoggedIn = atom({
   key: "isLoggedIn",
-  default: false,
+  default: sessionStorage.getItem('accessToken') && true,
 });
 
 export const userName = atom({
   key: "userName",
-  default: "",
+  default:sessionStorage.getItem('userName')
+})
+
+export const correctCode = atom({
+  key: "correctCode",
+  default: sessionStorage.getItem('correctCode'),
+})
+
+export const recoilStep = atom({
+  key: "recoilStep",
+  default: 1,
+})
+
+export const recoilMyCode = atom({
+  key:"recoilMyCode",
+  default: sessionStorage.getItem('myCode')
+})
+
+export const recoilYourCode = atom({
+  key:"recoilYourCode",
+  default: sessionStorage.getItem('yourCode')
 })
