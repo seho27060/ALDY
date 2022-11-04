@@ -10,7 +10,7 @@ import com.example.demo.domain.entity.Study;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 
-import com.example.demo.repository.Member.MemberRepository;
+import com.example.demo.repository.CalendarRepository;
 import com.example.demo.repository.MemberInStudyRepository;
 import com.example.demo.repository.StudyRepository;
 
@@ -33,9 +33,9 @@ public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
 
-    private final MemberRepository memberRepository;
-
     private final MemberInStudyRepository memberInStudyRepository;
+
+    private final CalendarRepository calendarRepository;
 
     private final List<Integer> authList = List.of(1, 2);
 
@@ -62,7 +62,7 @@ public class StudyServiceImpl implements StudyService {
                 new StudyDto(e, countMember(e.getId()))
         );
 
-        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage);
+        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage.getTotalElements(), studyDtoPage);
 
     }
 
@@ -80,7 +80,7 @@ public class StudyServiceImpl implements StudyService {
                 new StudyDto(e.getStudy(), countMember(e.getStudy().getId()))
         );
 
-        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage);
+        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage.getTotalElements(), studyDtoPage);
 
     }
 

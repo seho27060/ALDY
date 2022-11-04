@@ -58,7 +58,7 @@ public class StudyController {
     @GetMapping()
     public ResponseEntity getAllStudyPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "keyword", defaultValue = "") String keyword
     ) {
 
@@ -76,7 +76,7 @@ public class StudyController {
     @GetMapping("/mystudy")
     public ResponseEntity getMyStudyPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
     ) {
 
