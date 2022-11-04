@@ -21,7 +21,7 @@ const CodeReview = () => {
   const [language, setLanguage] = useState('python')
   const [editedCodeList, setEditedCodeList] = useState([])
   const [subimtCode, setSumbitCode] = useState(null)
-  const [myCode, setMyCode] = useRecoilState(recoilMyCode)
+  const myCode = sessionStorage.getItem('mycode')
   const [yourCode, setYourCode] = useState("")
   const editorRef = useRef(null)
   const navigate = useNavigate();
@@ -56,10 +56,79 @@ const CodeReview = () => {
         modals[step]
       }
       <section className="review-header">
-        {step === 1 && <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드 제출하기 ✨</h2>}
-        {step === 2 && <h2 className="review-orange">✨ 코드리뷰 2단계 : 코드 주석달기 ✨</h2>}
-        {step === 3 && <h2 className="review-orange">✨ 코드리뷰 3단계 : 코드 하이라이팅 ✨</h2>}
-        {step === 4 && <h2 className="review-orange">✨ 코드리뷰 4단계 : 최종 코드 제출하기 ✨</h2>}
+        {step === 1 && 
+          <div className="review-header-step">
+            <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
+            <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드 제출하기 ✨</h2>
+            <button className="review-header-step-btn" onClick={()=>{
+              if (step === 1) {
+                setStepModalShow1(true)
+              } else if (step === 2) {
+                setStepModalShow2(true)
+              } else if (step === 3) {
+                setStepModalShow3(true)
+              } else if (step === 4) {
+                setStepModalShow4(true)
+              }
+            }}>이용방법</button>
+            <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
+          </div>
+        }
+        {step === 2 &&
+          <div className="review-header-step">
+            <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
+            <h2 className="review-orange">✨ 코드리뷰 2단계 : 코드 주석달기 ✨</h2>
+            <button className="review-header-step-btn" onClick={()=>{
+              if (step === 1) {
+                setStepModalShow1(true)
+              } else if (step === 2) {
+                setStepModalShow2(true)
+              } else if (step === 3) {
+                setStepModalShow3(true)
+              } else if (step === 4) {
+                setStepModalShow4(true)
+              }
+            }}>이용방법</button>
+            <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
+          </div>
+        
+        }
+        {step === 3 &&
+        <div className="review-header-step">
+          <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
+          <h2 className="review-orange">✨ 코드리뷰 3단계 : 코드 하이라이팅 ✨</h2>
+          <button className="review-header-step-btn" onClick={()=>{
+              if (step === 1) {
+                setStepModalShow1(true)
+              } else if (step === 2) {
+                setStepModalShow2(true)
+              } else if (step === 3) {
+                setStepModalShow3(true)
+              } else if (step === 4) {
+                setStepModalShow4(true)
+              }
+            }}>이용방법</button>
+            <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
+        </div>
+        }
+        {step === 4 &&
+          <div className="review-header-step">
+            <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
+            <h2 className="review-orange">✨ 코드리뷰 4단계 : 최종 코드 제출하기 ✨</h2>
+            <button className="review-header-step-btn" onClick={()=>{
+              if (step === 1) {
+                setStepModalShow1(true)
+              } else if (step === 2) {
+                setStepModalShow2(true)
+              } else if (step === 3) {
+                setStepModalShow3(true)
+              } else if (step === 4) {
+                setStepModalShow4(true)
+              }
+            }}>이용방법</button>
+            <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
+          </div>
+        }
       </section>
       <section className="review-board">
         <div className="review-title">
@@ -207,7 +276,7 @@ const CodeReview = () => {
           )}
         </div>
       </section>
-      <section className="review-method">
+      {/* <section className="review-method">
         <button className="review-method-btn" onClick={()=>{
           if (step === 1) {
             setStepModalShow1(true)
@@ -220,7 +289,7 @@ const CodeReview = () => {
           }
         }}>이용방법</button>
         <img src="/dinosaur.png" className="review-method-img"></img>
-      </section>
+      </section> */}
     </main>
   );
 };
