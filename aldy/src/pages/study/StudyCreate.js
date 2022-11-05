@@ -1,6 +1,9 @@
+import TierData from "../../data/tier";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./StudyCreate.css";
-
 import styled from "styled-components";
+import { createStudy } from "../../api/study";
 
 const RedButton = styled.button`
   width: 170px;
@@ -14,6 +17,49 @@ const RedButton = styled.button`
 `;
 
 const StudyCreate = () => {
+  const navigate = useNavigate();
+  const [newStudy, setNewStudy] = useState({
+    name: "",
+    upperLimit: null,
+    introduction: "",
+    threshold: null,
+    visibility: null,
+  });
+  const [tierLabel, setTierLabel] = useState("티어를 선택해주세요.");
+
+  // input 값 변경
+  const tierChange = (e) => {
+    const { name, value } = e.target;
+    setTierLabel(TierData[value]);
+    setNewStudy((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setNewStudy((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+  // 스터디 생성
+  const createNewStudy = async (e) => {
+    e.preventDefault();
+    await createStudy(newStudy)
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/study/detail/${res.data.id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <main className="StudyCreate-page-main">
       <div className="StudyCreate-page-bg">
@@ -25,7 +71,12 @@ const StudyCreate = () => {
             <div className="StudyCreate-form-title">
               <div>스터디 이름</div>
               <div className="form-title-id">
-                <input placeholder="스터디 이름을 입력해 주세요."></input>
+                <input
+                  name="name"
+                  placeholder="스터디 이름을 입력해 주세요."
+                  value={newStudy.name}
+                  onChange={onChange}
+                ></input>
               </div>
             </div>
             <div className="StudyCreate-form-second">
@@ -36,32 +87,63 @@ const StudyCreate = () => {
                   min="2"
                   max="6"
                   step="1"
-                  name="number"
+                  name="upperLimit"
                   placeholder="2~6명"
+                  value={newStudy.upperLimit || ""}
+                  onChange={onChange}
                 ></input>
               </div>
               <div className="StudyCreate-form-title">
                 <div>스터디 공개 범위</div>
                 {/* <input placeholder="공개, 비공개"></input> */}
                 <label>
-                  <input type="radio" name="radio" value="yes" /> 공개
+                  <input
+                    type="radio"
+                    name="visibility"
+                    value={1}
+                    onChange={onChange}
+                  />{" "}
+                  공개
                 </label>
                 <label>
-                  <input type="radio" name="radio" value="no" /> 비공개
+                  <input
+                    type="radio"
+                    name="visibility"
+                    value={0}
+                    onChange={onChange}
+                  />{" "}
+                  비공개
                 </label>
               </div>
             </div>
             <div className="StudyCreate-form-title">
               <div>스터디 설명</div>
-              <textarea placeholder="스터디 설명을 입력해 주세요."></textarea>
+              <textarea
+                placeholder="스터디 설명을 입력해 주세요."
+                name="introduction"
+                value={newStudy.introduction}
+                onChange={onChange}
+              ></textarea>
               {/* <input placeholder="스터디 설명을 입력해 주세요."></input> */}
             </div>
             <div className="StudyCreate-form-title">
               <div>스터디 가입 요건</div>
-              <input placeholder="스터디 가입 요건을 입력해 주세요."></input>
+              {/* <input placeholder="스터디 가입 요건을 입력해 주세요."></input> */}
+              <input
+                type="number"
+                min="1"
+                max="31"
+                step="1"
+                name="threshold"
+                placeholder="티어"
+                value={newStudy.threshold || ""}
+                id="tier"
+                onChange={tierChange}
+              ></input>
+              <label htmlFor="tier">{tierLabel}</label>
             </div>
             <div className="StudyCreate-submit-btn">
-              <RedButton>스터디 생성하기</RedButton>
+              <RedButton onClick={createNewStudy}>스터디 생성하기</RedButton>
             </div>
           </form>
         </section>
