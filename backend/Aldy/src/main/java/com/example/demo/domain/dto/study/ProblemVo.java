@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto.solvedac;
+package com.example.demo.domain.dto.study;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
