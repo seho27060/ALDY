@@ -134,3 +134,13 @@ input:focus {
   -ms-user-select: text;
   user-select: text;
 }
+
+#tier {
+  width: 20%;
+  margin-right: 20px;
+}
+
+#tier + label {
+  color: black;
+  cursor: default;
+}
