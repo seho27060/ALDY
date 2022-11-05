@@ -8,10 +8,10 @@ import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
-import com.example.demo.repository.EditedCodeRepository;
-import com.example.demo.repository.Member.MemberRepository;
+import com.example.demo.repository.code.EditedCodeRepository;
+import com.example.demo.repository.member.MemberRepository;
 
-import com.example.demo.service.SolvedacService;
+import com.example.demo.service.solvedac.SolvedacService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;

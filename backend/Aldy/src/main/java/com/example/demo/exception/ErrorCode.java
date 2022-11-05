@@ -35,6 +35,7 @@ public enum ErrorCode {
     STUDY_NOT_FOUND(NOT_FOUND, "해당 스터디를 찾을 수 없습니다"),
     MEMBERINSTUDY_NOT_FOUND(NOT_FOUND, "해당 맴버를 스터디에서 찾을 수 없습니다"),
     CALENDAR_NOT_FOUND(NOT_FOUND, "해당 캘린더를 찾을 수 없습니다"),
+    PROBLEMTABLE_NOT_FOUND(NOT_FOUND,"해당 문제를 찾을 수 없습니다"),
     REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "로그아웃 된 사용자입니다"),
     NOT_FOLLOW(NOT_FOUND, "팔로우 중이지 않습니다"),
 

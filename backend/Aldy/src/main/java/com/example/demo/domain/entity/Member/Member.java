@@ -1,9 +1,9 @@
 package com.example.demo.domain.entity.Member;
 
 import com.example.demo.domain.dto.member.request.MemberModifyRequestDto;
-import com.example.demo.domain.entity.EditedCode;
-import com.example.demo.domain.entity.MemberInStudy;
-import com.example.demo.domain.entity.RequestedCode;
+import com.example.demo.domain.entity.Code.EditedCode;
+import com.example.demo.domain.entity.Study.MemberInStudy;
+import com.example.demo.domain.entity.Code.RequestedCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

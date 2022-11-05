@@ -1,6 +1,6 @@
 package com.example.demo.service.member;
 
-import com.example.demo.repository.Member.MemberRepository;
+import com.example.demo.repository.member.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
