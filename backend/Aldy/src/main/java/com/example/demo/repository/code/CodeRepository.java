@@ -11,4 +11,6 @@ public interface CodeRepository extends JpaRepository<Code, Long> {
     Optional<Code> findByStudy_idAndProblem_idAndWriter_idAndProcess(long study_id, long problem_id, long member_id, int level);
 
     List<Code> findByStudy_idAndProblem_idAndWriter_id(long study_id, long problem_id, Long id);
+
+    List<Code> findByStudy_idAndProblem_id(long study_id, long problem_id);
 }

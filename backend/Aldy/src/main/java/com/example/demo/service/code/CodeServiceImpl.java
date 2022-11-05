@@ -2,6 +2,8 @@ package com.example.demo.service.code;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.study.StudyMemberDto;
+import com.example.demo.domain.dto.study.StudyStatusDto;
 import com.example.demo.domain.entity.Code.Code;
 import com.example.demo.domain.entity.Code.EditedCode;
 import com.example.demo.domain.entity.Member.Member;
@@ -29,7 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -264,4 +269,34 @@ public class CodeServiceImpl implements CodeService {
 
         return editedCodeDtoPage;
     }
+
+    @Override
+    public StudyStatusDto getProcessOfStudy(long study_id, long problem_id, HttpServletRequest request) {
+        List<Code> codeList = codeRepository.findByStudy_idAndProblem_id(study_id, problem_id);
+        HashMap<Long, Integer> data = new HashMap<>();
+        HashMap<Long, Member> memberData = new HashMap<>();
+        for(Code code : codeList){
+            long memberId = code.getWriter().getId();
+            int process = code.getProcess();
+            System.out.println("-------"+memberId+" "+process);
+            data.put(memberId, process);
+            memberData.put(memberId, code.getWriter());
+        }
+        List<StudyMemberDto> studyMemberDtoList = new ArrayList<>();
+        for(Map.Entry<Long,Integer> entry : data.entrySet()){
+            StudyMemberDto studyMemberDto = StudyMemberDto.builder()
+                    .memberId(entry.getKey())
+                    .backjoonId(memberData.get(entry.getKey()).getBaekjoonId())
+                    .nickname(memberData.get(entry.getKey()).getNickname())
+                    .process(entry.getValue())
+                    .build();
+            studyMemberDtoList.add(studyMemberDto);
+        }
+        StudyStatusDto studyStatusDto = StudyStatusDto.builder()
+                .studyMemberDtoList(studyMemberDtoList)
+                .build();
+        return studyStatusDto;
+    }
+
+
 }

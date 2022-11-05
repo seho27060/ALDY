@@ -1,6 +1,7 @@
 package com.example.demo.service.code;
 
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.study.StudyStatusDto;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,4 +25,6 @@ public interface CodeService {
     Page<RequestedCodeDto> getMyRequestingCodeList(int page, int size, String loginMember);
     Page<EditedCodeDto> getMyEditedCodeList(int page, int size, String loginMember);
     Page<EditedCodeDto> getMyEditingCodeList(int page, int size, String loginMember);
+
+    StudyStatusDto getProcessOfStudy(long study_id, long problem_id, HttpServletRequest request);
 }
