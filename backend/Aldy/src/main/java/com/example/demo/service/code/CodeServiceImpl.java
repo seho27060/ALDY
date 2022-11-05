@@ -20,6 +20,10 @@ import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.repository.study.StudyRepository;
 import com.example.demo.service.study.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -205,5 +209,59 @@ public class CodeServiceImpl implements CodeService {
         List<EditedCode> editedCodeList = ecRepository.findAllByCode_idAndReceiver_id(code.getId(), receiver.getId());
         List<EditedCodeDto> editedCodeDtoList = editedCodeList.stream().map(EditedCodeDto::new).collect(Collectors.toList());
         return editedCodeDtoList;
+    }
+
+    @Override
+    public Page<RequestedCodeDto> getMyRequestedCodeList(int page, int size, String loginMember) {
+        Member me = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("isDone").ascending().
+                and(Sort.by("requestDate").descending()));
+        Page<RequestedCode> requestedCodePage = rcRepository.findByReceiver_id(me.getId(), pageable);
+
+        Page<RequestedCodeDto> requestedCodeDtoPage = requestedCodePage.map(
+                o -> new RequestedCodeDto(o));
+
+        return requestedCodeDtoPage;
+    }
+
+    @Override
+    public Page<RequestedCodeDto> getMyRequestingCodeList(int page, int size, String loginMember) {
+        Member me = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("isDone").ascending().
+                and(Sort.by("requestDate").descending()));
+        Page<RequestedCode> requestedCodePage = rcRepository.findBySender_id(me.getId(), pageable);
+
+        Page<RequestedCodeDto> requestedCodeDtoPage = requestedCodePage.map(
+                o -> new RequestedCodeDto(o));
+
+        return requestedCodeDtoPage;
+    }
+
+    @Override
+    public Page<EditedCodeDto> getMyEditedCodeList(int page, int size, String loginMember) {
+        Member me = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("editedDate").descending());
+        Page<EditedCode> requestedCodePage = ecRepository.findByReceiver_id(me.getId(), pageable);
+
+        Page<EditedCodeDto> editedCodeDtoPage = requestedCodePage.map(
+                o -> new EditedCodeDto(o));
+
+        return editedCodeDtoPage;
+    }
+
+    @Override
+    public Page<EditedCodeDto> getMyEditingCodeList(int page, int size, String loginMember) {
+        Member me = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("editedDate").descending());
+        Page<EditedCode> requestedCodePage = ecRepository.findBySender_id(me.getId(), pageable);
+
+        Page<EditedCodeDto> editedCodeDtoPage = requestedCodePage.map(
+                o -> new EditedCodeDto(o));
+
+        return editedCodeDtoPage;
     }
 }

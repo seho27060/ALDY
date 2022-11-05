@@ -7,6 +7,8 @@ import com.example.demo.domain.entity.Code.RequestedCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 // 독립적 테이블이 별로 없음.
 // 9개 API 분류
 // 멤버 API, 내가 7개 상현이 1개
@@ -21,8 +23,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestedCodeDto {
     private Long id;
-
     private boolean isDone;
+
+    private LocalDateTime requestDate;
     private MemberResponseDto sender;
     private MemberResponseDto receiver;
     private CodeDto codeDto;
@@ -32,5 +35,6 @@ public class RequestedCodeDto {
         this.isDone = requestedCode.getIsDone();
         this.sender = new MemberResponseDto(requestedCode.getSender());
         this.receiver = new MemberResponseDto(requestedCode.getReceiver());
+        this.requestDate = requestedCode.getRequestDate();
     }
 }

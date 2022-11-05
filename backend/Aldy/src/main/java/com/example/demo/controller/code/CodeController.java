@@ -1,12 +1,15 @@
 package com.example.demo.controller.code;
 
+import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.study.StudyPageResponseDto;
 import com.example.demo.service.code.CodeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ import java.util.List;
 public class CodeController {
 
     private final CodeService codeService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/{study_id}/{problem_id}")
     @Operation(summary = "코드 반환 API", description = "사용자의 단계별 코드 반환")
@@ -80,7 +84,7 @@ public class CodeController {
     }
 
     @GetMapping("/getEditedCodes/{studyId}/{problemId}")
-    @Operation(summary = "코드 리뷰 첨삭 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 첨삭받은 코드들을 반환해준다.")
+    @Operation(summary = "코드 리뷰 첨삭 전체 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 첨삭받은 코드들을 반환해준다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "404", description = "실패"),
@@ -88,5 +92,82 @@ public class CodeController {
     private ResponseEntity code06(HttpServletRequest request, @PathVariable long studyId, @PathVariable int problemId){
         List<EditedCodeDto> requestedCodeDtoList = codeService.getEditedCodes(studyId, problemId, request);
         return new ResponseEntity(requestedCodeDtoList, HttpStatus.OK);
+    }
+    @Operation(summary = "내게 온 요청 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 요청받은 코드들을 미응답, 날짜 순으로" +
+            "반환해준다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
+    })
+    @GetMapping("/my-requested-codes")
+    public ResponseEntity getMyRequestedCodes(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            HttpServletRequest request
+    ) {
+
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        Page<RequestedCodeDto> requestedCodeDtoList = codeService.getMyRequestedCodeList(page - 1, size, loginMember);
+
+        return new ResponseEntity(requestedCodeDtoList, HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "코드 리뷰 요청 리스트 API", description = "이 스터디에서 특정 문제에 대해 내가 요청한 코드들을 반환해준다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
+    })
+    @GetMapping("/my-requesting-codes")
+    public ResponseEntity getMyRequestingCodes(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            HttpServletRequest request
+    ) {
+
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        Page<RequestedCodeDto> requestedCodeDtoList = codeService.getMyRequestingCodeList(page - 1, size, loginMember);
+
+        return new ResponseEntity(requestedCodeDtoList, HttpStatus.OK);
+    }
+
+    @Operation(summary = "코드 리뷰 첨삭 받은 것 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 첨삭받은 코드들을 반환해준다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
+    })
+    @GetMapping("/my-edited-codes")
+    public ResponseEntity getMyEditedCodes(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            HttpServletRequest request
+    ) {
+
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        Page<EditedCodeDto> editedCodeList = codeService.getMyEditedCodeList(page - 1, size, loginMember);
+
+        return new ResponseEntity(editedCodeList, HttpStatus.OK);
+    }
+
+    @Operation(summary = "코드 리뷰 첨삭 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 첨삭받은 코드들을 반환해준다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
+    })
+    @GetMapping("/my-editing-codes")
+    public ResponseEntity getMyEditingCodes(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            HttpServletRequest request
+    ) {
+
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        Page<EditedCodeDto> editngCodeList = codeService.getMyEditingCodeList(page - 1, size, loginMember);
+
+        return new ResponseEntity(editngCodeList, HttpStatus.OK);
     }
 }

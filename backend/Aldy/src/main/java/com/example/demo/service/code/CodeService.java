@@ -1,6 +1,7 @@
 package com.example.demo.service.code;
 
 import com.example.demo.domain.dto.code.*;
+import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,4 +19,9 @@ public interface CodeService {
     RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request);
 
     List<EditedCodeDto> getEditedCodes(long studyId, int problemId, HttpServletRequest request);
+
+    Page<RequestedCodeDto> getMyRequestedCodeList(int page, int size, String loginMember);
+    Page<RequestedCodeDto> getMyRequestingCodeList(int page, int size, String loginMember);
+    Page<EditedCodeDto> getMyEditedCodeList(int page, int size, String loginMember);
+    Page<EditedCodeDto> getMyEditingCodeList(int page, int size, String loginMember);
 }

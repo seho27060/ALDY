@@ -28,9 +28,11 @@ public class CodeDto {
 
 //    private Long problemId;
 
-//    private String problemName;
+    private String problemName;
 
-//    private int problemTier;
+    private int problemTier;
+
+    private int problemNum;
 
     public CodeDto(Code code){
         this.code= code.getCode();
@@ -41,7 +43,8 @@ public class CodeDto {
         this.process = code.getProcess();
         this.problemId = code.getProblem().getId();
 //        this.problemId = code.getProblemId();
-//        this.problemName = code.getProblemName();
-//        this.problemTier = code.getProblemTier();
+        this.problemName = code.getProblem().getProblemName();
+        this.problemTier = code.getProblem().getProblemTier();
+        this.problemNum = code.getProblem().getProblemNum();
     }
 }
