@@ -15,6 +15,6 @@ public class ProblemFilterDto {
 
     private int count;
 
-    private List<ProblemDto> items;
+    private List<ProblemVo> items;
 
 }

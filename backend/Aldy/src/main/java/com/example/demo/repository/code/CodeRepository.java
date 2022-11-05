@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface CodeRepository extends JpaRepository<Code, Long> {
     List<Code> findByStudy_idAndProblemIdAndWriter_id(long study_id, long problem_id, long member_id);
-    Optional<Code> findByStudy_idAndProblemIdAndWriter_idAndProcess(long study_id, long problem_id, long member_id, int level);
+    Optional<Code> findByStudy_idAndProblem_idAndWriter_idAndProcess(long study_id, long problem_id, long member_id, int level);
+
+    List<Code> findByStudy_idAndProblem_idAndWriter_id(long study_id, long problem_id, Long id);
 }

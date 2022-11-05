@@ -2,7 +2,7 @@ package com.example.demo.domain.entity;
 
 import com.example.demo.domain.entity.Study.Calendar;
 import com.example.demo.repository.study.CalendarRepository;
-import com.example.demo.repository.study.ProblemTableRepository;
+import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.repository.study.StudyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class StudyTest {
     private CalendarRepository calendarRepository;
 
     @Autowired
-    private ProblemTableRepository problemTableRepository;
+    private ProblemRepository problemRepository;
 
     private final String name = "test";
 

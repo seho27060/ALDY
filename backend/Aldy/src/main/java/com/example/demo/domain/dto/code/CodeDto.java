@@ -1,6 +1,6 @@
 package com.example.demo.domain.dto.code;
 
-import com.example.demo.domain.dto.study.ProblemTableDto;
+import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.dto.study.StudyDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.entity.Code.Code;
@@ -24,7 +24,7 @@ public class CodeDto {
 
     private int process;
 
-    private ProblemTableDto problem;
+    private long problemId;
 
 //    private Long problemId;
 
@@ -39,7 +39,7 @@ public class CodeDto {
         this.studyDto = new StudyDto(code.getStudy(),0);
         this.id = code.getId();
         this.process = code.getProcess();
-        this.problem = new ProblemTableDto(code.getProblem());
+        this.problemId = code.getProblem().getId();
 //        this.problemId = code.getProblemId();
 //        this.problemName = code.getProblemName();
 //        this.problemTier = code.getProblemTier();

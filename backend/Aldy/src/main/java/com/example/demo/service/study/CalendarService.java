@@ -8,6 +8,7 @@ public interface CalendarService {
     void registerProblem(ProblemChoiceRequestDto problemChoiceRequestDto);
 
     void deleteProblem(long study_id, int problem_id, String date);
+    void deleteProblem(long problem_id);
 
     CalendarDto getCalendar(long study_id, int year, int month);
 }

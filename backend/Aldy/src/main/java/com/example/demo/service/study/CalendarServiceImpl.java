@@ -2,14 +2,14 @@ package com.example.demo.service.study;
 
 import com.example.demo.domain.dto.study.CalendarDto;
 import com.example.demo.domain.dto.study.ProblemChoiceRequestDto;
-import com.example.demo.domain.dto.study.ProblemDto;
+import com.example.demo.domain.dto.study.ProblemVo;
 import com.example.demo.domain.entity.Study.Calendar;
 import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.study.CalendarRepository;
-import com.example.demo.repository.study.ProblemTableRepository;
+import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.repository.study.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.List;
 public class CalendarServiceImpl implements CalendarService{
 
     private final CalendarRepository calendarRepository;
-    private final ProblemTableRepository problemTableRepository;
+    private final ProblemRepository problemRepository;
     private final StudyRepository studyRepository;
     // 문제를 등록한다. 캘린더가 존재하지 않으면 존재하게 만들어준다.
     @Override
@@ -37,25 +37,27 @@ public class CalendarServiceImpl implements CalendarService{
         int month = problemChoiceRequestDto.getMonth();;
         int day = problemChoiceRequestDto.getDay();
         // 달력이 있으면 가져오고 달력이 없으면 하나 만들어줌.
-        Calendar calendar = calendarRepository.findById(problemChoiceRequestDto.getStudyId()).orElseGet(
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(problemChoiceRequestDto.getStudyId(),
+                month, year).orElseGet(
                 () -> calendarRepository.save(Calendar.builder()
                         .calendarMonth(month)
                         .calendarYear(year)
                         .study(study)
                         .build())
                 );
+
         // 문제 리스트
-        List<ProblemDto> problemList = problemChoiceRequestDto.getProblemList();
+        List<ProblemVo> problemList = problemChoiceRequestDto.getProblemList();
         // 문제들을 하나씩 문제테이블에 넣어줌.
-        for(ProblemDto problem : problemList){
+        for(ProblemVo problem : problemList){
             Problem problemTable = Problem.builder()
-                    .problemId(problem.getProblemId())
+                    .problemNum(problem.getProblemId())
                     .problemTier(problem.getLevel())
                     .problemName(problem.getTitleKo())
                     .calendar(calendar)
                     .problemDay(day)
                     .build();
-            problemTableRepository.save(problemTable);
+            problemRepository.save(problemTable);
         }
     }
 
@@ -69,7 +71,12 @@ public class CalendarServiceImpl implements CalendarService{
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study_id, year, month).orElseThrow(
                 () -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND)
         );
-        problemTableRepository.deleteByCalendar_idAndProblemIdAndProblemDay(calendar.getId(), problem_id, day);
+//        problemRepository.deleteByCalendar_idAndProblemIdAndProblemDay(calendar.getId(), problem_id, day);
+    }
+
+    @Override
+    public void deleteProblem(long problem_id) {
+        problemRepository.deleteById(problem_id);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class CalendarServiceImpl implements CalendarService{
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study_id, year, month).orElseThrow(
                 () -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND)
         );
-        List<Problem> problemList = problemTableRepository.findByCalendar_id(calendar.getId());
+        List<Problem> problemList = problemRepository.findByCalendar_id(calendar.getId());
 
         String year_str = String.valueOf(year);
         String month_str = String.format("%02d", month);

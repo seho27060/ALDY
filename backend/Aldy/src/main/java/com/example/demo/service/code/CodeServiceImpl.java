@@ -16,7 +16,7 @@ import com.example.demo.repository.code.EditedCodeRepository;
 import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.repository.code.RequestedCodeRepository;
 import com.example.demo.repository.study.CalendarRepository;
-import com.example.demo.repository.study.ProblemTableRepository;
+import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.repository.study.StudyRepository;
 import com.example.demo.service.study.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -44,16 +44,16 @@ public class CodeServiceImpl implements CodeService {
 
     private final StudyRepository studyRepository;
 
-    private final ProblemTableRepository problemTableRepository;
+    private final ProblemRepository problemRepository;
 
-    private CalendarRepository calendarRepository;
+    private final CalendarRepository calendarRepository;
 
     @Override
     public CodeResponseDto getCodesByStudy_idAndProblem_idAndMember_id(long study_id, long problem_id, HttpServletRequest request) {
 
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member writer = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        List<Code> codeList = codeRepository.findByStudy_idAndProblemIdAndWriter_id(study_id, problem_id, writer.getId());
+        List<Code> codeList = codeRepository.findByStudy_idAndProblem_idAndWriter_id(study_id, problem_id, writer.getId());
         List<CodeDto> codeDtoList = codeList.stream().map(o -> new CodeDto(o)).collect(Collectors.toList());
         CodeResponseDto codeResponseDto = new CodeResponseDto(codeDtoList);
         return codeResponseDto;
@@ -105,7 +105,7 @@ public class CodeServiceImpl implements CodeService {
         long problem_id = codeReviewReplyDto.getProblemId();
 
         // 어떤 코드를 보고 첨삭했는지
-        Code code = codeRepository.findByStudy_idAndProblemIdAndWriter_idAndProcess(study_id, problem_id, receiver_index,3).orElseThrow(
+        Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(study_id, problem_id, receiver_index,3).orElseThrow(
                 () -> new CustomException(ErrorCode.CODE_NOT_FOUND)
         );
 
@@ -143,8 +143,9 @@ public class CodeServiceImpl implements CodeService {
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(study.getId(),month, year)
                 .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
 
-        Problem problem = problemTableRepository.
-                findByCalendar_idAndProblemId(calendar.getId(), codeSaveRequestDto.getProblemId())
+        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
+        Problem problem = problemRepository.
+                findById(codeSaveRequestDto.getProblemId())
                 .orElseThrow(()->new CustomException(ErrorCode.PROBLEMTABLE_NOT_FOUND));
 
         Code code = Code.builder()
@@ -176,7 +177,7 @@ public class CodeServiceImpl implements CodeService {
                 () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
         );
 
-        Code original_code = codeRepository.findByStudy_idAndProblemIdAndWriter_idAndProcess(
+        Code original_code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
             codeReviewRequestDto.getStudyId(),codeReviewRequestDto.getProblemId(),sender.getId(),3
                 ).orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
         RequestedCode requestedCode = RequestedCode.builder()
@@ -199,7 +200,7 @@ public class CodeServiceImpl implements CodeService {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member receiver = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Code code = codeRepository.findByStudy_idAndProblemIdAndWriter_idAndProcess(studyId, problemId, receiver.getId(), 3).
+        Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(studyId, problemId, receiver.getId(), 3).
                 orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
         List<EditedCode> editedCodeList = ecRepository.findAllByCode_idAndReceiver_id(code.getId(), receiver.getId());
         List<EditedCodeDto> editedCodeDtoList = editedCodeList.stream().map(EditedCodeDto::new).collect(Collectors.toList());

@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProblemChoiceRequestDto {
     private long studyId;
-    private List<ProblemDto> problemList;
+    private List<ProblemVo> problemList;
     private int year;
     private int month;
     private int day;

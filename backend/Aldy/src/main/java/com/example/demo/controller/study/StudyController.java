@@ -152,13 +152,13 @@ public class StudyController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("/problem/{study_id}/{date}/{problem_id}")
+    @DeleteMapping("/problem{problem_id}")
     @Operation(summary = "달력에서 문제 삭제 API - [담당자 조성민]", description = "달력에서 문제를 하나씩 삭제시키는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity study14(@PathVariable long study_id, @PathVariable int problem_id, @PathVariable String date){
-        calendarService.deleteProblem(study_id, problem_id, date);
+    private ResponseEntity study14(long problem_id){
+        calendarService.deleteProblem(problem_id);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

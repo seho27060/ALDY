@@ -25,7 +25,7 @@ public class Problem {
 
     private int problemDay;
 
-    private int problemId;
+    private int problemNum;
 
     private int problemTier;
 
