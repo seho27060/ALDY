@@ -2,6 +2,7 @@ package com.example.demo.controller.study;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.study.*;
+import com.example.demo.service.code.CodeService;
 import com.example.demo.service.study.CalendarService;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/api/study")
 public class StudyController {
 
+    private final CodeService codeService;
     private final JwtTokenProvider jwtTokenProvider;
     private final StudyService studyService;
     private final MemberInStudyService memberInStudyService;
@@ -152,7 +154,7 @@ public class StudyController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("/problem{problem_id}")
+    @DeleteMapping("/problem/{problem_id}")
     @Operation(summary = "달력에서 문제 삭제 API - [담당자 조성민]", description = "달력에서 문제를 하나씩 삭제시키는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
@@ -160,5 +162,18 @@ public class StudyController {
     private ResponseEntity study14(long problem_id){
         calendarService.deleteProblem(problem_id);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/process/{study_id}/{problem_id}")
+    @Operation(summary = "각 팀원들의 문제별 단계를 보여주는 API - [담당자 조성민]", description = "팀원들이 현재 특정문제에서" +
+            "몇 단계까지 진행했는지 보여주는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    private ResponseEntity getProcessOfStudy(@PathVariable long study_id ,@PathVariable long problem_id
+    , HttpServletRequest request){
+
+        StudyStatusDto studyStatusDto = codeService.getProcessOfStudy(study_id, problem_id, request);
+        return new ResponseEntity(studyStatusDto, HttpStatus.OK);
     }
 }
