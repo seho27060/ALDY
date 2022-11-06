@@ -11,13 +11,13 @@ export const mypageCode = () => {
 };
 
 // 회원정보 수정
-export const updateUserInfo = (data) => {
-  return api.put("/member/info", data);
+export const updateUserInfo = () => {
+  return api.put("/member/info");
 };
 
 // 회원 비밀번호 수정
-export const changePW = () => {
-  return api.put("/member/password");
+export const changepassword = (data) => {
+  return api.put("/member/password", data);
 };
 
 // 회원탈퇴
