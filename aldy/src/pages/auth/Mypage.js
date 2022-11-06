@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+import { getUserInfo, mypageCode } from "../../api/user";
+import { getMyStudy } from "../../api/study";
 
 const RedButton = styled.button`
   width: 170px;
@@ -19,6 +21,52 @@ const RedButton = styled.button`
 `;
 
 const Mypage = () => {
+  // const [credentials, setCredentials] = useState({
+  //   baekjoonId: "",
+  //   email: "",
+  //   nickname: "",
+  //   tear: 0,
+  //   answerCodeReviewNumber: 0,
+  //   replyCodeReviewNumber: 0,
+  // });
+  const [baekjoonId, setBaekjoonId] = useState(null);
+  const [nickname, setNickname] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [tier, setTier] = useState(null);
+  const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
+  const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
+
+  useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        console.log(res.data);
+        // setCredentials((credentials.baekjoonId = res.data.baekjoonId));
+        // setCredentials((credentials.email = res.data.email));
+        // setCredentials((credentials.nickname = res.data.nickname));
+        // setCredentials((credentials.tear = res.data.tear));
+        setBaekjoonId(res.data.baekjoonId);
+        setNickname(res.data.nickname);
+        setEmail(res.data.email);
+        setTier(res.data.tier);
+        console.log(baekjoonId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    mypageCode().then((res) => {
+      console.log(res.data);
+      // setCredentials(
+      //   (credentials.answerCodeReviewNumber = res.data.answerCodeReviewNumber)
+      // );
+      // setCredentials(
+      //   (credentials.replyCodeReviewNumber = res.data.replyCodeReviewNumber)
+      // );
+      // console.log(credentials, "ddd");
+      setAnswerCodeReviewNumber(res.data.answerCodeReviewNumber);
+      setReplyCodeReviewNumber(res.data.replyCodeReviewNumber);
+    });
+  }, []);
+
   const navigate = useNavigate();
 
   const navigateUserinfo = () => {
@@ -27,6 +75,9 @@ const Mypage = () => {
   const navigateChangePw = () => {
     navigate("/changepw");
   };
+
+  // console.log(credentials, "t");
+  console.log(baekjoonId, "t");
 
   return (
     <main>
@@ -46,7 +97,8 @@ const Mypage = () => {
         </h2>
         <div className="Mypage-section1-userinfo">
           <div>
-            <h2>유저아이디</h2>
+            {/* <img src="`https://d2gd6pc034wcta.cloudfront.net/tier/${tier}.svg`" /> */}
+            <h2>{nickname}님 안녕하세요</h2>
           </div>
           <div>
             <RedButton onClick={navigateUserinfo} className="study-button">
@@ -62,7 +114,7 @@ const Mypage = () => {
             <div className="study-list-title">
               <div className="study-id"></div>
               <h5 className="study-name">내가 리뷰한 코드 수</h5>
-              <div className="study-number">34</div>
+              <div className="study-number">{answerCodeReviewNumber}개</div>
             </div>
           </div>
         </div>
@@ -71,7 +123,7 @@ const Mypage = () => {
             <div className="study-list-title">
               <div className="study-id"></div>
               <h5 className="study-name">내가 리뷰한 받은 코드 수</h5>
-              <div className="study-number">36</div>
+              <div className="study-number">{replyCodeReviewNumber}개</div>
             </div>
           </div>
         </div>
@@ -101,49 +153,14 @@ const StudyListMy = () => {
 
   useEffect(() => {
     // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    setMyStudyList([
-      {
-        studyId: "1",
-        studyName: "SSAFY ALDY",
-        studyNumber: "5/6",
-        studyRank: "Gold4",
-        studyDescription:
-          "✨ 다들 열심히 달려봅시다!! ✨ 저희 스터디는 알고리즘 스터디입니다. 매주 월 수 금 문제를 풀어 올려야 합니다~~",
-        problemNum: 32,
-        startDate: "2022 - 10 - 21",
-        recentRank: "Gold5",
-      },
-      {
-        studyId: "2",
-        studyName: "알고리즘 홧팅!",
-        studyNumber: "4/5",
-        studyRank: "Gold3",
-        studyDescription: "알고리즘 화이팅~~",
-        problemNum: 23,
-        startDate: "2022 - 10 - 17",
-        recentRank: "Gold4",
-      },
-      {
-        studyId: "3",
-        studyName: "다들 열심히 스터디",
-        studyNumber: "3/6",
-        studyRank: "Gold2",
-        studyDescription: "아무말이나 우선 적어보기",
-        problemNum: 12,
-        startDate: "2022 - 09 - 15",
-        recentRank: "Gold2",
-      },
-      {
-        studyId: "4",
-        studyName: "공룡 키우기",
-        studyNumber: "6/6",
-        studyRank: "Gold1",
-        studyDescription: "우리 스터디는 마감이요",
-        problemNum: 40,
-        startDate: "2022 - 09 - 09",
-        recentRank: "Gold1",
-      },
-    ]);
+    getMyStudy().then((res) => {
+      console.log("my study data");
+      console.log(res.data);
+      console.log(res.data.studyDtoPage.content);
+    });
+    // setMyStudyList([
+
+    // ]);
   }, []);
 
   return (

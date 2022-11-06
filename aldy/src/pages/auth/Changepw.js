@@ -1,5 +1,8 @@
 import "./ChangePW.css";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { changepassword } from "../../api/user";
 
 const RedButton = styled.button`
   width: 170px;
@@ -13,6 +16,21 @@ const RedButton = styled.button`
 `;
 
 const Changepw = () => {
+  const navigate = useNavigate();
+
+  const navigateMypage = () => {
+    navigate("/mypage");
+  };
+  const [sendPw, setSendPw] = useState({ password: "" });
+  const passwordInput = useRef(null);
+  const passwordCheckInput = useRef(null);
+  const passwordDoubleCheck = () => {
+    if (passwordInput.current.value === passwordCheckInput.current.value) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <main className="Changepw-page-main">
       <div className="Changepw-page-bg">
@@ -20,21 +38,46 @@ const Changepw = () => {
           <div>✨변경할 비밀번호를 입력해주세요.✨</div>
           {/* 여기 수정 */}
           <div className="nnnnnn">비밀번호 수정</div>
-          <form>
+          <div>
             <div className="form-title">
               <div>비밀번호</div>
               <div className="form-title-id">
-                <input placeholder="비밀번호를 입력해주세요."></input>
+                <input
+                  type="password"
+                  name="password"
+                  ref={passwordInput}
+                  placeholder="비밀번호를 입력해주세요."
+                ></input>
               </div>
             </div>
             <div className="form-title">
               <div>비밀번호 확인</div>
-              <input placeholder="비밀번호를 확인해주세요."></input>
+              <input
+                type="password"
+                name="passwordCheck"
+                ref={passwordCheckInput}
+                placeholder="비밀번호를 다시 입력해주세요."
+              ></input>
             </div>
             <div className="Changepw-submit-btn">
-              <RedButton>비밀번호 변경하기</RedButton>
+              <RedButton
+                onClick={() => {
+                  setSendPw((sendPw.password = passwordInput.current.value));
+                  console.log(sendPw);
+                  if (passwordDoubleCheck()) {
+                    console.log("성공");
+                    changepassword(sendPw);
+                    alert("비밀번호가 변경 되었습니다.");
+                    navigateMypage();
+                  } else {
+                    alert("비밀번호가 일치하지 않습니다.");
+                  }
+                }}
+              >
+                비밀번호 변경하기
+              </RedButton>
             </div>
-          </form>
+          </div>
         </section>
         <section className="Changepw-page-right">
           <div className="Changepw-page-right-title">✨Welcome to Aldy✨</div>

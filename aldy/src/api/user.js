@@ -1,21 +1,31 @@
-import { api } from './api'
+import { api } from "./api";
 
 // 회원정보 조회
-export const getUserInfo = (baekjoonId) => {
-    return api.get(`/member/find/${baekjoonId}`)
-}
+export const getUserInfo = () => {
+  return api.get(`/member/mypage`);
+};
 
-// 회원정보 수정
-export const updateUserInfo = (data) => {
-    return api.put('/member/info', data)
-}
+// 마이페이지 리뷰한 코드, 리뷰 받은 코드
+export const mypageCode = () => {
+  return api.get(`/member/review`);
+};
+
+// 이메일 수정
+export const updateEmail = (data) => {
+  return api.put("/member/email", data);
+};
+
+// 닉네임 수정
+export const updateNickname = (data) => {
+  return api.put("/member/nickname", data);
+};
 
 // 회원 비밀번호 수정
-export const changePW = () => {
-    return api.put('/member/password')
-}
+export const changepassword = (data) => {
+  return api.put("/member/password", data);
+};
 
 // 회원탈퇴
 export const withdraw = (data) => {
-    return api.post('/member/withdrawal', data)
-}
+  return api.post("/member/withdrawal", data);
+};
