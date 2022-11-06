@@ -10,7 +10,7 @@ public class MemberResponseDto {
     private String baekjoonId;
     private String nickname;
     private String email;
-    private int tier;
+    private Long tier;
 
     public MemberResponseDto(Member member){
         this.baekjoonId = member.getBaekjoonId();

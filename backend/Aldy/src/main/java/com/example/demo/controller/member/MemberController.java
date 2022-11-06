@@ -4,10 +4,12 @@ import com.example.demo.domain.dto.member.request.*;
 import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
+import com.example.demo.domain.dto.solvedac.response.MemberProblemRecommendationResponseDto;
 import com.example.demo.exception.ErrorResponse;
 
 import com.example.demo.service.member.MemberService;
 
+import com.example.demo.service.solvedac.SolvedacService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Tag(name = "Member API - [담당자 : 박세호]", description = "회원정보 조회, 수정, 탈퇴")
 @RestController
@@ -29,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final SolvedacService solvedacService;
 
     @Operation(summary = "회원 탈퇴 API", description = "로그인 유저의 회원 정보 삭제합니다.")
     @ApiResponses({
@@ -63,13 +67,22 @@ public class MemberController {
 
         return new ResponseEntity<>(codeReviewNumberResponseDto, HttpStatus.OK);
     }
-    @Operation(summary = "회원 정보 수정 API", description = "로그인 유저의 nickname, contact 수정합니다.")
+    @Operation(summary = "회원 nickname 수정 API", description = "로그인 유저의 nickname 수정합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
     })
-    @PutMapping("/info")
-    public ResponseEntity<MemberResponseDto> modifyInfo(@RequestBody MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request){
-        MemberResponseDto memberResponseDto = memberService.modifyInfo(memberModifyRequestDto, request);
+    @PutMapping("/nickname")
+    public ResponseEntity<MemberResponseDto> modifyNickname(@RequestBody MemberModifyNicknameRequestDto memberModifyNicknameRequestDto, HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.modifyNickname(memberModifyNicknameRequestDto, request);
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+    @Operation(summary = "회원 email 수정 API", description = "로그인 유저의 email 수정합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
+    })
+    @PutMapping("/email")
+    public ResponseEntity<MemberResponseDto> modifyEmail(@RequestBody MemberModifyEmailRequestDto memberModifyEmailRequestDto, HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.modifyEmail(memberModifyEmailRequestDto, request);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
     @Operation(summary = "회원 비밀번호 수정 API", description = "로그인 유저의 password 수정합니다.")
@@ -81,6 +94,24 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.modifyPassword(memberPasswordRequestDto, request);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
+    @Operation(summary = "로그인 사용자 tier 갱신", description = "로그인 유저의 백준 tier를 갱신합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
+    })
+    @PutMapping("/renew")
+    public ResponseEntity<MemberResponseDto> renewTier(HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.renewTier(request);
+        return new ResponseEntity<>(memberResponseDto,HttpStatus.OK);
+    }
 
+    @Operation(summary = "로그인 사용자 문제 추천", description = "로그인 유저의 최근 푼 20개 문제를 기준으로 1개의 문제를 추천합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberProblemRecommendationResponseDto.class))),
+    })
+    @GetMapping("/recommendation")
+    public ResponseEntity<MemberProblemRecommendationResponseDto> recommendProblemFoMember(HttpServletRequest request) throws IOException {
+        MemberProblemRecommendationResponseDto solvedacSearchProblemDto = solvedacService.recommendProblemForMember(request);
+        return new ResponseEntity<>(solvedacSearchProblemDto, HttpStatus.OK);
+    }
 }
 
