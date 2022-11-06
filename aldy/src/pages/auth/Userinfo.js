@@ -40,12 +40,12 @@ const Userinfo = () => {
   const nicknameInput = useRef();
 
   const onClickEmail = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setEmailShow((prev) => !prev);
   };
 
   const onClickNickname = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setNicknameShow(!nicknameShow);
   };
 
@@ -85,7 +85,7 @@ const Userinfo = () => {
         <section className="userinfo-page-left">
           <div>✨닉네임과 이메일을 변경할 수 있습니다.✨</div>
           <div className="nnnnnn">회원 정보</div>
-          <form>
+          <div>
             <div className="form-title">
               <div>이메일</div>
               <div className="userinfo-form-title-id">
@@ -102,7 +102,10 @@ const Userinfo = () => {
               </div>
             </div>
             {nicknameShow ? <ChangeNickname /> : null}
-          </form>
+            <div>
+              <RedButton>변경하기</RedButton>
+            </div>
+          </div>
         </section>
         <section className="userinfo-page-right">
           <div className="userinfo-page-right-title">✨Welcome to Aldy✨</div>
