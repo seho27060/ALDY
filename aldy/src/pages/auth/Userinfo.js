@@ -1,6 +1,8 @@
 import "./Userinfo.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { updateUserInfo } from "../../api/user";
+import { getUserInfo } from "../../api/user";
 
 const RedButton = styled.button`
   width: 170px;
@@ -14,6 +16,21 @@ const RedButton = styled.button`
 `;
 
 const Userinfo = () => {
+  const [nickname, setNickname] = useState(null);
+  const [email, setEmail] = useState(null);
+
+  useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        console.log(res.data);
+        setNickname(res.data.nickname);
+        setEmail(res.data.email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [emailShow, setEmailShow] = useState(false);
   const onSubmit = (e) => {
     // e.preventDefault();
@@ -34,12 +51,12 @@ const Userinfo = () => {
 
   const ChangeEmail = () => (
     <div className="form-title">
-      <div>이메일</div>
+      <div>변경 할 이메일</div>
       <div className="form-title-id">
         <input
           name="email"
           ref={emailInput}
-          placeholder="zmmmm111@gmail.com"
+          placeholder={email}
           onClick={onSubmit}
         ></input>
         <RedButton>중복확인</RedButton>
@@ -49,12 +66,12 @@ const Userinfo = () => {
 
   const ChangeNickname = () => (
     <div className="form-title">
-      <div>닉네임</div>
+      <div>변경 할 닉네임</div>
       <div className="form-title-id">
         <input
           name="nickname"
           ref={nicknameInput}
-          placeholder="세룽룽"
+          placeholder={nickname}
           onClick={onSubmit}
         ></input>
         <RedButton>중복확인</RedButton>
@@ -72,7 +89,7 @@ const Userinfo = () => {
             <div className="form-title">
               <div>이메일</div>
               <div className="userinfo-form-title-id">
-                <div>zmmmm111@gmail.com</div>
+                <div>{email}</div>
                 <RedButton onClick={onClickEmail}>수정하기</RedButton>
               </div>
             </div>
@@ -80,7 +97,7 @@ const Userinfo = () => {
             <div className="form-title">
               <div>닉네임</div>
               <div className="userinfo-form-title-id">
-                <div>세룽룽</div>
+                <div>{nickname}</div>
                 <RedButton onClick={onClickNickname}>수정하기</RedButton>
               </div>
             </div>

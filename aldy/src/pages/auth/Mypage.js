@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+import { getUserInfo, mypageCode } from "../../api/user";
 
 const RedButton = styled.button`
   width: 170px;
@@ -19,6 +20,52 @@ const RedButton = styled.button`
 `;
 
 const Mypage = () => {
+  // const [credentials, setCredentials] = useState({
+  //   baekjoonId: "",
+  //   email: "",
+  //   nickname: "",
+  //   tear: 0,
+  //   answerCodeReviewNumber: 0,
+  //   replyCodeReviewNumber: 0,
+  // });
+  const [baekjoonId, setBaekjoonId] = useState(null);
+  const [nickname, setNickname] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [tier, setTier] = useState(null);
+  const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
+  const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
+
+  useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        console.log(res.data);
+        // setCredentials((credentials.baekjoonId = res.data.baekjoonId));
+        // setCredentials((credentials.email = res.data.email));
+        // setCredentials((credentials.nickname = res.data.nickname));
+        // setCredentials((credentials.tear = res.data.tear));
+        setBaekjoonId(res.data.baekjoonId);
+        setNickname(res.data.nickname);
+        setEmail(res.data.email);
+        setTier(res.data.tier);
+        console.log(baekjoonId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    mypageCode().then((res) => {
+      console.log(res.data);
+      // setCredentials(
+      //   (credentials.answerCodeReviewNumber = res.data.answerCodeReviewNumber)
+      // );
+      // setCredentials(
+      //   (credentials.replyCodeReviewNumber = res.data.replyCodeReviewNumber)
+      // );
+      // console.log(credentials, "ddd");
+      setAnswerCodeReviewNumber(res.data.answerCodeReviewNumber);
+      setReplyCodeReviewNumber(res.data.replyCodeReviewNumber);
+    });
+  }, []);
+
   const navigate = useNavigate();
 
   const navigateUserinfo = () => {
@@ -27,6 +74,9 @@ const Mypage = () => {
   const navigateChangePw = () => {
     navigate("/changepw");
   };
+
+  // console.log(credentials, "t");
+  console.log(baekjoonId, "t");
 
   return (
     <main>
@@ -46,7 +96,8 @@ const Mypage = () => {
         </h2>
         <div className="Mypage-section1-userinfo">
           <div>
-            <h2>유저아이디</h2>
+            {/* <img src="`https://d2gd6pc034wcta.cloudfront.net/tier/${tier}.svg`" /> */}
+            <h2>{nickname}님 안녕하세요</h2>
           </div>
           <div>
             <RedButton onClick={navigateUserinfo} className="study-button">
@@ -62,7 +113,7 @@ const Mypage = () => {
             <div className="study-list-title">
               <div className="study-id"></div>
               <h5 className="study-name">내가 리뷰한 코드 수</h5>
-              <div className="study-number">34</div>
+              <div className="study-number">{answerCodeReviewNumber}개</div>
             </div>
           </div>
         </div>
@@ -71,7 +122,7 @@ const Mypage = () => {
             <div className="study-list-title">
               <div className="study-id"></div>
               <h5 className="study-name">내가 리뷰한 받은 코드 수</h5>
-              <div className="study-number">36</div>
+              <div className="study-number">{replyCodeReviewNumber}개</div>
             </div>
           </div>
         </div>
