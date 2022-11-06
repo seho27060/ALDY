@@ -10,9 +10,14 @@ export const mypageCode = () => {
   return api.get(`/member/review`);
 };
 
-// 회원정보 수정
-export const updateUserInfo = () => {
-  return api.put("/member/info");
+// 이메일 수정
+export const updateEmail = (data) => {
+  return api.put("/member/email", data);
+};
+
+// 닉네임 수정
+export const updateNickname = (data) => {
+  return api.put("/member/nickname", data);
 };
 
 // 회원 비밀번호 수정

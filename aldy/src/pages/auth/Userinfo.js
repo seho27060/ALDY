@@ -1,7 +1,7 @@
 import "./Userinfo.css";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { updateUserInfo } from "../../api/user";
+import { updateEmail, updateNickname } from "../../api/user";
 import { getUserInfo } from "../../api/user";
 import { emailValid, nicknameValid } from "../../api/auth";
 
@@ -33,10 +33,11 @@ const Userinfo = () => {
   }, []);
 
   const [emailShow, setEmailShow] = useState(false);
-
   const [nicknameShow, setNicknameShow] = useState(false);
   const emailInput = useRef();
   const nicknameInput = useRef();
+  const [sendEmail, setSendEmail] = useState({ email: "" });
+  const [sendNickname, setSendNickname] = useState({ nickname: "" });
 
   const onClickEmail = (e) => {
     // e.preventDefault();
@@ -76,9 +77,17 @@ const Userinfo = () => {
               if (res.data.doubleCheck === true) {
                 setNicknameChecked(true);
                 alert("중복 확인 완료");
+                setSendNickname(
+                  (sendNickname.nickname = nicknameInput.current.value)
+                );
+                updateNickname(sendNickname).then((res) => {
+                  console.log(res);
+                });
+                alert("닉네임 변경 완료");
                 console.log(nicknameInput.current.value);
+                window.location.reload(); //새로고침
               } else {
-                alert("중복 된 닉네임입니다.");
+                alert("중복 된 닉네임입니다. 다시 입력해주세요.");
               }
             });
           }}
@@ -112,9 +121,6 @@ const Userinfo = () => {
               </div>
             </div>
             {nicknameShow ? <ChangeNickname /> : null}
-            <div>
-              <RedButton>변경하기</RedButton>
-            </div>
           </div>
         </section>
         <section className="userinfo-page-right">
