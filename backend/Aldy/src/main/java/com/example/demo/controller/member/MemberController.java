@@ -4,8 +4,6 @@ import com.example.demo.domain.dto.member.request.*;
 import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
-import com.example.demo.domain.dto.solvedac.SolvedProblemDto;
-import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.domain.dto.solvedac.response.MemberProblemRecommendationResponseDto;
 import com.example.demo.exception.ErrorResponse;
 
@@ -69,13 +67,22 @@ public class MemberController {
 
         return new ResponseEntity<>(codeReviewNumberResponseDto, HttpStatus.OK);
     }
-    @Operation(summary = "회원 정보 수정 API", description = "로그인 유저의 nickname, contact 수정합니다.")
+    @Operation(summary = "회원 nickname 수정 API", description = "로그인 유저의 nickname 수정합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
     })
-    @PutMapping("/info")
-    public ResponseEntity<MemberResponseDto> modifyInfo(@RequestBody MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request){
-        MemberResponseDto memberResponseDto = memberService.modifyInfo(memberModifyRequestDto, request);
+    @PutMapping("/nickname")
+    public ResponseEntity<MemberResponseDto> modifyNickname(@RequestBody MemberModifyNicknameRequestDto memberModifyNicknameRequestDto, HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.modifyNickname(memberModifyNicknameRequestDto, request);
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+    @Operation(summary = "회원 email 수정 API", description = "로그인 유저의 email 수정합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
+    })
+    @PutMapping("/email")
+    public ResponseEntity<MemberResponseDto> modifyEmail(@RequestBody MemberModifyEmailRequestDto memberModifyEmailRequestDto, HttpServletRequest request){
+        MemberResponseDto memberResponseDto = memberService.modifyEmail(memberModifyEmailRequestDto, request);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
     @Operation(summary = "회원 비밀번호 수정 API", description = "로그인 유저의 password 수정합니다.")

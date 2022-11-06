@@ -56,11 +56,6 @@ public class AuthServiceImpl implements AuthService{
         Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaekjoonId());
         Long tier = (long) Integer.parseInt(Optional.ofNullable(entries.get("tier"))
                 .orElse(String.valueOf(0)));
-//        try{
-//            tier = Integer.parseInt(entries.get("tier"));
-//        } catch (Exception e ){
-//            tier = 0;
-//        }
 
         Member member = Member.builder()
                 .baekjoonId(memberRequestDto.getBaekjoonId())

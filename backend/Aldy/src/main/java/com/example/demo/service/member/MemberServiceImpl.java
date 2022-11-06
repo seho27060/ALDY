@@ -29,7 +29,9 @@ public class MemberServiceImpl implements MemberService{
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final EditedCodeRepository editedCodeRepository;
+
     private final SolvedacService solvedacService;
+    private final AuthService authService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -60,11 +62,20 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberResponseDto modifyInfo(MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request) {
+    public MemberResponseDto modifyNickname(MemberModifyNicknameRequestDto memberModifyNicknameRequestDto, HttpServletRequest request) {
         String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        member.modifyInfo(memberModifyRequestDto);
+        member.modifyNickname(memberModifyNicknameRequestDto);
+        return new MemberResponseDto(member);
+    }
+
+    @Override
+    public MemberResponseDto modifyEmail(MemberModifyEmailRequestDto memberModifyEmailRequestDto, HttpServletRequest request) {
+        String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        member.modifyEmail(memberModifyEmailRequestDto);
         return new MemberResponseDto(member);
     }
 

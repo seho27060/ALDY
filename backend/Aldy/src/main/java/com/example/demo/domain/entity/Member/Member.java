@@ -1,6 +1,7 @@
 package com.example.demo.domain.entity.Member;
 
-import com.example.demo.domain.dto.member.request.MemberModifyRequestDto;
+import com.example.demo.domain.dto.member.request.MemberModifyEmailRequestDto;
+import com.example.demo.domain.dto.member.request.MemberModifyNicknameRequestDto;
 import com.example.demo.domain.entity.Code.EditedCode;
 import com.example.demo.domain.entity.Study.MemberInStudy;
 import com.example.demo.domain.entity.Code.RequestedCode;
@@ -56,9 +57,11 @@ public class Member {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<RequestedCode> receiveRequestedCodeList;
 
-    public void modifyInfo(MemberModifyRequestDto memberModifyRequestDto){
-        this.nickname = memberModifyRequestDto.getNickname();
-        this.email = memberModifyRequestDto.getEmail();
+    public void modifyNickname(MemberModifyNicknameRequestDto memberModifyNicknameRequestDto){
+        this.nickname = memberModifyNicknameRequestDto.getNickname();
+    }
+    public void modifyEmail(MemberModifyEmailRequestDto memberModifyEmailRequestDto){
+        this.email = memberModifyEmailRequestDto.getEmail();
     }
     public void modifyPassword(String password){
         this.password = password;
