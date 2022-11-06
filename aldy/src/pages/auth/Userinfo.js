@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { updateUserInfo } from "../../api/user";
 import { getUserInfo } from "../../api/user";
+import { emailValid, nicknameValid } from "../../api/auth";
 
 const RedButton = styled.button`
   width: 170px;
@@ -32,9 +33,7 @@ const Userinfo = () => {
   }, []);
 
   const [emailShow, setEmailShow] = useState(false);
-  const onSubmit = (e) => {
-    // e.preventDefault();
-  };
+
   const [nicknameShow, setNicknameShow] = useState(false);
   const emailInput = useRef();
   const nicknameInput = useRef();
@@ -49,6 +48,9 @@ const Userinfo = () => {
     setNicknameShow(!nicknameShow);
   };
 
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [nicknameChecked, setNicknameChecked] = useState(false);
+
   const ChangeEmail = () => (
     <div className="form-title">
       <div>변경 할 이메일</div>
@@ -56,8 +58,7 @@ const Userinfo = () => {
         <input
           name="email"
           ref={emailInput}
-          placeholder={email}
-          onClick={onSubmit}
+          // placeholder={email}
         ></input>
         <RedButton>중복확인</RedButton>
       </div>
@@ -68,13 +69,22 @@ const Userinfo = () => {
     <div className="form-title">
       <div>변경 할 닉네임</div>
       <div className="form-title-id">
-        <input
-          name="nickname"
-          ref={nicknameInput}
-          placeholder={nickname}
-          onClick={onSubmit}
-        ></input>
-        <RedButton>중복확인</RedButton>
+        <input name="nickname" ref={nicknameInput}></input>
+        <RedButton
+          onClick={() => {
+            nicknameValid(nicknameInput.current.value).then((res) => {
+              if (res.data.doubleCheck === true) {
+                setNicknameChecked(true);
+                alert("중복 확인 완료");
+                console.log(nicknameInput.current.value);
+              } else {
+                alert("중복 된 닉네임입니다.");
+              }
+            });
+          }}
+        >
+          중복확인
+        </RedButton>
       </div>
     </div>
   );
