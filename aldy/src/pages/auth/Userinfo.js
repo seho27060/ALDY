@@ -39,21 +39,16 @@ const Userinfo = () => {
   const [sendEmail, setSendEmail] = useState({ email: "" });
   const [sendNickname, setSendNickname] = useState({ nickname: "" });
 
-  const onClickEmail = (e) => {
-    // e.preventDefault();
+  const onClickEmail = () => {
     setEmailShow((prev) => !prev);
   };
 
-  const onClickNickname = (e) => {
-    // e.preventDefault();
-    setNicknameShow(!nicknameShow);
+  const onClickNickname = () => {
+    setNicknameShow((prev) => !prev);
   };
 
-  const [emailChecked, setEmailChecked] = useState(false);
-  const [nicknameChecked, setNicknameChecked] = useState(false);
-
   // 이메일 유효성 검사
-  function checkIt() {
+  const checkIt = () => {
     const email = emailInput.current.value;
     const exptext = /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+.[A-Za-z0-9-]+/;
     if (exptext.test(email) === false) {
@@ -61,23 +56,18 @@ const Userinfo = () => {
       return false;
     }
     return true;
-  }
+  };
 
   const ChangeEmail = () => (
     <div className="form-title">
       <div>변경 할 이메일</div>
       <div className="form-title-id">
-        <input
-          name="email"
-          ref={emailInput}
-          // placeholder={email}
-        ></input>
+        <input name="email" ref={emailInput}></input>
         <RedButton
           onClick={() => {
             if (checkIt()) {
               emailValid(emailInput.current.value).then((res) => {
                 if (res.data.doubleCheck === true) {
-                  setEmailChecked(true);
                   alert("중복 확인 완료");
                   setSendEmail((sendEmail.email = emailInput.current.value));
                   updateEmail(sendEmail).then((res) => {
@@ -109,7 +99,6 @@ const Userinfo = () => {
           onClick={() => {
             nicknameValid(nicknameInput.current.value).then((res) => {
               if (res.data.doubleCheck === true) {
-                setNicknameChecked(true);
                 alert("중복 확인 완료");
                 setSendNickname(
                   (sendNickname.nickname = nicknameInput.current.value)
