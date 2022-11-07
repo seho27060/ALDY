@@ -8,7 +8,6 @@ import { getReviewList, getRequestedCode, getRequestingCode, getEditedCode } fro
 import { useRecoilState } from "recoil";
 import { correctCode, recoilMyCode, recoilStep } from "../../store/states";
 import Paging from '../../components/Paging'
-import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
@@ -107,9 +106,9 @@ const RequestToMe = () => {
       setList(res.data.content)
       setTotalElements(res.data.totalElements)
     })
-    .catch((err)=>{
-      alert('코드 리스트를 불러올 수 없습니다.')
-    })
+    // .catch((err)=>{
+    //   alert('코드 리스트를 불러올 수 없습니다.')
+    // })
   }, [pageNum])
   return (
     <div>
@@ -144,9 +143,9 @@ const RequestByMe = () => {
       setList(res.data.content)
       setTotalElements(res.data.totalElements)
     })
-    .catch((err)=>{
-      alert('코드리스트를 불러 올 수 없습니다.')
-    })
+    // .catch((err)=>{
+    //   alert('코드리스트를 불러 올 수 없습니다.')
+    // })
   }, [pageNum])
   return (
     <div>
@@ -183,9 +182,9 @@ const ReviewedCode = () => {
       setList(res.data.content)
       setTotalElements(res.data.totalElements)
     })
-    .catch((err)=>{
-      alert('코드리스트를 불러 올 수 없습니다.')
-    })
+    // .catch((err)=>{
+    //   alert('코드리스트를 불러 올 수 없습니다.')
+    // })
   }, [pageNum])
   return (
     <div>
