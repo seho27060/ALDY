@@ -46,6 +46,7 @@
 .login-page-right {
   padding-left: 12%;
   /* align-items: center; */
+  align-items: center;
 }
 
 .login-page-right-title {
@@ -58,9 +59,8 @@
   align-items: center;
   text-align: center;
   letter-spacing: -0.005em;
-
   color: #dcf0be;
-  padding-bottom: 10px;
+  padding-bottom: 50px;
 
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
 }
@@ -71,15 +71,13 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 30px;
-  display: flex;
   align-items: center;
   text-align: center;
   letter-spacing: -0.005em;
-
   color: #ffffff;
-
+  width: 250px;
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
-  padding-bottom: 15%;
+  padding-bottom: 10%;
 }
 
 .form-title {
@@ -133,7 +131,17 @@ input:focus {
 }
 
 .join-btn {
-  background: #f5f5f5;
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
+  width: 100px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid red;
+  outline: none;
+  color: red;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  font-size: 20px;
+}
+
+.login-page-right-item {
+  margin: 15px;
 }
