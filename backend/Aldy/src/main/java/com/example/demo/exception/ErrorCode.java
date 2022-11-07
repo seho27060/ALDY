@@ -48,7 +48,8 @@ public enum ErrorCode {
     ALREADY_JOIN(CONFLICT,"이미 회원가입 한 유저입니다"),
 
     /* 500 */
-    SAVE_ERROR(INTERNAL_SERVER_ERROR, "데이터 저장에 실패했습니다")
+    SAVE_ERROR(INTERNAL_SERVER_ERROR, "데이터 저장에 실패했습니다"),
+    SOLVEDAC_ERROR(INTERNAL_SERVER_ERROR, "solvedac api 요청에 실패했습니다.")
     ;
 
     private final HttpStatus httpStatus;
