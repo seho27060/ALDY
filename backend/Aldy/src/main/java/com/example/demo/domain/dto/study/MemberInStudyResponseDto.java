@@ -13,8 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MemberInStudyResponseDto {
 
-    private List<MemberInStudyDto> member;
+    private List<MemberInStudyDto> registeredMember;
 
-    private List<MemberInStudyDto> applicateMember;
+    private List<MemberInStudyDto> appliedMember;
 
 }
