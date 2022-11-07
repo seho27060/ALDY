@@ -63,7 +63,7 @@ const StudyManage = () => {
               <tr>
                 <td style={{ color: "#B4E196" }}>공룡레벨</td>
                 <td>lv.20</td>
-                <td rowSpan="4">
+                <td rowSpan="5">
                   <div
                     style={{
                       color: "#B4E196",
@@ -75,6 +75,10 @@ const StudyManage = () => {
                   </div>
                   {studyDetail.introduction}
                 </td>
+              </tr>
+              <tr>
+                <td>스터디장</td>
+                <td>{studyDetail.leaderBaekjoonId}</td>
               </tr>
               <tr>
                 <td>스터디원</td>
