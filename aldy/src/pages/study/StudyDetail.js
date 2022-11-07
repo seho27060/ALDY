@@ -4,7 +4,9 @@ import Calendar from "react-calendar";
 import styled from "styled-components";
 import Modal from "react-bootstrap/Modal";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getStudyDetail } from "../../api/study";
+import TierData from "../../data/tier";
 import "./Calendar.css";
 
 const RedButton = styled.button`
@@ -31,14 +33,33 @@ const WhiteButton = styled.button`
 `;
 
 const StudyDetail = () => {
+  const params = useParams();
+  const id = params.id || "";
   const navigate = useNavigate();
   const navigateStudySelect = () => {
-    navigate("/study/select", { state: { date: problemDay } });
+    navigate("/study/select", { state: { date: date } });
+  };
+  const navigateStudyManage = () => {
+    navigate(`/study/manage/${id}`, { state: { studyDetail: studyDetail } });
+  };
+  const navigateReviewList = () => {
+    navigate(`/review/list`);
   };
 
+  const [studyDetail, setStudyDetail] = useState({
+    id: 0,
+    createdDate: "",
+    name: "",
+    upperLimit: 6,
+    introduction: "",
+    threshold: 0,
+    visibility: 1,
+    countMember: 0,
+  });
+
   // 달력 날짜
-  const [value, onChange] = useState(new Date());
-  const [problemDay, setProblemDay] = useState(null);
+  const [date, setDate] = useState(new Date());
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
   // 모달창
   const [studyJoinModalShow, setStudyJoiModalShow] = useState(false);
   const [problemModalShow, setProblemJoiModalShow] = useState(false);
@@ -51,15 +72,21 @@ const StudyDetail = () => {
   };
   // 문제풀이 리스트
   const [problemList, setProblemList] = useState(null);
+
   useEffect(() => {
-    const year = value.getFullYear();
-    const month = value.getMonth();
-    const date = value.getDate();
-    const day = value.getDay();
-    const week = ["일", "월", "화", "수", "목", "금", "토"];
-    setProblemDay(`${year}년 ${month + 1}월 ${date}일 ${week[day]}요일`);
+    getStudyDetail(id)
+      .then((res) => {
+        console.log(res.data);
+        setStudyDetail(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  useEffect(() => {
     handleProblemModalShow();
-  }, [value]);
+  }, [date]);
 
   useEffect(() => {
     setProblemList([
@@ -110,7 +137,8 @@ const StudyDetail = () => {
                 <span>스터디 가입 신청</span>
               </h3>
               <div>
-                SSAFY ALDY에 가입하기 위해 가입 신청 메세지를 작성해주세요!!
+                {studyDetail.name}에 가입하기 위해 가입 신청 메세지를
+                작성해주세요!!
               </div>
             </div>
             <div>
@@ -138,7 +166,10 @@ const StudyDetail = () => {
           <div className="review-modal-header">
             <div>
               <h3 className="study-detail-title">
-                <span>{problemDay}</span>
+                <span>
+                  {date.getFullYear()}년 {date.getMonth() + 1}월{" "}
+                  {date.getDate()}일 {week[date.getDay()]}요일
+                </span>
               </h3>
             </div>
             <div>
@@ -171,22 +202,33 @@ const StudyDetail = () => {
         <div className="study-detail-description">
           코드 리뷰를 통해 공룡을 키워보세요~
         </div>
-        <h1 className="study-title">SSAFY ALDY</h1>
+        <h1 className="study-title">{studyDetail.name}</h1>
         <div className="study-detail-banner">
           <div className="description-detail">
             <img src="/pencil.png" alt="연필 이미지"></img>
             <div>알고리즘 코드리뷰</div>
-            <h4 className="underline-green">오늘의 문제 풀어보기</h4>
+            <h4
+              className="underline-green"
+              onClick={() => {
+                setDate(new Date());
+              }}
+            >
+              오늘의 문제 풀어보기
+            </h4>
           </div>
           <div className="description-detail">
             <img src="/code_person.png" alt="코딩하는사람"></img>
             <div>함께 푼 문제 수 확인하기</div>
-            <h4 className="underline-green">스터디원 살펴보기</h4>
+            <h4 className="underline-green" onClick={navigateStudyManage}>
+              스터디원 살펴보기
+            </h4>
           </div>
           <div className="description-detail">
             <img src="/CodeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
-            <h4 className="underline-green">내게 요청 온 목록</h4>
+            <h4 className="underline-green" onClick={navigateReviewList}>
+              내게 요청 온 목록
+            </h4>
           </div>
         </div>
       </section>
@@ -204,7 +246,7 @@ const StudyDetail = () => {
           <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
             공룡의 레벨
           </span>
-          은 ssafy aldy{" "}
+          은{" "}
           <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
             lv.20
           </span>
@@ -213,20 +255,29 @@ const StudyDetail = () => {
       </section>
       <section className="study-detail-bottom">
         <Calendar
-          onChange={onChange}
-          value={value}
+          onChange={setDate}
+          date={date}
           onClick={handleProblemModalShow}
         />
         <div className="study-detail-bottom-right">
           <div className="study-detail-info">
-            <span className="study-detail-number">멤버 수 : 5/6</span>
+            <span className="study-detail-number">
+              스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
+            </span>
             <h3 className="study-detail-title">
-              <span>SSAFY ALDY</span>
+              <span>{studyDetail.name}</span>
             </h3>
-            <div className="study-detail-rank">GOLD 4</div>
+            <div className="study-detail-rank">
+              <img
+                src={`https://d2gd6pc034wcta.cloudfront.net/tier/${studyDetail.threshold}.svg`}
+                alt="티어 이미지"
+                className="tier-image"
+              ></img>
+              {TierData[studyDetail.threshold]}
+            </div>
             <div className="description">
-              ✨ 다들 열심히 달려봅시다!! ✨ <br></br> 저희 스터디는 알고리즘
-              스터디입니다. <br></br> 매주 월 수 금 문제를 풀어 올려야 합니다~~
+              <div>✨ 스터디 소개 ✨</div>
+              {studyDetail.introduction}
             </div>
           </div>
           <div className="study-detail-graph">

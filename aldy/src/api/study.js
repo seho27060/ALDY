@@ -54,7 +54,7 @@ export const getStudyDetail = (studyId) => {
 };
 
 // 스터디 삭제
-export const delteStudy = (studyId) => {
+export const deleteStudy = (studyId) => {
   return api.delete(`/study/${studyId}`);
 };
 

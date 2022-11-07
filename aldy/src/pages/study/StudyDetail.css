@@ -49,6 +49,7 @@ h4.underline-green {
   margin: auto;
   font-weight: bold;
   user-select: none;
+  cursor: pointer;
 }
 
 /* middle */
@@ -113,12 +114,24 @@ h1.underline-green {
 }
 
 .study-detail-rank {
-  color: #d28c00;
+  /* color: #d28c00; */
   font-weight: 900;
+  font-size: 18px;
+}
+
+.tier-image {
+  width: 20px;
+  margin-right: 5px;
 }
 
 .study-detail-info > .description {
   text-align: start;
+}
+
+.study-detail-info > .description > div {
+  text-align: start;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .study-detail-graph {
