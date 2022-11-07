@@ -31,10 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -152,11 +149,15 @@ public class CodeServiceImpl implements CodeService {
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(study.getId(),month, year)
                 .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
 
-        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
+//        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
         Problem problem = problemRepository.
                 findById(codeSaveRequestDto.getProblemId())
                 .orElseThrow(()->new CustomException(ErrorCode.PROBLEMTABLE_NOT_FOUND));
 
+        boolean preCodeExists = checkPreCodeExists(codeSaveRequestDto, writer, study);
+        if(!preCodeExists){
+            throw new CustomException(ErrorCode.CODE_NOT_FOUND);
+        }
         Code code = Code.builder()
                 .code(codeSaveRequestDto.getCode())
                 .writer(writer)
@@ -296,6 +297,23 @@ public class CodeServiceImpl implements CodeService {
                 .studyMemberDtoList(studyMemberDtoList)
                 .build();
         return studyStatusDto;
+    }
+
+    public boolean checkPreCodeExists(CodeSaveRequestDto codeSaveRequestDto, Member writer, Study study){
+        int nowProcess = codeSaveRequestDto.getProcess();
+        int preProcess = nowProcess-1;
+        if(preProcess == 0){
+            return true;
+        }
+        else{
+            Optional<Code> preCode = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
+                    study.getId(),
+                    codeSaveRequestDto.getProblemId(),
+                    writer.getId(),
+                    preProcess
+            );
+            return preCode.isPresent();
+        }
     }
 
 
