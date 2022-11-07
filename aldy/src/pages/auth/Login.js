@@ -1,10 +1,10 @@
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from 'react'
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { FcLike } from "react-icons/fc";
-import { login } from '../../api/auth'
-import { useRecoilState } from 'recoil'
+import { login } from "../../api/auth";
+import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../../store/states";
 
 const RedButton = styled.button`
@@ -26,14 +26,39 @@ const Login = () => {
     baekjoonId: "",
     password: "",
   });
-  const [logged, setLogged] = useRecoilState(isLoggedIn)
-  const [username, setUsername] = useRecoilState(userName)
+  const [logged, setLogged] = useRecoilState(isLoggedIn);
+  const [username, setUsername] = useRecoilState(userName);
   const navigateSignup = () => {
     navigate("/signup");
   };
   const navigateMain = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
+
+  const onKeypress = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
+  const onSubmit = () => {
+    setCredentials((credentials.baekjoonId = idInput.current.value));
+    setCredentials((credentials.password = passwordInput.current.value));
+    console.log(credentials);
+    login(credentials)
+      .then((res) => {
+        sessionStorage.setItem("accessToken", res.data.accessToken);
+        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        setLogged(true);
+        sessionStorage.setItem("userName", idInput.current.value);
+        setUsername(idInput.current.value);
+        navigateMain();
+      })
+      .catch((err) => {
+        alert("로그인에 실패하였습니다.");
+        window.location.reload(); //새로고침
+      });
+  };
 
   return (
     <main className="login-page-main">
@@ -44,28 +69,23 @@ const Login = () => {
             <div className="form-title">
               <div>아이디</div>
               <div className="form-title-id">
-                <input placeholder="아이디를 입력해주세요." ref={idInput}></input>
+                <input
+                  placeholder="아이디를 입력해주세요."
+                  ref={idInput}
+                ></input>
               </div>
             </div>
             <div className="form-title">
               <div>비밀번호</div>
-              <input type="password" placeholder="비밀번호를 입력해주세요." ref={passwordInput}></input>
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요."
+                ref={passwordInput}
+                onKeyPress={onKeypress}
+              ></input>
             </div>
             <div className="login-submit-btn">
-              <RedButton onClick={()=>{
-                setCredentials(credentials.baekjoonId = idInput.current.value)
-                setCredentials(credentials.password = passwordInput.current.value)
-                console.log(credentials)
-                login(credentials)
-                .then((res)=>{
-                  sessionStorage.setItem('accessToken', res.data.accessToken)
-                  sessionStorage.setItem('refreshToken', res.data.refreshToken)
-                  setLogged(true)
-                  sessionStorage.setItem('userName', idInput.current.value)
-                  setUsername(idInput.current.value)
-                  navigateMain()
-                })
-              }}>Log In</RedButton>
+              <RedButton onClick={onSubmit}>Log In</RedButton>
             </div>
           </div>
           <div className="login-page-join">
