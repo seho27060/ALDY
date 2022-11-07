@@ -9,18 +9,17 @@ import { correctCode } from "../../store/states";
 import { codeReply } from "../../api/code";
 
 const CodeCorrect = () => {
-  const [code, setCode] = useRecoilState(correctCode);
+  const previousCode = sessionStorage.getItem('previousCode')
   const studyName = sessionStorage.getItem('studyName')
   const sender = sessionStorage.getItem('sender')
   const problemName = sessionStorage.getItem('problemName')
   const problemId = sessionStorage.getItem('problemId')
   const createDate = sessionStorage.getItem('createDate')
-  const receiverId = sessionStorage.getItem('receiverId')
   const studyId = sessionStorage.getItem('studyId')
   const [language, setLanguage] = useState('python')
   const [reply, setReply] = useState({
     code:"",
-    receiverId: receiverId,
+    receiverId: sender,
     problemId: problemId,
     studyId: studyId
   })
@@ -29,10 +28,6 @@ const CodeCorrect = () => {
       return {...prev, code: value}
     })
   }
-  useEffect(() => {
-    // params를 활용해 서버로 부터 요청받은 코드를 가져온다.
-    // 가져온 코드를 state에 저장한다.
-  }, []);
   return (
     <main className="correct-main">
       <section className="correct-header">
@@ -54,7 +49,6 @@ const CodeCorrect = () => {
           </Row>
           <hr></hr>
           <Row>
-            {/* 데이터 바인딩 해줘야 함 */}
             <Col>{studyName}</Col>
             <Col>{sender}</Col>
             <Col>{problemName}</Col>
@@ -87,7 +81,7 @@ const CodeCorrect = () => {
               language={language}
               height='100%'
               theme='vs-dark'
-              defaultValue={code}
+              defaultValue={previousCode}
               options={{
                 fontSize:20,
                 minimap:{ enabled: false},
@@ -107,7 +101,7 @@ const CodeCorrect = () => {
                 language={language}
                 height='100%'
                 theme='vs-dark'
-                defaultValue={code}
+                defaultValue={previousCode}
                 onChange={handleEditorChange}
                 options={{
                   fontSize:20,
@@ -122,13 +116,13 @@ const CodeCorrect = () => {
         </div>
         <div className="correct-btns">
           <button className="correctBtn" onClick={()=>{
-            console.log(reply)
             codeReply(reply)
-            .then((res)=>{
+            .then(()=>{
               alert('답장을 보냈습니다.')
             })
             .catch((err)=>{
               console.log(err)
+              alert('답장 보내기에 실패했습니다.')
             })
           }}>답장 보내기</button>
         </div>
