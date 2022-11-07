@@ -5,6 +5,11 @@ export const getUserInfo = () => {
   return api.get(`/member/mypage`);
 };
 
+// 로그인 사용자 문제 추천
+export const recommendation = () => {
+  return api.get(`/member/recommendation`);
+};
+
 // 마이페이지 리뷰한 코드, 리뷰 받은 코드
 export const mypageCode = () => {
   return api.get(`/member/review`);

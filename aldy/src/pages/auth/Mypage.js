@@ -2,9 +2,11 @@ import "./Mypage.css";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { getUserInfo, mypageCode } from "../../api/user";
 import { getMyStudy } from "../../api/study";
-import MyStudyListItem from "../../components/study/MyStudyListItem";
+import { recommendation } from "../../api/user";
+import MyStudyListItem from "../../components/MyStudyListItem";
 import Paging from "../../components/Paging";
 
 const RedButton = styled.button`
@@ -20,20 +22,23 @@ const RedButton = styled.button`
 `;
 
 const Mypage = () => {
-  // const [credentials, setCredentials] = useState({
-  //   baekjoonId: "",
-  //   email: "",
-  //   nickname: "",
-  //   tear: 0,
-  //   answerCodeReviewNumber: 0,
-  //   replyCodeReviewNumber: 0,
+  // const [recommendProblem, setRecommendProblem] = useState({
+  //   acceptedUserCount: null,
+  //   algorithm: null,
+  //   averageTries: null,
+  //   level: null,
+  //   problemId: null,
+  //   titleKo: null,
   // });
+
   const [baekjoonId, setBaekjoonId] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [email, setEmail] = useState(null);
   const [tier, setTier] = useState(null);
   const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
   const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
+
+  const [tab, setTab] = useState("studyListAll");
 
   const [myStudyList, setMyStudyList] = useState(null);
   // Pagination
@@ -46,10 +51,6 @@ const Mypage = () => {
     getUserInfo()
       .then((res) => {
         console.log(res.data);
-        // setCredentials((credentials.baekjoonId = res.data.baekjoonId));
-        // setCredentials((credentials.email = res.data.email));
-        // setCredentials((credentials.nickname = res.data.nickname));
-        // setCredentials((credentials.tear = res.data.tear));
         setBaekjoonId(res.data.baekjoonId);
         setNickname(res.data.nickname);
         setEmail(res.data.email);
@@ -61,15 +62,18 @@ const Mypage = () => {
       });
     mypageCode().then((res) => {
       console.log(res.data);
-      // setCredentials(
-      //   (credentials.answerCodeReviewNumber = res.data.answerCodeReviewNumber)
-      // );
-      // setCredentials(
-      //   (credentials.replyCodeReviewNumber = res.data.replyCodeReviewNumber)
-      // );
-      // console.log(credentials, "ddd");
       setAnswerCodeReviewNumber(res.data.answerCodeReviewNumber);
       setReplyCodeReviewNumber(res.data.replyCodeReviewNumber);
+    });
+    recommendation().then((res) => {
+      console.log(res.data);
+      setAcceptedUserCount(res.data.acceptedUserCount);
+      setAlgorithm(res.data.algorithm);
+      setAverageTries(res.data.averageTries);
+      setLevel(res.data.level);
+      setProblemId(res.data.problemId);
+      setTitleKo(res.data.titleKo);
+      console.log("문제추천 잘 뜨는지 확인");
     });
   }, []);
 
@@ -93,6 +97,10 @@ const Mypage = () => {
   };
   const navigateChangePw = () => {
     navigate("/changepw");
+  };
+
+  const mvBoj = () => {
+    window.open(`https://www.acmicpc.net/problem/${problemId}`, "_blank");
   };
 
   // console.log(credentials, "t");
@@ -151,8 +159,46 @@ const Mypage = () => {
           </div>
         </div>
       </section>
+      <section>
+        <img
+          className="Mypage-icon"
+          src={process.env.PUBLIC_URL + "/mypageRecommend.png"}
+          alt=""
+        ></img>
+        <h2 className="Mypage-underline-orange">
+          <span>오늘의 문제 추천</span>
+        </h2>
+        <p>
+          <span>✨ 최근 푼 문제를 기준으로 </span>
+          <span className="study-highlight-orange">문제 추천</span>
+          <span>을 해드립니다.✨</span>
+        </p>
+      </section>
+      <section className="study-list">
+        <div>문제 추천~ </div>
+        <div className="Mypage-recommend-box">
+          <div>문제 제목 : {titleKo}</div>
+          <img
+            src={`https://d2gd6pc034wcta.cloudfront.net/tier/${level}.svg`}
+            alt="티어 이미지"
+            className="Mypage-tier-img"
+          />
+          <div>맞힌 사람 : {acceptedUserCount}명</div>
+          <div>알고리즘 종류 : {algorithm}</div>
+          <div>평균 시도 : {averageTries}회</div>
+          {/* <div>티어 : {level}</div> */}
+          {/* <div>문제 번호 : {problemId}번</div> */}
+        </div>
+        <div>
+          <RedButton onClick={mvBoj}>문제 풀러 가기!</RedButton>
+        </div>
+      </section>
       <section className="study-search">
-        <img src={process.env.PUBLIC_URL + "/mypageStudyList.png"} alt=""></img>
+        <img
+          className="Mypage-icon"
+          src={process.env.PUBLIC_URL + "/mypageStudyList.png"}
+          alt=""
+        ></img>
         <h2 className="Mypage-underline-orange">
           <span>내가 가입한 스터디 목록</span>
         </h2>
