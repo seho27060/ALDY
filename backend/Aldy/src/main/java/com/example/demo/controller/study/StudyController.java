@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -175,5 +176,18 @@ public class StudyController {
 
         StudyStatusDto studyStatusDto = codeService.getProcessOfStudy(study_id, problem_id, request);
         return new ResponseEntity(studyStatusDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/problem/{calendar_id}/{day}")
+    @Operation(summary = "해당 날짜에 어떤 문제 있는지 반환해주는 API - [담당자 조성민]", description = "머리아파 죽겠음" +
+            " 그래도 기어코 해내주는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    private ResponseEntity getProblemsOfDay(@PathVariable long calendar_id
+                                            , @PathVariable int day, HttpServletRequest request){
+
+        List<ProblemDto> problemDtoList = codeService.getProblemsOfDay(calendar_id, day, request);
+        return new ResponseEntity(problemDtoList, HttpStatus.OK);
     }
 }

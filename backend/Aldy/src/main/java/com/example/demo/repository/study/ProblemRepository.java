@@ -11,5 +11,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
 
     List<Problem> findByCalendar_id(long calendar_id);
 
+    List<Problem> findByCalendar_idAndProblemDay(long calendar_id, int day);
+
 //    Optional<Problem> findByCalendar_idAndProblemId(Long id, int problemId);
 }

@@ -2,6 +2,7 @@ package com.example.demo.service.code;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.dto.study.StudyMemberDto;
 import com.example.demo.domain.dto.study.StudyStatusDto;
 import com.example.demo.domain.entity.Code.Code;
@@ -311,6 +312,13 @@ public class CodeServiceImpl implements CodeService {
                 .studyMemberDtoList(studyMemberDtoList)
                 .build();
         return studyStatusDto;
+    }
+
+    @Override
+    public List<ProblemDto> getProblemsOfDay(long calendar_id, int day, HttpServletRequest request) {
+        List<Problem> problemList = problemRepository.findByCalendar_idAndProblemDay(calendar_id, day);
+        List<ProblemDto> problemDtoList = problemList.stream().map(ProblemDto::new).collect(Collectors.toList());
+        return problemDtoList;
     }
 
     public boolean checkPreCodeExists(CodeSaveRequestDto codeSaveRequestDto, Member writer, Study study){
