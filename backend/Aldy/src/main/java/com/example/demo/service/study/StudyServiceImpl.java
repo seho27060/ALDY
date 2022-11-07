@@ -99,7 +99,15 @@ public class StudyServiceImpl implements StudyService {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
-        return new StudyDto(study, countMember(study.getId()));
+        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
+
+        studyDto.setLeaderBaekjoonId(
+                memberInStudyRepository.findByStudyAndAuth(study, 1)
+                        .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
+                        .getMember().getBaekjoonId()
+        );
+
+        return studyDto;
 
     }
 

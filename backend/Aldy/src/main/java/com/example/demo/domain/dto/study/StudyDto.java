@@ -19,6 +19,7 @@ public class StudyDto {
     private int threshold;
     private int visibility;
     private int countMember;
+    private String leaderBaekjoonId;
 
     public StudyDto(Study study, int countMember) {
         this.id = study.getId();
@@ -29,6 +30,10 @@ public class StudyDto {
         this.threshold = study.getThreshold();
         this.visibility = study.getVisibility();
         this.countMember = countMember;
+    }
+
+    public void setLeaderBaekjoonId(String leaderBaekjoonId) {
+        this.leaderBaekjoonId = leaderBaekjoonId;
     }
 
 }

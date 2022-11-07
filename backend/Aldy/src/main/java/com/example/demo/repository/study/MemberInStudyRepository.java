@@ -1,6 +1,7 @@
 package com.example.demo.repository.study;
 
 import com.example.demo.domain.entity.Study.MemberInStudy;
+import com.example.demo.domain.entity.Study.Study;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,5 @@ public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Lo
 
     Optional<MemberInStudy> findByStudy_IdAndMember_Id(Long studyId, Long memberId);
 
+    Optional<MemberInStudy> findByStudyAndAuth(Study study, int auth);
 }
