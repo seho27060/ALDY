@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -94,20 +95,24 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyDto getById(Long studyId) {
+    public StudyDetailResponseDto getById(Long studyId) {
 
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
-        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
+        StudyDetailResponseDto studyDetailResponseDto = new StudyDetailResponseDto(study);
 
-        studyDto.setLeaderBaekjoonId(
+        studyDetailResponseDto.setCountMember(countMember(study.getId()));
+
+        studyDetailResponseDto.setLeaderBaekjoonId(
                 memberInStudyRepository.findByStudyAndAuth(study, 1)
                         .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
                         .getMember().getBaekjoonId()
         );
 
-        return studyDto;
+        studyDetailResponseDto.setStatsByTier(statsByTier(study));
+
+        return studyDetailResponseDto;
 
     }
 
@@ -153,6 +158,25 @@ public class StudyServiceImpl implements StudyService {
         }
 
         return new ProblemInfo(count, tier);
+    }
+
+    public HashMap<Integer, Integer> statsByTier(Study study) {
+
+        HashMap<Integer, Integer> stats = new HashMap<>();
+        List<Calendar> calendarList = calendarRepository.findByStudy_id(study.getId());
+
+        for(Calendar calendar : calendarList) {
+            List<Problem> problemList = problemRepository.findByCalendar_id(calendar.getId());
+            for(Problem problem : problemList) {
+                int count = 1;
+                if(stats.containsKey(problem.getProblemTier())) {
+                    count = stats.get(problem.getProblemTier()) + 1;
+                }
+                stats.put(problem.getProblemTier(), count);
+            }
+        }
+
+        return stats;
     }
 
 }

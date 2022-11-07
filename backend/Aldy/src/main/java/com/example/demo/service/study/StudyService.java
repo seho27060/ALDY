@@ -1,9 +1,6 @@
 package com.example.demo.service.study;
 
-import com.example.demo.domain.dto.study.CreateStudyRequestDto;
-import com.example.demo.domain.dto.study.MyStudyPageResponseDto;
-import com.example.demo.domain.dto.study.StudyDto;
-import com.example.demo.domain.dto.study.StudyPageResponseDto;
+import com.example.demo.domain.dto.study.*;
 
 public interface StudyService {
 
@@ -13,7 +10,7 @@ public interface StudyService {
 
     MyStudyPageResponseDto getMyStudyPage(int page, int size, String baekjoonId);
 
-    StudyDto getById(Long studyId);
+    StudyDetailResponseDto getById(Long studyId);
 
     void deleteById(Long studyId);
 }

@@ -4,12 +4,14 @@ import com.example.demo.domain.entity.Study.Study;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudyDto {
+public class StudyDetailResponseDto {
 
     private Long id;
     private LocalDateTime createdDate;
@@ -20,7 +22,11 @@ public class StudyDto {
     private int visibility;
     private int countMember;
 
-    public StudyDto(Study study, int countMember) {
+    private String leaderBaekjoonId;
+    private HashMap<Integer, Integer> statsByTier;
+    private HashMap<String, Integer> statsByTag;
+
+    public StudyDetailResponseDto(Study study) {
         this.id = study.getId();
         this.createdDate = study.getCreatedDate();
         this.name = study.getName();

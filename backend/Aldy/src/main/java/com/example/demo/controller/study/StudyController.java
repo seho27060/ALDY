@@ -96,9 +96,9 @@ public class StudyController {
     @GetMapping("/{studyId}")
     public ResponseEntity getDetailStudy(@PathVariable("studyId") Long studyId) {
 
-        StudyDto studyDto = studyService.getById(studyId);
+        StudyDetailResponseDto studyDetailResponseDto = studyService.getById(studyId);
 
-        return new ResponseEntity(studyDto, HttpStatus.OK);
+        return new ResponseEntity(studyDetailResponseDto, HttpStatus.OK);
 
     }
 

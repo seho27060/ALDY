@@ -22,7 +22,6 @@ public class Problem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private int problemDay;
 
     private int problemNum;
