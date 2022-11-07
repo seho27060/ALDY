@@ -5,6 +5,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { deleteStudy } from "../../api/study";
 import TierData from "../../data/tier";
 import styled from "styled-components";
+import StudyMember from "../../components/study/StudyMember";
+import StudyJoin from "../../components/study/StudyJoin";
 
 const RedButton = styled.button`
   width: 70px;
@@ -114,7 +116,7 @@ const StudyManage = () => {
         <h3 className="study-detail-title">
           <span>스터디원</span>
         </h3>
-        <StudyMember></StudyMember>
+        <StudyMember id={id}></StudyMember>
       </section>
       <section className="study-manage-member">
         <h3 className="study-detail-title">
@@ -123,188 +125,6 @@ const StudyManage = () => {
         <StudyJoin></StudyJoin>
       </section>
     </main>
-  );
-};
-
-const StudyMember = () => {
-  const [studyMember, setStudyMember] = useState(null);
-
-  useEffect(() => {
-    // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    setStudyMember([
-      {
-        studyMemberId: "1",
-        studyMemberName: "ssafy123",
-        problemNum: "32",
-        studyJoinDate: "2020.10.18",
-        penalty: 0,
-      },
-      {
-        studyMemberId: "2",
-        studyMemberName: "세룽룽",
-        problemNum: "52",
-        studyJoinDate: "2020.10.22",
-        penalty: 3,
-      },
-      {
-        studyMemberId: "3",
-        studyMemberName: "asdf1234",
-        problemNum: "22",
-        studyJoinDate: "2020.10.26",
-        penalty: 0,
-      },
-      {
-        studyMemberId: "4",
-        studyMemberName: "나는야 스터디왕",
-        problemNum: "17",
-        studyJoinDate: "2020.10.29",
-        penalty: 2,
-      },
-      {
-        studyMemberId: "5",
-        studyMemberName: "zmmmm111",
-        problemNum: "5",
-        studyJoinDate: "2020.11.01",
-        penalty: 1,
-      },
-    ]);
-  }, []);
-
-  return (
-    <div className="study-list-box">
-      {studyMember?.map((item, studyMemberId) => (
-        <StudyMemberItem key={studyMemberId} item={item} />
-      ))}
-    </div>
-  );
-};
-
-const StudyMemberItem = (props) => {
-  const [dropdown, setDropdown] = useState("none");
-  const [penalty, setPenalty] = useState(props.item.penalty);
-
-  const penaltyColor = () => {
-    if (penalty === 1) {
-      setPenalty("penalty-green");
-    } else if (penalty === 2) {
-      setPenalty("penalty-orange");
-    } else if (penalty === 3) {
-      setPenalty("penalty-red");
-    } else {
-      setPenalty("penalty-white");
-    }
-  };
-
-  useEffect(() => {
-    penaltyColor();
-  }, []);
-
-  return (
-    <div className={`${penalty} study-list-item`}>
-      <div className="study-list-title">
-        <div className="study-id">{props.item.studyMemberId}</div>
-        <h5 className="study-name">{props.item.studyMemberName}</h5>
-        <div className="study-number"></div>
-        {dropdown === "none" && (
-          <FaChevronCircleDown
-            className="down-icon"
-            onClick={() => {
-              setDropdown("active");
-            }}
-          />
-        )}
-        {dropdown === "active" && (
-          <FaChevronCircleUp
-            className="down-icon"
-            onClick={() => {
-              setDropdown("none");
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        className={`study-list-content ${
-          dropdown === "active" ? "content-active" : ""
-        }`}
-      >
-        <div>함께 푼 문제 : {props.item.problemNum}</div>
-        <div>들어온 날짜 : {props.item.studyJoinDate}</div>
-        <RedButton>강퇴</RedButton>
-      </div>
-    </div>
-  );
-};
-
-const StudyJoin = () => {
-  const [studyMember, setStudyMember] = useState(null);
-
-  useEffect(() => {
-    // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    setStudyMember([
-      {
-        studyJoinId: "1",
-        studyJoinName: "abcd123",
-        description: "스터디 열심히 하겠습니다~",
-      },
-      {
-        studyJoinId: "2",
-        studyJoinName: "스터디 함께해요",
-        description: "함께 공부하고 싶어요!!",
-      },
-      {
-        studyJoinId: "3",
-        studyJoinName: "aldyaldy111",
-        description: "ALDY 화이팅!! ><",
-      },
-    ]);
-  }, []);
-
-  return (
-    <div className="study-list-box">
-      {studyMember?.map((item, studyJoinId) => (
-        <StudyJoinItem key={studyJoinId} item={item} />
-      ))}
-    </div>
-  );
-};
-
-const StudyJoinItem = (props) => {
-  const [dropdown, setDropdown] = useState("none");
-
-  return (
-    <div className="study-list-item">
-      <div className="study-list-title">
-        <div className="study-id">{props.item.studyJoinId}</div>
-        <h5 className="study-name">{props.item.studyJoinName}</h5>
-        <div className="study-number"></div>
-        {dropdown === "none" && (
-          <FaChevronCircleDown
-            className="down-icon"
-            onClick={() => {
-              setDropdown("active");
-            }}
-          />
-        )}
-        {dropdown === "active" && (
-          <FaChevronCircleUp
-            className="down-icon"
-            onClick={() => {
-              setDropdown("none");
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        className={`study-list-content ${
-          dropdown === "active" ? "content-active" : ""
-        }`}
-      >
-        <div>{props.item.description}</div>
-        <RedButton>수락</RedButton>
-      </div>
-    </div>
   );
 };
 
