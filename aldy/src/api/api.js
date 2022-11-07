@@ -24,6 +24,7 @@ api.interceptors.response.use(
   // 실패 응답일 때,
   async (error) => {
     // 1) 토큰 만료 이슈인 경우
+    console.log('토큰 만료 후 에러메세지', error)
     if (
       error.response.status === 401 &&
       error.response.data.code === "ACCESSTOKEN_EXPIRED"
