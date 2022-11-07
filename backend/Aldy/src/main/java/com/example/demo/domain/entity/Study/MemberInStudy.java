@@ -17,6 +17,7 @@ public class MemberInStudy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 1 : Leader, 2 : 스터디원, 3 : 가입 신청, 0 : 강퇴
     private int auth;
 
     // null 허용

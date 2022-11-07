@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -99,9 +100,15 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         }
 
         // save
+        if(study.getVisibility() == 1) {
+            return new MemberInStudyDto(
+                    memberInStudyRepository.save(new MemberInStudy(study, member, 2, requestDto.getMessage()))
+            );
+        }
         return new MemberInStudyDto(
                 memberInStudyRepository.save(new MemberInStudy(study, member, 3, requestDto.getMessage()))
         );
+
     }
 
     @Override
@@ -113,6 +120,16 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
                 new MemberInStudyDto(e)).collect(Collectors.toList()
         );
 
+    }
+
+    @Override
+    public List<MemberInStudyDto> getAllApplicateMemberInStudy(Long studyId) {
+
+        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, List.of(3));
+
+        return memberInStudyList.stream().map(e ->
+                new MemberInStudyDto(e)).collect(Collectors.toList()
+        );
     }
 
     @Override

@@ -4,18 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudyPageResponseDto {
+public class MemberInStudyResponseDto {
 
-    private int numberOfPages;
+    private List<MemberInStudyDto> member;
 
-    private long numberOfObject;
-
-    private Page<StudyDto> studyDtoPage;
+    private List<MemberInStudyDto> applicateMember;
 
 }

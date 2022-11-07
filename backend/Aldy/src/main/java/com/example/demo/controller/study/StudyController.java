@@ -59,7 +59,7 @@ public class StudyController {
     @GetMapping()
     public ResponseEntity getAllStudyPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "keyword", defaultValue = "") String keyword
     ) {
 
@@ -77,15 +77,15 @@ public class StudyController {
     @GetMapping("/mystudy")
     public ResponseEntity getMyStudyPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
     ) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
-        StudyPageResponseDto studyDtoPage = studyService.getMyStudyPage(page - 1, size, loginMember);
+        MyStudyPageResponseDto myStudyDtoPage = studyService.getMyStudyPage(page - 1, size, loginMember);
 
-        return new ResponseEntity(studyDtoPage, HttpStatus.OK);
+        return new ResponseEntity(myStudyDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "스터디 상세 API", description = "[studyId : 스터디 Id]")
