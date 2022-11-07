@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto.study;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,15 +9,13 @@ import org.springframework.data.domain.Page;
 @Getter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class StudyPageResponseDto {
 
     private int numberOfPages;
 
-    private Page<StudyDto> studyDtoPage;
+    private long numberOfObject;
 
-    public StudyPageResponseDto(int numberOfPages, Page<StudyDto> studyDtoPage) {
-        this.numberOfPages = numberOfPages;
-        this.studyDtoPage = studyDtoPage;
-    }
+    private Page<StudyDto> studyDtoPage;
 
 }
