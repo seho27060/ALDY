@@ -1,7 +1,6 @@
 import "../../pages/study/StudyDetail.css";
 import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProblemListItem from "./ProblemListItem";
 
@@ -16,51 +15,15 @@ const RedButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
-const StudyJoin = ({ studyDetail, date, modal, handleModal }) => {
+const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
   const navigate = useNavigate();
   const navigateStudySelect = () => {
     navigate("/study/select", { state: { date: date } });
   };
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
-  const [problemList, setProblemList] = useState(null);
   const studyId = studyDetail.id;
   const studyName = studyDetail.name;
-
-  useEffect(() => {
-    setProblemList([
-      {
-        problemId: "3017",
-        problemName: "가까운 수 찾기",
-        problemNumber: "3/6",
-        study1: "1단계",
-        study2: "3단계",
-        study3: "2단계",
-        study4: "4단계",
-        study5: "3단계",
-      },
-      {
-        problemId: "14503",
-        problemName: "로봇 청소기",
-        problemNumber: "2/6",
-        study1: "1단계",
-        study2: "2단계",
-        study3: "3단계",
-        study4: "4단계",
-        study5: "3단계",
-      },
-      {
-        problemId: "9205",
-        problemName: "맥주 마시면서 걸어가기",
-        problemNumber: "4/6",
-        study1: "2단계",
-        study2: "3단계",
-        study3: "2단계",
-        study4: "2단계",
-        study5: "3단계",
-      },
-    ]);
-  }, []);
 
   return (
     <Modal size="lg" show={modal} onHide={handleModal}>
@@ -82,9 +45,13 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal }) => {
         </div>
         <div className="review-modal-content">
           <div className="problem-list-box">
-            {problemList?.map((item, problemId) => (
-              <ProblemListItem key={problemId} item={item} />
-            ))}
+            {problemList.length !== 0 ? (
+              problemList?.map((item, problemId) => (
+                <ProblemListItem key={problemId} item={item} />
+              ))
+            ) : (
+              <div className="problem-none">문제를 선정해 주세요!</div>
+            )}
           </div>
         </div>
         <div className="study-join-btn">
