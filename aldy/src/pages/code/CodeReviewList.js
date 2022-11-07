@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { getReviewList } from '../../api/code'
+import { getReviewList, getRequestedCode, getRequestingCode, getEditedCode } from '../../api/code'
 import { useRecoilState } from "recoil";
 import { correctCode, recoilMyCode, recoilStep } from "../../store/states";
+import Paging from '../../components/Paging'
+import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
@@ -68,7 +70,6 @@ const CodeReviewList = () => {
             <Col>진행 상황</Col>
           </Row>
         </Container>
-
         {
           tab === 'requestToMe' && <RequestToMe />
         }
@@ -87,77 +88,128 @@ const CodeReviewList = () => {
 // 내가 요청 받은 코드
 const RequestToMe = () => {
   const [list, setList] = useState(null);
-  useEffect(()=>{
-    // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    getReviewList()
+  const [pageNum, setPageNum] = useState(1)
+  const [totalElements, setTotalElements] = useState(0);
+  // useEffect(()=>{
+  //   // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
+  //   getReviewList()
+  //   .then((res)=>{
+  //     setList(res.data.requestedCodeList)
+  //     console.log(res)
+  //   }).catch((err)=>{
+  //     console.log(err)
+  //     alert('코드 리스트를 불러올 수 없습니다.')
+  //   })
+  // }, [])
+  useEffect(() => {
+    getRequestedCode(pageNum)
     .then((res)=>{
-      setList(res.data.requestedCodeList)
-      console.log(res)
-    }).catch((err)=>{
-      console.log(err)
+      setList(res.data.content)
+      setTotalElements(res.data.totalElements)
+    })
+    .catch((err)=>{
       alert('코드 리스트를 불러올 수 없습니다.')
     })
-  }, [])
+  }, [pageNum])
   return (
     <div>
       {
-        list?.map((item) => <CardRequestToMe item={item}/>)
+        list?.map((item) => <CardRequestToMe item={item} />)
       }
+      <Paging
+        page={pageNum}
+        setPage={setPageNum}
+        totalElements={totalElements}
+      />
     </div>
   )
 }
 // 내가 요청한 코드
 const RequestByMe = () => {
   const [list, setList] = useState(null)
-  useEffect(()=>{
-    getReviewList()
+  const [pageNum, setPageNum] = useState(1)
+  const [totalElements, setTotalElements] = useState(0);
+  // useEffect(()=>{
+  //   getReviewList()
+  //   .then((res)=>{
+  //     setList(res.data.requestingCodeList)
+  //   }).catch((err)=>{
+  //     console.log(err)
+  //     alert('코드 리스트를 불러올 수 없습니다.')
+  //   })
+  // }, [])
+  useEffect(() => {
+    getRequestingCode(pageNum)
     .then((res)=>{
-      setList(res.data.requestingCodeList)
-    }).catch((err)=>{
-      console.log(err)
-      alert('코드 리스트를 불러올 수 없습니다.')
+      setList(res.data.content)
+      setTotalElements(res.data.totalElements)
     })
-  }, [])
+    .catch((err)=>{
+      alert('코드리스트를 불러 올 수 없습니다.')
+    })
+  }, [pageNum])
   return (
     <div>
       {
         list?.map((item) => <CardRequestByMe item={item}/>)
       }
+      <Paging
+        page={pageNum}
+        setPage={setPageNum}
+        totalElements={totalElements}
+      />
     </div>
   )
 }
+
 // 내가 리뷰 받은 코드
 const ReviewedCode = () => {
   const [list, setList] = useState(null)
-  useEffect(()=>{
-    getReviewList()
+  const [pageNum, setPageNum] = useState(1)
+  const [totalElements, setTotalElements] = useState(0);
+  // useEffect(()=>{
+  //   getReviewList()
+  //   .then((res)=>{
+  //     setList(res.data.editedCodeList)
+  //     console.log('리뷰받은', res.data.editedCodeList)
+  //   }).catch((err)=>{
+  //     console.log(err)
+  //     alert('코드 리스트를 불러올 수 없습니다.')
+  //   })
+  // }, [])
+  useEffect(() => {
+    getEditedCode(pageNum)
     .then((res)=>{
-      setList(res.data.editedCodeList)
-      console.log('리뷰받은', res.data.editedCodeList)
-    }).catch((err)=>{
-      console.log(err)
-      alert('코드 리스트를 불러올 수 없습니다.')
+      setList(res.data.content)
+      setTotalElements(res.data.totalElements)
     })
-  }, [])
+    .catch((err)=>{
+      alert('코드리스트를 불러 올 수 없습니다.')
+    })
+  }, [pageNum])
   return (
     <div>
       {
         list?.map((item) => <CardReviewdCode item={item}/>)
       }
+      <Paging
+        page={pageNum}
+        setPage={setPageNum}
+        totalElements={totalElements}
+      />
     </div>
   )
 }
 // 리뷰 요청받은 코드 카드 컴포넌트
 const CardRequestToMe = (props) => {
   const item = props.item;
-  const [code, setCode] = useRecoilState(correctCode)
-  console.log(item)
+  // const [code, setCode] = useRecoilState(correctCode)
   const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
       <Row>
         <Col>{item.codeDto.studyDto.name}</Col>
-        <Col>{item.sender.baekjoonId}</Col>
+        <Col>{item.sender.nickname}</Col>
         <Col>{item.codeDto.problemId}</Col>
         <Col>{item.codeDto.problemName}</Col>
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
@@ -165,13 +217,13 @@ const CardRequestToMe = (props) => {
             // 코드 첨삭 페이지로 이동
             sessionStorage.setItem('correctCode', item.codeDto.code)
             sessionStorage.setItem('studyName', item.codeDto.studyDto.name)
-            sessionStorage.setItem('sender', item.sender.baekjoonId)
+            sessionStorage.setItem('sender', item.sender.nickname)
             sessionStorage.setItem('problemId', item.codeDto.problemId)
             sessionStorage.setItem('problemName', item.codeDto.problemName)
             sessionStorage.setItem('createDate', item.codeDto.createdDate.substring(0,10))
-            sessionStorage.setItem('receiverId', item.sender.baekjoonId)
+            sessionStorage.setItem('receiverId', item.sender.nickname)
             sessionStorage.setItem('studyId', item.codeDto.studyDto.id)
-            setCode(item.codeDto.code)
+            // setCode(item.codeDto.code)
             navigate('/correct')
         }}>코드 첨삭하기</button>}</Col>
       </Row>
@@ -181,12 +233,11 @@ const CardRequestToMe = (props) => {
 // 요청 한 코드 카드 컴포넌트
 const CardRequestByMe = (props) => {
   const item = props.item;
-  const navigate = useNavigate();
   return (
     <Container className='review-list-item'>
       <Row>
         <Col>{item.codeDto.studyDto.name}</Col>
-        <Col>{item.receiver.baekjoonId}</Col>
+        <Col>{item.receiver.nickname}</Col>
         <Col>{item.codeDto.problemId}</Col>
         <Col>{item.codeDto.problemName}</Col>
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
@@ -205,7 +256,7 @@ const CardReviewdCode = (props) => {
     <Container className='review-list-item'>
       <Row>
         <Col>{item.codeDto.studyDto.name}</Col>
-        <Col>{item.sender.baekjoonId}</Col>
+        <Col>{item.sender.nickname}</Col>
         <Col>{item.codeDto.problemId}</Col>
         <Col>{item.codeDto.problemName}</Col>
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>

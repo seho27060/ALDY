@@ -29,3 +29,33 @@ export const getReviewList = () => {
 export const getEditedCodes = (studyId, problemId) => {
     return api.get(`/code/getEditedCodes/${studyId}/${problemId}`)
 }
+
+// 내게 온 요청 조회
+export const getRequestedCode = (page, size) => {
+    return api.get('/code/my-requested-codes', {
+        params: {
+            page: page,
+            size: size,
+        }
+    })
+}
+
+// 내가 보낸 요청 조회
+export const getRequestingCode = (page, size) => {
+    return api.get('/code/my-requesting-codes', {
+        params: {
+            page:page,
+            size:size,
+        }
+    })
+}
+
+// 첨삭 받은 코드 리스트 조회
+export const getEditedCode = (page, size) => {
+    return api.get('/code/my-edited-codes', {
+        params: {
+            page: page,
+            size:size,
+        }
+    })
+}
