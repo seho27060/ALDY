@@ -9,6 +9,13 @@ import { getEditedCodes, saveCode } from "../../api/code";
 import { useNavigate } from "react-router-dom";
 
 const CodeReview = () => {
+  // studyInfo
+  const studyInfo = sessionStorage.getItem('studyInfo')
+  const studyId = studyInfo.id
+  const studyName = studyInfo.name
+  const problemId = studyInfo.problemId
+  const problemNumber = studyInfo.problemNumber
+  //
   const [selected, setSelected] = useState(null)
   const [editedCode, setEditedCode] = useState(null)
   const sessionEditCode = sessionStorage.getItem('editedCode')
@@ -24,10 +31,15 @@ const CodeReview = () => {
   const myCode = sessionStorage.getItem('mycode')
   const [yourCode, setYourCode] = useState("")
   const navigate = useNavigate();
-  const [codeStepOne, setCodeStepOne] = useState("")
+  const [codeOneTwoThree, setCodeOneTwoThree] = useState({
+    code:"",  
+    process: 1,
+    studyId: 0,
+    problemId: 0
+  })
 
   function handleEditorChange(value, event) {
-    setCodeStepOne((prev)=>{
+    setCodeOneTwoThree((prev)=>{
       return {...prev, code: value}
     })
   }
@@ -209,7 +221,7 @@ const CodeReview = () => {
                             language={language}
                             theme='vs-dark'
                             defaultValue={sessionEditCode}
-                            onMount={handleEditorChange}
+                            onMount={handleEditorChange} // 바꿔야함
                             options={{
                               fontSize:20,
                               minimap:{ enabled: false},
@@ -226,7 +238,7 @@ const CodeReview = () => {
                           language={language}
                           theme='vs-dark'
                           defaultValue={myCode}
-                          onMount={handleEditorChange}
+                          onMount={handleEditorChange} // 바꿔야함
                           options={{
                             fontSize:20,
                             minimap:{ enabled: false},
@@ -243,7 +255,7 @@ const CodeReview = () => {
               language={language}
               theme='vs-dark'
               defaultValue={null}
-              onMount={handleEditorChange}
+              onChange={handleEditorChange}
               options={{
                 fontSize:20,
                 minimap:{ enabled: false},
@@ -271,7 +283,7 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
-                saveCode()
+                saveCode(codeOneTwoThree)
               }}
             >
               코드 제출하기
