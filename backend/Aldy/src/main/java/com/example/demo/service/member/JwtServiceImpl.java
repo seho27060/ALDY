@@ -4,6 +4,8 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.domain.dto.member.response.ValidateTokenResponseDto;
 import com.example.demo.domain.entity.Member.RefreshToken;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.member.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +42,9 @@ public class JwtServiceImpl implements JwtService{
     }
     @Override
     public RefreshToken getRefreshToken(String refreshToken) {
-        return refreshTokenRepository.findByRefreshToken(refreshToken).orElse(null);
+        RefreshToken existRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken).
+        orElseThrow(() -> new CustomException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
+        return existRefreshToken;
     }
 }
 
