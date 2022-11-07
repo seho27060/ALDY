@@ -1,13 +1,10 @@
 import "./Mypage.css";
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { getUserInfo, mypageCode } from "../../api/user";
 import { getMyStudy } from "../../api/study";
-import MyStudyListItem from "../../components/MyStudyListItem";
+import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 
 const RedButton = styled.button`
@@ -37,8 +34,6 @@ const Mypage = () => {
   const [tier, setTier] = useState(null);
   const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
   const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
-
-  const [tab, setTab] = useState("studyListAll");
 
   const [myStudyList, setMyStudyList] = useState(null);
   // Pagination

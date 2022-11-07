@@ -1,5 +1,5 @@
 import "./MyStudyListItem.css";
-import TierData from "../../src/data/tier";
+import TierData from "../../data/tier";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
@@ -9,7 +9,7 @@ const MyStudyListItem = (props) => {
 
   const navigate = useNavigate();
   const navigateMyStudyDetail = () => {
-    navigate(`/study/detail/${props.item.studyId}`);
+    navigate(`/study/detail/${props.item.id}`);
   };
 
   return (

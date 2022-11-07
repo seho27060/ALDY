@@ -2,12 +2,12 @@ import "./StudyDetail.css";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
-import Modal from "react-bootstrap/Modal";
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getStudyDetail } from "../../api/study";
 import TierData from "../../data/tier";
 import "./Calendar.css";
+import StudyJoinModal from "../../components/study/StudyJoinModal.js";
+import ProblemModal from "../../components/study/ProblemModal";
 
 const RedButton = styled.button`
   width: 170px;
@@ -20,25 +20,10 @@ const RedButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
-const WhiteButton = styled.button`
-  width: 70px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid red;
-  outline: none;
-  color: red;
-  font-weight: bold;
-  font-size: 12px;
-  transition: transform 30ms ease-in;
-`;
-
 const StudyDetail = () => {
   const params = useParams();
   const id = params.id || "";
   const navigate = useNavigate();
-  const navigateStudySelect = () => {
-    navigate("/study/select", { state: { date: date } });
-  };
   const navigateStudyManage = () => {
     navigate(`/study/manage/${id}`, { state: { studyDetail: studyDetail } });
   };
@@ -59,19 +44,15 @@ const StudyDetail = () => {
 
   // 달력 날짜
   const [date, setDate] = useState(new Date());
-  const week = ["일", "월", "화", "수", "목", "금", "토"];
   // 모달창
   const [studyJoinModalShow, setStudyJoiModalShow] = useState(false);
-  const [problemModalShow, setProblemJoiModalShow] = useState(false);
   const handleStudyJoinModalShow = (e) => {
-    e.preventDefault();
     setStudyJoiModalShow((prev) => !prev);
   };
+  const [problemModalShow, setProblemJoiModalShow] = useState(false);
   const handleProblemModalShow = (e) => {
     setProblemJoiModalShow((prev) => !prev);
   };
-  // 문제풀이 리스트
-  const [problemList, setProblemList] = useState(null);
 
   useEffect(() => {
     getStudyDetail(id)
@@ -88,111 +69,20 @@ const StudyDetail = () => {
     handleProblemModalShow();
   }, [date]);
 
-  useEffect(() => {
-    setProblemList([
-      {
-        problemId: "3017",
-        problemName: "가까운 수 찾기",
-        problemNumber: "3/6",
-        study1: "1단계",
-        study2: "3단계",
-        study3: "2단계",
-        study4: "4단계",
-        study5: "3단계",
-      },
-      {
-        problemId: "14503",
-        problemName: "로봇 청소기",
-        problemNumber: "2/6",
-        study1: "1단계",
-        study2: "2단계",
-        study3: "3단계",
-        study4: "4단계",
-        study5: "3단계",
-      },
-      {
-        problemId: "9205",
-        problemName: "맥주 마시면서 걸어가기",
-        problemNumber: "4/6",
-        study1: "2단계",
-        study2: "3단계",
-        study3: "2단계",
-        study4: "2단계",
-        study5: "3단계",
-      },
-    ]);
-  }, []);
-
   return (
     <main>
-      <Modal
-        size="lg"
-        show={studyJoinModalShow}
-        onHide={handleStudyJoinModalShow}
-      >
-        <Modal.Body className="review-modal-body">
-          <div className="review-modal-header">
-            <div>
-              <h3 className="study-detail-title">
-                <span>스터디 가입 신청</span>
-              </h3>
-              <div>
-                {studyDetail.name}에 가입하기 위해 가입 신청 메세지를
-                작성해주세요!!
-              </div>
-            </div>
-            <div>
-              <button
-                className="review-modal-close-btn"
-                onClick={handleStudyJoinModalShow}
-              >
-                X
-              </button>
-            </div>
-          </div>
-          <div className="review-modal-content">
-            <textarea
-              className="join-message"
-              placeholder=" 가입신청 메세지를 작성해주세요."
-            ></textarea>
-          </div>
-          <div className="study-join-btn">
-            <RedButton>가입 신청하기</RedButton>
-          </div>
-        </Modal.Body>
-      </Modal>
-      <Modal size="lg" show={problemModalShow} onHide={handleProblemModalShow}>
-        <Modal.Body className="review-modal-body">
-          <div className="review-modal-header">
-            <div>
-              <h3 className="study-detail-title">
-                <span>
-                  {date.getFullYear()}년 {date.getMonth() + 1}월{" "}
-                  {date.getDate()}일 {week[date.getDay()]}요일
-                </span>
-              </h3>
-            </div>
-            <div>
-              <button
-                className="review-modal-close-btn"
-                onClick={handleProblemModalShow}
-              >
-                X
-              </button>
-            </div>
-          </div>
-          <div className="review-modal-content">
-            <div className="problem-list-box">
-              {problemList?.map((item, problemId) => (
-                <ProblemListItem key={problemId} item={item} />
-              ))}
-            </div>
-          </div>
-          <div className="study-join-btn">
-            <RedButton onClick={navigateStudySelect}>문제 선정하기</RedButton>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <StudyJoinModal
+        studyDetail={studyDetail}
+        modal={studyJoinModalShow}
+        handleModal={handleStudyJoinModalShow}
+      />
+      <ProblemModal
+        studyDetail={studyDetail}
+        date={date}
+        modal={problemModalShow}
+        handleModal={handleProblemModalShow}
+      />
+
       <section className="study-detail-top">
         <div className="top">
           <RedButton onClick={handleStudyJoinModalShow}>
@@ -297,51 +187,6 @@ const StudyDetail = () => {
         </div>
       </section>
     </main>
-  );
-};
-
-const ProblemListItem = (props) => {
-  const [dropdown, setDropdown] = useState("none");
-
-  return (
-    <div className="problem-list-item">
-      <div className="problem-list-title">
-        <h5 className="problem-name">{props.item.problemId}번</h5>
-        <div className="problem-name">{props.item.problemName}</div>
-        <div className="problem-list-right">
-          <div className="problem-number">{props.item.problemNumber}</div>
-          <WhiteButton>코드 리뷰</WhiteButton>
-          {dropdown === "none" && (
-            <FaChevronCircleDown
-              className="down-icon"
-              onClick={() => {
-                setDropdown("active");
-              }}
-            />
-          )}
-          {dropdown === "active" && (
-            <FaChevronCircleUp
-              className="down-icon"
-              onClick={() => {
-                setDropdown("none");
-              }}
-            />
-          )}
-        </div>
-      </div>
-
-      <div
-        className={`problem-list-content ${
-          dropdown === "active" ? "content-active" : ""
-        }`}
-      >
-        <div>스터디원 1 : {props.item.study1}</div>
-        <div>스터디원 2 : {props.item.study2}</div>
-        <div>스터디원 3 : {props.item.study3}</div>
-        <div>스터디원 4 : {props.item.study4}</div>
-        <div>스터디원 5 : {props.item.study5}</div>
-      </div>
-    </div>
   );
 };
 
