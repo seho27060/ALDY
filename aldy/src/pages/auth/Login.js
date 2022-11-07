@@ -100,12 +100,24 @@ const Login = () => {
         <section className="login-page-right">
           <div className="login-page-right-title">✨Welcome to Aldy✨</div>
           <div className="login-page-right-text">
-            if (not a member?) '
-            {
-              <button className="join-btn" onClick={navigateSignup}>
-                JOIN US
-              </button>
-            }
+            <div className="login-page-right-item">
+              if (not&#32; &#32;a&#32; &#32;member?){" "}
+            </div>
+            <div
+              className="login-page-right-item"
+              style={{ textAlign: "left" }}
+            >
+              &#123;
+            </div>
+            <button className="join-btn" onClick={navigateSignup}>
+              JOIN US
+            </button>
+            <div
+              className="login-page-right-item"
+              style={{ textAlign: "left" }}
+            >
+              &#125;
+            </div>
           </div>
           <img
             src={process.env.PUBLIC_URL + "/login_dinosaur.png"}
