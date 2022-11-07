@@ -163,18 +163,20 @@ public class SolvedacServiceImpl implements SolvedacService {
         // 쿼리 생성
         // 옵션 주고 문제 api
         // 최대 50개중 랜덤으로 반환
-//        StringBuilder query = new StringBuilder("");
+
         String query = String.format("(~solved_by:%s)&(tag:%s)&(tier:%d..%d)&(lang:ko)&(solveable:true)",
                 loginMember.getBaekjoonId(),
                 algos,
                 Math.max(0,loginMember.getTier()-1),
                 Math.min(31,loginMember.getTier()+1));
-        System.out.println(query);
+
         SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
                 .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        SolvedProblemDto randomProblem = solvedacSearchProblemDto.getItems().get((int) (Math.random()*solvedacSearchProblemDto.getCount()));
-        int randomProblemIdx = (int) (Math.random()*randomProblem.getTags().size());
-        int randomProblemAlgorithmIdx = (int) (Math.random()*randomProblem.getTags().get(randomProblemIdx).getDisplayNames().size());
+
+        SolvedProblemDto randomProblem = solvedacSearchProblemDto
+                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
+
+        int randomProblemTagsIdx = (int) (Math.random()*randomProblem.getTags().size());
         MemberProblemRecommendationResponseDto memberProblemRecommendationResponseDto = MemberProblemRecommendationResponseDto.builder()
                 .problemId(randomProblem.getProblemId())
                 .acceptedUserCount(randomProblem.getAcceptedUserCount())
@@ -182,8 +184,8 @@ public class SolvedacServiceImpl implements SolvedacService {
                 .titleKo(randomProblem.getTitleKo())
                 .level(randomProblem.getLevel())
                 .algorithm(randomProblem.getTags()
-                        .get(randomProblemIdx)
-                        .getDisplayNames().get(randomProblemAlgorithmIdx)
+                        .get(randomProblemTagsIdx)
+                        .getDisplayNames().get(0)
                         .getName()).build();
         return memberProblemRecommendationResponseDto;
     }
@@ -228,7 +230,7 @@ public class SolvedacServiceImpl implements SolvedacService {
                         clientResponse ->
                                 clientResponse
                                         .bodyToMono(String.class)
-                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
+                                        .map(body -> new CustomException(ErrorCode.SOLVEDAC_ERROR)))
                 .bodyToMono(SolvedacSearchProblemDto.class)
                 .flux()
                 .toStream()
