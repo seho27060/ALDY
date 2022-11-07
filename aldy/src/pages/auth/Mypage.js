@@ -1,12 +1,14 @@
 import "./Mypage.css";
 import { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { getUserInfo, mypageCode } from "../../api/user";
 import { getMyStudy } from "../../api/study";
 import { recommendation } from "../../api/user";
-import MyStudyListItem from "../../components/MyStudyListItem";
+import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 
 const RedButton = styled.button`
@@ -38,7 +40,12 @@ const Mypage = () => {
   const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
   const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
 
-  const [tab, setTab] = useState("studyListAll");
+  const [acceptedUserCount, setAcceptedUserCount] = useState(null);
+  const [algorithm, setAlgorithm] = useState(null);
+  const [averageTries, setAverageTries] = useState(null);
+  const [level, setLevel] = useState(null);
+  const [problemId, setProblemId] = useState(null);
+  const [titleKo, setTitleKo] = useState(null);
 
   const [myStudyList, setMyStudyList] = useState(null);
   // Pagination
