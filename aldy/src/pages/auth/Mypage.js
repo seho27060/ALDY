@@ -10,6 +10,7 @@ import { getMyStudy } from "../../api/study";
 import { recommendation } from "../../api/user";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
+import ProblemRecommendationBox from "../../components/problemRecommendationBox/ProblemRecommendationBox";
 
 const RedButton = styled.button`
   width: 170px;
@@ -181,6 +182,9 @@ const Mypage = () => {
           <span>을 해드립니다.✨</span>
         </p>
       </section>
+      <ProblemRecommendationBox>
+        우와우!
+      </ProblemRecommendationBox>
       <section className="study-list">
         <div>문제 추천~ </div>
         <div className="Mypage-recommend-box">
