@@ -137,7 +137,7 @@ public class StudyController {
             @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
     })
     @PostMapping("/mail/send")
-    public String sendMail(MailDto mailDto) {
+    public String sendMail(MailDto mailDto) throws InterruptedException {
         emailServiceImpl.sendSimpleMessage(mailDto);
         System.out.println("메일 전송 완료");
         return "AfterMail.html";
