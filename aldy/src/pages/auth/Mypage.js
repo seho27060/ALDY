@@ -96,8 +96,12 @@ const Mypage = () => {
           <span>회원정보</span>
         </h2>
         <div className="Mypage-section1-userinfo">
-          <div>
-            {/* <img src="`https://d2gd6pc034wcta.cloudfront.net/tier/${tier}.svg`" /> */}
+          <div className="Mypage-tier-nickname">
+            <img
+              src={`https://d2gd6pc034wcta.cloudfront.net/tier/${tier}.svg`}
+              alt="티어 이미지"
+              className="Mypage-tier-img"
+            />
             <h2>{nickname}님 안녕하세요</h2>
           </div>
           <div>
