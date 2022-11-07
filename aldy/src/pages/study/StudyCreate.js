@@ -76,6 +76,7 @@ const StudyCreate = () => {
                   placeholder="스터디 이름을 입력해 주세요."
                   value={newStudy.name}
                   onChange={onChange}
+                  required
                 ></input>
               </div>
             </div>
@@ -91,6 +92,7 @@ const StudyCreate = () => {
                   placeholder="2~6명"
                   value={newStudy.upperLimit || ""}
                   onChange={onChange}
+                  required
                 ></input>
               </div>
               <div className="StudyCreate-form-title">

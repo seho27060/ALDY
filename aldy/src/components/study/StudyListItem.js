@@ -1,5 +1,5 @@
 import "./StudyListItem.css";
-import TierData from "../../src/data/tier";
+import TierData from "../../data/tier";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
@@ -52,6 +52,7 @@ const StudyListItem = (props) => {
           <img
             src={`https://d2gd6pc034wcta.cloudfront.net/tier/${props.item.threshold}.svg`}
             alt="티어 이미지"
+            className="tier-image"
           ></img>
           <div>{TierData[props.item.threshold]}</div>
         </div>

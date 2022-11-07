@@ -1,7 +1,5 @@
 import "./Mypage.css";
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
@@ -40,12 +38,7 @@ const Mypage = () => {
   const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
   const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
 
-  const [acceptedUserCount, setAcceptedUserCount] = useState(null);
-  const [algorithm, setAlgorithm] = useState(null);
-  const [averageTries, setAverageTries] = useState(null);
-  const [level, setLevel] = useState(null);
-  const [problemId, setProblemId] = useState(null);
-  const [titleKo, setTitleKo] = useState(null);
+  const [tab, setTab] = useState("studyListAll");
 
   const [myStudyList, setMyStudyList] = useState(null);
   // Pagination

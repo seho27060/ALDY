@@ -5,10 +5,17 @@ import Select from "react-select";
 import Editor from '@monaco-editor/react'
 import { useRecoilState } from "recoil";
 import { recoilMyCode, recoilStep } from "../../store/states";
-import { getEditedCodes } from "../../api/code";
+import { getEditedCodes, saveCode } from "../../api/code";
 import { useNavigate } from "react-router-dom";
 
 const CodeReview = () => {
+  // studyInfo
+  const studyInfo = sessionStorage.getItem('studyInfo')
+  const studyId = studyInfo.id
+  const studyName = studyInfo.name
+  const problemId = studyInfo.problemId
+  const problemNumber = studyInfo.problemNumber
+  //
   const [selected, setSelected] = useState(null)
   const [editedCode, setEditedCode] = useState(null)
   const sessionEditCode = sessionStorage.getItem('editedCode')
@@ -23,11 +30,18 @@ const CodeReview = () => {
   const [subimtCode, setSumbitCode] = useState(null)
   const myCode = sessionStorage.getItem('mycode')
   const [yourCode, setYourCode] = useState("")
-  const editorRef = useRef(null)
   const navigate = useNavigate();
-  function handleEditorChange(editor, monaco) {
-    editorRef.current = editor;
-    setSumbitCode(editorRef.current.getValue())
+  const [codeOneTwoThree, setCodeOneTwoThree] = useState({
+    code:"",  
+    process: 1,
+    studyId: 0,
+    problemId: 0
+  })
+
+  function handleEditorChange(value, event) {
+    setCodeOneTwoThree((prev)=>{
+      return {...prev, code: value}
+    })
   }
   const modals = {
     1:<StepModal1 show={stepModalShow1} onHide={()=>{setStepModalShow1(false)}}></StepModal1>,
@@ -207,7 +221,7 @@ const CodeReview = () => {
                             language={language}
                             theme='vs-dark'
                             defaultValue={sessionEditCode}
-                            onMount={handleEditorChange}
+                            onMount={handleEditorChange} // 바꿔야함
                             options={{
                               fontSize:20,
                               minimap:{ enabled: false},
@@ -224,7 +238,7 @@ const CodeReview = () => {
                           language={language}
                           theme='vs-dark'
                           defaultValue={myCode}
-                          onMount={handleEditorChange}
+                          onMount={handleEditorChange} // 바꿔야함
                           options={{
                             fontSize:20,
                             minimap:{ enabled: false},
@@ -241,7 +255,7 @@ const CodeReview = () => {
               language={language}
               theme='vs-dark'
               defaultValue={null}
-              onMount={handleEditorChange}
+              onChange={handleEditorChange}
               options={{
                 fontSize:20,
                 minimap:{ enabled: false},
@@ -269,6 +283,7 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
+                saveCode(codeOneTwoThree)
               }}
             >
               코드 제출하기
@@ -374,11 +389,11 @@ function StepModal1(props) {
             <span>백준에서</span>
             <span className='highlight'>풀었던 코드</span>
             <span>를 제출해주세요.</span><br></br>
-            <span>해당 문제의 풀이코드를</span>
+            {/* <span>해당 문제의 풀이코드를</span>
             <span className='highlight'> 공개</span>
             <span>로 설정하였을 경우</span><br></br>
             <span className='highlight'>백준연동</span>
-            <span>으로 코드를 가져올 수 있습니다.</span>
+            <span>으로 코드를 가져올 수 있습니다.</span> */}
           </p>
         </div>
       </Modal.Body>

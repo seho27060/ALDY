@@ -4,8 +4,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import StudyListItem from "../../components/StudyListItem";
-import MyStudyListItem from "../../components/MyStudyListItem";
+import StudyListItem from "../../components/study/StudyListItem";
+import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
 
@@ -52,8 +52,8 @@ const StudyList = () => {
   useEffect(() => {
     getMyStudy(myStudyPageNum)
       .then((res) => {
-        const data = res.data.studyDtoPage;
-        // console.log(data);
+        const data = res.data.myStudyDtoPage;
+        // console.log(res);
         setMyStudyList(data.content);
         setMyStudyTotal(data.totalElements);
       })

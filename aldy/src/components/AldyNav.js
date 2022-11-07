@@ -39,10 +39,22 @@ const AldyNav = () => {
     navigate("/");
   };
   const navigateStudy = () => {
-    navigate("/study/list");
+    if (logged) {
+      navigate("/study/list");
+    } else {
+      if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
+        navigate('/login')
+      }
+    }
   };
   const navigateReview = () => {
-    navigate("/review/list");
+    if (logged) {
+      navigate("/review/list");
+    } else {
+      if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
+        navigate('/login')
+      }
+    }
   };
   const navigateMypage = () => {
     navigate("/mypage");
@@ -147,6 +159,7 @@ const AldyNav = () => {
                         sessionStorage.clear();
                         setLogged(false);
                         alert("로그아웃 되었습니다.");
+                        navigateMain();
                       }}
                     >
                       <BsPower />
