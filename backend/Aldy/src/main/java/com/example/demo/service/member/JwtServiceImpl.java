@@ -4,7 +4,7 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.domain.dto.member.response.ValidateTokenResponseDto;
 import com.example.demo.domain.entity.Member.RefreshToken;
-import com.example.demo.repository.Member.RefreshTokenRepository;
+import com.example.demo.repository.member.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -8,10 +8,10 @@ import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
-import com.example.demo.repository.EditedCodeRepository;
-import com.example.demo.repository.Member.MemberRepository;
+import com.example.demo.repository.code.EditedCodeRepository;
+import com.example.demo.repository.member.MemberRepository;
 
-import com.example.demo.service.SolvedacService;
+import com.example.demo.service.solvedac.SolvedacService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,9 @@ public class MemberServiceImpl implements MemberService{
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final EditedCodeRepository editedCodeRepository;
+
     private final SolvedacService solvedacService;
+    private final AuthService authService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -60,11 +62,20 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberResponseDto modifyInfo(MemberModifyRequestDto memberModifyRequestDto, HttpServletRequest request) {
+    public MemberResponseDto modifyNickname(MemberModifyNicknameRequestDto memberModifyNicknameRequestDto, HttpServletRequest request) {
         String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        member.modifyInfo(memberModifyRequestDto);
+        member.modifyNickname(memberModifyNicknameRequestDto);
+        return new MemberResponseDto(member);
+    }
+
+    @Override
+    public MemberResponseDto modifyEmail(MemberModifyEmailRequestDto memberModifyEmailRequestDto, HttpServletRequest request) {
+        String loginMemberBaekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member member = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        member.modifyEmail(memberModifyEmailRequestDto);
         return new MemberResponseDto(member);
     }
 

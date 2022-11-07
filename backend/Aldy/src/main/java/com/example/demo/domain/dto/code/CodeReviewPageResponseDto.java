@@ -1,7 +1,6 @@
 package com.example.demo.domain.dto.code;
 
 
-import com.example.demo.domain.dto.RequestedCodeDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

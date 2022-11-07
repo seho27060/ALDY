@@ -11,8 +11,8 @@ import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
-import com.example.demo.repository.Member.MemberRepository;
-import com.example.demo.service.SolvedacService;
+import com.example.demo.repository.member.MemberRepository;
+import com.example.demo.service.solvedac.SolvedacService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -56,11 +56,6 @@ public class AuthServiceImpl implements AuthService{
         Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaekjoonId());
         Long tier = (long) Integer.parseInt(Optional.ofNullable(entries.get("tier"))
                 .orElse(String.valueOf(0)));
-//        try{
-//            tier = Integer.parseInt(entries.get("tier"));
-//        } catch (Exception e ){
-//            tier = 0;
-//        }
 
         Member member = Member.builder()
                 .baekjoonId(memberRequestDto.getBaekjoonId())
