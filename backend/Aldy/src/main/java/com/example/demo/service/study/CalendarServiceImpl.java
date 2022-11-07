@@ -1,16 +1,19 @@
 package com.example.demo.service.study;
 
+import com.example.demo.domain.dto.solvedac.ProblemTagsDto;
 import com.example.demo.domain.dto.study.CalendarDto;
 import com.example.demo.domain.dto.study.ProblemChoiceRequestDto;
-import com.example.demo.domain.dto.study.ProblemVo;
+import com.example.demo.domain.dto.solvedac.ProblemVo;
 import com.example.demo.domain.entity.Study.Calendar;
 import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
+import com.example.demo.domain.entity.Study.TagOfProblem;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.study.CalendarRepository;
 import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.repository.study.StudyRepository;
+import com.example.demo.repository.study.TagOfProblemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,8 @@ public class CalendarServiceImpl implements CalendarService{
     private final CalendarRepository calendarRepository;
     private final ProblemRepository problemRepository;
     private final StudyRepository studyRepository;
+    private final TagOfProblemRepository tagOfProblemRepository;
+
     // 문제를 등록한다. 캘린더가 존재하지 않으면 존재하게 만들어준다.
     @Override
     public void registerProblem(ProblemChoiceRequestDto problemChoiceRequestDto) {
@@ -34,7 +39,7 @@ public class CalendarServiceImpl implements CalendarService{
         Study study = studyRepository.findById(study_id).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
         int year = problemChoiceRequestDto.getYear();
-        int month = problemChoiceRequestDto.getMonth();;
+        int month = problemChoiceRequestDto.getMonth();
         int day = problemChoiceRequestDto.getDay();
         // 달력이 있으면 가져오고 달력이 없으면 하나 만들어줌.
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(problemChoiceRequestDto.getStudyId(),
@@ -57,6 +62,14 @@ public class CalendarServiceImpl implements CalendarService{
                     .calendar(calendar)
                     .problemDay(day)
                     .build();
+
+            List<ProblemTagsDto> problemTagsDtoList = problem.getTags();
+            for(ProblemTagsDto problemTagsDto : problemTagsDtoList) {
+                tagOfProblemRepository.save(
+                        new TagOfProblem(problemTagsDto.getKey(), problemTable)
+                );
+            }
+
             problemRepository.save(problemTable);
         }
     }
@@ -94,9 +107,9 @@ public class CalendarServiceImpl implements CalendarService{
             String day_str = String.format("%02d", problem.getProblemDay());
             dayList.add(day_str+"-"+month_str+"-"+year_str);
         }
-        CalendarDto calendarDto = CalendarDto.builder()
+
+        return CalendarDto.builder()
                 .days(dayList)
                 .build();
-        return calendarDto;
     }
 }
