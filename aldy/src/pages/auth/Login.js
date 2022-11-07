@@ -35,6 +35,12 @@ const Login = () => {
     navigate("/");
   };
 
+  const onKeypress = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   const onSubmit = () => {
     setCredentials((credentials.baekjoonId = idInput.current.value));
     setCredentials((credentials.password = passwordInput.current.value));
@@ -75,6 +81,7 @@ const Login = () => {
                 type="password"
                 placeholder="비밀번호를 입력해주세요."
                 ref={passwordInput}
+                onKeyPress={onKeypress}
               ></input>
             </div>
             <div className="login-submit-btn">
