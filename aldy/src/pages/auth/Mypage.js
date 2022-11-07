@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { getUserInfo, mypageCode } from "../../api/user";
 import { getMyStudy } from "../../api/study";
+import MyStudyListItem from "../../components/MyStudyListItem";
+import Paging from "../../components/Paging";
 
 const RedButton = styled.button`
   width: 170px;
@@ -35,6 +37,15 @@ const Mypage = () => {
   const [tier, setTier] = useState(null);
   const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
   const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
+
+  const [tab, setTab] = useState("studyListAll");
+
+  const [myStudyList, setMyStudyList] = useState(null);
+  // Pagination
+
+  const [myStudyPageNum, setMyStudyPageNum] = useState(1);
+
+  const [myStudyTotal, setMyStudyTotal] = useState(0);
 
   useEffect(() => {
     getUserInfo()
@@ -66,6 +77,19 @@ const Mypage = () => {
       setReplyCodeReviewNumber(res.data.replyCodeReviewNumber);
     });
   }, []);
+
+  useEffect(() => {
+    getMyStudy(myStudyPageNum)
+      .then((res) => {
+        const data = res.data.myStudyDtoPage;
+        console.log(data);
+        setMyStudyList(data.content);
+        setMyStudyTotal(data.totalElements);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [myStudyPageNum]);
 
   const navigate = useNavigate();
 
@@ -145,80 +169,20 @@ const Mypage = () => {
       </section>
       <section className="study-list">
         <div>
-          <StudyListMy />
+          {/* <StudyListMy /> */}
+          <div className="Mypage-study-list-box">
+            {myStudyList?.map((item, i) => (
+              <MyStudyListItem key={i} item={item} />
+            ))}
+            <Paging
+              page={myStudyPageNum}
+              setPage={setMyStudyPageNum}
+              totalElements={myStudyTotal}
+            />
+          </div>
         </div>
       </section>
     </main>
-  );
-};
-
-const StudyListMy = () => {
-  const [myStudyList, setMyStudyList] = useState(null);
-
-  useEffect(() => {
-    // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-    getMyStudy().then((res) => {
-      console.log("my study data");
-      console.log(res.data);
-      console.log(res.data.studyDtoPage.content);
-    });
-    // setMyStudyList([
-
-    // ]);
-  }, []);
-
-  return (
-    <div className="study-list-box">
-      {myStudyList?.map((item, studyId) => (
-        <MyStudyListItem key={studyId} item={item} />
-      ))}
-    </div>
-  );
-};
-
-const MyStudyListItem = (props) => {
-  const [dropdown, setDropdown] = useState("none");
-
-  return (
-    <div className="study-list-item">
-      <div className="study-list-title">
-        <div className="study-id">{props.item.studyId}</div>
-        <h5 className="study-name">{props.item.studyName}</h5>
-        <div className="study-number">{props.item.studyNumber}</div>
-        {dropdown === "none" && (
-          <FaChevronCircleDown
-            className="down-icon"
-            onClick={() => {
-              setDropdown("active");
-            }}
-          />
-        )}
-        {dropdown === "active" && (
-          <FaChevronCircleUp
-            className="down-icon"
-            onClick={() => {
-              setDropdown("none");
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        className={`my-study-list-content ${
-          dropdown === "active" ? "content-active" : ""
-        }`}
-      >
-        <div className="my-study-description1">
-          <div className="study-rank">{props.item.studyRank}</div>
-          <div>{props.item.studyDescription}</div>
-        </div>
-        <div className="my-study-description2">
-          <div>함께 푼 문제 수 : {props.item.problemNum}</div>
-          <div>시작한 날짜 : {props.item.startDate}</div>
-          <div>최근 해결한 문제 티어 : {props.item.recentRank}</div>
-        </div>
-      </div>
-    </div>
   );
 };
 
