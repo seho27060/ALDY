@@ -178,16 +178,18 @@ public class StudyController {
         return new ResponseEntity(studyStatusDto, HttpStatus.OK);
     }
 
-    @GetMapping("/problem/{calendar_id}/{day}")
+    @GetMapping("/problem/{study_id}/{year}/{month}/{day}")
     @Operation(summary = "해당 날짜에 어떤 문제 있는지 반환해주는 API - [담당자 조성민]", description = "머리아파 죽겠음" +
             " 그래도 기어코 해내주는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity getProblemsOfDay(@PathVariable long calendar_id
-                                            , @PathVariable int day, HttpServletRequest request){
+    private ResponseEntity getProblemsOfDay(@PathVariable long study_id
+                                            , @PathVariable int year, @PathVariable int month,
+                                            @PathVariable int day,
+                                            HttpServletRequest request){
 
-        List<ProblemDto> problemDtoList = codeService.getProblemsOfDay(calendar_id, day, request);
+        List<ProblemDto> problemDtoList = codeService.getProblemsOfDay(study_id, year, month, day, request);
         return new ResponseEntity(problemDtoList, HttpStatus.OK);
     }
 }

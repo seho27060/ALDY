@@ -29,5 +29,5 @@ public interface CodeService {
 
     StudyStatusDto getProcessOfStudy(long study_id, long problem_id, HttpServletRequest request);
 
-    List<ProblemDto> getProblemsOfDay(long calendar_id, int day, HttpServletRequest request);
+    List<ProblemDto> getProblemsOfDay(long study_id, int year, int month, int day, HttpServletRequest request);
 }

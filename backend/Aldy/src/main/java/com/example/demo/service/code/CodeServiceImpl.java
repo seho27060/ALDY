@@ -147,7 +147,7 @@ public class CodeServiceImpl implements CodeService {
 
         int month = LocalDateTime.now().getMonth().getValue();
         int year = LocalDateTime.now().getYear();
-        Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(study.getId(),month, year)
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study.getId(),month, year)
                 .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
 
 //        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
@@ -315,11 +315,14 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public List<ProblemDto> getProblemsOfDay(long calendar_id, int day, HttpServletRequest request) {
-        List<Problem> problemList = problemRepository.findByCalendar_idAndProblemDay(calendar_id, day);
+    public List<ProblemDto> getProblemsOfDay(long study_id, int year, int month, int day, HttpServletRequest request) {
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study_id, year, month)
+                .orElseThrow(() -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
+        List<Problem> problemList = problemRepository.findByCalendar_idAndProblemDay(calendar.getId(), day);
         List<ProblemDto> problemDtoList = problemList.stream().map(ProblemDto::new).collect(Collectors.toList());
         return problemDtoList;
     }
+
 
     public boolean checkPreCodeExists(CodeSaveRequestDto codeSaveRequestDto, Member writer, Study study){
         int nowProcess = codeSaveRequestDto.getProcess();
