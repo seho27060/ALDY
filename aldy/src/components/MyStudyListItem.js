@@ -53,15 +53,24 @@ const MyStudyListItem = (props) => {
             <img
               src={`https://d2gd6pc034wcta.cloudfront.net/tier/${props.item.threshold}.svg`}
               alt="티어 이미지"
+              className="tier-image"
             ></img>
             <div>{TierData[props.item.threshold]}</div>
           </div>
           <div>{props.item.introduction}</div>
         </div>
         <div className="my-study-description2">
-          <div>함께 푼 문제 수 : {props.item.problemNum}</div>
+          <div>함께 푼 문제 수 : {props.item.numberOfSolvedProblem}</div>
           <div>시작한 날짜 : {props.item.createdDate.substring(0, 10)}</div>
-          <div>최근 해결한 문제 티어 : {props.item.recentRank}</div>
+          <div>
+            최근 해결한 문제 티어 :{" "}
+            <img
+              src={`https://d2gd6pc034wcta.cloudfront.net/tier/${props.item.tierOfRecentSolvedProblem}.svg`}
+              alt="티어 이미지"
+              className="tier-image"
+            ></img>
+            {TierData[props.item.tierOfRecentSolvedProblem]}
+          </div>
         </div>
       </div>
     </div>

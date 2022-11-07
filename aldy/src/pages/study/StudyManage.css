@@ -12,6 +12,16 @@
   padding: 50px;
 }
 
+.delete-study > button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  white-space: nowrap;
+  width: 80px;
+  padding: 5px;
+  font-size: 12px;
+}
+
 .study-manage-top > h1 {
   color: rgba(40, 80, 15);
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -62,12 +72,12 @@
 .study-manage-blackboard > table > tbody > tr > td:nth-child(2) {
   font-weight: 700;
   text-align: start;
-  width: 20%;
+  width: 30%;
   border-right: 1px dashed rgb(250, 250, 250);
 }
 
 .study-manage-blackboard > table > tbody > tr > td:nth-child(3) {
-  width: 60%;
+  width: 50%;
   text-align: center;
 }
 

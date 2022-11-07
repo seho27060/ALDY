@@ -147,6 +147,7 @@ const AldyNav = () => {
                         sessionStorage.clear();
                         setLogged(false);
                         alert("로그아웃 되었습니다.");
+                        navigateMain();
                       }}
                     >
                       <BsPower />

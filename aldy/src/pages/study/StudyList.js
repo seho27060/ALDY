@@ -52,8 +52,8 @@ const StudyList = () => {
   useEffect(() => {
     getMyStudy(myStudyPageNum)
       .then((res) => {
-        const data = res.data.studyDtoPage;
-        // console.log(data);
+        const data = res.data.myStudyDtoPage;
+        // console.log(res);
         setMyStudyList(data.content);
         setMyStudyTotal(data.totalElements);
       })
