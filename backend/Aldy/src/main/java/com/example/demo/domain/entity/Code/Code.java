@@ -41,6 +41,9 @@ public class Code {
     @JoinColumn(name="problem_id")
     private Problem problem;
 
+    public void updateCode(String code){
+        this.code = code;
+    }
 //    public Code(CodeSaveRequestDto codeSaveRequestDto, Member writer){
 //        this.code = codeSaveRequestDto.getCode();
 //        this.writer = writer;

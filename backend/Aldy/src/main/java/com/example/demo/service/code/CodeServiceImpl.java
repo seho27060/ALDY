@@ -153,25 +153,39 @@ public class CodeServiceImpl implements CodeService {
         Problem problem = problemRepository.
                 findById(codeSaveRequestDto.getProblemId())
                 .orElseThrow(()->new CustomException(ErrorCode.PROBLEMTABLE_NOT_FOUND));
-
-        boolean preCodeExists = checkPreCodeExists(codeSaveRequestDto, writer, study);
-        if(!preCodeExists){
+        // 로직을 더 짧게 JPA를 활용해서 해줄수도 있을 듯.
+        // exist 함수로
+        boolean preProcessCodeExists = checkPreCodeExists(codeSaveRequestDto, writer, study);
+        if(!preProcessCodeExists){
             throw new CustomException(ErrorCode.CODE_NOT_FOUND);
         }
-        Code code = Code.builder()
-                .code(codeSaveRequestDto.getCode())
-                .writer(writer)
-                .study(study)
-                .process(codeSaveRequestDto.getProcess())
-                .problem(problem)
-//                .problemName(codeSaveRequestDto.getProblemName())
-//                .problemTier(codeSaveRequestDto.getProblemTier())
-                .build();
+        // 있으면 덮어 쓰기 없으면 새로 생성
+        Optional<Code> preCode = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
+                study.getId(),
+                codeSaveRequestDto.getProblemId(),
+                writer.getId(),
+                codeSaveRequestDto.getProcess()
+        );
+        Code code = null;
+        if(preCode.isPresent()){
+            code = preCode.get();
+            code.updateCode(codeSaveRequestDto.getCode());
+        }else{
+            code = Code.builder()
+                    .code(codeSaveRequestDto.getCode())
+                    .writer(writer)
+                    .study(study)
+                    .process(codeSaveRequestDto.getProcess())
+                    .problem(problem)
+    //                .problemName(codeSaveRequestDto.getProblemName())
+    //                .problemTier(codeSaveRequestDto.getProblemTier())
+                    .build();
 
-        try{
-            codeRepository.save(code);
-        }catch(Exception e){
-            throw new CustomException(ErrorCode.SAVE_ERROR);
+            try{
+                codeRepository.save(code);
+            }catch(Exception e){
+                throw new CustomException(ErrorCode.SAVE_ERROR);
+            }
         }
 
 
