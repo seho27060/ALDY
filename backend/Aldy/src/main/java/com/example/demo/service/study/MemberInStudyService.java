@@ -16,6 +16,8 @@ public interface MemberInStudyService {
 
     List<MemberInStudyDto> getAllMemberInStudy(Long studyId);
 
+    List<MemberInStudyDto> getAllApplicateMemberInStudy(Long studyId);
+
     MemberInStudyDto changeAuth(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId, int auth);
 
     void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId);

@@ -4,6 +4,7 @@ import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.study.ApplicateStudyRequestDto;
 import com.example.demo.domain.dto.study.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.study.MemberInStudyDto;
+import com.example.demo.domain.dto.study.MemberInStudyResponseDto;
 import com.example.demo.service.study.MemberInStudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -56,7 +57,9 @@ public class MemberInStudyController {
 
         List<MemberInStudyDto> memberInStudyDtoList = memberInStudyService.getAllMemberInStudy(studyId);
 
-        return new ResponseEntity<>(memberInStudyDtoList, HttpStatus.OK);
+        List<MemberInStudyDto> applicateMemberInStudyDtoList = memberInStudyService.getAllApplicateMemberInStudy(studyId);
+
+        return new ResponseEntity<>(new MemberInStudyResponseDto(memberInStudyDtoList, applicateMemberInStudyDtoList), HttpStatus.OK);
 
     }
 

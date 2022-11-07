@@ -1,7 +1,10 @@
 package com.example.demo.domain.dto.study;
 
 import com.example.demo.domain.entity.Study.Study;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudyDto {
+public class MyStudyDto {
 
     private Long id;
     private LocalDateTime createdDate;
@@ -17,23 +20,21 @@ public class StudyDto {
     private int upperLimit;
     private String introduction;
     private int threshold;
-    private int visibility;
     private int countMember;
-    private String leaderBaekjoonId;
+    private int numberOfSolvedProblem;
+    private int tierOfRecentSolvedProblem;
 
-    public StudyDto(Study study, int countMember) {
+    public MyStudyDto(Study study, int countMember, int numberOfSolvedProblem, int tierOfRecentSolvedProblem) {
         this.id = study.getId();
         this.createdDate = study.getCreatedDate();
         this.name = study.getName();
         this.upperLimit = study.getUpperLimit();
         this.introduction = study.getIntroduction();
         this.threshold = study.getThreshold();
-        this.visibility = study.getVisibility();
         this.countMember = countMember;
-    }
-
-    public void setLeaderBaekjoonId(String leaderBaekjoonId) {
-        this.leaderBaekjoonId = leaderBaekjoonId;
+        this.numberOfSolvedProblem = numberOfSolvedProblem;
+        this.tierOfRecentSolvedProblem = tierOfRecentSolvedProblem;
     }
 
 }
+

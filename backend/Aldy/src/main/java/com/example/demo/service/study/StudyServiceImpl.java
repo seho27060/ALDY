@@ -1,19 +1,22 @@
 package com.example.demo.service.study;
 
-import com.example.demo.domain.dto.study.CreateStudyRequestDto;
-import com.example.demo.domain.dto.study.StudyDto;
+import com.example.demo.domain.dto.study.*;
 
-import com.example.demo.domain.dto.study.StudyPageResponseDto;
+import com.example.demo.domain.entity.Study.Calendar;
 import com.example.demo.domain.entity.Study.MemberInStudy;
+import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
 
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 
-import com.example.demo.repository.member.MemberRepository;
+import com.example.demo.repository.study.CalendarRepository;
 import com.example.demo.repository.study.MemberInStudyRepository;
+import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.repository.study.StudyRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -33,7 +37,9 @@ public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
 
-    private final MemberRepository memberRepository;
+    private final CalendarRepository calendarRepository;
+
+    private final ProblemRepository problemRepository;
 
     private final MemberInStudyRepository memberInStudyRepository;
 
@@ -62,12 +68,12 @@ public class StudyServiceImpl implements StudyService {
                 new StudyDto(e, countMember(e.getId()))
         );
 
-        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage);
+        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage.getTotalElements(), studyDtoPage);
 
     }
 
     @Override
-    public StudyPageResponseDto getMyStudyPage(int page, int size, String baekjoonId) {
+    public MyStudyPageResponseDto getMyStudyPage(int page, int size, String baekjoonId) {
 
         Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BaekjoonId(baekjoonId,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
@@ -76,11 +82,14 @@ public class StudyServiceImpl implements StudyService {
             throw new CustomException(ErrorCode.STUDY_NOT_FOUND);
         }
 
-        Page<StudyDto> studyDtoPage = memberInStudyPage.map(e ->
-                new StudyDto(e.getStudy(), countMember(e.getStudy().getId()))
-        );
+        Page<MyStudyDto> myStudyDtoPage = memberInStudyPage.map(e -> {
 
-        return new StudyPageResponseDto(studyDtoPage.getTotalPages(), studyDtoPage);
+            ProblemInfo problemInfo = getProblemInfo(e.getStudy().getId());
+            return new MyStudyDto(e.getStudy(), countMember(e.getStudy().getId()), problemInfo.getCount(), problemInfo.getTier());
+
+        });
+
+        return new MyStudyPageResponseDto(myStudyDtoPage.getTotalPages(), myStudyDtoPage.getTotalElements(), myStudyDtoPage);
 
     }
 
@@ -90,7 +99,15 @@ public class StudyServiceImpl implements StudyService {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
-        return new StudyDto(study, countMember(study.getId()));
+        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
+
+        studyDto.setLeaderBaekjoonId(
+                memberInStudyRepository.findByStudyAndAuth(study, 1)
+                        .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
+                        .getMember().getBaekjoonId()
+        );
+
+        return studyDto;
 
     }
 
@@ -109,4 +126,40 @@ public class StudyServiceImpl implements StudyService {
 
     }
 
+    public ProblemInfo getProblemInfo(long studyId) {
+
+        List<Calendar> calendarList = calendarRepository.findByStudy_id(studyId);
+
+        LocalDate now = LocalDate.now();
+        LocalDate max = LocalDate.of(1, 1, 1);
+        int count = 0;
+        int tier = 0;
+
+        for (Calendar calendar : calendarList) {
+            List<Problem> problemList = problemRepository.findByCalendar_id(calendar.getId());
+
+            for (Problem problem : problemList) {
+                LocalDate problemDate = LocalDate.of(calendar.getCalendarYear(), calendar.getCalendarMonth(), problem.getProblemDay());
+
+                if (problemDate.compareTo(now) < 0) {
+                    count += 1;
+
+                    if(problemDate.compareTo(max) > 0) {
+                        max = problemDate;
+                        tier = problem.getProblemTier();
+                    }
+                }
+            }
+        }
+
+        return new ProblemInfo(count, tier);
+    }
+
+}
+
+@Getter
+@AllArgsConstructor
+class ProblemInfo {
+    private int count;
+    private int tier;
 }
