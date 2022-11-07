@@ -25,7 +25,7 @@ import java.util.List;
 public class JwtTokenProvider {
     private final String accessSecretKey = "killtheSpringSecurity2";
 
-    private final long accessTokenValidTime = Duration.ofMinutes(60).toMillis();
+    private final long accessTokenValidTime = Duration.ofMinutes(1).toMillis();
 
     private final String refreshSecretKey = "killtheSpringSecurity3";
 
