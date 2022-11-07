@@ -35,6 +35,25 @@ const Login = () => {
     navigate("/");
   };
 
+  const onSubmit = () => {
+    setCredentials((credentials.baekjoonId = idInput.current.value));
+    setCredentials((credentials.password = passwordInput.current.value));
+    console.log(credentials);
+    login(credentials)
+      .then((res) => {
+        sessionStorage.setItem("accessToken", res.data.accessToken);
+        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        setLogged(true);
+        sessionStorage.setItem("userName", idInput.current.value);
+        setUsername(idInput.current.value);
+        navigateMain();
+      })
+      .catch((err) => {
+        alert("로그인에 실패하였습니다.");
+        window.location.reload(); //새로고침
+      });
+  };
+
   return (
     <main className="login-page-main">
       <div className="login-page-bg">
@@ -59,38 +78,7 @@ const Login = () => {
               ></input>
             </div>
             <div className="login-submit-btn">
-              <RedButton
-                onClick={() => {
-                  setCredentials(
-                    (credentials.baekjoonId = idInput.current.value)
-                  );
-                  setCredentials(
-                    (credentials.password = passwordInput.current.value)
-                  );
-                  console.log(credentials);
-                  login(credentials)
-                    .then((res) => {
-                      sessionStorage.setItem(
-                        "accessToken",
-                        res.data.accessToken
-                      );
-                      sessionStorage.setItem(
-                        "refreshToken",
-                        res.data.refreshToken
-                      );
-                      setLogged(true);
-                      sessionStorage.setItem("userName", idInput.current.value);
-                      setUsername(idInput.current.value);
-                      navigateMain();
-                    })
-                    .catch((err) => {
-                      alert("로그인에 실패하였습니다.");
-                      window.location.reload(); //새로고침
-                    });
-                }}
-              >
-                Log In
-              </RedButton>
+              <RedButton onClick={onSubmit}>Log In</RedButton>
             </div>
           </div>
           <div className="login-page-join">
