@@ -20,10 +20,9 @@ const ProblemListItem = (props) => {
   return (
     <div className="problem-list-item">
       <div className="problem-list-title">
-        <h5 className="problem-name">{props.item.problemId}번</h5>
+        <h5 className="problem-name">{props.item.problemNum}번</h5>
         <div className="problem-name">{props.item.problemName}</div>
         <div className="problem-list-right">
-          <div className="problem-number">{props.item.problemNumber}</div>
           <WhiteButton>코드 리뷰</WhiteButton>
           {dropdown === "none" && (
             <FaChevronCircleDown

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { getStudyDetail } from "../../api/study";
+import { getStudyDetail, getProblem } from "../../api/study";
 import TierData from "../../data/tier";
 import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
@@ -32,7 +32,7 @@ const StudyDetail = () => {
   };
 
   const [studyDetail, setStudyDetail] = useState({
-    id: 0,
+    id: id,
     createdDate: "",
     name: "",
     upperLimit: 6,
@@ -54,6 +54,20 @@ const StudyDetail = () => {
     setProblemJoiModalShow((prev) => !prev);
   };
 
+  // 문제 가져오기
+  const [problemList, setProblemList] = useState([]);
+  useEffect(() => {
+    handleProblemModalShow();
+    getProblem(id, date.getFullYear(), date.getMonth() + 1, date.getDate())
+      .then((res) => {
+        console.log(res.data);
+        setProblemList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id, date]);
+
   useEffect(() => {
     getStudyDetail(id)
       .then((res) => {
@@ -64,10 +78,6 @@ const StudyDetail = () => {
         console.log(err);
       });
   }, [id]);
-
-  useEffect(() => {
-    handleProblemModalShow();
-  }, [date]);
 
   return (
     <main>
@@ -81,8 +91,8 @@ const StudyDetail = () => {
         date={date}
         modal={problemModalShow}
         handleModal={handleProblemModalShow}
+        problemList={problemList}
       />
-
       <section className="study-detail-top">
         <div className="top">
           <RedButton onClick={handleStudyJoinModalShow}>
@@ -144,11 +154,7 @@ const StudyDetail = () => {
         </div>
       </section>
       <section className="study-detail-bottom">
-        <Calendar
-          onChange={setDate}
-          date={date}
-          onClick={handleProblemModalShow}
-        />
+        <Calendar onChange={setDate} date={date} />
         <div className="study-detail-bottom-right">
           <div className="study-detail-info">
             <span className="study-detail-number">

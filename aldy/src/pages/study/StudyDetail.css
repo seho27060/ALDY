@@ -205,3 +205,8 @@ h1.underline-green {
 .content-active {
   display: flex;
 }
+
+.problem-none {
+  font-size: 20px;
+  font-weight: 700;
+}

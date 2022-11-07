@@ -70,10 +70,20 @@ export const getMyStudy = () => {
 
 // 달력에 문제 추가
 export const addProblem = (data) => {
-  return api.post("/calendar/problem", data);
+  return api.post("/study/problem", data);
 };
 
 // 달력에서 문제 삭제
-export const deleteProblem = (studyId, date, problemId) => {
-  return api.delete(`/calendar/problem/${studyId}/${date}/${problemId}`);
+export const deleteProblem = (problemId) => {
+  return api.delete(`/study/problem/${problemId}`);
+};
+
+// 달력 문제 조회
+export const getProblem = (studyId, year, month, day) => {
+  return api.get(`/study/problem/${studyId}/${year}/${month}/${day}`);
+};
+
+// 각 팀원들의 문제별 단계 조회
+export const getProblemStage = (studyId, problemId) => {
+  return api.get(`/study/problem/${studyId}/${problemId}`);
 };
