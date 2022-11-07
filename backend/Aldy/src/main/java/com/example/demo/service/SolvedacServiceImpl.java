@@ -160,7 +160,7 @@ public class SolvedacServiceImpl implements SolvedacService {
 //        System.out.println(problemDtoList.get(0).getProblemId());
 //        System.out.println(problemDtoList.get(problemDtoList.size()-1).getProblemId());
         // 가져온 문제들의 알고리즘 분류 카운트
-        Map<String,Long> tagMap;
+        Map<String,Long> eachTagNumber;
         
         // 카운트 상위 최대 3개의 알고리즘 분류 가져오기
         // 쿼리 생성
