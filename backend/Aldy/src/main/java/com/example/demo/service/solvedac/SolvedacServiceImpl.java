@@ -3,6 +3,7 @@ package com.example.demo.service.solvedac;
 import com.example.demo.domain.dto.solvedac.*;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
+import com.example.demo.domain.dto.solvedac.response.ProblemRecommendationResponseDto;
 import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
 import com.example.demo.domain.entity.Member.Member;
@@ -11,6 +12,10 @@ import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.service.crawling.CrawlingServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.MediaType;
 
 import org.springframework.stereotype.Service;
@@ -33,6 +38,7 @@ public class SolvedacServiceImpl implements SolvedacService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
 
+    private final StringRedisTemplate stringRedisTemplate;
     @Override
     public SolvedacSearchProblemDto filter(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList, int page) {
 
@@ -111,24 +117,59 @@ public class SolvedacServiceImpl implements SolvedacService {
     }
 
     @Override
-    public ProblemWithTagsVo recommendProblemForMember(HttpServletRequest request) throws IOException {
+    public ProblemWithTagDisplayNamesVo recommendProblem(HttpServletRequest request) throws IOException {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member loginMember = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        StringBuilder problemsIds = new StringBuilder();
+        HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
+        Map<String, Object> entries = hashOperations.entries(baekjoonId);
+        System.out.println("redis test ::: "+entries.isEmpty());
+        if(entries.isEmpty()){
+            List<ProblemWithTagsVo> solvedProblemList;
+            solvedProblemList = SolvedacProblemLookup(baekjoonId);
 
-        // 로그인 사용자의 최근 푼 문제 번호 20개 가져오기
-        ArrayList<Integer> latestSolvedProblemIdList = crawlingService.getRecentProblems(baekjoonId);
+            HashMap<String,Long> tagMap = new HashMap<>();
 
-        for(int latestSolvedProblemId : latestSolvedProblemIdList){
-            problemsIds.append(latestSolvedProblemId).append(",");
+            // 가져온 문제들의 알고리즘 분류 카운트
+            for(ProblemWithTagsVo solvedProblem : solvedProblemList){
+                for(ProblemTagsDto problemTagsDto: solvedProblem.getTags()){
+                    String tagDisplayName = problemTagsDto.getKey();
+                    tagMap.put(tagDisplayName,tagMap.getOrDefault(tagDisplayName,0L)+1);
+                }
+            }
+
+            // 카운트 상위 최대 3개의 알고리즘 분류 가져오기
+            List<String> keyset = new ArrayList<>(tagMap.keySet());
+            keyset.sort(((o1, o2) -> tagMap.get(o2).compareTo(tagMap.get(o1))));
+
+            StringBuilder algos = new StringBuilder();
+            for (int idx = 0; idx < Math.min(keyset.size(),5);idx++){
+                algos.append(keyset.get(idx));
+                algos.append("|");
+            }
+            algos.deleteCharAt(algos.length()-1);
+
+            // 쿼리 생성
+            // 옵션 주고 문제 api
+            // 최대 50개중 랜덤으로 반환
+            String query = String.format("(~solved_by:%s)&(tag:%s)&(tier:%d..%d)&(lang:ko)&(solveable:true)",
+                    loginMember.getBaekjoonId(),
+                    algos,
+                    Math.max(0,loginMember.getTier()-1),
+                    Math.min(31,loginMember.getTier()+1));
+
+            // 랜덤한 문제를 뽑고.해당 문제의 알고리즘 중 랜덤하게 출력하는 과정.
+            SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
+                    .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+//            hashOperations.put(baekjoonId,"maxCount",solvedacSearchProblemDto.getCount());
+//            hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
+//            hashOperations.put(baekjoonId,"count",0);
+
         }
-        problemsIds.deleteCharAt(problemsIds.length()-1);
-
         // 문제 번호 20개로 문제 20개 불러오기
         List<ProblemWithTagsVo> solvedProblemList;
-        solvedProblemList = SolvedacProblemLookup(problemsIds);
+        solvedProblemList = SolvedacProblemLookup(baekjoonId);
 
         HashMap<String,Long> tagMap = new HashMap<>();
 
@@ -160,27 +201,32 @@ public class SolvedacServiceImpl implements SolvedacService {
                 Math.max(0,loginMember.getTier()-1),
                 Math.min(31,loginMember.getTier()+1));
 
+        // 랜덤한 문제를 뽑고.해당 문제의 알고리즘 중 랜덤하게 출력하는 과정.
         SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
                 .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-//        SolvedProblemDto randomProblem = solvedacSearchProblemDto
-//                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
-////        solvedacSearchProblemDto.getItems().get((int) (Math.random()*solvedacSearchProblemDto.getItems().size()))
-//        int randomProblemTagsIdx = (int) (Math.random()*randomProblem.getTags().size());
-//        MemberProblemRecommendationResponseDto memberProblemRecommendationResponseDto = MemberProblemRecommendationResponseDto.builder()
-//                .problemId(randomProblem.getProblemId())
-//                .acceptedUserCount(randomProblem.getAcceptedUserCount())
-//                .averageTries(randomProblem.getAverageTries())
-//                .titleKo(randomProblem.getTitleKo())
-//                .level(randomProblem.getLevel())
-//                .algorithm(randomProblem.getTags()
-//                        .get(randomProblemTagsIdx)
-//                        .getDisplayNames().get(0)
-//                        .getName()).build();
-        return null;
+
+        ProblemWithTagDisplayNamesVo randomProblem = solvedacSearchProblemDto
+                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
+
+        return randomProblem;
     }
 
-    private List<ProblemWithTagsVo> SolvedacProblemLookup(StringBuilder problemsIds) {
+    private List<ProblemWithTagsVo> SolvedacProblemLookup(String  baekjoonId) throws IOException {
+
+        // 로그인 사용자의 최근 푼 문제 번호 20개 가져오기
+
+        ArrayList<Integer> latestSolvedProblemIdList = crawlingService.getRecentProblems(baekjoonId);
+
+
+        StringBuilder problemsIds = new StringBuilder();
+        for(int latestSolvedProblemId : latestSolvedProblemIdList){
+            problemsIds.append(latestSolvedProblemId).append(",");
+        }
+        problemsIds.deleteCharAt(problemsIds.length()-1);
+
+        // 문제 번호 20개로 문제 20개 불러오기
         List<ProblemWithTagsVo> solvedProblemList;
+
         solvedProblemList = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/problem/lookup")

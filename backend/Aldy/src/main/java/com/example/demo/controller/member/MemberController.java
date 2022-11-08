@@ -4,7 +4,9 @@ import com.example.demo.domain.dto.member.request.*;
 import com.example.demo.domain.dto.member.response.CodeReviewNumberResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
 
+import com.example.demo.domain.dto.solvedac.ProblemWithTagDisplayNamesVo;
 import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
+import com.example.demo.domain.dto.solvedac.response.ProblemRecommendationResponseDto;
 import com.example.demo.exception.ErrorResponse;
 
 import com.example.demo.service.member.MemberService;
@@ -109,9 +111,23 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = ProblemWithTagsVo.class))),
     })
     @GetMapping("/recommendation")
-    public ResponseEntity<ProblemWithTagsVo> recommendProblemFoMember(HttpServletRequest request) throws IOException {
-        ProblemWithTagsVo problem = solvedacService.recommendProblemForMember(request);
-        return new ResponseEntity<>(problem, HttpStatus.OK);
+    public ResponseEntity<ProblemRecommendationResponseDto> recommendProblemFoMember(HttpServletRequest request) throws IOException {
+
+        ProblemWithTagDisplayNamesVo randomProblem = solvedacService.recommendProblem(request);
+        int randomProblemTagsIdx = (int) (Math.random()*randomProblem.getTags().size());
+        // 결과값 담아서 반환
+        ProblemRecommendationResponseDto memberProblemRecommendationResponseDto = ProblemRecommendationResponseDto.builder()
+                .problemId(randomProblem.getProblemId())
+                .acceptedUserCount(randomProblem.getAcceptedUserCount())
+                .averageTries(randomProblem.getAverageTries())
+                .titleKo(randomProblem.getTitleKo())
+                .level(randomProblem.getLevel())
+                .algorithm(randomProblem.getTags()
+                        .get(randomProblemTagsIdx)
+                        .getDisplayNames().get(0)
+                        .getName()).build();
+
+        return new ResponseEntity<>(memberProblemRecommendationResponseDto, HttpStatus.OK);
     }
 }
 
