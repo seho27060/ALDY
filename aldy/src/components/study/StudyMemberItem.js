@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { kickMemberApi } from "../../api/study";
 import styled from "styled-components";
+import { recoilLeaderBaekjoonId } from "../../store/states";
+import { useRecoilState } from "recoil";
 
 const RedButton = styled.button`
   width: 70px;
@@ -18,7 +20,9 @@ const RedButton = styled.button`
 const StudyMemberItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
   const [penalty, setPenalty] = useState(props.item.penalty);
-  console.log(props, "프롭스");
+  const [sendLeaderId, setSendLeaderId] = useRecoilState(
+    recoilLeaderBaekjoonId
+  );
 
   const penaltyColor = () => {
     if (penalty === 1) {
@@ -35,6 +39,7 @@ const StudyMemberItem = (props) => {
   useEffect(() => {
     penaltyColor();
   }, []);
+  const myId = sessionStorage.getItem("userName");
 
   const kickMember = () => {
     console.log("멤버 강퇴");
@@ -80,7 +85,9 @@ const StudyMemberItem = (props) => {
       >
         <div>백준 아이디 : {props.item.baekjoonId}</div>
         <div>함께 푼 문제 수: {props.item.solvedTogether}개</div>
-        <RedButton onClick={kickMember(props.item.id)}>강퇴</RedButton>
+        {myId === sendLeaderId && (
+          <RedButton onClick={kickMember(props.item.id)}>강퇴</RedButton>
+        )}
       </div>
     </div>
   );
