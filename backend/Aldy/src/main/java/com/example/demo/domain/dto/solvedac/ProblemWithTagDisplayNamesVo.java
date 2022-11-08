@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class ProblemWithTagDisplayNamesVo extends ProblemVo{
-    private List<TagsWithDisplayNamesDto> tagsWithDisplayNamesDtoList;
+    private List<TagsWithDisplayNamesDto> tags;
 }

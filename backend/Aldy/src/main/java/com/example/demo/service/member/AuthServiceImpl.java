@@ -128,7 +128,7 @@ public class AuthServiceImpl implements AuthService{
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
         hashOperations.put(baekjoonId,"authString", String.valueOf(newWord));
         hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacMemberResponseDto.getTier()));
-        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
+        hashOperations.getOperations().expire(baekjoonId,3*60L, TimeUnit.MINUTES);
 //        hashOperations.(backjoonId, 5L, TimeUnit.MINUTES);
         return newWord.toString();
     }
@@ -140,10 +140,10 @@ public class AuthServiceImpl implements AuthService{
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         List<String> solvedacBio = List.of(solvedacMemberResponseDto.getBio().split(" "));
 
-        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
-        Map<String, String> entries = valueOperations.entries(baekjoonId);
+        HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
+        Map<String, String> entries = hashOperations.entries(baekjoonId);
         String authString = entries.get("authString");
-        valueOperations.delete(baekjoonId,"authString");
+        hashOperations.delete(baekjoonId,"authString");
 
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
