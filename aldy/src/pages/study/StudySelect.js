@@ -50,6 +50,7 @@ const StudySelect = () => {
   const location = useLocation();
 
   const date = location.state.date;
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
 
   // 알고리즘 분류
   const algorithm = [
@@ -105,7 +106,10 @@ const StudySelect = () => {
           <div className="study-select-small-title">
             🔥필터 선택 후 검색 버튼을 눌러 문제를 선정해주세요🔥
           </div>
-          <div className="study-select-date">{date}</div>
+          <div className="study-select-date">
+            {date.getFullYear()}년 {date.getMonth() + 1}월 {date.getDate()}일{" "}
+            {week[date.getDay()]}요일
+          </div>
         </div>
       </section>
       <section className="study-select-search-box">
