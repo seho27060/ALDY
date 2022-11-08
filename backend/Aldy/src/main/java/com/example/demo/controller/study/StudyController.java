@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -137,7 +138,7 @@ public class StudyController {
             @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
     })
     @PostMapping("/mail/send")
-    public String sendMail(MailDto mailDto) {
+    public String sendMail(MailDto mailDto) throws InterruptedException {
         emailServiceImpl.sendSimpleMessage(mailDto);
         System.out.println("메일 전송 완료");
         return "AfterMail.html";
@@ -175,5 +176,20 @@ public class StudyController {
 
         StudyStatusDto studyStatusDto = codeService.getProcessOfStudy(study_id, problem_id, request);
         return new ResponseEntity<>(studyStatusDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/problem/{study_id}/{year}/{month}/{day}")
+    @Operation(summary = "해당 날짜에 어떤 문제 있는지 반환해주는 API - [담당자 조성민]", description = "머리아파 죽겠음" +
+            " 그래도 기어코 해내주는 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+    })
+    private ResponseEntity getProblemsOfDay(@PathVariable long study_id
+                                            , @PathVariable int year, @PathVariable int month,
+                                            @PathVariable int day,
+                                            HttpServletRequest request){
+
+        List<ProblemDto> problemDtoList = codeService.getProblemsOfDay(study_id, year, month, day, request);
+        return new ResponseEntity(problemDtoList, HttpStatus.OK);
     }
 }

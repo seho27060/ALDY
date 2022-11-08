@@ -207,7 +207,7 @@ public class SolvedacServiceImpl implements SolvedacService {
                         clientResponse ->
                                 clientResponse
                                         .bodyToMono(String.class)
-                                        .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
+                                        .map(body -> new CustomException(ErrorCode.SOLVEDAC_ERROR)))
                 .bodyToMono(SolvedacSearchProblemDto.class)
                 .flux()
                 .toStream()

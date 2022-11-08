@@ -97,7 +97,7 @@ public class AuthController {
         return new ResponseEntity<>(doubleCheckResponseDto, HttpStatus.OK);
     }
 
-    @Operation(summary = "리프레쉬 토큰 재발급 API", description = "액세스 토큰이 만료됐을시, 리프레쉬토큰을 유효한지 확인 후 액세스 토큰 재발급/ 리프레쉬 토큰이 만료시 재로그인을 요청하는 예외 반환")
+    @Operation(summary = "액세스 토큰 재발급 API", description = "액세스 토큰이 만료됐을시, 리프레쉬토큰을 유효한지 확인 후 액세스 토큰 재발급/ 리프레쉬 토큰이 만료시 재로그인을 요청하는 예외 반환")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "401", description = "비밀번호가 일치하지 않습니다."),

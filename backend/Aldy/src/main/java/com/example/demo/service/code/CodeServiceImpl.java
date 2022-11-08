@@ -2,6 +2,7 @@ package com.example.demo.service.code;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.dto.study.StudyMemberDto;
 import com.example.demo.domain.dto.study.StudyStatusDto;
 import com.example.demo.domain.entity.Code.Code;
@@ -31,10 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -149,28 +147,46 @@ public class CodeServiceImpl implements CodeService {
 
         int month = LocalDateTime.now().getMonth().getValue();
         int year = LocalDateTime.now().getYear();
-        Calendar calendar = calendarRepository.findByStudy_idAndCalendarMonthAndCalendarYear(study.getId(),month, year)
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study.getId(),month, year)
                 .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
 
-        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
+//        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
         Problem problem = problemRepository.
                 findById(codeSaveRequestDto.getProblemId())
                 .orElseThrow(()->new CustomException(ErrorCode.PROBLEMTABLE_NOT_FOUND));
+        // 로직을 더 짧게 JPA를 활용해서 해줄수도 있을 듯.
+        // exist 함수로
+        boolean preProcessCodeExists = checkPreCodeExists(codeSaveRequestDto, writer, study);
+        if(!preProcessCodeExists){
+            throw new CustomException(ErrorCode.CODE_NOT_FOUND);
+        }
+        // 있으면 덮어 쓰기 없으면 새로 생성
+        Optional<Code> preCode = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
+                study.getId(),
+                codeSaveRequestDto.getProblemId(),
+                writer.getId(),
+                codeSaveRequestDto.getProcess()
+        );
+        Code code = null;
+        if(preCode.isPresent()){
+            code = preCode.get();
+            code.updateCode(codeSaveRequestDto.getCode());
+        }else{
+            code = Code.builder()
+                    .code(codeSaveRequestDto.getCode())
+                    .writer(writer)
+                    .study(study)
+                    .process(codeSaveRequestDto.getProcess())
+                    .problem(problem)
+    //                .problemName(codeSaveRequestDto.getProblemName())
+    //                .problemTier(codeSaveRequestDto.getProblemTier())
+                    .build();
 
-        Code code = Code.builder()
-                .code(codeSaveRequestDto.getCode())
-                .writer(writer)
-                .study(study)
-                .process(codeSaveRequestDto.getProcess())
-                .problem(problem)
-//                .problemName(codeSaveRequestDto.getProblemName())
-//                .problemTier(codeSaveRequestDto.getProblemTier())
-                .build();
-
-        try{
-            codeRepository.save(code);
-        }catch(Exception e){
-            throw new CustomException(ErrorCode.SAVE_ERROR);
+            try{
+                codeRepository.save(code);
+            }catch(Exception e){
+                throw new CustomException(ErrorCode.SAVE_ERROR);
+            }
         }
 
 
@@ -296,6 +312,33 @@ public class CodeServiceImpl implements CodeService {
                 .studyMemberDtoList(studyMemberDtoList)
                 .build();
         return studyStatusDto;
+    }
+
+    @Override
+    public List<ProblemDto> getProblemsOfDay(long study_id, int year, int month, int day, HttpServletRequest request) {
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study_id, year, month)
+                .orElseThrow(() -> new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
+        List<Problem> problemList = problemRepository.findByCalendar_idAndProblemDay(calendar.getId(), day);
+        List<ProblemDto> problemDtoList = problemList.stream().map(ProblemDto::new).collect(Collectors.toList());
+        return problemDtoList;
+    }
+
+
+    public boolean checkPreCodeExists(CodeSaveRequestDto codeSaveRequestDto, Member writer, Study study){
+        int nowProcess = codeSaveRequestDto.getProcess();
+        int preProcess = nowProcess-1;
+        if(preProcess == 0){
+            return true;
+        }
+        else{
+            Optional<Code> preCode = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
+                    study.getId(),
+                    codeSaveRequestDto.getProblemId(),
+                    writer.getId(),
+                    preProcess
+            );
+            return preCode.isPresent();
+        }
     }
 
 

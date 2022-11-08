@@ -1,6 +1,7 @@
 package com.example.demo.service.code;
 
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.dto.study.StudyStatusDto;
 import org.springframework.data.domain.Page;
 
@@ -27,4 +28,6 @@ public interface CodeService {
     Page<EditedCodeDto> getMyEditingCodeList(int page, int size, String loginMember);
 
     StudyStatusDto getProcessOfStudy(long study_id, long problem_id, HttpServletRequest request);
+
+    List<ProblemDto> getProblemsOfDay(long study_id, int year, int month, int day, HttpServletRequest request);
 }

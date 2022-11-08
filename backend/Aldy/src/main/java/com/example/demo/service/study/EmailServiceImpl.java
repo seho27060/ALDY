@@ -3,8 +3,10 @@ package com.example.demo.service.study;
 import com.example.demo.domain.dto.study.MailDto;
 import com.example.demo.domain.entity.Study.Study;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Time;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,7 +37,6 @@ public class EmailServiceImpl {
         String title = "";
         String text = "";
         message.setTo(mailDto.getAddress());
-
         switch(type) {
             case "request":
                 title = title_type_1;
@@ -62,6 +63,7 @@ public class EmailServiceImpl {
         emailSender.send(message);
         }
         // 실제 서비스단에서 코드 리뷰 요청, 응답 시 메일 발송 함수
+    @Async
     public void sendCodeAlertEmail(Study study, String mail_address, String sender_nickname, String receiver_nickname, String type){
         MailDto mailDto = MailDto.builder()
             .studyName(study.getName())
@@ -74,6 +76,7 @@ public class EmailServiceImpl {
     }
 
     // 실제 서비스단에서 강제 퇴장 시 사용되는 메일 발송 함수
+    @Async
     public void sendEvictionMail(Study study, String mail_address, String receiver_nickname, String type){
         MailDto mailDto = MailDto.builder()
                 .studyName(study.getName())

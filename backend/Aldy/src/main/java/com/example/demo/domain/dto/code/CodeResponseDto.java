@@ -8,20 +8,33 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class CodeResponseDto {
-    private CodeDto firstLevelCode;
-    private CodeDto secondLevelCode;
-    private CodeDto thirdLevelCode;
-    private CodeDto fourthLevelCode;
+
+    private int currentProcess;
+    private CodeDto firstProcessCode;
+    private CodeDto secondProcessCode;
+    private CodeDto thirdProcessCode;
+    private CodeDto fourthProcessCode;
     public CodeResponseDto(List<CodeDto> codeDtoList){
+
+        currentProcess = 0;
+
         for(CodeDto code : codeDtoList){
-            if(code.getProcess() == 1)
-                firstLevelCode = code;
-            else if(code.getProcess() == 2)
-                secondLevelCode = code;
-            else if(code.getProcess() == 3)
-                thirdLevelCode = code;
-            else
-                fourthLevelCode = code;
+            if(code.getProcess() == 1){
+                firstProcessCode = code;
+                currentProcess++;
+            }
+            else if(code.getProcess() == 2){
+                secondProcessCode = code;
+                currentProcess++;
+            }
+            else if(code.getProcess() == 3){
+                thirdProcessCode = code;
+                currentProcess++;
+            }
+            else{
+                fourthProcessCode = code;
+                currentProcess++;
+            }
         }
     }
 
