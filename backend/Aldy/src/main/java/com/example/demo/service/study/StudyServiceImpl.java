@@ -2,11 +2,13 @@ package com.example.demo.service.study;
 
 import com.example.demo.domain.dto.study.*;
 
+import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Study.*;
 
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 
+import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.repository.study.*;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +34,8 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
+
+    private final MemberRepository memberRepository;
 
     private final CalendarRepository calendarRepository;
 
@@ -92,12 +97,18 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyDetailResponseDto getById(Long studyId) {
+    public StudyDetailResponseDto getById(Long studyId, String loginMember) {
 
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
         StudyDetailResponseDto studyDetailResponseDto = new StudyDetailResponseDto(study);
+
+        memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(study.getId(), loginMember)
+                        .ifPresentOrElse(
+                                m -> studyDetailResponseDto.setIsMember(true),
+                                () -> studyDetailResponseDto.setIsMember(false)
+                        );
 
         studyDetailResponseDto.setCountMember(countMember(study.getId()));
 
@@ -117,6 +128,22 @@ public class StudyServiceImpl implements StudyService {
                 .orElseThrow(()-> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
         studyRepository.delete(study);
+    }
+
+    @Override
+    public StudyInfoListDto getStudyInfoList(Long studyId) {
+
+        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findByStudy_Id(studyId);
+
+        List<String> memberList = new ArrayList<>();
+        for(MemberInStudy memberInStudy : memberInStudyList) {
+            memberList.add(memberInStudy.getMember().getBaekjoonId());
+        }
+
+        List<String> algoList = new ArrayList<>();
+
+        return new StudyInfoListDto(memberList, algoList);
+
     }
 
 

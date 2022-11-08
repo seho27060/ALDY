@@ -95,9 +95,11 @@ public class StudyController {
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping("/{studyId}")
-    public ResponseEntity<StudyDetailResponseDto> getDetailStudy(@PathVariable("studyId") Long studyId) {
+    public ResponseEntity<StudyDetailResponseDto> getDetailStudy(@PathVariable("studyId") Long studyId, HttpServletRequest request) {
 
-        StudyDetailResponseDto studyDetailResponseDto = studyService.getById(studyId);
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        StudyDetailResponseDto studyDetailResponseDto = studyService.getById(studyId, loginMember);
 
         return new ResponseEntity<>(studyDetailResponseDto, HttpStatus.OK);
 

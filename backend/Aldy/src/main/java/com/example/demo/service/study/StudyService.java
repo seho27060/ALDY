@@ -10,7 +10,9 @@ public interface StudyService {
 
     MyStudyPageResponseDto getMyStudyPage(int page, int size, String baekjoonId);
 
-    StudyDetailResponseDto getById(Long studyId);
+    StudyDetailResponseDto getById(Long studyId, String loginMember);
 
     void deleteById(Long studyId);
+
+    StudyInfoListDto getStudyInfoList(Long studyId);
 }
