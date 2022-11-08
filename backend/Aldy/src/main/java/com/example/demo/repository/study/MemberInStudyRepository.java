@@ -22,4 +22,6 @@ public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Lo
     Optional<MemberInStudy> findByStudy_IdAndMember_Id(Long studyId, Long memberId);
 
     Optional<MemberInStudy> findByStudyAndAuth(Study study, int auth);
+
+    List<MemberInStudy> findByStudy_Id(Long studyId);
 }

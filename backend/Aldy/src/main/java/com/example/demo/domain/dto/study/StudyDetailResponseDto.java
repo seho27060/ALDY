@@ -26,6 +26,8 @@ public class StudyDetailResponseDto {
     private HashMap<Integer, Integer> statsByTier;
     private HashMap<String, Integer> statsByTag;
 
+    private Boolean isMember;
+
     public StudyDetailResponseDto(Study study) {
         this.id = study.getId();
         this.createdDate = study.getCreatedDate();
@@ -34,7 +36,6 @@ public class StudyDetailResponseDto {
         this.introduction = study.getIntroduction();
         this.threshold = study.getThreshold();
         this.visibility = study.getVisibility();
-        this.countMember = countMember;
     }
 
 }
