@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ProblemListItem from "./ProblemListItem";
+import { recoilLeaderBaekjoonId } from "../../store/states";
+import { useRecoilState } from "recoil";
 
 const RedButton = styled.button`
   width: 170px;
@@ -20,6 +22,10 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
   const navigateStudySelect = () => {
     navigate("/study/select", { state: { date: date, studyId: studyId } });
   };
+  const [sendLeaderId, setSendLeaderId] = useRecoilState(
+    recoilLeaderBaekjoonId
+  );
+  const myId = sessionStorage.getItem("userName");
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const studyId = studyDetail.id;
@@ -58,12 +64,14 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
                 />
               ))
             ) : (
-              <div className="problem-none">문제를 선정해 주세요!</div>
+              <div className="problem-none">선정된 문제가 없습니다.</div>
             )}
           </div>
         </div>
         <div className="study-join-btn">
-          <RedButton onClick={navigateStudySelect}>문제 선정하기</RedButton>
+          {myId === sendLeaderId && (
+            <RedButton onClick={navigateStudySelect}>문제 선정하기</RedButton>
+          )}
         </div>
       </Modal.Body>
     </Modal>
