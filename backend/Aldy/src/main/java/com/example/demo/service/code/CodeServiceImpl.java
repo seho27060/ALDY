@@ -225,7 +225,7 @@ public class CodeServiceImpl implements CodeService {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member receiver = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(studyId, problemId, receiver.getId(), 3).
+        Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(studyId, problemId, receiver.getId(), 2).
                 orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
         List<EditedCode> editedCodeList = ecRepository.findAllByCode_idAndReceiver_id(code.getId(), receiver.getId());
         List<EditedCodeDto> editedCodeDtoList = editedCodeList.stream().map(EditedCodeDto::new).collect(Collectors.toList());
