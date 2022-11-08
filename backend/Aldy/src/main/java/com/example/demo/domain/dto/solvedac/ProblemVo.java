@@ -1,10 +1,11 @@
-package com.example.demo.domain.dto.study;
+package com.example.demo.domain.dto.solvedac;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Getter
 @SuperBuilder
@@ -17,5 +18,7 @@ public class ProblemVo {
     private int level;
     private int averageTries;
     private int acceptedUserCount;
+
+    private List<ProblemTagsDto> tags;
 
 }

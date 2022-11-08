@@ -12,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SolvedacSearchProblemDto {
+
     private Long count;
-    private List<SolvedProblemDto> items;
+    private List<ProblemVo> items;
+
 }

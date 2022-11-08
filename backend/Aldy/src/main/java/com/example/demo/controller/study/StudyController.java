@@ -40,7 +40,7 @@ public class StudyController {
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @PostMapping()
-    public ResponseEntity createStudy(@RequestBody CreateStudyRequestDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<StudyDto> createStudy(@RequestBody CreateStudyRequestDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -48,7 +48,7 @@ public class StudyController {
 
         memberInStudyService.setRoomLeader(studyDto.getId(), loginMember);
 
-        return new ResponseEntity(studyDto, HttpStatus.OK);
+        return new ResponseEntity<>(studyDto, HttpStatus.OK);
 
     }
 
@@ -58,7 +58,7 @@ public class StudyController {
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping()
-    public ResponseEntity getAllStudyPage(
+    public ResponseEntity<StudyPageResponseDto> getAllStudyPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "keyword", defaultValue = "") String keyword
@@ -66,7 +66,7 @@ public class StudyController {
 
         StudyPageResponseDto studyDtoPage = studyService.getAllStudyPage(page - 1, size, keyword);
 
-        return new ResponseEntity(studyDtoPage, HttpStatus.OK);
+        return new ResponseEntity<>(studyDtoPage, HttpStatus.OK);
 
     }
 
@@ -76,7 +76,7 @@ public class StudyController {
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping("/mystudy")
-    public ResponseEntity getMyStudyPage(
+    public ResponseEntity<MyStudyPageResponseDto> getMyStudyPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
@@ -86,7 +86,7 @@ public class StudyController {
 
         MyStudyPageResponseDto myStudyDtoPage = studyService.getMyStudyPage(page - 1, size, loginMember);
 
-        return new ResponseEntity(myStudyDtoPage, HttpStatus.OK);
+        return new ResponseEntity<>(myStudyDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "스터디 상세 API", description = "[studyId : 스터디 Id]")
@@ -95,11 +95,11 @@ public class StudyController {
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping("/{studyId}")
-    public ResponseEntity getDetailStudy(@PathVariable("studyId") Long studyId) {
+    public ResponseEntity<StudyDetailResponseDto> getDetailStudy(@PathVariable("studyId") Long studyId) {
 
-        StudyDto studyDto = studyService.getById(studyId);
+        StudyDetailResponseDto studyDetailResponseDto = studyService.getById(studyId);
 
-        return new ResponseEntity(studyDto, HttpStatus.OK);
+        return new ResponseEntity<>(studyDetailResponseDto, HttpStatus.OK);
 
     }
 
@@ -111,7 +111,7 @@ public class StudyController {
             @ApiResponse(responseCode = "404", description = "UNAUTHORIZED_REQUEST"),
     })
     @DeleteMapping("/{studyId}")
-    public ResponseEntity deleteStudy(@PathVariable("studyId") Long studyId, HttpServletRequest request) {
+    public ResponseEntity<?> deleteStudy(@PathVariable("studyId") Long studyId, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -121,14 +121,14 @@ public class StudyController {
 
         studyService.deleteById(studyId);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @Operation(summary = "문제 선정된 요일 반환 API - [담당자 조성민]", description = "문제가 설정된 요일들을 반환하는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
     @GetMapping("/{study_id}/{year}/{month}")
-    public ResponseEntity getCalendar(@PathVariable long study_id, @PathVariable int year, @PathVariable int month){
+    public ResponseEntity<CalendarDto> getCalendar(@PathVariable long study_id, @PathVariable int year, @PathVariable int month){
         return new ResponseEntity<>(calendarService.getCalendar(study_id, year, month), HttpStatus.OK);
     }
 
@@ -149,10 +149,10 @@ public class StudyController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity study12(@RequestBody ProblemChoiceRequestDto problemChoiceRequestDto){
+    private ResponseEntity<?> study12(@RequestBody ProblemChoiceRequestDto problemChoiceRequestDto){
 
         calendarService.registerProblem(problemChoiceRequestDto);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/problem/{problem_id}")
@@ -160,9 +160,9 @@ public class StudyController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity study14(long problem_id){
+    private ResponseEntity<?> study14(long problem_id){
         calendarService.deleteProblem(problem_id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/process/{study_id}/{problem_id}")
@@ -171,11 +171,11 @@ public class StudyController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity getProcessOfStudy(@PathVariable long study_id ,@PathVariable long problem_id
+    private ResponseEntity<StudyStatusDto> getProcessOfStudy(@PathVariable long study_id ,@PathVariable long problem_id
     , HttpServletRequest request){
 
         StudyStatusDto studyStatusDto = codeService.getProcessOfStudy(study_id, problem_id, request);
-        return new ResponseEntity(studyStatusDto, HttpStatus.OK);
+        return new ResponseEntity<>(studyStatusDto, HttpStatus.OK);
     }
 
     @GetMapping("/problem/{study_id}/{year}/{month}/{day}")

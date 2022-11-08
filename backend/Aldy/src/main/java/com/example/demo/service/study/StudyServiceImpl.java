@@ -2,18 +2,12 @@ package com.example.demo.service.study;
 
 import com.example.demo.domain.dto.study.*;
 
-import com.example.demo.domain.entity.Study.Calendar;
-import com.example.demo.domain.entity.Study.MemberInStudy;
-import com.example.demo.domain.entity.Study.Problem;
-import com.example.demo.domain.entity.Study.Study;
+import com.example.demo.domain.entity.Study.*;
 
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 
-import com.example.demo.repository.study.CalendarRepository;
-import com.example.demo.repository.study.MemberInStudyRepository;
-import com.example.demo.repository.study.ProblemRepository;
-import com.example.demo.repository.study.StudyRepository;
+import com.example.demo.repository.study.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -42,6 +37,8 @@ public class StudyServiceImpl implements StudyService {
     private final ProblemRepository problemRepository;
 
     private final MemberInStudyRepository memberInStudyRepository;
+
+    private final TagOfProblemRepository tagOfProblemRepository;
 
     private final List<Integer> authList = List.of(1, 2);
 
@@ -84,8 +81,9 @@ public class StudyServiceImpl implements StudyService {
 
         Page<MyStudyDto> myStudyDtoPage = memberInStudyPage.map(e -> {
 
-            ProblemInfo problemInfo = getProblemInfo(e.getStudy().getId());
-            return new MyStudyDto(e.getStudy(), countMember(e.getStudy().getId()), problemInfo.getCount(), problemInfo.getTier());
+            MyStudyDto myStudyDto = new MyStudyDto(e.getStudy(), countMember(e.getStudy().getId()));
+
+            return getProblemInfo(e.getStudy(), myStudyDto);
 
         });
 
@@ -94,20 +92,22 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyDto getById(Long studyId) {
+    public StudyDetailResponseDto getById(Long studyId) {
 
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
-        StudyDto studyDto = new StudyDto(study, countMember(study.getId()));
+        StudyDetailResponseDto studyDetailResponseDto = new StudyDetailResponseDto(study);
 
-        studyDto.setLeaderBaekjoonId(
+        studyDetailResponseDto.setCountMember(countMember(study.getId()));
+
+        studyDetailResponseDto.setLeaderBaekjoonId(
                 memberInStudyRepository.findByStudyAndAuth(study, 1)
                         .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
                         .getMember().getBaekjoonId()
         );
 
-        return studyDto;
+        return getDetailInfo(study, studyDetailResponseDto);
 
     }
 
@@ -126,9 +126,9 @@ public class StudyServiceImpl implements StudyService {
 
     }
 
-    public ProblemInfo getProblemInfo(long studyId) {
+    public MyStudyDto getProblemInfo(Study study, MyStudyDto myStudyDto) {
 
-        List<Calendar> calendarList = calendarRepository.findByStudy_id(studyId);
+        List<Calendar> calendarList = calendarRepository.findByStudy_id(study.getId());
 
         LocalDate now = LocalDate.now();
         LocalDate max = LocalDate.of(1, 1, 1);
@@ -152,14 +152,44 @@ public class StudyServiceImpl implements StudyService {
             }
         }
 
-        return new ProblemInfo(count, tier);
+        myStudyDto.setNumberOfSolvedProblem(count);
+        myStudyDto.setTierOfRecentSolvedProblem(tier);
+
+        return myStudyDto;
     }
 
-}
+    public StudyDetailResponseDto getDetailInfo(Study study, StudyDetailResponseDto studyDetailResponseDto) {
 
-@Getter
-@AllArgsConstructor
-class ProblemInfo {
-    private int count;
-    private int tier;
+        HashMap<Integer, Integer> statsByTier = new HashMap<>();
+        HashMap<String, Integer> statsByTag = new HashMap<>();
+
+        List<Calendar> calendarList = calendarRepository.findByStudy_id(study.getId());
+
+        for(Calendar calendar : calendarList) {
+            List<Problem> problemList = problemRepository.findByCalendar_id(calendar.getId());
+
+            for(Problem problem : problemList) {
+                int countTier = 1;
+                if(statsByTier.containsKey(problem.getProblemTier())) {
+                    countTier = statsByTier.get(problem.getProblemTier()) + 1;
+                }
+                statsByTier.put(problem.getProblemTier(), countTier);
+
+                List<TagOfProblem> tagOfProblemList = tagOfProblemRepository.findByProblemId(problem.getId());
+
+                for(TagOfProblem tagOfProblem : tagOfProblemList) {
+                    int countTag = 1;
+                    if(statsByTag.containsKey(tagOfProblem.getProblemTag())) {
+                        countTag = statsByTag.get(tagOfProblem.getProblemTag()) + 1;
+                    }
+                    statsByTag.put(tagOfProblem.getProblemTag(), countTag);
+                }
+            }
+        }
+
+        studyDetailResponseDto.setStatsByTier(statsByTier);
+        studyDetailResponseDto.setStatsByTag(statsByTag);
+
+        return studyDetailResponseDto;
+    }
 }
