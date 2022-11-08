@@ -2,17 +2,14 @@ package com.example.demo.service.study;
 
 import com.example.demo.domain.dto.study.*;
 
-import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Study.*;
 
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
 
-import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.repository.study.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.example.demo.service.solvedac.AlgoEnum;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -26,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @Service
@@ -34,8 +32,6 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
-
-    private final MemberRepository memberRepository;
 
     private final CalendarRepository calendarRepository;
 
@@ -135,14 +131,17 @@ public class StudyServiceImpl implements StudyService {
 
         List<MemberInStudy> memberInStudyList = memberInStudyRepository.findByStudy_Id(studyId);
 
-        List<String> memberList = new ArrayList<>();
+        HashMap<String, String> memberHash = new HashMap<>();
         for(MemberInStudy memberInStudy : memberInStudyList) {
-            memberList.add(memberInStudy.getMember().getBaekjoonId());
+            memberHash.put(memberInStudy.getMember().getBaekjoonId(), memberInStudy.getMember().getNickname());
         }
 
-        List<String> algoList = new ArrayList<>();
+        HashMap<AlgoEnum, String> algoHash = new HashMap<>();
+        for(AlgoEnum algoEnum : AlgoEnum.values()) {
+            algoHash.put(algoEnum, algoEnum.getKo());
+        }
 
-        return new StudyInfoListDto(memberList, algoList);
+        return new StudyInfoListDto(memberHash, algoHash);
 
     }
 

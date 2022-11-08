@@ -1,12 +1,19 @@
 package com.example.demo.controller.study;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
+import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.domain.dto.study.ApplicateStudyRequestDto;
 import com.example.demo.domain.dto.study.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.study.MemberInStudyDto;
 import com.example.demo.domain.dto.study.MemberInStudyResponseDto;
+import com.example.demo.domain.entity.Member.Member;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorResponse;
+import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.service.study.MemberInStudyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,19 +33,21 @@ public class MemberInStudyController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final MemberRepository memberRepository;
+
     private final MemberInStudyService memberInStudyService;
 
     @Operation(summary = "스터디 가입 신청 API", description = "스터디 가입 신청 관련 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MemberInStudyDto.class))),
             @ApiResponse(responseCode = "403", description = "MEMBER_LIMIT_EXCEEDED"),
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
-            @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
             @ApiResponse(responseCode = "404", description = "MEMBER_NOT_FOUND"),
+            @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
             @ApiResponse(responseCode = "409", description = "DUPLICATE_RESOURCE"),
     })
     @PostMapping()
-    public ResponseEntity applicateStudy(@RequestBody ApplicateStudyRequestDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<MemberInStudyDto> applicateStudy(@RequestBody ApplicateStudyRequestDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -50,10 +59,10 @@ public class MemberInStudyController {
 
     @Operation(summary = "스터디원 리스트 보여주기 API", description = "스터디원 리스트 보여주기 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MemberInStudyResponseDto.class))),
     })
     @GetMapping("/{studyId}")
-    public ResponseEntity getAllMemberInStudy(@PathVariable("studyId") Long studyId) {
+    public ResponseEntity<MemberInStudyResponseDto> getAllMemberInStudy(@PathVariable("studyId") Long studyId) {
 
         List<MemberInStudyDto> memberInStudyDtoList = memberInStudyService.getAllMemberInStudy(studyId);
 
@@ -63,14 +72,14 @@ public class MemberInStudyController {
 
     }
 
-    @Operation(summary = "스터디원 가입 수락 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보], [loginMemberId : 로그인 한 유저 정보]")
+    @Operation(summary = "스터디원 가입 수락 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보]")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MemberInStudyDto.class))),
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
     @PatchMapping("accept")
-    public ResponseEntity acceptMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<MemberInStudyDto> acceptMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -80,14 +89,14 @@ public class MemberInStudyController {
 
     }
 
-    @Operation(summary = "스터디원 강퇴 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보], [loginMemberId : 로그인 한 유저 정보]")
+    @Operation(summary = "스터디원 강퇴 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보]")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MemberInStudyDto.class))),
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
     @PatchMapping("kick")
-    public ResponseEntity kickMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<?> kickMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -97,14 +106,14 @@ public class MemberInStudyController {
 
     }
 
-    @Operation(summary = "스터디원 가입 거절 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보], [loginMemberId : 로그인 한 유저 정보]")
+    @Operation(summary = "스터디원 가입 거절 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보]")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MemberInStudyDto.class))),
             @ApiResponse(responseCode = "403", description = "UNAUTHORIZED_REQUEST"),
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
     @DeleteMapping("reject")
-    public ResponseEntity rejectMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<?> rejectMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -114,5 +123,21 @@ public class MemberInStudyController {
 
     }
 
+    @Operation(summary = "스터디 탈퇴 API", description = "[RequestBody : 권한 수정할 스터디, 유저 정보]")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MemberInStudyDto.class))),
+            @ApiResponse(responseCode = "404", description = "MEMBER_NOT_FOUND"),
+            @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
+    })
+    @PatchMapping("withdrawal")
+    public ResponseEntity<?> withdrawalStudy(@RequestParam Long studyId, HttpServletRequest request) {
+
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(studyId, loginMember, 4);
+
+        return new ResponseEntity<>(memberInStudyDto, HttpStatus.OK);
+
+    }
 
 }

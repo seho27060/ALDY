@@ -79,7 +79,11 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         // 중복 검사
         Optional<MemberInStudy> memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(study.getId(), member.getId());
         memberInStudy.ifPresent(m -> {
-            throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
+            if(m.getAuth() == 0){
+                throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
+            } else {
+                throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
+            }
         });
 
         // 인원 수 체크
@@ -89,7 +93,6 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         }
 
         // tier 체크
-//        tier Member Entity에 추가
         SolvedacMemberResponseDto solvedacMemberResponseDto = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/user/show")
@@ -128,24 +131,6 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
     }
 
-    public int getNumberOfSolvedTogether(MemberInStudy memberInStudy) {
-
-        List<Code> codeList = codeRepository.findByStudy_idAndWriter_id(memberInStudy.getStudy().getId(), memberInStudy.getMember().getId());
-
-        HashMap<String, Integer> countProblemNum = new HashMap<>();
-        for(Code code : codeList) {
-            Problem problem = code.getProblem();
-
-            int count = 1;
-            if(countProblemNum.containsKey(problem.getProblemName())) {
-                count = countProblemNum.get(problem.getProblemName()) + 1;
-            }
-            countProblemNum.put(problem.getProblemName(), count);
-        }
-
-        return countProblemNum.size();
-    }
-
     @Override
     public List<MemberInStudyDto> getAllApplicateMemberInStudy(Long studyId) {
 
@@ -176,6 +161,21 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     }
 
     @Override
+    public MemberInStudyDto changeAuth(Long studyId, String loginMemberBaekjoonId, int auth) {
+
+        Member loginMember = memberRepository.findByBaekjoonId(loginMemberBaekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(studyId, loginMember.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND));
+
+        memberInStudy.setAuth(auth);
+
+        return new MemberInStudyDto(memberInStudy);
+
+    }
+
+    @Override
     public void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId) {
 
         MemberInStudy loginMemberInStudy = memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(requestDto.getStudyId(), loginMemberBaekjoonId)
@@ -192,4 +192,21 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
     }
 
+    public int getNumberOfSolvedTogether(MemberInStudy memberInStudy) {
+
+        List<Code> codeList = codeRepository.findByStudy_idAndWriter_id(memberInStudy.getStudy().getId(), memberInStudy.getMember().getId());
+
+        HashMap<String, Integer> countProblemNum = new HashMap<>();
+        for(Code code : codeList) {
+            Problem problem = code.getProblem();
+
+            int count = 1;
+            if(countProblemNum.containsKey(problem.getProblemName())) {
+                count = countProblemNum.get(problem.getProblemName()) + 1;
+            }
+            countProblemNum.put(problem.getProblemName(), count);
+        }
+
+        return countProblemNum.size();
+    }
 }

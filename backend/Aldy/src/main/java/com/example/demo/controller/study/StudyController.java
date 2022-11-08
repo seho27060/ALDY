@@ -10,6 +10,8 @@ import com.example.demo.service.study.MemberInStudyService;
 import com.example.demo.service.study.EmailServiceImpl;
 import com.example.demo.service.study.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,9 +35,10 @@ public class StudyController {
     private final MemberInStudyService memberInStudyService;
     private final CalendarService calendarService;
     private final EmailServiceImpl emailServiceImpl;
+
     @Operation(summary = "스터디 생성 API", description = "스터디 생성 관련 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = StudyDto.class))),
             @ApiResponse(responseCode = "404", description = "MEMBER_NOT_FOUND"),
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
@@ -54,7 +57,7 @@ public class StudyController {
 
     @Operation(summary = "전체 스터디 목록 조회 API", description = "[page : 페이지], [size : 페이지 당 정보 개수], [keyword : 검색어]")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = StudyPageResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping()
@@ -72,7 +75,7 @@ public class StudyController {
 
     @Operation(summary = "내 스터디 목록 조회 API", description = "[page : 페이지], [size : 페이지 당 정보 개수]")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = MyStudyPageResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
     })
     @GetMapping("/mystudy")
@@ -91,8 +94,9 @@ public class StudyController {
 
     @Operation(summary = "스터디 상세 API", description = "[studyId : 스터디 Id]")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = StudyDetailResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
+            @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
     @GetMapping("/{studyId}")
     public ResponseEntity<StudyDetailResponseDto> getDetailStudy(@PathVariable("studyId") Long studyId, HttpServletRequest request) {
@@ -109,7 +113,6 @@ public class StudyController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
             @ApiResponse(responseCode = "401", description = "STUDY_NOT_FOUND"),
-            @ApiResponse(responseCode = "404", description = "STUDY_NOT_FOUND"),
             @ApiResponse(responseCode = "404", description = "UNAUTHORIZED_REQUEST"),
     })
     @DeleteMapping("/{studyId}")
@@ -125,6 +128,7 @@ public class StudyController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @Operation(summary = "문제 선정된 요일 반환 API - [담당자 조성민]", description = "문제가 설정된 요일들을 반환하는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
