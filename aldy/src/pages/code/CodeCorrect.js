@@ -7,6 +7,7 @@ import Editor from '@monaco-editor/react'
 import { useRecoilState } from "recoil";
 import { correctCode } from "../../store/states";
 import { codeReply } from "../../api/code";
+import { useNavigate } from "react-router-dom";
 
 const CodeCorrect = () => {
   const previousCode = sessionStorage.getItem('previousCode')
@@ -23,6 +24,7 @@ const CodeCorrect = () => {
     problemId: problemId,
     studyId: studyId
   })
+  const navigate = useNavigate()
   function handleEditorChange(value, event) {
     setReply((prev)=>{
       return {...prev, code: value}
@@ -119,6 +121,7 @@ const CodeCorrect = () => {
             codeReply(reply)
             .then(()=>{
               alert('답장을 보냈습니다.')
+              navigate('/review/list')
             })
             .catch((err)=>{
               console.log(err)
