@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/code")
 @RequiredArgsConstructor
-@Tag(name = "Code API - 담당자 조성민", description = "코드 관련 API")
+@Tag(name = "Code API - [담당자 조성민]", description = "코드 관련 API")
 public class CodeController {
 
     private final CodeService codeService;

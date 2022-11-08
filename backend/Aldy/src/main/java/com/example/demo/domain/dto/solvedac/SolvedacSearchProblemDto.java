@@ -14,6 +14,6 @@ import java.util.List;
 public class SolvedacSearchProblemDto {
 
     private Long count;
-    private List<ProblemVo> items;
+    private List<ProblemWithTagsVo> items;
 
 }

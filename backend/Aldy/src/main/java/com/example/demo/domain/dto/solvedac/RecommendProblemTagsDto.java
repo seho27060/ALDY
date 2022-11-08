@@ -9,9 +9,9 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 @Getter
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProblemTagsDto {
-    private String key;
+@SuperBuilder
+public class RecommendProblemTagsDto extends ProblemTagsDto{
+    List<TagsDisplayNames> displayNames;
 }
