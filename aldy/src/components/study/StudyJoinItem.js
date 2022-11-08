@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { deleteStudy, getStudyMember } from "../../api/study";
-import TierData from "../../data/tier";
 import styled from "styled-components";
-import StudyMember from "../../components/study/StudyMember";
 
 const RedButton = styled.button`
   width: 70px;

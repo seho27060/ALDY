@@ -22,8 +22,28 @@ export const kickMemberApi = (data) => {
 
 // 스터디원 가입 거절
 export const rejectMember = (data) => {
-  api.delete("/memberinstudy/reject", {
+  return api.delete("/memberinstudy/reject", {
     data: data,
+  });
+};
+
+// 스터디 문제 추천
+export const getStudyProblem = (algoList, tierList, baekjoonIdList) => {
+  return api.get("/solvedac", {
+    params: {
+      algoList: algoList,
+      tierList: tierList,
+      baekjoonIdList: baekjoonIdList,
+    },
+  });
+};
+
+// 문제 필터 페이지에 리스트 가져오기
+export const getOptionList = (studyId) => {
+  return api.get("/solvedac/list", {
+    params: {
+      studyId: studyId,
+    },
   });
 };
 

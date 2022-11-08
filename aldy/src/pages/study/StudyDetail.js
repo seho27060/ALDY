@@ -101,8 +101,8 @@ const StudyDetail = () => {
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
             <div>
-              <h3 className="study-detail-title">
-                <span>✨ {studyDetail.name} ✨</span>
+              <h3 className="study-underline-orange">
+                <span>✨{studyDetail.name}✨</span>
               </h3>
             </div>
             <div>
@@ -151,17 +151,23 @@ const StudyDetail = () => {
           >
             <img src="/pencil.png" alt="연필 이미지"></img>
             <div>알고리즘 코드리뷰</div>
-            <h4 className="underline-green">오늘의 문제 풀어보기</h4>
+            <h4 className="study-underline-green">
+              <span>오늘의 문제 풀어보기</span>
+            </h4>
           </div>
           <div className="description-detail" onClick={handleMemberModalShow}>
             <img src="/code_person.png" alt="코딩하는사람"></img>
             <div>함께 푼 문제 수 확인하기</div>
-            <h4 className="underline-green">스터디원 살펴보기</h4>
+            <h4 className="study-underline-green">
+              <span>스터디원 살펴보기</span>
+            </h4>
           </div>
           <div className="description-detail" onClick={navigateReviewList}>
             <img src="/CodeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
-            <h4 className="underline-green">내게 요청 온 목록</h4>
+            <h4 className="study-underline-green">
+              <span>내게 요청 온 목록</span>
+            </h4>
           </div>
         </div>
       </section>
@@ -171,8 +177,10 @@ const StudyDetail = () => {
           src="/dinosaur_hello.gif"
           alt="스터디 메인 이미지"
         ></img>
-        <h1 className="underline-green">
-          안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
+        <h1 className="study-underline-green">
+          <span>
+            안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
+          </span>
         </h1>
         <div className="dinosaur-description">
           지금 우리 스터디{" "}
@@ -193,7 +201,7 @@ const StudyDetail = () => {
             <span className="study-detail-number">
               스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
             </span>
-            <h3 className="study-detail-title">
+            <h3 className="study-underline-orange">
               <span>{studyDetail.name}</span>
             </h3>
             <div className="study-detail-rank">
@@ -211,13 +219,13 @@ const StudyDetail = () => {
           </div>
           <div className="study-detail-graph">
             <div>
-              <h5 className="study-detail-title">
+              <h5 className="study-underline-orange">
                 <span>카테고리 별 푼 문제</span>
               </h5>
               <div>그래프 뿅뿅</div>
             </div>
             <div>
-              <h5 className="study-detail-title">
+              <h5 className="study-underline-orange">
                 <span>난이도 별 푼 문제</span>
               </h5>
               <div>그래프 뿅뿅</div>

@@ -2,6 +2,7 @@ import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import styled, { ServerStyleSheet } from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deleteProblem } from "../../api/study";
 
 const WhiteButton = styled.button`
   width: 70px;
@@ -15,29 +16,64 @@ const WhiteButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
+const RedButton = styled.button`
+  width: 70px;
+  border-radius: 8px;
+  background-color: red;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  margin-left: auto;
+  font-size: 12px;
+  padding: 2.5px 0px;
+`;
+
 const ProblemListItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
-  const studyId = props.studyId
-  const studyName = props.studyName
-  const year = props.year
-  const month = props.month
-  const navigate = useNavigate()
+  const studyId = props.studyId;
+  const studyName = props.studyName;
+  const year = props.year;
+  const month = props.month;
+  const navigate = useNavigate();
+
+  const delProblem = () => {
+    deleteProblem(props.item.problemNum)
+      .then((res) => {
+        alert(
+          `${props.item.problemNum}번 ${props.item.problemName}가 삭제되었습니다.`
+        );
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="problem-list-item">
       <div className="problem-list-title">
-        <h5 className="problem-name">{props.item.problemNum}번</h5>
+        <b className="problem-name">{props.item.problemNum}번</b>
         <div className="problem-name">{props.item.problemName}</div>
         <div className="problem-list-right">
-          <WhiteButton onClick={()=>{
-            sessionStorage.setItem('reviewProblemId', props.item.id)
-            sessionStorage.setItem('reviewStudyId', studyId)
-            sessionStorage.setItem('reviewProblemName', props.item.problemName)
-            sessionStorage.setItem('reviewProblemNum', props.item.problemNum)
-            sessionStorage.setItem('reviewStudyName', studyName)
-            sessionStorage.setItem('reviewYear', year)
-            sessionStorage.setItem('reviewMonth', month)
-            navigate('/review')
-          }}>코드 리뷰</WhiteButton>
+          <WhiteButton
+            onClick={() => {
+              sessionStorage.setItem("reviewProblemId", props.item.id);
+              sessionStorage.setItem("reviewStudyId", studyId);
+              sessionStorage.setItem(
+                "reviewProblemName",
+                props.item.problemName
+              );
+              sessionStorage.setItem("reviewProblemNum", props.item.problemNum);
+              sessionStorage.setItem("reviewStudyName", studyName);
+              sessionStorage.setItem("reviewYear", year);
+              sessionStorage.setItem("reviewMonth", month);
+              navigate("/review");
+            }}
+          >
+            코드 리뷰
+          </WhiteButton>
           {dropdown === "none" && (
             <FaChevronCircleDown
               className="down-icon"
@@ -67,6 +103,7 @@ const ProblemListItem = (props) => {
         <div>스터디원 3 : {props.item.study3}</div>
         <div>스터디원 4 : {props.item.study4}</div>
         <div>스터디원 5 : {props.item.study5}</div>
+        <RedButton>문제 삭제</RedButton>
       </div>
     </div>
   );
