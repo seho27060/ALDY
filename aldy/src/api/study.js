@@ -16,8 +16,8 @@ export const acceptMember = (data) => {
 };
 
 // 스터디원 강퇴
-export const kickMember = (data) => {
-  return api.patch("/memberinsutdy/kick", data);
+export const kickMemberApi = (data) => {
+  return api.patch("/memberinstudy/kick", data);
 };
 
 // 스터디원 가입 거절

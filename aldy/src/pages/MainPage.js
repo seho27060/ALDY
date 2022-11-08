@@ -4,6 +4,9 @@ import styled from "styled-components";
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { getUserInfo } from "../api/user";
+import { useRecoilState } from "recoil";
+import { isLoggedIn } from "../store/states";
 
 const RedButton = styled.button`
   width: 170px;
@@ -31,7 +34,25 @@ const WhiteButton = styled.button`
 const MainPage = () => {
   useEffect(() => {
     AOS.init();
+    userInfoSession();
   });
+
+  const [logged, setLogged] = useRecoilState(isLoggedIn);
+
+  const userInfoSession = () => {
+    if (logged) {
+      console.log("메인페이지 로그인 됨");
+      getUserInfo().then((res) => {
+        console.log(res.data);
+        sessionStorage.setItem("nickname", res.data.nickname);
+        sessionStorage.setItem("tier", res.data.tier);
+        sessionStorage.setItem("id", res.data.id);
+      });
+    } else {
+      console.log("메인페이지 로그인 안됨");
+    }
+  };
+
   const navigate = useNavigate();
 
   const navigateSignUp = () => {
