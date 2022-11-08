@@ -1,10 +1,16 @@
 package com.example.demo.controller.solvedac;
 
+import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.domain.dto.study.StudyInfoListDto;
+import com.example.demo.exception.ErrorResponse;
 import com.example.demo.service.solvedac.SolvedacService;
 import com.example.demo.service.study.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +35,9 @@ public class SolvedacController {
 //    private final WebClient webClient;
 
     @Operation(summary = "스터디 문제 추천 API", description = "[algoList : 알고리즘 목록], [tierList : 티어 목록], [backjoonIdList : 유저 목록]")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = SolvedacSearchProblemDto.class))),
+    })
     @GetMapping()
     public ResponseEntity<SolvedacSearchProblemDto> filterProblem(
             @RequestParam(required = false) List<String> algoList,
@@ -43,6 +52,9 @@ public class SolvedacController {
     }
 
     @Operation(summary = "문제 필터 페이지에 리스트 보내주기", description = "")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = StudyInfoListDto.class))),
+    })
     @GetMapping("/list")
     public ResponseEntity<StudyInfoListDto> getList(@RequestParam Long studyId) {
 
