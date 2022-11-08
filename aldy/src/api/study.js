@@ -16,7 +16,7 @@ export const acceptMember = (data) => {
 };
 
 // 스터디원 강퇴
-export const kickMember = (data) => {
+export const kickMemberApi = (data) => {
   return api.patch("/memberinsutdy/kick", data);
 };
 

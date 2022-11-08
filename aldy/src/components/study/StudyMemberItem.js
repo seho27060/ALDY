@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import { getStudyMember } from "../../api/study";
+import { kickMemberApi } from "../../api/study";
 import styled from "styled-components";
 
 const RedButton = styled.button`
@@ -37,11 +36,24 @@ const StudyMemberItem = (props) => {
     penaltyColor();
   }, []);
 
+  const kickMember = () => {
+    console.log("멤버 강퇴");
+    kickMemberApi();
+  };
+
   return (
     <div className={`${penalty} study-list-item`}>
       <div className="study-list-title">
-        <div className="study-id">{props.item.studyMemberId}</div>
-        <h5 className="study-name">{props.item.baeckjoonId}</h5>
+        <div className="study-id">{props.num + 1}</div>
+        <p className="study-name" style={{ margin: "3px" }}>
+          {props.item.nickname}
+        </p>
+        <img
+          src={`https://d2gd6pc034wcta.cloudfront.net/tier/${props.item.tier}.svg`}
+          alt="티어 이미지"
+          className="tier-image"
+          style={{ width: "15px" }}
+        ></img>
         <div className="study-number"></div>
         {dropdown === "none" && (
           <FaChevronCircleDown
@@ -66,9 +78,9 @@ const StudyMemberItem = (props) => {
           dropdown === "active" ? "content-active" : ""
         }`}
       >
-        <div>함께 푼 문제 : {props.item.problemNum}</div>
-        <div>들어온 날짜 : {props.item.studyJoinDate}</div>
-        <RedButton>강퇴</RedButton>
+        <div>백준 아이디 : {props.item.baekjoonId}</div>
+        <div>함께 푼 문제 수: {props.item.solvedTogether}개</div>
+        <RedButton onClick={kickMember(props.item.id)}>강퇴</RedButton>
       </div>
     </div>
   );
