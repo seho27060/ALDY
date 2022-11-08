@@ -33,6 +33,7 @@ public class Code {
     @CreatedDate
     private LocalDateTime createdDate;
 
+    @Column(length = 10000)
     private String code;
 
     private int process;
