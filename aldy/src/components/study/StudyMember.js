@@ -18,8 +18,8 @@ const StudyMember = (props) => {
 
   return (
     <div className="study-list-box">
-      {studyMember?.map((item, studyMemberId) => (
-        <StudyMemberItem key={studyMemberId} item={item} />
+      {studyMember?.map((item, i) => (
+        <StudyMemberItem key={i} item={item} num={i} />
       ))}
     </div>
   );
