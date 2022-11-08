@@ -10,6 +10,8 @@ import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
 import ProblemModal from "../../components/study/ProblemModal";
 import StudyMember from "../../components/study/StudyMember";
+import { useRecoilState } from "recoil";
+import { recoilLeaderBaekjoonId } from "../../store/states";
 
 const RedButton = styled.button`
   width: 150px;
@@ -47,6 +49,10 @@ const StudyDetail = () => {
   });
   console.log(studyDetail);
 
+  const [sendLeaderId, setSendLeaderId] = useRecoilState(
+    recoilLeaderBaekjoonId
+  );
+
   // 달력 날짜
   const [date, setDate] = useState(new Date());
   // 모달창
@@ -82,6 +88,7 @@ const StudyDetail = () => {
       .then((res) => {
         console.log(res.data);
         setStudyDetail(res.data);
+        setSendLeaderId(res.data.leaderBaekjoonId);
       })
       .catch((err) => {
         console.log(err);

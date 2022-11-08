@@ -5,12 +5,13 @@ import Select from "react-select";
 import Editor from '@monaco-editor/react'
 import { useRecoilState } from "recoil";
 import { recoilMyCode, recoilStep } from "../../store/states";
-import { getEditedCodes, saveCode, getCode } from "../../api/code";
+import { getEditedCodes, saveCode, getCode, reviewRequest } from "../../api/code";
 import { useNavigate } from "react-router-dom";
+import { getStudyMember } from "../../api/study";
 
 const CodeReview = () => {
   // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
-  const convertCodes = {2:"firstProcessCode", 3:"secondProcessCode"}
+  const convertCodes = {2:"firstProcessCode"}
   // studyInfo
   const studyId = sessionStorage.getItem('reviewStudyId') 
   const studyName = sessionStorage.getItem('reviewStudyName')
@@ -23,12 +24,11 @@ const CodeReview = () => {
   const [selected, setSelected] = useState(null)
   const [editedCode, setEditedCode] = useState(null)
   const sessionEditCode = sessionStorage.getItem('editedCode')
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [requestModalShow, setRequestModalShow] = useState(false);
   const [stepModalShow1, setStepModalShow1] = useState(false);
   const [stepModalShow2, setStepModalShow2] = useState(false);
   const [stepModalShow3, setStepModalShow3] = useState(false);
-  const [stepModalShow4, setStepModalShow4] = useState(false);
   const [language, setLanguage] = useState('python')
   const [editedCodeList, setEditedCodeList] = useState([])
   const [subimtCode, setSumbitCode] = useState(null)
@@ -36,13 +36,15 @@ const CodeReview = () => {
   const [yourCode, setYourCode] = useState("")
   const navigate = useNavigate();
   const [codes, setCodes] = useState({})
+  const [defaultCode1, setDefaultCode1] = useState("")
+  const [defaultCode2, setDefaultCode2] = useState("")
 
   useEffect(()=>{
     setSubmitOneTwoThree((prev) => {
       return {...prev, process:step}
     })
   }, [step])
-  
+
   const [submitOneTwoThree, setSubmitOneTwoThree] = useState({
     code: "",
     process: step,
@@ -61,14 +63,34 @@ const CodeReview = () => {
     1:<StepModal1 show={stepModalShow1} onHide={()=>{setStepModalShow1(false)}}></StepModal1>,
     2:<StepModal2 show={stepModalShow2} onHide={()=>{setStepModalShow2(false)}}></StepModal2>,
     3:<StepModal3 show={stepModalShow3} onHide={()=>{setStepModalShow3(false)}}></StepModal3>,
-    4:<StepModal4 show={stepModalShow4} onHide={()=>{setStepModalShow4(false)}}></StepModal4>
+    // 4:<StepModal4 show={stepModalShow4} onHide={()=>{setStepModalShow4(false)}}></StepModal4>
   }
+
+  useEffect(() => {
+    getCode(studyId, problemId)
+    .then((res) => {
+      
+    })
+  })
 
   useEffect(()=>{
     getCode(studyId, problemId)
     .then((res) => {
       setStep(res.data.currentProcess+1)
       setCodes(res.data)
+      // 1단계 작성해야한다면 아무것도 안한다.
+      if (res.data.currentProcess === 0) {
+      }
+      // 2단계 작성해야한다면 2단계 코드 초기 값을 1단계 코드로 주고, 1단계 코드 초기값도 1단계 코드로 준다.
+      if (res.data.currentProcess === 1) {
+        setDefaultCode2(res.data.firstProcessCode.code)
+        setDefaultCode1(res.data.firstProcessCode.code)
+      }
+      // 3단계를 작성해야한다면
+      if (res.data.currentProcess === 2) {
+        setDefaultCode1(res.data.firstProcessCode.code)
+        setDefaultCode2(res.data.secondProcessCode.code)
+      }
     })
     .catch('사용자의 코드정보를 불러올 수 없습니다.')
   }, [])
@@ -87,6 +109,8 @@ const CodeReview = () => {
   return (
     <main className="review-main">
       <RequestModal
+        studyId={studyId}
+        problemId={problemId}
         show={requestModalShow}
         onHide={() => setRequestModalShow(false)}
       />
@@ -105,9 +129,10 @@ const CodeReview = () => {
                 setStepModalShow2(true)
               } else if (step === 3) {
                 setStepModalShow3(true)
-              } else if (step === 4) {
-                setStepModalShow4(true)
               }
+              // else if (step === 4) {
+              //   setStepModalShow4(true)
+              // }
             }}>이용방법</button>
             <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
           </div>
@@ -123,9 +148,10 @@ const CodeReview = () => {
                 setStepModalShow2(true)
               } else if (step === 3) {
                 setStepModalShow3(true)
-              } else if (step === 4) {
-                setStepModalShow4(true)
               }
+              // else if (step === 4) {
+              //   setStepModalShow4(true)
+              // }
             }}>이용방법</button>
             <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
           </div>
@@ -142,14 +168,15 @@ const CodeReview = () => {
                 setStepModalShow2(true)
               } else if (step === 3) {
                 setStepModalShow3(true)
-              } else if (step === 4) {
-                setStepModalShow4(true)
               }
+              // else if (step === 4) {
+              //   setStepModalShow4(true)
+              // }
             }}>이용방법</button>
             <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
         </div>
         }
-        {step === 4 &&
+        {/* {step === 4 &&
           <div className="review-header-step">
             <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
             <h2 className="review-orange">✨ 코드리뷰 4단계 : 최종 코드 제출하기 ✨</h2>
@@ -166,7 +193,7 @@ const CodeReview = () => {
             }}>이용방법</button>
             <img src="/dinosaur.png" className="review-header-step-img review-header-special-img" style={{'marginRight':'40px'}}></img>
           </div>
-        }
+        } */}
       </section>
       <section className="review-board">
         <div className="review-title">
@@ -203,41 +230,31 @@ const CodeReview = () => {
             >
               2단계
             </button>
-            <button
+            {/* <button
               className={`review-step-btn ${step === 3 ? "act" : ""}`}
               onClick={() => {
                 setStep(3);
               }}
             >
               3단계
-            </button>
+            </button> */}
             <button
-              className={`review-step-btn ${step === 4 ? "act" : ""}`}
-              // onClick={() => {
-              //   setStep(4);
-              //   4단계 클릭하면 axios로 내가 첨삭받은 코드 원래 내코드 불러와서 usestate의 myCode, yourCode에 저장한다.
-              // }}
+              className={`review-step-btn ${step === 3 ? "act" : ""}`}
+              onClick={() => {
+                setStep(3)
+                setStepModalShow3(true)
+              }}
             >
-              4단계
+              3단계
             </button>
           </div>
           <div className="review-code">
             {
-              step === 4 ? 
+              step === 3 && 
                 <div className="step-four-main">
                   <div className="step-four-your-code">
                     <div className="step-four-type">
                       <span>리뷰 받은 코드 
-                        {/* <select className="reviewer-select" onChange={(e)=>{
-                          setEditedCode(e.target.value)
-                          sessionStorage.setItem('editedCode', e.target.value)
-                          navigate('/review')
-                          }}>
-                          <option>---선택하기</option>
-                          {
-                            editedCodeList?.map((item)=><option value={item.editedCode}>{item.sender.baekjoonId}</option>)
-                          }
-                        </select> */}
                       </span>
                     </div>
                     <Editor className='review-code-editor'
@@ -273,12 +290,15 @@ const CodeReview = () => {
                         }}></Editor>
                   </div>
                 </div>
-              :
-            <Editor className='review-code-editor'
+            }
+            
+            {
+              step === 1 &&
+              <Editor className='review-code-editor'
               height='95%'
               language={language}
               theme='vs-dark'
-              defaultValue={step === 1 ? "" : codes[convertCodes[step]].code}
+              defaultValue={defaultCode1}
               onChange={handleEditorChange}
               options={{
                 fontSize:20,
@@ -289,20 +309,50 @@ const CodeReview = () => {
               }
             }}></Editor>
             }
+
+            {
+              step === 2 &&
+            <Editor className='review-code-editor'
+              height='95%'
+              language={language}
+              theme='vs-dark'
+              defaultValue={defaultCode2}
+              onChange={handleEditorChange}
+              options={{
+                fontSize:20,
+                minimap:{ enabled: false},
+                scrollbar:{
+                  vertical: 'auto',
+                  horizontal: 'auto'
+              }
+            }}></Editor>
+            }
+            
           </div>
         </div>
         <div className="review-btns">
           {/* {step === 1 ? <button className="reviewBtn">백준 연동</button> : null} */}
-          {step === 3 ? (
+          {step === 2 && 
             <button
               className="reviewBtn"
               onClick={() => {
+                saveCode(submitOneTwoThree)
+                .then((res) => {
+                  console.log('제출성공')
+                  window.location.reload()
+                })
+                .catch((err) => {
+                  alert('코드제출실패')
+                })
                 setRequestModalShow(true);
               }}
             >
               리뷰 요청하기
             </button>
-          ) : (
+          }
+          
+          {
+            step === 1 && 
             <button
               className="reviewBtn"
               onClick={() => {
@@ -312,6 +362,8 @@ const CodeReview = () => {
                 saveCode(submitOneTwoThree)
                 .then((res)=>{
                   console.log('제출 성공!')
+                  setStep(prev => prev+1)
+                  window.location.reload()
                 })
                 .catch((err)=>{
                   console.log(err, '1단계 제출에러')
@@ -320,7 +372,19 @@ const CodeReview = () => {
             >
               코드 제출하기
             </button>
-          )}
+          }
+
+          {
+            step === 3 &&
+            <button
+              className="reviewBtn"
+              onClick={()=>{
+
+              }}
+            >
+              코드 제출하기
+            </button>
+          }
         </div>
       </section>
       {/* <section className="review-method">
@@ -341,21 +405,34 @@ const CodeReview = () => {
   );
 };
 
+
 function RequestModal(props) {
   // collegue에는 user_id, 아이디가 필요
   // 데이터 줄때 value, label 형태로 줄 수 있는지?
   // 스터디원 정보를 useEffect로 받아온다.
-  const [collegue, setCollegue] = useState([
-    { value: "스터디원1", label: "스터디원1" },
-    { value: "스터디원2", label: "스터디원1" },
-    { value: "스터디원3", label: "스터디원2" },
-    { value: "스터디원4", label: "스터디원3" },
-    { value: "스터디원4", label: "스터디원4" },
-    { value: "스터디원5", label: "스터디원5" },
-    { value: "스터디원6", label: "스터디원6" },
-    { value: "스터디원7", label: "스터디원7" },
-  ]);
-  const [selected, setSelected] = useState(null);
+  const [collegue, setCollegue] = useState();
+  const studyId = props.studyId
+  const problemId = props.problemId
+  useEffect(() => {
+    getStudyMember(sessionStorage.getItem('reviewStudyId'))
+    .then((res) => {
+      const tmp = []
+      const items = res.data.registeredMember
+      for (let i=0; i<items.length; i++) {
+        const keyValue = {}
+        keyValue['value'] = items[i].baekjoonId
+        keyValue['label'] = items[i].nickname
+        tmp.push(keyValue)
+      }
+      console.log(tmp)
+      setCollegue(tmp)
+    })
+  },[])
+  const [selected, setSelected] = useState({
+    receiverId: [],
+    studyId: Number(studyId),
+    problemId: Number(problemId),
+  });
 
   return (
     <Modal
@@ -380,19 +457,35 @@ function RequestModal(props) {
           </div>
         </div>
         <div className="review-modal-content">
-          {collegue?.map((person) => (
+          {/* {collegue?.map((person) => (
             <div className="review-modal-item">
               {person.label}
-              <button className="review-modal-selectBtn">✔</button>
+              <button className='review-modal-selectBtn' onClick={() => {
+                setSelected(person.value)
+              }}>✔</button>
             </div>
-          ))}
-          {/* <Select isMulti onChange={setSelected} options={collegue}></Select> */}
+          ))} */}
+          <Select isMulti onChange={(select) => {
+            setSelected((prev) => {
+              const tmp = prev.receiverId
+              tmp.push(select[select.length-1].value)
+              // console.log(tmp, 'tmp값')
+              return {...prev, receiverId: tmp}
+            })
+          }} options={collegue}></Select>
           <button
             className="review-modal-request-btn"
             onClick={() => {
               props.onHide();
-              console.log(selected);
+              console.log(selected, '요청보내는 데이터');
               // 서버로 리뷰 요청하는 axios 추가
+              // reviewRequest(selected)
+              // .then(() => {
+              //   alert('리뷰요청을 보냈습니다.')
+              // })
+              // .catch(() => {
+              //   alert('리뷰 요청에 실패했습니다.')
+              // })
             }}
           >
             요청하기
@@ -459,6 +552,33 @@ function StepModal2(props) {
   );
 }
 
+// function StepModal3(props) {
+//   return (
+//     <Modal
+//       {...props}
+//       size="md"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Body className="step-modal-body">
+//         <div className="step-modal-header">
+//           <h2 className="step-modal-title">코드 리뷰 3단계 방법 알아보기</h2>
+//         </div>
+//         <div className="step-modal-content">
+//           <p>
+//             <span className='highlight'>코드리뷰</span>
+//             <span>를 받고싶은 부분을</span><br></br>
+//             <span className='highlight'>하이라이팅</span>
+//             <span>을 사용해 선택해주세요!</span><br></br>
+//             <span>선택을 완료한 후 리뷰요청 버튼을 누르고</span><br></br>
+//             <span>리뷰요청 창에서 스터디원을 선택한 후 요청해주세요.</span>
+//           </p>
+//         </div>
+//       </Modal.Body>
+//     </Modal>
+//   );
+// }
+
 function StepModal3(props) {
   return (
     <Modal
@@ -473,33 +593,7 @@ function StepModal3(props) {
         </div>
         <div className="step-modal-content">
           <p>
-            <span className='highlight'>코드리뷰</span>
-            <span>를 받고싶은 부분을</span><br></br>
-            <span className='highlight'>하이라이팅</span>
-            <span>을 사용해 선택해주세요!</span><br></br>
-            <span>선택을 완료한 후 리뷰요청 버튼을 누르고</span><br></br>
-            <span>리뷰요청 창에서 스터디원을 선택한 후 요청해주세요.</span>
-          </p>
-        </div>
-      </Modal.Body>
-    </Modal>
-  );
-}
-
-function StepModal4(props) {
-  return (
-    <Modal
-      {...props}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Body className="step-modal-body">
-        <div className="step-modal-header">
-          <h2 className="step-modal-title">코드 리뷰 4단계 방법 알아보기</h2>
-        </div>
-        <div className="step-modal-content">
-          <p>
+            <span>상단의 코드리뷰 페이지에서 3단계 완료하기를 눌러주세요</span><br />
             <span className='highlight'>코드리뷰</span>
             <span>를 받은 부분과</span><br></br>
             <span className='highlight'>내가 작성한 코드</span>
