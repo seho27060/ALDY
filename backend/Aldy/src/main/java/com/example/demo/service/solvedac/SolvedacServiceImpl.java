@@ -176,7 +176,9 @@ public class SolvedacServiceImpl implements SolvedacService {
 //                        .get(randomProblemTagsIdx)
 //                        .getDisplayNames().get(0)
 //                        .getName()).build();
-        return null;
+
+        ProblemWithTagsVo problemTagsDto = solvedacSearchProblemDto.getItems().get(0);
+        return problemTagsDto;
     }
 
     private List<ProblemWithTagsVo> SolvedacProblemLookup(StringBuilder problemsIds) {
