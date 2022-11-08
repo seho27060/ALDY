@@ -162,8 +162,21 @@ public class SolvedacServiceImpl implements SolvedacService {
 
         SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
                 .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-
-        return solvedacSearchProblemDto.getItems().get((int) (Math.random()*solvedacSearchProblemDto.getItems().size()));
+        SolvedProblemDto randomProblem = solvedacSearchProblemDto
+                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
+//        solvedacSearchProblemDto.getItems().get((int) (Math.random()*solvedacSearchProblemDto.getItems().size()))
+        int randomProblemTagsIdx = (int) (Math.random()*randomProblem.getTags().size());
+        MemberProblemRecommendationResponseDto memberProblemRecommendationResponseDto = MemberProblemRecommendationResponseDto.builder()
+                .problemId(randomProblem.getProblemId())
+                .acceptedUserCount(randomProblem.getAcceptedUserCount())
+                .averageTries(randomProblem.getAverageTries())
+                .titleKo(randomProblem.getTitleKo())
+                .level(randomProblem.getLevel())
+                .algorithm(randomProblem.getTags()
+                        .get(randomProblemTagsIdx)
+                        .getDisplayNames().get(0)
+                        .getName()).build();
+        return memberProblemRecommendationResponseDto;
     }
 
     private List<ProblemVo> SolvedacProblemLookup(StringBuilder problemsIds) {

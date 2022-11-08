@@ -1,15 +1,13 @@
 package com.example.demo.domain.dto.solvedac;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProblemTagsDto {
-    private String key;
+@SuperBuilder
+public class SolvedProblemVo extends {
 }
