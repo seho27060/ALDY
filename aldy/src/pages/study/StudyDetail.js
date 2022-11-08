@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { getStudyDetail, getProblem } from "../../api/study";
+import { getStudyDetail, getProblem, studyWithdrawal } from "../../api/study";
 import TierData from "../../data/tier";
 import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
@@ -14,12 +14,25 @@ import { useRecoilState } from "recoil";
 import { recoilLeaderBaekjoonId } from "../../store/states";
 
 const RedButton = styled.button`
-  width: 150px;
+  width: 80px;
   border-radius: 8px;
   background-color: red;
   border: none;
   outline: none;
   color: white;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  font-size: 12px;
+  padding: 3px;
+`;
+
+const WhiteButton = styled.button`
+  width: 120px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid red;
+  outline: none;
+  color: red;
   font-weight: bold;
   transition: transform 30ms ease-in;
 `;
@@ -67,6 +80,22 @@ const StudyDetail = () => {
   const [memberModalShow, setMemberModalShow] = useState(false);
   const handleMemberModalShow = (e) => {
     setMemberModalShow((prev) => !prev);
+  };
+
+  // 스터디 탈퇴
+  const studyOut = () => {
+    if (window.confirm(`${studyDetail.name}에서 탈퇴하시겠습니까?`) === true) {
+      console.log(id);
+      studyWithdrawal(Number(id))
+        .then((res) => {
+          alert(`${studyDetail.name}에서 탈퇴하셨습니다.`);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err, "hi", Number(id));
+        });
+    } else {
+    }
   };
 
   // 문제 가져오기
@@ -131,11 +160,11 @@ const StudyDetail = () => {
       />
       <section className="study-detail-top">
         <div className="top">
-          <RedButton onClick={handleStudyJoinModalShow}>
-            스터디 가입하기
-          </RedButton>
+          <WhiteButton onClick={handleStudyJoinModalShow}>
+            스터디 가입
+          </WhiteButton>
           {myId === studyDetail.leaderBaekjoonId && (
-            <RedButton onClick={navigateStudyManage}>스터디 관리</RedButton>
+            <WhiteButton onClick={navigateStudyManage}>스터디 관리</WhiteButton>
           )}
         </div>
         <div className="study-detail-description">
@@ -170,6 +199,11 @@ const StudyDetail = () => {
             </h4>
           </div>
         </div>
+        {myId !== studyDetail.leaderBaekjoonId && (
+          <div className="study-out">
+            <RedButton onClick={studyOut}>스터디 탈퇴</RedButton>
+          </div>
+        )}
       </section>
       <section className="study-detail-middle">
         <img

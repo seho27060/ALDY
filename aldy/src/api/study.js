@@ -27,6 +27,15 @@ export const rejectMember = (data) => {
   });
 };
 
+// 스터디 탈퇴
+export const studyWithdrawal = (studyId) => {
+  return api.patch("/memberinstudy/withdrawal", {
+    params: {
+      studyId: studyId,
+    },
+  });
+};
+
 // 스터디 문제 추천
 export const getStudyProblem = (algoList, tierList, baekjoonIdList) => {
   return api.get("/solvedac", {
