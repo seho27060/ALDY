@@ -4,6 +4,7 @@ import com.example.demo.domain.dto.solvedac.ProblemTagsDto;
 import com.example.demo.domain.dto.study.CalendarDto;
 import com.example.demo.domain.dto.study.ProblemChoiceRequestDto;
 import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
+import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.entity.Study.Calendar;
 import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
@@ -33,7 +34,7 @@ public class CalendarServiceImpl implements CalendarService{
 
     // 문제를 등록한다. 캘린더가 존재하지 않으면 존재하게 만들어준다.
     @Override
-    public void registerProblem(ProblemChoiceRequestDto problemChoiceRequestDto) {
+    public List<ProblemDto> registerProblem(ProblemChoiceRequestDto problemChoiceRequestDto) {
         long study_id = problemChoiceRequestDto.getStudyId();
         // 문제가 어느 스터디에서 선택된 건지 알아냄.
         Study study = studyRepository.findById(study_id).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
@@ -51,10 +52,16 @@ public class CalendarServiceImpl implements CalendarService{
                         .build())
                 );
 
+
+        List<ProblemDto> problemDtoList = new ArrayList<>();
         // 문제 리스트
         List<ProblemWithTagsVo> problemList = problemChoiceRequestDto.getProblemList();
         // 문제들을 하나씩 문제테이블에 넣어줌.
         for(ProblemWithTagsVo problem : problemList){
+            if(problemRepository.existsByCalendarIdAndProblemDayAndProblemName(calendar.getId(), day, problem.getTitleKo())) {
+                continue;
+            }
+
             Problem problemTable = Problem.builder()
                     .problemNum(problem.getProblemId())
                     .problemTier(problem.getLevel())
@@ -70,8 +77,10 @@ public class CalendarServiceImpl implements CalendarService{
                 );
             }
 
-            problemRepository.save(problemTable);
+            problemDtoList.add(new ProblemDto(problemRepository.save(problemTable)));
         }
+
+        return problemDtoList;
     }
 
     @Override

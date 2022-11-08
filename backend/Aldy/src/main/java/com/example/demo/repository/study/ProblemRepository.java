@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
-//    void deleteByCalendar_idAndProblemIdAndProblemDay(Long id, int problem_id, int day);
+
+    Boolean existsByCalendarIdAndProblemDayAndProblemName(Long id, int day, String problem_name);
 
     List<Problem> findByCalendar_id(long calendar_id);
 

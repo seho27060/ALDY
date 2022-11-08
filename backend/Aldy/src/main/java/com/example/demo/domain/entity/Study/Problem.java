@@ -33,6 +33,9 @@ public class Problem {
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
     private List<Code> codeList;
 
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
+    private List<TagOfProblem> tagOfProblemList;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calendar_id")
     private Calendar calendar;
