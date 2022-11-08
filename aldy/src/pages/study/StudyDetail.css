@@ -8,7 +8,7 @@
 
 .study-detail-top > .top {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
 }
 
 .study-detail-number {
@@ -40,6 +40,7 @@
   box-shadow: 5px 10px 10px #c2c2d6;
   padding: 20px;
   margin: 10px;
+  cursor: pointer;
 }
 
 h4.underline-green {
