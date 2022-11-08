@@ -145,9 +145,9 @@ public class CodeServiceImpl implements CodeService {
 
         Study study = studyRepository.findById(codeSaveRequestDto.getStudyId()).orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
 
-        int month = LocalDateTime.now().getMonth().getValue();
-        int year = LocalDateTime.now().getYear();
-        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study.getId(),month, year)
+        int month = codeSaveRequestDto.getCalendarMonth();
+        int year = codeSaveRequestDto.getCalendarYear();
+        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study.getId(),year, month)
                 .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
 
 //        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());

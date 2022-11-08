@@ -3,7 +3,7 @@ package com.example.demo.service.study;
 import com.example.demo.domain.dto.solvedac.ProblemTagsDto;
 import com.example.demo.domain.dto.study.CalendarDto;
 import com.example.demo.domain.dto.study.ProblemChoiceRequestDto;
-import com.example.demo.domain.dto.solvedac.ProblemVo;
+import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
 import com.example.demo.domain.entity.Study.Calendar;
 import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
@@ -43,7 +43,7 @@ public class CalendarServiceImpl implements CalendarService{
         int day = problemChoiceRequestDto.getDay();
         // 달력이 있으면 가져오고 달력이 없으면 하나 만들어줌.
         Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(problemChoiceRequestDto.getStudyId(),
-                month, year).orElseGet(
+                year, month).orElseGet(
                 () -> calendarRepository.save(Calendar.builder()
                         .calendarMonth(month)
                         .calendarYear(year)
@@ -52,9 +52,9 @@ public class CalendarServiceImpl implements CalendarService{
                 );
 
         // 문제 리스트
-        List<ProblemVo> problemList = problemChoiceRequestDto.getProblemList();
+        List<ProblemWithTagsVo> problemList = problemChoiceRequestDto.getProblemList();
         // 문제들을 하나씩 문제테이블에 넣어줌.
-        for(ProblemVo problem : problemList){
+        for(ProblemWithTagsVo problem : problemList){
             Problem problemTable = Problem.builder()
                     .problemNum(problem.getProblemId())
                     .problemTier(problem.getLevel())

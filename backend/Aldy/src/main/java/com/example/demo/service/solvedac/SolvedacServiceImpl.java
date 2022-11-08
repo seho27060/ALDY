@@ -4,7 +4,7 @@ import com.example.demo.domain.dto.solvedac.*;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
-import com.example.demo.domain.dto.solvedac.ProblemVo;
+import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
@@ -111,7 +111,7 @@ public class SolvedacServiceImpl implements SolvedacService {
     }
 
     @Override
-    public ProblemVo recommendProblemForMember(HttpServletRequest request) throws IOException {
+    public ProblemWithTagsVo recommendProblemForMember(HttpServletRequest request) throws IOException {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member loginMember = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -127,13 +127,13 @@ public class SolvedacServiceImpl implements SolvedacService {
         problemsIds.deleteCharAt(problemsIds.length()-1);
 
         // 문제 번호 20개로 문제 20개 불러오기
-        List<ProblemVo> solvedProblemList;
+        List<ProblemWithTagsVo> solvedProblemList;
         solvedProblemList = SolvedacProblemLookup(problemsIds);
 
         HashMap<String,Long> tagMap = new HashMap<>();
 
         // 가져온 문제들의 알고리즘 분류 카운트
-        for(ProblemVo solvedProblem : solvedProblemList){
+        for(ProblemWithTagsVo solvedProblem : solvedProblemList){
             for(ProblemTagsDto problemTagsDto: solvedProblem.getTags()){
                 String tagDisplayName = problemTagsDto.getKey();
                 tagMap.put(tagDisplayName,tagMap.getOrDefault(tagDisplayName,0L)+1);
@@ -162,25 +162,25 @@ public class SolvedacServiceImpl implements SolvedacService {
 
         SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
                 .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        SolvedProblemDto randomProblem = solvedacSearchProblemDto
-                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
-//        solvedacSearchProblemDto.getItems().get((int) (Math.random()*solvedacSearchProblemDto.getItems().size()))
-        int randomProblemTagsIdx = (int) (Math.random()*randomProblem.getTags().size());
-        MemberProblemRecommendationResponseDto memberProblemRecommendationResponseDto = MemberProblemRecommendationResponseDto.builder()
-                .problemId(randomProblem.getProblemId())
-                .acceptedUserCount(randomProblem.getAcceptedUserCount())
-                .averageTries(randomProblem.getAverageTries())
-                .titleKo(randomProblem.getTitleKo())
-                .level(randomProblem.getLevel())
-                .algorithm(randomProblem.getTags()
-                        .get(randomProblemTagsIdx)
-                        .getDisplayNames().get(0)
-                        .getName()).build();
-        return memberProblemRecommendationResponseDto;
+//        SolvedProblemDto randomProblem = solvedacSearchProblemDto
+//                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
+////        solvedacSearchProblemDto.getItems().get((int) (Math.random()*solvedacSearchProblemDto.getItems().size()))
+//        int randomProblemTagsIdx = (int) (Math.random()*randomProblem.getTags().size());
+//        MemberProblemRecommendationResponseDto memberProblemRecommendationResponseDto = MemberProblemRecommendationResponseDto.builder()
+//                .problemId(randomProblem.getProblemId())
+//                .acceptedUserCount(randomProblem.getAcceptedUserCount())
+//                .averageTries(randomProblem.getAverageTries())
+//                .titleKo(randomProblem.getTitleKo())
+//                .level(randomProblem.getLevel())
+//                .algorithm(randomProblem.getTags()
+//                        .get(randomProblemTagsIdx)
+//                        .getDisplayNames().get(0)
+//                        .getName()).build();
+        return null;
     }
 
-    private List<ProblemVo> SolvedacProblemLookup(StringBuilder problemsIds) {
-        List<ProblemVo> solvedProblemList;
+    private List<ProblemWithTagsVo> SolvedacProblemLookup(StringBuilder problemsIds) {
+        List<ProblemWithTagsVo> solvedProblemList;
         solvedProblemList = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/problem/lookup")
@@ -195,7 +195,7 @@ public class SolvedacServiceImpl implements SolvedacService {
                                 clientResponse
                                         .bodyToMono(String.class)
                                         .map(body -> new CustomException(ErrorCode.NOT_EXIST_MEMBER)))
-                .bodyToFlux(ProblemVo.class)
+                .bodyToFlux(ProblemWithTagsVo.class)
                 .toStream()
                 .collect(Collectors.toList());
 
