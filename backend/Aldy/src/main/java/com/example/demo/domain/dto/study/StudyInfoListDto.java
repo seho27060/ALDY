@@ -1,10 +1,12 @@
 package com.example.demo.domain.dto.study;
 
+import com.example.demo.service.solvedac.AlgoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -13,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class StudyInfoListDto {
 
-    List<String> memberBaekjoonIdList;
+    HashMap<String, String> memberHash;
 
-    List<String> algoList;
+    HashMap<AlgoEnum, String> algoHash;
 
 }
