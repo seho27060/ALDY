@@ -18,7 +18,7 @@ public interface CodeService {
 
     CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto, HttpServletRequest request);
 
-    RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request);
+    List<RequestedCodeDto> requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request);
 
     List<EditedCodeDto> getEditedCodes(long studyId, int problemId, HttpServletRequest request);
 

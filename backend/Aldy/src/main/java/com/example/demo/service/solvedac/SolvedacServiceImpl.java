@@ -38,6 +38,8 @@ public class SolvedacServiceImpl implements SolvedacService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
 
+    private final RedisTemplate redisTemplate;
+
     private final StringRedisTemplate stringRedisTemplate;
     @Override
     public SolvedacSearchProblemDto filter(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList, int page) {
@@ -122,7 +124,8 @@ public class SolvedacServiceImpl implements SolvedacService {
         Member loginMember = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
+        HashOperations<String,String,Object> hashOperations = redisTemplate.opsForHash();
+
         Map<String, Object> entries = hashOperations.entries(baekjoonId);
         System.out.println("redis test ::: "+entries.isEmpty());
         if(entries.isEmpty()){
@@ -162,10 +165,11 @@ public class SolvedacServiceImpl implements SolvedacService {
             // 랜덤한 문제를 뽑고.해당 문제의 알고리즘 중 랜덤하게 출력하는 과정.
             SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
                     .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-//            hashOperations.put(baekjoonId,"maxCount",solvedacSearchProblemDto.getCount());
-//            hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
-//            hashOperations.put(baekjoonId,"count",0);
-
+            hashOperations.put(baekjoonId,"maxCount",solvedacSearchProblemDto.getCount());
+            hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
+            hashOperations.put(baekjoonId,"count",0);
+        } else{
+            hashOperations.delete(baekjoonId);
         }
         // 문제 번호 20개로 문제 20개 불러오기
         List<ProblemWithTagsVo> solvedProblemList;
