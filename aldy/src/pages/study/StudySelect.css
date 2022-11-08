@@ -140,16 +140,14 @@ label {
   display: flex;
 }
 
-.problem-number-box > :nth-child(1) {
-  display: none;
-}
-
 .problem-number {
   background: #ffffff;
   border: 3px solid #dcf0be;
   border-radius: 10px;
   padding: 2px 10px;
   margin: 7px;
+  display: flex;
+  align-items: center;
 }
 
 /* 문제 선택 */
@@ -171,4 +169,50 @@ label {
 
 .second-row {
   width: 100%;
+}
+
+.problem-search-none {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(100, 100, 100);
+  margin: 20px;
+}
+
+.problem-item {
+  display: flex;
+  align-items: center;
+}
+
+.problem-text {
+  margin-left: 12px;
+}
+
+.problem-small-text {
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+}
+
+.problem-text-line {
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+  margin: 0px 10px;
+}
+
+.problem-text-margin {
+  margin-left: auto;
+}
+
+.problem-tier-image {
+  width: 15px;
+  margin-right: 5px;
+}
+
+.delete-problem {
+  margin-left: 5px;
+  font-size: 10px;
+  font-weight: 900;
+  border-radius: 50%;
+  color: rgba(40, 80, 15, 0.5);
+  margin-left: 3px;
+  cursor: pointer;
 }

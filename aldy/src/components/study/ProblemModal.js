@@ -18,14 +18,14 @@ const RedButton = styled.button`
 const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
   const navigate = useNavigate();
   const navigateStudySelect = () => {
-    navigate("/study/select", { state: { date: date, studyId:studyId } });
+    navigate("/study/select", { state: { date: date, studyId: studyId } });
   };
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const studyId = studyDetail.id;
   const studyName = studyDetail.name;
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
   return (
     <Modal size="lg" show={modal} onHide={handleModal}>
       <Modal.Body className="review-modal-body">
@@ -48,7 +48,14 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
           <div className="problem-list-box">
             {problemList.length !== 0 ? (
               problemList?.map((item, i) => (
-                <ProblemListItem key={i} item={item} studyId={studyId} studyName={studyName} year={year} month={month} />
+                <ProblemListItem
+                  key={i}
+                  item={item}
+                  studyId={studyId}
+                  studyName={studyName}
+                  year={year}
+                  month={month}
+                />
               ))
             ) : (
               <div className="problem-none">문제를 선정해 주세요!</div>

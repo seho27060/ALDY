@@ -2,7 +2,7 @@ const TierData = {
   0: "Beakjoon Tier",
   1: "Bronze 5",
   2: "Bronze 4",
-  3: "Bronze 5",
+  3: "Bronze 3",
   4: "Bronze 2",
   5: "Bronze 1",
   6: "Silver 5",

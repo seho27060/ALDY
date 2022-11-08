@@ -2,6 +2,10 @@ import "./StudySelect.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import TierData from "../../data/tier";
+import Option from "../../components/Option";
+import Problem from "../../components/Problem";
+import { getStudyProblem, getOptionList } from "../../api/study";
 
 const RedButton = styled.button`
   width: 60px;
@@ -25,76 +29,59 @@ const WhiteButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
-const StyledTable = styled.table`
-  border-collapse: seperate;
-  thead {
-    tr {
-      th {
-        padding: 3px 5px;
-        font-weight: 700;
-        // border-bottom: 1px solid #eee;
-      }
-    }
-  }
-  tbody {
-    tr {
-      td {
-        padding: 3px 5px;
-        // border-bottom: 1px solid #eee;
-      }
-    }
-  }
-`;
-
 const StudySelect = () => {
   const location = useLocation();
-
   const date = location.state.date;
+  const studyId = location.state.studyId;
   const week = ["일", "월", "화", "수", "목", "금", "토"];
 
-  // 알고리즘 분류
-  const algorithm = [
-    { id: 0, title: "알고리즘" },
-    { id: 1, title: "BFS" },
-    { id: 2, title: "DFS" },
-    { id: 3, title: "브루트 포스" },
-    { id: 4, title: "DP" },
-    { id: 5, title: "이진탐색" },
-  ];
+  // 체크박스 옵션 리스트
+  const [algoOption, setAlgoOption] = useState({});
+  const tierOption = TierData;
+  const [baekjoonIdOption, setBaekjoonIdOption] = useState({});
+  // 체크된 옵션
+  const [algoList, setAlgoList] = useState([]);
+  const [tierList, setTierList] = useState([]);
+  const [baekjoonIdList, setBaekjoonIdList] = useState([]);
+  // 검색 결과
+  const [result, setResult] = useState([]);
+  // 체크된 문제
+  const [problem, setProblem] = useState([]);
+  console.log(problem);
 
-  const rank = [
-    { id: 0, title: "난이도" },
-    { id: 1, title: "Gold1" },
-    { id: 2, title: "Gold2" },
-    { id: 3, title: "Gold3" },
-    { id: 4, title: "Gold4" },
-    { id: 5, title: "Gold5" },
-  ];
+  useEffect(() => {
+    getOptionList(studyId)
+      .then((res) => {
+        const data = res.data;
+        setAlgoOption(data.algoHash);
+        setBaekjoonIdOption(data.memberHash);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [studyId]);
 
-  const member = [
-    { id: 0, title: "안푼사람" },
-    { id: 1, title: "스터디원1" },
-    { id: 2, title: "스터디원2" },
-    { id: 3, title: "스터디원3" },
-    { id: 4, title: "스터디원4" },
-    { id: 5, title: "스터디원5" },
-  ];
+  const searchProblem = () => {
+    const tierNumberList = [];
+    tierList.forEach((id) => tierNumberList.push(Number(id)));
+    getStudyProblem(
+      algoList.join(","),
+      tierNumberList.join(","),
+      baekjoonIdList.join(",")
+    )
+      .then((res) => {
+        const data = res.data;
+        setResult(data.items);
+        console.log(data.items);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  const result = [
-    { id: 0, number: 0, title: "문제 목록" },
-    { id: 1, number: 2839, title: "설탕배달" },
-    { id: 2, number: 1712, title: "손익분기점" },
-    { id: 3, number: 2869, title: "달팽이는 올라가고 싶다" },
-    { id: 4, number: 14503, title: "로봇 청소기" },
-  ];
-
-  const problem = [
-    { id: 0, number: 0 },
-    { id: 1, number: 2839 },
-    { id: 2, number: 1712 },
-    { id: 3, number: 2869 },
-    { id: 4, number: 14503 },
-  ];
+  // const deleteProblem = (item) => {
+  //   setProblem(problem.filter((el) => el !== item));
+  // };
 
   return (
     <main style={{ textAlign: "start" }}>
@@ -119,7 +106,11 @@ const StudySelect = () => {
             <div>알고리즘 분류</div>
           </div>
           <div className="option-scroll">
-            <Option data={algorithm}></Option>
+            <Option
+              optionData={algoOption}
+              checkItems={algoList}
+              setCheckItems={setAlgoList}
+            ></Option>
           </div>
         </div>
         <div className="study-select-option">
@@ -128,7 +119,11 @@ const StudySelect = () => {
             <div>난이도</div>
           </div>
           <div className="option-scroll">
-            <Option data={rank}></Option>
+            <Option
+              optionData={tierOption}
+              checkItems={tierList}
+              setCheckItems={setTierList}
+            ></Option>
           </div>
         </div>
         <div className="study-select-option">
@@ -137,22 +132,27 @@ const StudySelect = () => {
             <div>안푼사람</div>
           </div>
           <div className="option-scroll">
-            <Option data={member}></Option>
+            <Option
+              optionData={baekjoonIdOption}
+              checkItems={baekjoonIdList}
+              setCheckItems={setBaekjoonIdList}
+            ></Option>
           </div>
         </div>
       </section>
       <div style={{ margin: "0px 10%", textAlign: "end" }}>
-        <WhiteButton>검색</WhiteButton>
+        <WhiteButton onClick={searchProblem}>검색</WhiteButton>
       </div>
       <section className="study-select-problem-box">
         <div className="green-line">
           <div>✨ 담긴 문제 ✨</div>
         </div>
         <div className="problem-number-box">
-          {problem?.map((problem, key) => (
-            <span key={key} className="problem-number">
-              {problem.number}
-            </span>
+          {problem?.map((item, key) => (
+            <div key={key} className="problem-number">
+              {item.problemId}
+              <span className="delete-problem">X</span>
+            </div>
           ))}
         </div>
       </section>
@@ -163,150 +163,14 @@ const StudySelect = () => {
           <span className="right">맞힌 사람이 많은 순</span>
         </div>
         <div className="option-scroll">
-          <Problem data={result}></Problem>
+          <Problem
+            optionData={result}
+            checkItems={problem}
+            setCheckItems={setProblem}
+          ></Problem>
         </div>
       </section>
     </main>
-  );
-};
-
-const Option = (props) => {
-  const optionName = props.data[0].title;
-  const data = props.data.filter((item) => item.id !== 0);
-
-  const [checkItems, setCheckItems] = useState([]);
-  console.log(optionName, checkItems);
-
-  // 체크박스 단일 선택
-  const handleSingleCheck = (checked, id) => {
-    if (checked) {
-      setCheckItems((prev) => [...prev, id]);
-    } else {
-      setCheckItems(checkItems.filter((el) => el !== id));
-    }
-  };
-
-  // 체크박스 전체 선택
-  const handleAllCheck = (checked) => {
-    if (checked) {
-      const idArray = [];
-      data.forEach((el) => idArray.push(el.id));
-      setCheckItems(idArray);
-    } else {
-      setCheckItems([]);
-    }
-  };
-
-  return (
-    <StyledTable>
-      <thead>
-        <tr>
-          <th>
-            <input
-              type="checkbox"
-              name="select-all"
-              id={`${optionName}-select-all`}
-              onChange={(e) => handleAllCheck(e.target.checked)}
-              checked={checkItems.length === data.length ? true : false}
-            />
-            <label htmlFor={`${optionName}-select-all`}></label>
-          </th>
-          <th className="second-row">
-            <label htmlFor={`${optionName}-select-all`}>전체 선택</label>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {data?.map((data, key) => (
-          <tr key={key}>
-            <td>
-              <input
-                type="checkbox"
-                name={`${optionName}-${data.id}`}
-                id={`${optionName}-${data.id}`}
-                onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
-                checked={checkItems.includes(data.id) ? true : false}
-              />
-              <label htmlFor={`${optionName}-${data.id}`}></label>
-            </td>
-            <td className="second-row">
-              <label htmlFor={`${optionName}-${data.id}`}>{data.title}</label>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </StyledTable>
-  );
-};
-
-const Problem = (props) => {
-  const optionName = props.data[0].title;
-  const data = props.data.filter((item) => item.id !== 0);
-
-  const [checkItems, setCheckItems] = useState([]);
-  console.log(optionName, checkItems);
-
-  // 체크박스 단일 선택
-  const handleSingleCheck = (checked, id) => {
-    if (checked) {
-      setCheckItems((prev) => [...prev, id]);
-    } else {
-      setCheckItems(checkItems.filter((el) => el !== id));
-    }
-  };
-
-  // 체크박스 전체 선택
-  const handleAllCheck = (checked) => {
-    if (checked) {
-      const idArray = [];
-      data.forEach((el) => idArray.push(el.id));
-      setCheckItems(idArray);
-    } else {
-      setCheckItems([]);
-    }
-  };
-
-  return (
-    <StyledTable>
-      <thead>
-        <tr className="problem-box">
-          <th>
-            <input
-              type="checkbox"
-              name="select-all"
-              id={`${optionName}-select-all`}
-              onChange={(e) => handleAllCheck(e.target.checked)}
-              checked={checkItems.length === data.length ? true : false}
-            />
-            <label htmlFor={`${optionName}-select-all`}></label>
-          </th>
-          <th className="second-row">
-            <label htmlFor={`${optionName}-select-all`}>전체 선택</label>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {data?.map((data, key) => (
-          <tr key={key} className="problem-box">
-            <td>
-              <input
-                type="checkbox"
-                name={`${optionName}-${data.id}`}
-                id={`${optionName}-${data.id}`}
-                onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
-                checked={checkItems.includes(data.id) ? true : false}
-              />
-              <label htmlFor={`${optionName}-${data.id}`}></label>
-            </td>
-            <td className="second-row">
-              <label htmlFor={`${optionName}-${data.id}`}>
-                <b>{data.number}번</b> {data.title}
-              </label>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </StyledTable>
   );
 };
 
