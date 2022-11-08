@@ -40,10 +40,25 @@ const StudyMemberItem = (props) => {
     penaltyColor();
   }, []);
   const myId = sessionStorage.getItem("userName");
+  const [credentials, setCredentials] = useState({
+    memberId: null,
+    studyId: null,
+  });
 
-  const kickMember = () => {
+  const onKickMember = () => {
+    setCredentials((credentials.memberId = props.item.memberId));
+    setCredentials((credentials.studyId = props.item.studyId));
     console.log("멤버 강퇴");
-    kickMemberApi();
+    console.log(credentials);
+    kickMemberApi(credentials)
+      .then((res) => {
+        alert("강퇴되었습니다");
+        window.location.reload(); //새로고침
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("에러입니다. 다시 실행해주세요.");
+      });
   };
 
   return (
@@ -85,8 +100,8 @@ const StudyMemberItem = (props) => {
       >
         <div>백준 아이디 : {props.item.baekjoonId}</div>
         <div>함께 푼 문제 수: {props.item.solvedTogether}개</div>
-        {myId === sendLeaderId && (
-          <RedButton onClick={kickMember(props.item.id)}>강퇴</RedButton>
+        {myId === sendLeaderId && !("Leader" === props.item.message) && (
+          <RedButton onClick={onKickMember}>강퇴</RedButton>
         )}
       </div>
     </div>
