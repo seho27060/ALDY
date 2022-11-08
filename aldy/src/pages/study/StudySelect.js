@@ -1,14 +1,15 @@
 import "./StudySelect.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import TierData from "../../data/tier";
 import Option from "../../components/Option";
 import Problem from "../../components/Problem";
-import { getStudyProblem, getOptionList } from "../../api/study";
+import { getStudyProblem, getOptionList, addProblem } from "../../api/study";
 
 const RedButton = styled.button`
-  width: 60px;
+  width: 200px;
+  height: 50px;
   border-radius: 8px;
   background-color: red;
   border: none;
@@ -16,6 +17,8 @@ const RedButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  font-size: 16px;
+  box-shadow: 4px 4px 20px rgba(100, 100, 100, 0.25);
 `;
 
 const WhiteButton = styled.button`
@@ -30,6 +33,7 @@ const WhiteButton = styled.button`
 `;
 
 const StudySelect = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const date = location.state.date;
   const studyId = location.state.studyId;
@@ -79,9 +83,29 @@ const StudySelect = () => {
       });
   };
 
-  // const deleteProblem = (item) => {
-  //   setProblem(problem.filter((el) => el !== item));
-  // };
+  const deleteProblem = (item) => {
+    setProblem(problem.filter((el) => el !== item));
+    console.log(problem);
+  };
+
+  const choiceProblem = () => {
+    const data = {
+      studyId: studyId,
+      problemList: problem,
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+    };
+    addProblem(data)
+      .then((res) => {
+        console.log(res);
+        alert("문제선정이 완료되었습니다!");
+        navigate(`/study/detail/${studyId}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <main style={{ textAlign: "start" }}>
@@ -151,7 +175,14 @@ const StudySelect = () => {
           {problem?.map((item, key) => (
             <div key={key} className="problem-number">
               {item.problemId}
-              <span className="delete-problem">X</span>
+              <span
+                className="delete-problem"
+                onClick={() => {
+                  deleteProblem(item);
+                }}
+              >
+                X
+              </span>
             </div>
           ))}
         </div>
@@ -169,6 +200,9 @@ const StudySelect = () => {
             setCheckItems={setProblem}
           ></Problem>
         </div>
+      </section>
+      <section className="study-problem-button">
+        <RedButton onClick={choiceProblem}>문제 선정하기</RedButton>
       </section>
     </main>
   );

@@ -17,27 +17,34 @@ const WhiteButton = styled.button`
 
 const ProblemListItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
-  const studyId = props.studyId
-  const studyName = props.studyName
-  const year = props.year
-  const month = props.month
-  const navigate = useNavigate()
+  const studyId = props.studyId;
+  const studyName = props.studyName;
+  const year = props.year;
+  const month = props.month;
+  const navigate = useNavigate();
   return (
     <div className="problem-list-item">
       <div className="problem-list-title">
-        <h5 className="problem-name">{props.item.problemNum}번</h5>
+        <b className="problem-name">{props.item.problemNum}번</b>
         <div className="problem-name">{props.item.problemName}</div>
         <div className="problem-list-right">
-          <WhiteButton onClick={()=>{
-            sessionStorage.setItem('reviewProblemId', props.item.id)
-            sessionStorage.setItem('reviewStudyId', studyId)
-            sessionStorage.setItem('reviewProblemName', props.item.problemName)
-            sessionStorage.setItem('reviewProblemNum', props.item.problemNum)
-            sessionStorage.setItem('reviewStudyName', studyName)
-            sessionStorage.setItem('reviewYear', year)
-            sessionStorage.setItem('reviewMonth', month)
-            navigate('/review')
-          }}>코드 리뷰</WhiteButton>
+          <WhiteButton
+            onClick={() => {
+              sessionStorage.setItem("reviewProblemId", props.item.id);
+              sessionStorage.setItem("reviewStudyId", studyId);
+              sessionStorage.setItem(
+                "reviewProblemName",
+                props.item.problemName
+              );
+              sessionStorage.setItem("reviewProblemNum", props.item.problemNum);
+              sessionStorage.setItem("reviewStudyName", studyName);
+              sessionStorage.setItem("reviewYear", year);
+              sessionStorage.setItem("reviewMonth", month);
+              navigate("/review");
+            }}
+          >
+            코드 리뷰
+          </WhiteButton>
           {dropdown === "none" && (
             <FaChevronCircleDown
               className="down-icon"

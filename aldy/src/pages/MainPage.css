@@ -1,14 +1,14 @@
 section.main-page-banner {
-  background-image: url(../../public/background.jpg);
+  background-image: url(../../public/background.gif);
   background-size: 100%;
   -webkit-background-size: cover;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-y: bottom;
+  /* background-position-y: bottom; */
   background-position-x: center;
   position: relative;
-  min-height: 559px;
-  padding: 80px;
+  min-height: 650px;
+  padding: 110px;
 }
 
 .main-page-banner > h1 {

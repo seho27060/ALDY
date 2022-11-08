@@ -25,6 +25,7 @@ const StyledTable = styled.table`
 const Option = ({ optionData, checkItems, setCheckItems }) => {
   const data = Object.keys(optionData).filter((i) => i !== "0");
   const optionName = data[0];
+  console.log(optionName);
 
   // 체크박스 단일 선택
   const handleSingleCheck = (checked, id) => {
@@ -48,23 +49,25 @@ const Option = ({ optionData, checkItems, setCheckItems }) => {
 
   return (
     <StyledTable>
-      <thead>
-        <tr>
-          <th>
-            <input
-              type="checkbox"
-              name="select-all"
-              id={`${optionName}-select-all`}
-              onChange={(e) => handleAllCheck(e.target.checked)}
-              checked={checkItems.length === data.length ? true : false}
-            />
-            <label htmlFor={`${optionName}-select-all`}></label>
-          </th>
-          <th className="second-row">
-            <label htmlFor={`${optionName}-select-all`}>전체 선택</label>
-          </th>
-        </tr>
-      </thead>
+      {optionName === "segtree" || optionName === "1" ? null : (
+        <thead>
+          <tr>
+            <th>
+              <input
+                type="checkbox"
+                name="select-all"
+                id={`${optionName}-select-all`}
+                onChange={(e) => handleAllCheck(e.target.checked)}
+                checked={checkItems.length === data.length ? true : false}
+              />
+              <label htmlFor={`${optionName}-select-all`}></label>
+            </th>
+            <th className="second-row">
+              <label htmlFor={`${optionName}-select-all`}>전체 선택</label>
+            </th>
+          </tr>
+        </thead>
+      )}
       <tbody>
         {data?.map((item, key) => (
           <tr key={key}>

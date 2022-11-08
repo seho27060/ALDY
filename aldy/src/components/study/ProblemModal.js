@@ -31,7 +31,7 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
       <Modal.Body className="review-modal-body">
         <div className="review-modal-header">
           <div>
-            <h3 className="study-detail-title">
+            <h3 className="study-underline-orange" style={{ fontSize: "22px" }}>
               <span>
                 {date.getFullYear()}년 {date.getMonth() + 1}월 {date.getDate()}
                 일 {week[date.getDay()]}요일

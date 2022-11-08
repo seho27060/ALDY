@@ -18,7 +18,7 @@
     rgba(220, 240, 190, 1) 40%
   );
   font-weight: 900;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0px 4px 4px rgba(100, 70, 0, 0.25);
   color: black;
 }
 
@@ -162,7 +162,7 @@ label {
 .right {
   color: #646464;
   font-weight: 500;
-  font-size: x-small;
+  font-size: 13px;
   text-align: end;
   margin-left: auto;
 }
@@ -215,4 +215,11 @@ label {
   color: rgba(40, 80, 15, 0.5);
   margin-left: 3px;
   cursor: pointer;
+}
+
+.study-problem-button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 10%;
+  width: 80%;
 }
