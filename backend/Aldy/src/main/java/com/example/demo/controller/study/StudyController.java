@@ -155,10 +155,10 @@ public class StudyController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity<?> study12(@RequestBody ProblemChoiceRequestDto problemChoiceRequestDto){
+    private ResponseEntity<List<ProblemDto>> study12(@RequestBody ProblemChoiceRequestDto problemChoiceRequestDto){
 
-        calendarService.registerProblem(problemChoiceRequestDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<ProblemDto> problemDtoList = calendarService.registerProblem(problemChoiceRequestDto);
+        return new ResponseEntity<>(problemDtoList, HttpStatus.OK);
     }
 
     @DeleteMapping("/problem/{problem_id}")
