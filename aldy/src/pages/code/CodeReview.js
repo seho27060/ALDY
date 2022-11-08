@@ -5,21 +5,25 @@ import Select from "react-select";
 import Editor from '@monaco-editor/react'
 import { useRecoilState } from "recoil";
 import { recoilMyCode, recoilStep } from "../../store/states";
-import { getEditedCodes, saveCode } from "../../api/code";
+import { getEditedCodes, saveCode, getCode } from "../../api/code";
 import { useNavigate } from "react-router-dom";
 
 const CodeReview = () => {
+  // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
+  const convertCodes = {2:"firstProcessCode", 3:"secondProcessCode"}
   // studyInfo
-  const studyInfo = sessionStorage.getItem('studyInfo')
-  const studyId = studyInfo.id
-  const studyName = studyInfo.name
-  const problemId = studyInfo.problemId
-  const problemNumber = studyInfo.problemNumber
+  const studyId = sessionStorage.getItem('reviewStudyId') 
+  const studyName = sessionStorage.getItem('reviewStudyName')
+  const problemId = sessionStorage.getItem('reviewProblemId')
+  const problemNum = sessionStorage.getItem('reviewProblemNum')
+  const problemName = sessionStorage.getItem('reviewProblemName')
+  const year = sessionStorage.getItem('reviewYear')
+  const month = sessionStorage.getItem('reviewMonth')
   //
   const [selected, setSelected] = useState(null)
   const [editedCode, setEditedCode] = useState(null)
   const sessionEditCode = sessionStorage.getItem('editedCode')
-  const [step, setStep] = useRecoilState(recoilStep);
+  const [step, setStep] = useState(1);
   const [requestModalShow, setRequestModalShow] = useState(false);
   const [stepModalShow1, setStepModalShow1] = useState(false);
   const [stepModalShow2, setStepModalShow2] = useState(false);
@@ -31,16 +35,26 @@ const CodeReview = () => {
   const myCode = sessionStorage.getItem('mycode')
   const [yourCode, setYourCode] = useState("")
   const navigate = useNavigate();
-  const [codeOneTwoThree, setCodeOneTwoThree] = useState({
-    code:"",  
-    process: 1,
-    studyId: 0,
-    problemId: 0
+  const [codes, setCodes] = useState({})
+
+  useEffect(()=>{
+    setSubmitOneTwoThree((prev) => {
+      return {...prev, process:step}
+    })
+  }, [step])
+  
+  const [submitOneTwoThree, setSubmitOneTwoThree] = useState({
+    code: "",
+    process: step,
+    studyId: Number(studyId),
+    problemId: Number(problemId),
+    calendarMonth: Number(month),
+    calendarYear: Number(year),
   })
 
   function handleEditorChange(value, event) {
-    setCodeOneTwoThree((prev)=>{
-      return {...prev, code: value}
+    setSubmitOneTwoThree((prev) => {
+      return {...prev, code:value}
     })
   }
   const modals = {
@@ -51,14 +65,24 @@ const CodeReview = () => {
   }
 
   useEffect(()=>{
-    const studyId = sessionStorage.getItem('studyId')
-    const problemId = sessionStorage.getItem('problemId')
-    getEditedCodes(studyId, problemId)
-    .then((res)=>{
-      console.log(res.data)
-      setEditedCodeList(res.data)
+    getCode(studyId, problemId)
+    .then((res) => {
+      setStep(res.data.currentProcess+1)
+      setCodes(res.data)
     })
+    .catch('사용자의 코드정보를 불러올 수 없습니다.')
   }, [])
+
+  // 최종제출은 세션스토리지 이용! (코드리뷰 4단계 버튼으로만 가능, 달력 모달에서 문제풀기는 3단계(리뷰요청) 제출하면 제출로 바뀌게 해주기(api필요))
+  // useEffect(()=>{
+  //   const studyId = sessionStorage.getItem('studyId')
+  //   const problemId = sessionStorage.getItem('problemId')
+  //   getEditedCodes(studyId, problemId)
+  //   .then((res)=>{
+  //     console.log(res.data)
+  //     setEditedCodeList(res.data)
+  //   })
+  // }, [])
 
   return (
     <main className="review-main">
@@ -146,9 +170,9 @@ const CodeReview = () => {
       </section>
       <section className="review-board">
         <div className="review-title">
-          <p style={{ margin: "0 25px" }}>✨ 스터디이름: ssafy</p>
-          <p style={{ margin: "0 25px" }}>3017번</p>
-          <p style={{ margin: "0 25px" }}>가까운 수 찾기 ✨</p>
+          <p style={{ margin: "0 25px" }}>✨ {studyName}</p>
+          <p style={{ margin: "0 25px" }}>{problemNum}번</p>
+          <p style={{ margin: "0 25px" }}>{problemName} ✨</p>
         </div>
         <div className="review-language-select">
           <select name='language' id='language-select' onChange={(e)=>{setLanguage(e.target.value)}}>
@@ -189,10 +213,10 @@ const CodeReview = () => {
             </button>
             <button
               className={`review-step-btn ${step === 4 ? "act" : ""}`}
-              onClick={() => {
-                setStep(4);
-                // 4단계 클릭하면 axios로 내가 첨삭받은 코드 원래 내코드 불러와서 usestate의 myCode, yourCode에 저장한다.
-              }}
+              // onClick={() => {
+              //   setStep(4);
+              //   4단계 클릭하면 axios로 내가 첨삭받은 코드 원래 내코드 불러와서 usestate의 myCode, yourCode에 저장한다.
+              // }}
             >
               4단계
             </button>
@@ -254,7 +278,7 @@ const CodeReview = () => {
               height='95%'
               language={language}
               theme='vs-dark'
-              defaultValue={null}
+              defaultValue={step === 1 ? "" : codes[convertCodes[step]].code}
               onChange={handleEditorChange}
               options={{
                 fontSize:20,
@@ -268,7 +292,7 @@ const CodeReview = () => {
           </div>
         </div>
         <div className="review-btns">
-          {step === 1 ? <button className="reviewBtn">백준 연동</button> : null}
+          {/* {step === 1 ? <button className="reviewBtn">백준 연동</button> : null} */}
           {step === 3 ? (
             <button
               className="reviewBtn"
@@ -283,7 +307,15 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
-                saveCode(codeOneTwoThree)
+                console.log(submitOneTwoThree.code, '제출되는 코드')
+                console.log(submitOneTwoThree, '제출되는 코드 객체')
+                saveCode(submitOneTwoThree)
+                .then((res)=>{
+                  console.log('제출 성공!')
+                })
+                .catch((err)=>{
+                  console.log(err, '1단계 제출에러')
+                })
               }}
             >
               코드 제출하기
