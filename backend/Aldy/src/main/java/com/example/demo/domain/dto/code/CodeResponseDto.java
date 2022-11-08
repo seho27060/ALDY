@@ -13,7 +13,7 @@ public class CodeResponseDto {
     private CodeDto firstProcessCode;
     private CodeDto secondProcessCode;
     private CodeDto thirdProcessCode;
-    private CodeDto fourthProcessCode;
+//    private CodeDto fourthProcessCode;
     public CodeResponseDto(List<CodeDto> codeDtoList){
 
         currentProcess = 0;
@@ -27,12 +27,13 @@ public class CodeResponseDto {
                 secondProcessCode = code;
                 currentProcess++;
             }
-            else if(code.getProcess() == 3){
-                thirdProcessCode = code;
-                currentProcess++;
-            }
+//            else if(code.getProcess() == 3){
+//                thirdProcessCode = code;
+//                currentProcess++;
+//            }
             else{
-                fourthProcessCode = code;
+                thirdProcessCode = code;
+//              fourthProcessCode = code;
                 currentProcess++;
             }
         }
