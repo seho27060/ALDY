@@ -15,17 +15,31 @@ public class MemberInStudyDto {
     private Long id;
     private int auth;
     private String message;
-
     private Long studyId;
-
-    private String baeckjoonId;
+    private String baekjoonId;
+    private String nickname;
+    private Long tier;
+    private Integer solvedTogether;
 
     public MemberInStudyDto(MemberInStudy memberInStudy) {
         this.id = memberInStudy.getId();
         this.auth = memberInStudy.getAuth();
         this.message = memberInStudy.getMessage();
         this.studyId = memberInStudy.getStudy().getId();
-        this.baeckjoonId = memberInStudy.getMember().getBaekjoonId();
+        this.baekjoonId = memberInStudy.getMember().getBaekjoonId();
+        this.nickname = memberInStudy.getMember().getNickname();
+        this.tier = memberInStudy.getMember().getTier();
+    }
+
+    public MemberInStudyDto(MemberInStudy memberInStudy, int solvedTogether) {
+        this.id = memberInStudy.getId();
+        this.auth = memberInStudy.getAuth();
+        this.message = memberInStudy.getMessage();
+        this.studyId = memberInStudy.getStudy().getId();
+        this.baekjoonId = memberInStudy.getMember().getBaekjoonId();
+        this.nickname = memberInStudy.getMember().getNickname();
+        this.tier = memberInStudy.getMember().getTier();
+        this.solvedTogether = solvedTogether;
     }
 
 }

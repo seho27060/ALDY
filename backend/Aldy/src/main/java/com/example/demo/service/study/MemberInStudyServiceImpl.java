@@ -4,11 +4,14 @@ import com.example.demo.domain.dto.study.ApplicateStudyRequestDto;
 import com.example.demo.domain.dto.study.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.study.MemberInStudyDto;
 import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
+import com.example.demo.domain.entity.Code.Code;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Study.MemberInStudy;
+import com.example.demo.domain.entity.Study.Problem;
 import com.example.demo.domain.entity.Study.Study;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
+import com.example.demo.repository.code.CodeRepository;
 import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.repository.study.MemberInStudyRepository;
 import com.example.demo.repository.study.StudyRepository;
@@ -20,6 +23,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +40,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     private final MemberRepository memberRepository;
 
     private final StudyRepository studyRepository;
+
+    private final CodeRepository codeRepository;
 
     private final List<Integer> authList = List.of(1, 2);
 
@@ -117,9 +123,27 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList);
 
         return memberInStudyList.stream().map(e ->
-                new MemberInStudyDto(e)).collect(Collectors.toList()
+                new MemberInStudyDto(e, getNumberOfSolvedTogether(e))).collect(Collectors.toList()
         );
 
+    }
+
+    public int getNumberOfSolvedTogether(MemberInStudy memberInStudy) {
+
+        List<Code> codeList = codeRepository.findByStudy_idAndWriter_id(memberInStudy.getStudy().getId(), memberInStudy.getMember().getId());
+
+        HashMap<String, Integer> countProblemNum = new HashMap<>();
+        for(Code code : codeList) {
+            Problem problem = code.getProblem();
+
+            int count = 1;
+            if(countProblemNum.containsKey(problem.getProblemName())) {
+                count = countProblemNum.get(problem.getProblemName()) + 1;
+            }
+            countProblemNum.put(problem.getProblemName(), count);
+        }
+
+        return countProblemNum.size();
     }
 
     @Override
