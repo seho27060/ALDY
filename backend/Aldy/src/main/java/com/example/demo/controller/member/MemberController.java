@@ -108,7 +108,7 @@ public class MemberController {
 
     @Operation(summary = "로그인 사용자 문제 추천", description = "로그인 유저의 최근 푼 20개 문제를 기준으로 1개의 문제를 추천합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = ProblemWithTagsVo.class))),
+            @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = ProblemRecommendationResponseDto.class))),
     })
     @GetMapping("/recommendation")
     public ResponseEntity<ProblemRecommendationResponseDto> recommendProblemFoMember(HttpServletRequest request) throws IOException {

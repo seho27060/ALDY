@@ -193,30 +193,38 @@ public class CodeServiceImpl implements CodeService {
         return new CodeDto(code);
     }
     @Override
-    public RequestedCodeDto requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) {
+    public List<RequestedCodeDto> requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) {
 
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member sender = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Member receiver = memberRepository.findByBaekjoonId(codeReviewRequestDto.getReceiverId()).orElseThrow(
-                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
-        );
-
         Code original_code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
-            codeReviewRequestDto.getStudyId(),codeReviewRequestDto.getProblemId(),sender.getId(),3
-                ).orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
-        RequestedCode requestedCode = RequestedCode.builder()
-                .code(original_code)
-                .receiver(receiver)
-                .sender(sender)
-                .isDone(false)
-                .build();
+                codeReviewRequestDto.getStudyId(),codeReviewRequestDto.getProblemId(),sender.getId(),2
+        ).orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
 
-        rcRepository.save(requestedCode);
+        List<RequestedCodeDto> response = new ArrayList<>();
 
-        Study study = studyRepository.findById(codeReviewRequestDto.getStudyId()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
-        emailServiceImpl.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");
-        return new RequestedCodeDto(requestedCode);
+        for(String receiverId : codeReviewRequestDto.getReceiverId()){
+            Member receiver = memberRepository.findByBaekjoonId(receiverId).orElseThrow(
+                    () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
+            );
+
+            RequestedCode requestedCode = RequestedCode.builder()
+                    .code(original_code)
+                    .receiver(receiver)
+                    .sender(sender)
+                    .isDone(false)
+                    .build();
+
+            rcRepository.save(requestedCode);
+
+            Study study = studyRepository.findById(codeReviewRequestDto.getStudyId()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+            emailServiceImpl.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");
+
+            response.add(new RequestedCodeDto(requestedCode));
+        }
+
+        return response;
     }
 
     @Override

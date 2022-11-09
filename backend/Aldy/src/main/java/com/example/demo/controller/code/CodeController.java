@@ -79,8 +79,8 @@ public class CodeController {
     })
     private ResponseEntity code05(HttpServletRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto){
 
-        RequestedCodeDto requestedCodeDto = codeService.requestCode(codeReviewRequestDto, request);
-        return new ResponseEntity(requestedCodeDto, HttpStatus.OK);
+        List<RequestedCodeDto> requestedCodeDtoList = codeService.requestCode(codeReviewRequestDto, request);
+        return new ResponseEntity(requestedCodeDtoList, HttpStatus.OK);
     }
 
     @GetMapping("/getEditedCodes/{studyId}/{problemId}")
