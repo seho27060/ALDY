@@ -73,7 +73,7 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public MyStudyPageResponseDto getMyStudyPage(int page, int size, String baekjoonId) {
 
-        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BaekjoonId(baekjoonId,
+        Page<MemberInStudy> memberInStudyPage = memberInStudyRepository.findAllByMember_BaekjoonIdAndAuthIn(baekjoonId, authList,
                 PageRequest.of(page, size).withSort(Sort.by("id").descending()));
 
         if(memberInStudyPage.isEmpty()) {

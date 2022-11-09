@@ -17,7 +17,7 @@ public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Lo
 
     int countAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
 
-    Page<MemberInStudy> findAllByMember_BaekjoonId(String baekjoonId, Pageable pageable);
+    Page<MemberInStudy> findAllByMember_BaekjoonIdAndAuthIn(String baekjoonId, List<Integer> auth,Pageable pageable);
 
     Optional<MemberInStudy> findByStudy_IdAndMember_Id(Long studyId, Long memberId);
 

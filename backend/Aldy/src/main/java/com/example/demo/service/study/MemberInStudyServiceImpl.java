@@ -79,7 +79,9 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         // 중복 검사
         Optional<MemberInStudy> memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(study.getId(), member.getId());
         memberInStudy.ifPresent(m -> {
-            if(m.getAuth() == 0){
+            if(m.getAuth() == 4) {
+                return;
+            } else if(m.getAuth() == 0){
                 throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
             } else {
                 throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
@@ -93,30 +95,24 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         }
 
         // tier 체크
-        SolvedacMemberResponseDto solvedacMemberResponseDto = webClient.get()
-                .uri(uriBuilder ->
-                        uriBuilder.path("/user/show")
-                                .queryParam("handle", baekjoonId)
-                                .build())
-                .acceptCharset(StandardCharsets.UTF_8)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(SolvedacMemberResponseDto.class)
-                .blockOptional().get();
-
-        if( solvedacMemberResponseDto.getTier() < study.getThreshold() ) {
+        if( memberInStudy.get().getMember().getTier() < study.getThreshold() ) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
         }
 
         // save
         if(study.getVisibility() == 1) {
-            return new MemberInStudyDto(
-                    memberInStudyRepository.save(new MemberInStudy(study, member, 2, requestDto.getMessage()))
+            memberInStudy.ifPresentOrElse(
+                    m -> memberInStudy.get().setAuth(2),
+                    () -> memberInStudyRepository.save(new MemberInStudy(study, member, 2, requestDto.getMessage()))
+            );
+        } else {
+            memberInStudy.ifPresentOrElse(
+                    m -> memberInStudy.get().setAuth(3),
+                    () -> memberInStudyRepository.save(new MemberInStudy(study, member, 3, requestDto.getMessage()))
             );
         }
-        return new MemberInStudyDto(
-                memberInStudyRepository.save(new MemberInStudy(study, member, 3, requestDto.getMessage()))
-        );
+        return new MemberInStudyDto(memberInStudyRepository.findByStudy_IdAndMember_Id(study.getId(), member.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND)));
 
     }
 
