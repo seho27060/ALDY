@@ -182,19 +182,24 @@ const Mypage = () => {
         </p>
       </section>
       <section className="study-list">
-        <div>문제 추천~ </div>
         <div className="Mypage-recommend-box">
-          <div>문제 제목 : {titleKo}</div>
-          <img
-            src={`https://d2gd6pc034wcta.cloudfront.net/tier/${level}.svg`}
-            alt="티어 이미지"
-            className="Mypage-tier-img"
-          />
-          <div>맞힌 사람 : {acceptedUserCount}명</div>
-          <div>알고리즘 종류 : {algorithm}</div>
-          <div>평균 시도 : {averageTries}회</div>
-          {/* <div>티어 : {level}</div> */}
-          {/* <div>문제 번호 : {problemId}번</div> */}
+          <div className="Mypage-recommend-box-title">
+            <img
+              src={`https://d2gd6pc034wcta.cloudfront.net/tier/${level}.svg`}
+              alt="티어 이미지"
+              className="Mypage-tier-img"
+            />
+            <div className="Mypage-recommend-box-title-titleKo">{titleKo}</div>
+          </div>
+          <div className="Mypage-recommend-box-content">
+            <div className="Mypage-recommend-box-content-text">
+              <div>맞힌 사람 : {acceptedUserCount}명</div>
+              <div>알고리즘 종류 : {algorithm}</div>
+              <div>평균 시도 : {averageTries}회</div>
+              {/* <div>티어 : {level}</div> */}
+              {/* <div>문제 번호 : {problemId}번</div> */}
+            </div>
+          </div>
         </div>
         <div>
           <RedButton onClick={mvBoj}>문제 풀러 가기!</RedButton>
