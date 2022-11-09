@@ -95,7 +95,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
         }
 
         // tier 체크
-        if( memberInStudy.get().getMember().getTier() < study.getThreshold() ) {
+        if( member.getTier() < study.getThreshold() ) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_REQUEST);
         }
 
