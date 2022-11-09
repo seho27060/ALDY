@@ -198,15 +198,17 @@ public class CodeServiceImpl implements CodeService {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member sender = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
+        Code original_code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
+                codeReviewRequestDto.getStudyId(),codeReviewRequestDto.getProblemId(),sender.getId(),2
+        ).orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
+
         List<RequestedCodeDto> response = new ArrayList<>();
 
         for(String receiverId : codeReviewRequestDto.getReceiverId()){
             Member receiver = memberRepository.findByBaekjoonId(receiverId).orElseThrow(
                     () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
             );
-            Code original_code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(
-                    codeReviewRequestDto.getStudyId(),codeReviewRequestDto.getProblemId(),sender.getId(),3
-            ).orElseThrow(() -> new CustomException(ErrorCode.CODE_NOT_FOUND));
+
             RequestedCode requestedCode = RequestedCode.builder()
                     .code(original_code)
                     .receiver(receiver)
