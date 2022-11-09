@@ -48,15 +48,16 @@ public class AuthServiceImpl implements AuthService{
         String rawPassword = memberRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
 
+        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
+
         if(memberRepository.existsByBaekjoonId(memberRequestDto.getBaekjoonId())){
             throw new CustomException(ErrorCode.ALREADY_JOIN);
         }
 
-        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
         Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaekjoonId());
-        Long tier = (long) Integer.parseInt(Optional.ofNullable(entries.get("tier"))
-                .orElse(String.valueOf(0)));
-
+        Long tier = Long.valueOf(Optional.ofNullable(entries.get("tier"))
+                .orElseGet(()->String.valueOf(0L)));
+        System.out.printf(String.format("entries: %s get tier:%d",entries.get("tier"),tier));
         Member member = Member.builder()
                 .baekjoonId(memberRequestDto.getBaekjoonId())
                 .nickname(memberRequestDto.getNickname())
@@ -67,6 +68,7 @@ public class AuthServiceImpl implements AuthService{
 
         memberRepository.save(member);
         valueOperations.delete(memberRequestDto.getBaekjoonId(),"tier");
+        valueOperations.delete(memberRequestDto.getBaekjoonId(),"authString");
         return new MemberResponseDto(member);
     }
 
@@ -126,10 +128,11 @@ public class AuthServiceImpl implements AuthService{
             }
         }
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
+
         hashOperations.put(baekjoonId,"authString", String.valueOf(newWord));
         hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacMemberResponseDto.getTier()));
-        hashOperations.getOperations().expire(baekjoonId,3*60L, TimeUnit.MINUTES);
-//        hashOperations.(backjoonId, 5L, TimeUnit.MINUTES);
+//        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
+
         return newWord.toString();
     }
 
@@ -139,11 +142,9 @@ public class AuthServiceImpl implements AuthService{
         SolvedacMemberResponseDto solvedacMemberResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         List<String> solvedacBio = List.of(solvedacMemberResponseDto.getBio().split(" "));
-
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
         Map<String, String> entries = hashOperations.entries(baekjoonId);
         String authString = entries.get("authString");
-        hashOperations.delete(baekjoonId,"authString");
 
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }

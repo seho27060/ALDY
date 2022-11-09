@@ -3,7 +3,6 @@ package com.example.demo.service.solvedac;
 import com.example.demo.domain.dto.solvedac.*;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
-import com.example.demo.domain.dto.solvedac.response.ProblemRecommendationResponseDto;
 import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
 import com.example.demo.domain.entity.Member.Member;
@@ -16,8 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.MediaType;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +26,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional
@@ -124,109 +122,68 @@ public class SolvedacServiceImpl implements SolvedacService {
         Member loginMember = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        HashOperations hashOperations = problemRedisTemplate.opsForHash();
+        HashOperations<String, Object, Object> hashOperations = problemRedisTemplate.opsForHash();
+
+        int randomIndex = 0;
+        List<ProblemWithTagDisplayNamesVo> problemWithTagDisplayNamesVoList = new ArrayList<>();
 
         if(!hashOperations.hasKey(baekjoonId,"items")){
             System.out.println("PUT REDIS");
-            List<ProblemWithTagsVo> solvedProblemList;
-            solvedProblemList = SolvedacProblemLookup(baekjoonId);
 
-            HashMap<String,Long> tagMap = new HashMap<>();
+            String algorithmQuery = String.valueOf(GetAlgorithmQuery(baekjoonId));
 
-            // 가져온 문제들의 알고리즘 분류 카운트
-            for(ProblemWithTagsVo solvedProblem : solvedProblemList){
-                for(ProblemTagsDto problemTagsDto: solvedProblem.getTags()){
-                    String tagDisplayName = problemTagsDto.getKey();
-                    tagMap.put(tagDisplayName,tagMap.getOrDefault(tagDisplayName,0L)+1);
-                }
-            }
-
-            // 카운트 상위 최대 3개의 알고리즘 분류 가져오기
-            List<String> keyset = new ArrayList<>(tagMap.keySet());
-            keyset.sort(((o1, o2) -> tagMap.get(o2).compareTo(tagMap.get(o1))));
-
-            StringBuilder algos = new StringBuilder();
-            for (int idx = 0; idx < Math.min(keyset.size(),5);idx++){
-                algos.append(keyset.get(idx));
-                algos.append("|");
-            }
-            algos.deleteCharAt(algos.length()-1);
-
-            // 쿼리 생성
-            // 옵션 주고 문제 api
-            // 최대 50개중 랜덤으로 반환
-            String query = String.format("(~solved_by:%s)&(tag:%s)&(tier:%d..%d)&(lang:ko)&(solveable:true)",
+            String query = String.format(
+                    "(~solved_by:%s)&(tag:%s)&(tier:%d..%d)&(lang:ko)&(solveable:true)",
                     loginMember.getBaekjoonId(),
-                    algos,
+                    algorithmQuery,
                     Math.max(0,loginMember.getTier()-1),
                     Math.min(31,loginMember.getTier()+1));
 
             // 랜덤한 문제를 뽑고.해당 문제의 알고리즘 중 랜덤하게 출력하는 과정.
-            SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
+            SolvedacSearchProblemDto solvedacSearchProblemDto = SearchProblemWithQuery(query)
                     .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-            hashOperations.put(baekjoonId,"maxCount",Math.min(solvedacSearchProblemDto.getCount(),50));
-            hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
-            hashOperations.put(baekjoonId,"count",0);
-        } else{
-            System.out.println("GET AND DELETE REDIS");
-            System.out.println(hashOperations.get(baekjoonId,"items"));
-            System.out.println(hashOperations.get(baekjoonId,"items").getClass());
-            System.out.printf("max :%d count :%d",hashOperations.get(baekjoonId,"maxCount"),hashOperations.get(baekjoonId,"count"));
 
-            List<ProblemWithTagDisplayNamesVo> whatisList = (List<ProblemWithTagDisplayNamesVo>) hashOperations.get(baekjoonId,"items");
-            System.out.println(whatisList.get(0));
+            problemWithTagDisplayNamesVoList = solvedacSearchProblemDto.getItems();
+            int maxCount = (int) Math.min(solvedacSearchProblemDto.getCount(),50);
+            List<Integer> indexList = IntStream.iterate(0, i -> i < maxCount, i -> i + 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            Collections.shuffle(indexList);
+
+            randomIndex = indexList.get(0);
+
+            hashOperations.put(baekjoonId,"indexList",indexList);
+            hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
+            hashOperations.put(baekjoonId,"count",1);
+
+        } else{
+            System.out.println("GET REDIS");
+            Map<Object, Object> entries = hashOperations.entries(baekjoonId);
+            // 레디스에 저장된 값 불러와서 objectmapper로 부합하는 객체 클래스로 변환
             ObjectMapper objectMapper = new ObjectMapper();
-            whatisList = objectMapper.convertValue(hashOperations.get(baekjoonId, "items"), new TypeReference<List<ProblemWithTagDisplayNamesVo>>() {});
+            problemWithTagDisplayNamesVoList = objectMapper.convertValue(entries.get("items"), new TypeReference<>() {});
+
             // 저장해서, 가져오고, 원하는 객체로 변환해주고..
             // 랜덤한 문제 뽑기
             // 뽑은 번호 리스트를 갖고 있기
             // 랜덤 번호 뽑아서 리스트에 없으면 그대로 출력 + 랜덤 번호 리스트에 추가 후 캐시 값 수정
             // 랜덤 번호 리스트 길이가 캐시의 maxLen 이상이면 캐시 삭제
             // 캐시가 삭제되면 다음 요청때 api 새로 요청해서 갱신함.
-            System.out.println(whatisList.get(0));
-            System.out.println(whatisList.get(0).getClass());
-            hashOperations.delete(baekjoonId,"maxCount","items","count");
-        }
-        // 문제 번호 20개로 문제 20개 불러오기
-        List<ProblemWithTagsVo> solvedProblemList;
-        solvedProblemList = SolvedacProblemLookup(baekjoonId);
 
-        HashMap<String,Long> tagMap = new HashMap<>();
+            List<Integer> indexList = (List<Integer>) entries.get("indexList");
+            int count = (int) entries.get("count");
+            randomIndex = indexList.get(count);
 
-        // 가져온 문제들의 알고리즘 분류 카운트
-        for(ProblemWithTagsVo solvedProblem : solvedProblemList){
-            for(ProblemTagsDto problemTagsDto: solvedProblem.getTags()){
-                String tagDisplayName = problemTagsDto.getKey();
-                tagMap.put(tagDisplayName,tagMap.getOrDefault(tagDisplayName,0L)+1);
+            count = count + 1;
+            if(count >= indexList.size()){
+                hashOperations.delete(baekjoonId,"items","count","indexList");
+                System.out.println("DELETE REDIS");
+            }else{
+                hashOperations.put(baekjoonId,"count",count);
             }
         }
 
-        // 카운트 상위 최대 3개의 알고리즘 분류 가져오기
-        List<String> keyset = new ArrayList<>(tagMap.keySet());
-        keyset.sort(((o1, o2) -> tagMap.get(o2).compareTo(tagMap.get(o1))));
-
-        StringBuilder algos = new StringBuilder();
-        for (int idx = 0; idx < Math.min(keyset.size(),5);idx++){
-            algos.append(keyset.get(idx));
-            algos.append("|");
-        }
-        algos.deleteCharAt(algos.length()-1);
-
-        // 쿼리 생성
-        // 옵션 주고 문제 api
-        // 최대 50개중 랜덤으로 반환
-        String query = String.format("(~solved_by:%s)&(tag:%s)&(tier:%d..%d)&(lang:ko)&(solveable:true)",
-                loginMember.getBaekjoonId(),
-                algos,
-                Math.max(0,loginMember.getTier()-1),
-                Math.min(31,loginMember.getTier()+1));
-
-        // 랜덤한 문제를 뽑고.해당 문제의 알고리즘 중 랜덤하게 출력하는 과정.
-        SolvedacSearchProblemDto solvedacSearchProblemDto = SolvedacSearchProblemForRecommendation(query)
-                .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-
-        ProblemWithTagDisplayNamesVo randomProblem = solvedacSearchProblemDto
-                .getItems().get((int) (Math.random()*Math.min(solvedacSearchProblemDto.getCount(),50)));
+        ProblemWithTagDisplayNamesVo randomProblem = problemWithTagDisplayNamesVoList.get(randomIndex);
 
         return randomProblem;
     }
@@ -268,7 +225,7 @@ public class SolvedacServiceImpl implements SolvedacService {
         return solvedProblemList;
     }
 
-    private Optional<SolvedacSearchProblemDto> SolvedacSearchProblemForRecommendation(String query){
+    private Optional<SolvedacSearchProblemDto> SearchProblemWithQuery(String query){
         Optional<SolvedacSearchProblemDto> solvedacSearchProblemDto;
         solvedacSearchProblemDto = webClient.get()
                 .uri(uriBuilder ->
@@ -292,6 +249,33 @@ public class SolvedacServiceImpl implements SolvedacService {
                 .toStream()
                 .findFirst();
         return solvedacSearchProblemDto;
+    }
+
+    private StringBuilder GetAlgorithmQuery(String baekjoonId) throws IOException {
+        List<ProblemWithTagsVo> solvedProblemList;
+        solvedProblemList = SolvedacProblemLookup(baekjoonId);
+
+        HashMap<String,Long> tagMap = new HashMap<>();
+
+        // 가져온 문제들의 알고리즘 분류 카운트
+        for(ProblemWithTagsVo solvedProblem : solvedProblemList){
+            for(ProblemTagsDto problemTagsDto: solvedProblem.getTags()){
+                String tagDisplayName = problemTagsDto.getKey();
+                tagMap.put(tagDisplayName,tagMap.getOrDefault(tagDisplayName,0L)+1);
+            }
+        }
+
+        // 카운트 상위 최대 3개의 알고리즘 분류 가져오기
+        List<String> keyset = new ArrayList<>(tagMap.keySet());
+        keyset.sort(((o1, o2) -> tagMap.get(o2).compareTo(tagMap.get(o1))));
+
+        StringBuilder algos = new StringBuilder();
+        for (int idx = 0; idx < Math.min(keyset.size(),5);idx++){
+            algos.append(keyset.get(idx));
+            algos.append("|");
+        }
+        algos.deleteCharAt(algos.length()-1);
+        return algos;
     }
 
 }
