@@ -11,7 +11,7 @@ import { getStudyMember } from "../../api/study";
 
 const CodeReview = () => {
   // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
-  const convertCodes = {2:"firstProcessCode"}
+  // const convertCodes = {2:"firstProcessCode"}
   // studyInfo
   const studyId = sessionStorage.getItem('reviewStudyId') 
   const studyName = sessionStorage.getItem('reviewStudyName')
@@ -20,9 +20,9 @@ const CodeReview = () => {
   const problemName = sessionStorage.getItem('reviewProblemName')
   const year = sessionStorage.getItem('reviewYear')
   const month = sessionStorage.getItem('reviewMonth')
+  const isFinal = sessionStorage.getItem('isFinal') || ''
   //
   const [selected, setSelected] = useState(null)
-  const [editedCode, setEditedCode] = useState(null)
   const sessionEditCode = sessionStorage.getItem('editedCode')
   const [step, setStep] = useState(0);
   const [requestModalShow, setRequestModalShow] = useState(false);
@@ -30,10 +30,7 @@ const CodeReview = () => {
   const [stepModalShow2, setStepModalShow2] = useState(false);
   const [stepModalShow3, setStepModalShow3] = useState(false);
   const [language, setLanguage] = useState('python')
-  const [editedCodeList, setEditedCodeList] = useState([])
-  const [subimtCode, setSumbitCode] = useState(null)
   const myCode = sessionStorage.getItem('mycode')
-  const [yourCode, setYourCode] = useState("")
   const navigate = useNavigate();
   const [codes, setCodes] = useState({})
   const [defaultCode1, setDefaultCode1] = useState("")
@@ -43,6 +40,12 @@ const CodeReview = () => {
     setSubmitOneTwoThree((prev) => {
       return {...prev, process:step}
     })
+    setSumbitCode((prev) => {
+      return {...prev, process:step}
+    })
+    if (step === 3 && !isFinal) {
+      setStepModalShow3(true)
+    }
   }, [step])
 
   const [submitOneTwoThree, setSubmitOneTwoThree] = useState({
@@ -54,11 +57,24 @@ const CodeReview = () => {
     calendarYear: Number(year),
   })
 
+  const [subimtCode, setSumbitCode] = useState({
+    code: "",
+    process: step,
+
+  })
+
   function handleEditorChange(value, event) {
     setSubmitOneTwoThree((prev) => {
       return {...prev, code:value}
     })
   }
+
+  function handleEditorChange3(value, event) {
+    setSumbitCode((prev) => {
+      return {...prev, code:value}
+    })
+  }
+
   const modals = {
     1:<StepModal1 show={stepModalShow1} onHide={()=>{setStepModalShow1(false)}}></StepModal1>,
     2:<StepModal2 show={stepModalShow2} onHide={()=>{setStepModalShow2(false)}}></StepModal2>,
@@ -66,28 +82,24 @@ const CodeReview = () => {
     // 4:<StepModal4 show={stepModalShow4} onHide={()=>{setStepModalShow4(false)}}></StepModal4>
   }
 
-  useEffect(() => {
-    getCode(studyId, problemId)
-    .then((res) => {
-      
-    })
-  })
-
   useEffect(()=>{
     getCode(studyId, problemId)
     .then((res) => {
-      setStep(res.data.currentProcess+1)
+      // setStep(res.data.currentProcess+1)
       setCodes(res.data)
-      // 1단계 작성해야한다면 아무것도 안한다.
+      // 1단계 작성해야한다면 step을 1단계로 설정
       if (res.data.currentProcess === 0) {
+        setStep(1)
       }
-      // 2단계 작성해야한다면 2단계 코드 초기 값을 1단계 코드로 주고, 1단계 코드 초기값도 1단계 코드로 준다.
+      // 2단계 작성해야한다면 2단계 코드 초기 값을 1단계 코드로 주고, 1단계 코드 초기값도 1단계 코드로 준다. step은 2단계로 설정
       if (res.data.currentProcess === 1) {
+        setStep(2)
         setDefaultCode2(res.data.firstProcessCode.code)
         setDefaultCode1(res.data.firstProcessCode.code)
       }
-      // 3단계를 작성해야한다면
+      // 3단계를 작성해야한다면 step은 2단계로 설정 3단계는 코드리뷰 리스트에서만 들어갈 수 있음
       if (res.data.currentProcess === 2) {
+        setStep(3)
         setDefaultCode1(res.data.firstProcessCode.code)
         setDefaultCode2(res.data.secondProcessCode.code)
       }
@@ -160,7 +172,7 @@ const CodeReview = () => {
         {step === 3 &&
         <div className="review-header-step">
           <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
-          <h2 className="review-orange">✨ 코드리뷰 3단계 : 코드 하이라이팅 ✨</h2>
+          <h2 className="review-orange">✨ 코드리뷰 3단계 : 최종 코드 제출하기 ✨</h2>
           <button className="review-header-step-btn" onClick={()=>{
               if (step === 1) {
                 setStepModalShow1(true)
@@ -242,7 +254,7 @@ const CodeReview = () => {
               className={`review-step-btn ${step === 3 ? "act" : ""}`}
               onClick={() => {
                 setStep(3)
-                setStepModalShow3(true)
+                // setStepModalShow3(true)
               }}
             >
               3단계
@@ -262,7 +274,8 @@ const CodeReview = () => {
                             language={language}
                             theme='vs-dark'
                             defaultValue={sessionEditCode}
-                            onMount={handleEditorChange} // 바꿔야함
+                            // 리뷰받은 코드는 변경을 인식할 필요가 없다.
+                            // onChange={} 
                             options={{
                               fontSize:20,
                               minimap:{ enabled: false},
@@ -279,7 +292,7 @@ const CodeReview = () => {
                           language={language}
                           theme='vs-dark'
                           defaultValue={myCode}
-                          onMount={handleEditorChange} // 바꿔야함
+                          onChange={handleEditorChange3} // 바꿔야함
                           options={{
                             fontSize:20,
                             minimap:{ enabled: false},
@@ -336,15 +349,18 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={() => {
-                saveCode(submitOneTwoThree)
-                .then((res) => {
-                  console.log('제출성공')
-                  window.location.reload()
-                })
-                .catch((err) => {
-                  alert('코드제출실패')
-                })
-                setRequestModalShow(true);
+                if (typeof(submitOneTwoThree.code) === 'object') {
+                  alert('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
+                } else {
+                  saveCode(submitOneTwoThree)
+                  .then((res) => {
+    
+                  })
+                  .catch((err) => {
+                    console.log('2단계 제출에러',err)
+                  })
+                  setRequestModalShow(true);
+                }
               }}
             >
               리뷰 요청하기
@@ -357,16 +373,14 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
-                console.log(submitOneTwoThree.code, '제출되는 코드')
-                console.log(submitOneTwoThree, '제출되는 코드 객체')
                 saveCode(submitOneTwoThree)
                 .then((res)=>{
-                  console.log('제출 성공!')
-                  setStep(prev => prev+1)
+                  alert('코드를 제출하였습니다.')
+                  // setStep(prev => prev+1)
                   window.location.reload()
                 })
                 .catch((err)=>{
-                  console.log(err, '1단계 제출에러')
+                  console.log('1단계 제출에러', err)
                 })
               }}
             >
@@ -379,7 +393,15 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={()=>{
-
+                // 최종코드 제출하기
+                saveCode(subimtCode)
+                .then((res) => {
+                  alert('코드를 최종 제출하였습니다.')
+                })
+                .catch((err) => {
+                  console.log('최종코드 실패', err)
+                  alert('최종코드 제출에 실패하였습니다.')
+                })
               }}
             >
               코드 제출하기
@@ -419,12 +441,12 @@ function RequestModal(props) {
       const tmp = []
       const items = res.data.registeredMember
       for (let i=0; i<items.length; i++) {
-        const keyValue = {}
+        if (items[i].nickname !== sessionStorage.getItem('nickname'))
+        { const keyValue = {}
         keyValue['value'] = items[i].baekjoonId
         keyValue['label'] = items[i].nickname
-        tmp.push(keyValue)
+        tmp.push(keyValue) }
       }
-      console.log(tmp)
       setCollegue(tmp)
     })
   },[])
@@ -469,7 +491,6 @@ function RequestModal(props) {
             setSelected((prev) => {
               const tmp = prev.receiverId
               tmp.push(select[select.length-1].value)
-              // console.log(tmp, 'tmp값')
               return {...prev, receiverId: tmp}
             })
           }} options={collegue}></Select>
@@ -478,14 +499,15 @@ function RequestModal(props) {
             onClick={() => {
               props.onHide();
               console.log(selected, '요청보내는 데이터');
-              // 서버로 리뷰 요청하는 axios 추가
-              // reviewRequest(selected)
-              // .then(() => {
-              //   alert('리뷰요청을 보냈습니다.')
-              // })
-              // .catch(() => {
-              //   alert('리뷰 요청에 실패했습니다.')
-              // })
+              //서버로 리뷰 요청하는 axios 추가
+              reviewRequest(selected)
+              .then(() => {
+                alert('리뷰요청을 보냈습니다.')
+                window.location.reload()
+              })
+              .catch(() => {
+                alert('리뷰 요청에 실패했습니다.')
+              })
             }}
           >
             요청하기
@@ -593,7 +615,10 @@ function StepModal3(props) {
         </div>
         <div className="step-modal-content">
           <p>
-            <span>상단의 코드리뷰 페이지에서 3단계 완료하기를 눌러주세요</span><br />
+            <span>상단의 코드리뷰 페이지의</span>
+            <span>내가 보낸 요청탭에서</span><br />
+            <span className='highlight'>코드리뷰 3단계</span>
+            <span>버튼을 눌러주세요</span><br />
             <span className='highlight'>코드리뷰</span>
             <span>를 받은 부분과</span><br></br>
             <span className='highlight'>내가 작성한 코드</span>

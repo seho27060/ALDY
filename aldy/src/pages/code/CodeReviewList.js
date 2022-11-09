@@ -249,7 +249,7 @@ const CardRequestByMe = (props) => {
 // 리뷰받은 코드 카드 컴포넌트
 const CardReviewdCode = (props) => {
   const item = props.item;
-  const [process, setProcess] = useRecoilState(recoilStep)
+  // const [process, setProcess] = useRecoilState(recoilStep)
   // const [myCode, setMyCode] = useRecoilState(recoilMyCode)
   const navigate = useNavigate();
   return (
@@ -262,13 +262,14 @@ const CardReviewdCode = (props) => {
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
         <Col><button className='correctBtn' onClick={()=>{
           navigate('/review')
-          setProcess(4)
+          // setProcess(4)
           // setMyCode(item.codeDto.code)
           sessionStorage.setItem('problemId', item.codeDto.problemId)
           sessionStorage.setItem('studyId', item.codeDto.studyDto.id)
           sessionStorage.setItem('mycode', item.codeDto.code)
           sessionStorage.setItem('editedCode', item.editedCode)
-        }}>코드리뷰 4단계</button></Col>
+          sessionStorage.setItem('isFinal', true)
+        }}>코드리뷰 3단계</button></Col>
       </Row>
     </Container>
   ) 
