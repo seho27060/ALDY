@@ -308,7 +308,7 @@ public class CodeServiceImpl implements CodeService {
         for(Map.Entry<Long,Integer> entry : data.entrySet()){
             StudyMemberDto studyMemberDto = StudyMemberDto.builder()
                     .memberId(entry.getKey())
-                    .backjoonId(memberData.get(entry.getKey()).getBaekjoonId())
+                    .baekjoonId(memberData.get(entry.getKey()).getBaekjoonId())
                     .nickname(memberData.get(entry.getKey()).getNickname())
                     .process(entry.getValue())
                     .build();
