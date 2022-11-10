@@ -94,3 +94,8 @@
   width: 20px;
   margin-right: 5px;
 }
+
+.Join-btns {
+  display: flex;
+  justify-content: end;
+}

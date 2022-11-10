@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./MyStudyListItem.css";
 
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import styled from "styled-components";
@@ -12,7 +13,7 @@ const RedButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
-  margin-left: auto;
+  margin-left: 10px;
 `;
 
 const StudyJoinItem = (props) => {
@@ -57,7 +58,10 @@ const StudyJoinItem = (props) => {
         }`}
       >
         <div>가입 신청 메시지 : {props.item.message}</div>
-        <RedButton>수락</RedButton>
+        <div className="Join-btns">
+          <RedButton>수락</RedButton>
+          <RedButton>거절</RedButton>
+        </div>
       </div>
     </div>
   );
