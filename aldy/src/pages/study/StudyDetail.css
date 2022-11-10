@@ -260,3 +260,33 @@ h1.underline-green {
   margin-left: 10px;
   margin-bottom: 5px;
 }
+
+/* 코드리뷰단계 상황 */
+.stage-table {
+  text-align: center;
+}
+
+.stage-table tbody tr td {
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.stage-table tbody tr td:nth-child(1) {
+  padding-top: 18px;
+}
+
+.stage-table tbody tr td div {
+  color: rgb(100, 100, 100);
+  font-size: 12px;
+  margin-top: -3px;
+  /* margin-left: 5px; */
+}
+
+.black {
+  color: black;
+  font-weight: 700;
+}
+
+.gray {
+  color: rgb(200, 200, 200);
+}
