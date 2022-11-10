@@ -88,7 +88,8 @@ const StudyDetail = () => {
       console.log(id);
       studyWithdrawal(Number(id))
         .then((res) => {
-          alert(`${studyDetail.name}에서 탈퇴하셨습니다.`);
+          alert(`${studyDetail.name}에서 탈퇴되었습니다.`);
+          navigate(`/study/list`);
           console.log(res);
         })
         .catch((err) => {

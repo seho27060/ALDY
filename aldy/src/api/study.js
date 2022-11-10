@@ -28,8 +28,8 @@ export const rejectMember = (data) => {
 };
 
 // 스터디 탈퇴
-export const studyWithdrawal = (studyId) => {
-  return api.patch("/memberinstudy/withdrawal", {
+export const studyWithdrawal = (studyId, data) => {
+  return api.patch("/memberinstudy/withdrawal", data, {
     params: {
       studyId: studyId,
     },
