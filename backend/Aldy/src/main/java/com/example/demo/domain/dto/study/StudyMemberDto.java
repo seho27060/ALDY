@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudyMemberDto {
     private long memberId;
-    private String backjoonId;
+    private String baekjoonId;
     private String nickname;
     private int process;
 }
