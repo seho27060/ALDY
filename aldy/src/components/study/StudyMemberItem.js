@@ -99,7 +99,7 @@ const StudyMemberItem = (props) => {
         }`}
       >
         <div>백준 아이디 : {props.item.baekjoonId}</div>
-        <div>함께 푼 문제 수: {props.item.solvedTogether}개</div>
+        <div>함께 푼 문제 수 : {props.item.solvedTogether}개</div>
         {myId === sendLeaderId && !("Leader" === props.item.message) && (
           <RedButton onClick={onKickMember}>강퇴</RedButton>
         )}

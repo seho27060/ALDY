@@ -59,6 +59,9 @@ const StudyDetail = () => {
     visibility: 1,
     countMember: 0,
     leaderBaekjoonId: "",
+    statsByTier: {},
+    statsByTag: {},
+    isMember: false,
   });
   console.log(studyDetail);
 
@@ -161,9 +164,12 @@ const StudyDetail = () => {
       />
       <section className="study-detail-top">
         <div className="top">
-          <WhiteButton onClick={handleStudyJoinModalShow}>
-            스터디 가입
-          </WhiteButton>
+          {studyDetail.countMember < studyDetail.upperLimit &&
+            !studyDetail.isMember && (
+              <RedButton onClick={handleStudyJoinModalShow}>
+                스터디 가입하기
+              </RedButton>
+            )}
           {myId === studyDetail.leaderBaekjoonId && (
             <WhiteButton onClick={navigateStudyManage}>스터디 관리</WhiteButton>
           )}

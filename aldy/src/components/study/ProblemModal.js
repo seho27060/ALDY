@@ -61,6 +61,7 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
                   studyName={studyName}
                   year={year}
                   month={month}
+                  handleModal={handleModal}
                 />
               ))
             ) : (

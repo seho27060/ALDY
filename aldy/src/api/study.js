@@ -104,7 +104,11 @@ export const addProblem = (data) => {
 
 // 달력에서 문제 삭제
 export const deleteProblem = (problemId) => {
-  return api.delete(`/study/problem/${problemId}`);
+  return api.delete(`/study/problem/${problemId}`, {
+    params: {
+      problem_id: problemId,
+    },
+  });
 };
 
 // 달력 문제 조회
