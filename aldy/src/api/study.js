@@ -11,8 +11,8 @@ export const getStudyMember = (studyId) => {
 };
 
 // 스터디원 가입수락
-export const acceptMember = (data) => {
-  return api.patch("/memberinstudy/accpet", data);
+export const acceptMemberApi = (data) => {
+  return api.patch("/memberinstudy/accept", data);
 };
 
 // 스터디원 강퇴
@@ -21,9 +21,18 @@ export const kickMemberApi = (data) => {
 };
 
 // 스터디원 가입 거절
-export const rejectMember = (data) => {
+export const rejectMemberApi = (data) => {
   return api.delete("/memberinstudy/reject", {
     data: data,
+  });
+};
+
+// 스터디 탈퇴
+export const studyWithdrawal = (studyId, data) => {
+  return api.patch("/memberinstudy/withdrawal", data, {
+    params: {
+      studyId: studyId,
+    },
   });
 };
 
@@ -95,7 +104,11 @@ export const addProblem = (data) => {
 
 // 달력에서 문제 삭제
 export const deleteProblem = (problemId) => {
-  return api.delete(`/study/problem/${problemId}`);
+  return api.delete(`/study/problem/${problemId}`, {
+    params: {
+      problem_id: problemId,
+    },
+  });
 };
 
 // 달력 문제 조회

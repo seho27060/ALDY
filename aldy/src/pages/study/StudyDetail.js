@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { getStudyDetail, getProblem } from "../../api/study";
+import {
+  getStudyDetail,
+  getProblem,
+  studyWithdrawal,
+  getSelectedDay,
+} from "../../api/study";
 import TierData from "../../data/tier";
 import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
@@ -12,14 +17,28 @@ import ProblemModal from "../../components/study/ProblemModal";
 import StudyMember from "../../components/study/StudyMember";
 import { useRecoilState } from "recoil";
 import { recoilLeaderBaekjoonId } from "../../store/states";
+import moment from "moment";
 
 const RedButton = styled.button`
-  width: 150px;
+  width: 80px;
   border-radius: 8px;
   background-color: red;
   border: none;
   outline: none;
   color: white;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  font-size: 12px;
+  padding: 3px;
+`;
+
+const WhiteButton = styled.button`
+  width: 120px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid red;
+  outline: none;
+  color: red;
   font-weight: bold;
   transition: transform 30ms ease-in;
 `;
@@ -46,8 +65,10 @@ const StudyDetail = () => {
     visibility: 1,
     countMember: 0,
     leaderBaekjoonId: "",
+    statsByTier: {},
+    statsByTag: {},
+    isMember: false,
   });
-  console.log(studyDetail);
 
   const [sendLeaderId, setSendLeaderId] = useRecoilState(
     recoilLeaderBaekjoonId
@@ -55,6 +76,7 @@ const StudyDetail = () => {
 
   // 달력 날짜
   const [date, setDate] = useState(new Date());
+  const [mark, setMark] = useState([]);
   // 모달창
   const [studyJoinModalShow, setStudyJoiModalShow] = useState(false);
   const handleStudyJoinModalShow = (e) => {
@@ -69,13 +91,29 @@ const StudyDetail = () => {
     setMemberModalShow((prev) => !prev);
   };
 
+  // 스터디 탈퇴
+  const studyOut = () => {
+    if (window.confirm(`${studyDetail.name}에서 탈퇴하시겠습니까?`) === true) {
+      studyWithdrawal(Number(id))
+        .then((res) => {
+          alert(`${studyDetail.name}에서 탈퇴되었습니다.`);
+          navigate(`/study/list`);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+    }
+  };
+
   // 문제 가져오기
   const [problemList, setProblemList] = useState([]);
   useEffect(() => {
     handleProblemModalShow();
     getProblem(id, date.getFullYear(), date.getMonth() + 1, date.getDate())
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setProblemList(res.data);
       })
       .catch((err) => {
@@ -86,7 +124,7 @@ const StudyDetail = () => {
   useEffect(() => {
     getStudyDetail(id)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setStudyDetail(res.data);
         setSendLeaderId(res.data.leaderBaekjoonId);
       })
@@ -94,6 +132,17 @@ const StudyDetail = () => {
         console.log(err);
       });
   }, [id]);
+
+  useEffect(() => {
+    getSelectedDay(id, date.getFullYear(), date.getMonth() + 1)
+      .then((res) => {
+        console.log(res.data.dayss);
+        setMark(res.data.days);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [date]);
 
   return (
     <main>
@@ -131,11 +180,14 @@ const StudyDetail = () => {
       />
       <section className="study-detail-top">
         <div className="top">
-          <RedButton onClick={handleStudyJoinModalShow}>
-            스터디 가입하기
-          </RedButton>
+          {studyDetail.countMember < studyDetail.upperLimit &&
+            !studyDetail.isMember && (
+              <WhiteButton onClick={handleStudyJoinModalShow}>
+                스터디 가입
+              </WhiteButton>
+            )}
           {myId === studyDetail.leaderBaekjoonId && (
-            <RedButton onClick={navigateStudyManage}>스터디 관리</RedButton>
+            <WhiteButton onClick={navigateStudyManage}>스터디 관리</WhiteButton>
           )}
         </div>
         <div className="study-detail-description">
@@ -144,7 +196,7 @@ const StudyDetail = () => {
         <h1 className="study-title">{studyDetail.name}</h1>
         <div className="study-detail-banner">
           <div
-            className="description-detail"
+            className="study-description-detail"
             onClick={() => {
               setDate(new Date());
             }}
@@ -155,14 +207,20 @@ const StudyDetail = () => {
               <span>오늘의 문제 풀어보기</span>
             </h4>
           </div>
-          <div className="description-detail" onClick={handleMemberModalShow}>
+          <div
+            className="study-description-detail"
+            onClick={handleMemberModalShow}
+          >
             <img src="/code_person.png" alt="코딩하는사람"></img>
             <div>함께 푼 문제 수 확인하기</div>
             <h4 className="study-underline-green">
               <span>스터디원 살펴보기</span>
             </h4>
           </div>
-          <div className="description-detail" onClick={navigateReviewList}>
+          <div
+            className="study-description-detail"
+            onClick={navigateReviewList}
+          >
             <img src="/CodeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
             <h4 className="study-underline-green">
@@ -170,6 +228,11 @@ const StudyDetail = () => {
             </h4>
           </div>
         </div>
+        {studyDetail.isMember && myId !== studyDetail.leaderBaekjoonId && (
+          <div className="study-out">
+            <RedButton onClick={studyOut}>스터디 탈퇴</RedButton>
+          </div>
+        )}
       </section>
       <section className="study-detail-middle">
         <img
@@ -195,7 +258,35 @@ const StudyDetail = () => {
         </div>
       </section>
       <section className="study-detail-bottom">
-        <Calendar onChange={setDate} date={date} />
+        <div className="study-detail-calendar">
+          <div className="calendar-description">
+            <span className="dot"></span> 빨간색 동그라미가 있는 날짜는 문제가
+            등록되어 있는 날짜입니다.
+          </div>
+          <Calendar
+            onChange={setDate}
+            date={date}
+            // tileClassName={({ date, view }) => {
+            //   if (mark.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
+            //     return "highlight";
+            //   }
+            // }}
+            tileContent={({ date, view }) => {
+              if (mark.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
+                return (
+                  <>
+                    <div className="dot-box">
+                      <div
+                        className="dot"
+                        style={{ position: "absolute" }}
+                      ></div>
+                    </div>
+                  </>
+                );
+              }
+            }}
+          />
+        </div>
         <div className="study-detail-bottom-right">
           <div className="study-detail-info">
             <span className="study-detail-number">

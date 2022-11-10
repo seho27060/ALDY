@@ -1,5 +1,5 @@
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import styled, { ServerStyleSheet } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteProblem } from "../../api/study";
@@ -36,14 +36,17 @@ const ProblemListItem = (props) => {
   const studyName = props.studyName;
   const year = props.year;
   const month = props.month;
+  const handleModal = props.handleModal;
   const navigate = useNavigate();
 
   const delProblem = () => {
-    deleteProblem(props.item.problemNum)
+    console.log(props.item);
+    deleteProblem(props.item.id)
       .then((res) => {
         alert(
-          `${props.item.problemNum}번 ${props.item.problemName}가 삭제되었습니다.`
+          `${props.item.problemNum}번 ${props.item.problemName} 문제가 삭제되었습니다.`
         );
+        handleModal();
         console.log(res);
       })
       .catch((err) => {
@@ -103,7 +106,7 @@ const ProblemListItem = (props) => {
         <div>스터디원 3 : {props.item.study3}</div>
         <div>스터디원 4 : {props.item.study4}</div>
         <div>스터디원 5 : {props.item.study5}</div>
-        <RedButton>문제 삭제</RedButton>
+        <RedButton onClick={delProblem}>문제 삭제</RedButton>
       </div>
     </div>
   );
