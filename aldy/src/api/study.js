@@ -118,5 +118,5 @@ export const getProblem = (studyId, year, month, day) => {
 
 // 각 팀원들의 문제별 단계 조회
 export const getProblemStage = (studyId, problemId) => {
-  return api.get(`/study/problem/${studyId}/${problemId}`);
+  return api.get(`/study/process/${studyId}/${problemId}`);
 };
