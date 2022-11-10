@@ -17,12 +17,21 @@ const RedButton = styled.button`
 
 const StudyJoinItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
+  console.log(props.item, "후아유");
 
   return (
     <div className="study-list-item">
       <div className="study-list-title">
-        <div className="study-id">{props.item.studyJoinId}</div>
-        <h5 className="study-name">{props.item.studyJoinName}</h5>
+        <div className="study-id">{props.num + 1}</div>
+        <h5 className="study-name" style={{ margin: "3px" }}>
+          {props.item.nickname}
+        </h5>
+        <img
+          src={`https://d2gd6pc034wcta.cloudfront.net/tier/${props.item.tier}.svg`}
+          alt="티어 이미지"
+          className="tier-image"
+          style={{ width: "15px" }}
+        ></img>
         <div className="study-number"></div>
         {dropdown === "none" && (
           <FaChevronCircleDown
@@ -47,7 +56,7 @@ const StudyJoinItem = (props) => {
           dropdown === "active" ? "content-active" : ""
         }`}
       >
-        <div>{props.item.description}</div>
+        <div>가입 신청 메시지 : {props.item.message}</div>
         <RedButton>수락</RedButton>
       </div>
     </div>
