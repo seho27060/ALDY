@@ -13,6 +13,7 @@ import java.util.ArrayList;
 @Service
 public class CrawlingServiceImpl {
 
+    
     public ArrayList<Integer> getRecentProblems(String backjoonId) throws IOException {
         ArrayList<Integer> problemList = new ArrayList<>();
         String url = "https://www.acmicpc.net/status?problem_id=&user_id=%s&language_id=-1&result_id=4";

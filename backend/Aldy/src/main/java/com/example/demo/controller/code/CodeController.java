@@ -170,4 +170,22 @@ public class CodeController {
 
         return new ResponseEntity(editngCodeList, HttpStatus.OK);
     }
+
+    @Operation(summary = "최종 제출 코드 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 최종 제출한 코드들을 반환해준다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "실패"),
+    })
+    @GetMapping("/my-final-codes")
+    public ResponseEntity getMyFinalCodeList(
+        @RequestParam(value = "page", defaultValue = "1") int page,
+        @RequestParam(value = "size", defaultValue = "15") int size,
+        HttpServletRequest request){
+
+        String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+
+        Page<CodeDto> codeDtoPage = codeService.getMyFinalCodeList(page-1,size,loginMember);
+
+        return new ResponseEntity(codeDtoPage, HttpStatus.OK);
+    }
 }
