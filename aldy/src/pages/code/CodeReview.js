@@ -60,7 +60,10 @@ const CodeReview = () => {
   const [subimtCode, setSumbitCode] = useState({
     code: "",
     process: step,
-
+    studyId: Number(studyId),
+    problemId: Number(problemId),
+    calendarMonth: Number(month),
+    calendarYear: Number(year),
   })
 
   function handleEditorChange(value, event) {
@@ -292,7 +295,7 @@ const CodeReview = () => {
                           language={language}
                           theme='vs-dark'
                           defaultValue={myCode}
-                          onChange={handleEditorChange3} // 바꿔야함
+                          onChange={handleEditorChange3}
                           options={{
                             fontSize:20,
                             minimap:{ enabled: false},
@@ -394,6 +397,7 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={()=>{
                 // 최종코드 제출하기
+                console.log(subimtCode)
                 saveCode(subimtCode)
                 .then((res) => {
                   alert('코드를 최종 제출하였습니다.')
