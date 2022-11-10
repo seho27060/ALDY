@@ -112,7 +112,7 @@ public class CodeServiceImpl implements CodeService {
         long problem_id = codeReviewReplyDto.getProblemId();
 
         // 어떤 코드를 보고 첨삭했는지
-        Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(study_id, problem_id, receiver_index,3).orElseThrow(
+        Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(study_id, problem_id, receiver_index,2).orElseThrow(
                 () -> new CustomException(ErrorCode.CODE_NOT_FOUND)
         );
 
@@ -141,15 +141,11 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto, HttpServletRequest request) {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
-        Member writer = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member writer = memberRepository.findByBaekjoonId(baekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Study study = studyRepository.findById(codeSaveRequestDto.getStudyId()).orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
-
-        int month = codeSaveRequestDto.getCalendarMonth();
-        int year = codeSaveRequestDto.getCalendarYear();
-        Calendar calendar = calendarRepository.findByStudy_idAndCalendarYearAndCalendarMonth(study.getId(),year, month)
-                .orElseThrow(()->new CustomException(ErrorCode.CALENDAR_NOT_FOUND));
-
+        Study study = studyRepository.findById(codeSaveRequestDto.getStudyId())
+                .orElseThrow(()->new CustomException(ErrorCode.STUDY_NOT_FOUND));
 //        System.out.println("-----------------------"+codeSaveRequestDto.getProblemId()+" "+ calendar.getId());
         Problem problem = problemRepository.
                 findById(codeSaveRequestDto.getProblemId())
@@ -270,7 +266,8 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public Page<EditedCodeDto> getMyEditedCodeList(int page, int size, String loginMember) {
-        Member me = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member me = memberRepository.findByBaekjoonId(loginMember)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("editedDate").descending());
         Page<EditedCode> requestedCodePage = ecRepository.findByReceiver_id(me.getId(), pageable);
@@ -283,7 +280,8 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public Page<EditedCodeDto> getMyEditingCodeList(int page, int size, String loginMember) {
-        Member me = memberRepository.findByBaekjoonId(loginMember).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Member me = memberRepository.findByBaekjoonId(loginMember)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("editedDate").descending());
         Page<EditedCode> requestedCodePage = ecRepository.findBySender_id(me.getId(), pageable);
@@ -331,6 +329,19 @@ public class CodeServiceImpl implements CodeService {
         return problemDtoList;
     }
 
+    @Override
+    public Page<CodeDto> getMyFinalCodeList(int page, int size, String loginMember) {
+        Member member = memberRepository.findByBaekjoonId(loginMember)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Long memberId = member.getId();
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+
+        Page<Code> codePage = codeRepository.findByWriterIdAndProcess(memberId,3,pageable);
+        Page<CodeDto> codeDtoPage = codePage.map(o -> new CodeDto(o));
+        return codeDtoPage;
+    }
+
 
     public boolean checkPreCodeExists(CodeSaveRequestDto codeSaveRequestDto, Member writer, Study study){
         int nowProcess = codeSaveRequestDto.getProcess();
@@ -348,6 +359,4 @@ public class CodeServiceImpl implements CodeService {
             return preCode.isPresent();
         }
     }
-
-
 }

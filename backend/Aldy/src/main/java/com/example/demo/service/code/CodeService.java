@@ -30,4 +30,6 @@ public interface CodeService {
     StudyStatusDto getProcessOfStudy(long study_id, long problem_id, HttpServletRequest request);
 
     List<ProblemDto> getProblemsOfDay(long study_id, int year, int month, int day, HttpServletRequest request);
+
+    Page<CodeDto> getMyFinalCodeList(int page, int size, String loginMember);
 }
