@@ -100,7 +100,7 @@ public class StudyServiceImpl implements StudyService {
 
         StudyDetailResponseDto studyDetailResponseDto = new StudyDetailResponseDto(study);
 
-        memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(study.getId(), loginMember)
+        memberInStudyRepository.findByStudy_IdAndMember_BaekjoonIdAndAuthIn(study.getId(), loginMember, authList)
                         .ifPresentOrElse(
                                 m -> studyDetailResponseDto.setIsMember(true),
                                 () -> studyDetailResponseDto.setIsMember(false)

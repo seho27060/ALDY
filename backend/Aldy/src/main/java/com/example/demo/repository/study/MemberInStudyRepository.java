@@ -13,6 +13,7 @@ public interface MemberInStudyRepository extends JpaRepository<MemberInStudy, Lo
 
     Optional<MemberInStudy> findByStudy_IdAndMember_BaekjoonId(Long studyId, String baekjoonId);
 
+    Optional<MemberInStudy> findByStudy_IdAndMember_BaekjoonIdAndAuthIn(Long studyId, String baekjoonId, List<Integer> auth);
     List<MemberInStudy> findAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
 
     int countAllByStudyIdAndAuthIn(Long studyId, List<Integer> auth);
