@@ -31,9 +31,13 @@ const StudyManage = () => {
   const myId = sessionStorage.getItem("userName");
 
   const deleteMyStudy = () => {
-    if (window.confirm("스터디를 정말 삭제하시겠습니까?") === true) {
+    if (
+      window.confirm(`스터디(${studyDetail.name})를 정말 삭제하시겠습니까?`) ===
+      true
+    ) {
       deleteStudy(id)
         .then((res) => {
+          alert(`스터디(${studyDetail.name})가 삭제되었습니다.`);
           // console.log(res);
           navigate("/study/list");
         })
