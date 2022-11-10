@@ -11,8 +11,8 @@ export const getStudyMember = (studyId) => {
 };
 
 // 스터디원 가입수락
-export const acceptMember = (data) => {
-  return api.patch("/memberinstudy/accpet", data);
+export const acceptMemberApi = (data) => {
+  return api.patch("/memberinstudy/accept", data);
 };
 
 // 스터디원 강퇴
@@ -21,7 +21,7 @@ export const kickMemberApi = (data) => {
 };
 
 // 스터디원 가입 거절
-export const rejectMember = (data) => {
+export const rejectMemberApi = (data) => {
   return api.delete("/memberinstudy/reject", {
     data: data,
   });

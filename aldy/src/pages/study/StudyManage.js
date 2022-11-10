@@ -126,7 +126,7 @@ const StudyManage = () => {
         <h3 className="study-detail-title">
           <span>스터디원 신청목록</span>
         </h3>
-        <StudyJoin></StudyJoin>
+        <StudyJoin id={id}></StudyJoin>
       </section>
     </main>
   );
