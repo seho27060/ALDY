@@ -13,6 +13,8 @@ public interface RequestedCodeRepository extends JpaRepository<RequestedCode, Lo
 
     List<RequestedCode> findByReceiver_id(long member_id);
 
+    List<RequestedCode> findByCodeId(long code_id);
+
     Page<RequestedCode> findByReceiver_id(long member_id, Pageable pageable);
     Page<RequestedCode> findBySender_id(long member_id, Pageable pageable);
 

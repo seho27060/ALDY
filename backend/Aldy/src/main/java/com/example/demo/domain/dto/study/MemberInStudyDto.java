@@ -28,6 +28,7 @@ public class MemberInStudyDto {
     private Long tier;
     @Schema(description = "함께 푼 문제")
     private Integer solvedTogether;
+    private Integer numberOfAlerts;
 
     public MemberInStudyDto(MemberInStudy memberInStudy) {
         this.id = memberInStudy.getId();
@@ -38,6 +39,7 @@ public class MemberInStudyDto {
         this.baekjoonId = memberInStudy.getMember().getBaekjoonId();
         this.nickname = memberInStudy.getMember().getNickname();
         this.tier = memberInStudy.getMember().getTier();
+        this.numberOfAlerts = memberInStudy.getNumberOfAlerts();
     }
 
     public MemberInStudyDto(MemberInStudy memberInStudy, int solvedTogether) {
@@ -50,6 +52,7 @@ public class MemberInStudyDto {
         this.nickname = memberInStudy.getMember().getNickname();
         this.tier = memberInStudy.getMember().getTier();
         this.solvedTogether = solvedTogether;
+        this.numberOfAlerts = memberInStudy.getNumberOfAlerts();
     }
 
 }

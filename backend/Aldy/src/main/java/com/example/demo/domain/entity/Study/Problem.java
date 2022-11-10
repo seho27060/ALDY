@@ -30,6 +30,8 @@ public class Problem {
 
     private String problemName;
 
+    private Boolean isChecked;
+
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
     private List<Code> codeList;
 
@@ -40,6 +42,13 @@ public class Problem {
     @JoinColumn(name = "calendar_id")
     private Calendar calendar;
 
+    @PrePersist
+    public void prePersist() {
+        this.isChecked = false;
+    }
 
+    public void batchCheck() {
+        this.isChecked = true;
+    }
 
 }

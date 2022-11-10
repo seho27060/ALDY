@@ -1,10 +1,7 @@
 package com.example.demo.domain.entity.Study;
 
 import com.example.demo.domain.dto.study.CreateStudyRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Study {
 
@@ -38,6 +36,9 @@ public class Study {
     // 공개 1, 비공개 0
     private int visibility;
 
+    private int level;
+    private int activationLevel;
+
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<Calendar> calendarList;
 
@@ -50,5 +51,11 @@ public class Study {
         this.introduction = requestDto.getIntroduction();
         this.threshold = requestDto.getThreshold();
         this.visibility = requestDto.getVisibility();
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.level = 0;
+        this.activationLevel = 0;
     }
 }
