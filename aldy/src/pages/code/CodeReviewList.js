@@ -180,6 +180,7 @@ const ReviewedCode = () => {
   useEffect(() => {
     getEditedCode(pageNum)
     .then((res)=>{
+      console.log(res.data.content)
       setList(res.data.content)
       setTotalElements(res.data.totalElements)
     })
@@ -249,6 +250,7 @@ const CardRequestByMe = (props) => {
 // 리뷰받은 코드 카드 컴포넌트
 const CardReviewdCode = (props) => {
   const item = props.item;
+  console.log(item, 'item')
   // const [process, setProcess] = useRecoilState(recoilStep)
   // const [myCode, setMyCode] = useRecoilState(recoilMyCode)
   const navigate = useNavigate();
@@ -260,16 +262,23 @@ const CardReviewdCode = (props) => {
         <Col>{item.codeDto.problemId}</Col>
         <Col>{item.codeDto.problemName}</Col>
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
-        <Col><button className='correctBtn' onClick={()=>{
+        <Col>{item.codeDto.process < 3 ? <button className='correctBtn' onClick={()=>{
           navigate('/review')
           // setProcess(4)
           // setMyCode(item.codeDto.code)
           sessionStorage.setItem('problemId', item.codeDto.problemId)
-          sessionStorage.setItem('studyId', item.codeDto.studyDto.id)
+          sessionStorage.setItem('reviewStudyId', item.codeDto.studyDto.id)
+          sessionStorage.setItem('reviewYear', )
+          sessionStorage.setItem('reviewMonth')
           sessionStorage.setItem('mycode', item.codeDto.code)
           sessionStorage.setItem('editedCode', item.editedCode)
           sessionStorage.setItem('isFinal', true)
-        }}>코드리뷰 3단계</button></Col>
+          sessionStorage.setItem('finalCodeSender', item.sender.baekjoonId)
+          sessionStorage.setItem('reviewYear', item.year) // 서버에서 주는 연
+          sessionStorage.setItem('reviewMonth', item.month)
+        }}>코드리뷰 3단계</button> :
+        <button>최종 코드 보기</button>
+        }</Col>
       </Row>
     </Container>
   ) 
