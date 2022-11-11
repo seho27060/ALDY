@@ -23,4 +23,6 @@ public interface MemberInStudyService {
 
     void rejectMember(MemberInStudyChangeAuthDto requestDto, String loginMemberBaekjoonId);
 
+    void changeLeader(Long studyId);
+
 }
