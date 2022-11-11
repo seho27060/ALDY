@@ -317,19 +317,17 @@ const CardReviewdCode = (props) => {
         <Col>{item.codeDto.problemName}</Col>
         <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
         <Col><button className='correctBtn' onClick={()=>{
-          navigate('/review')
           // setProcess(4)
           // setMyCode(item.codeDto.code)
-          sessionStorage.setItem('problemId', item.codeDto.problemId)
+          sessionStorage.setItem('reviewProblemId', item.codeDto.problemId)
           sessionStorage.setItem('reviewStudyId', item.codeDto.studyDto.id)
-          sessionStorage.setItem('reviewYear', )
-          sessionStorage.setItem('reviewMonth')
           sessionStorage.setItem('mycode', item.codeDto.code)
           sessionStorage.setItem('editedCode', item.editedCode)
           sessionStorage.setItem('isFinal', true)
           sessionStorage.setItem('finalCodeSender', item.sender.baekjoonId)
-          sessionStorage.setItem('reviewYear', item.year) // 서버에서 주는 연
-          sessionStorage.setItem('reviewMonth', item.month)
+          navigate('/review')
+          // sessionStorage.setItem('reviewYear', item.year)
+          // sessionStorage.setItem('reviewMonth', item.month)
         }}>코드리뷰 3단계</button>
         </Col>
       </Row>
