@@ -11,6 +11,7 @@ import {
   getSelectedDay,
 } from "../../api/study";
 import TierData from "../../data/tier";
+import ActivationLevel from "../../data/ActivationLevel";
 import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
 import ProblemModal from "../../components/study/ProblemModal";
@@ -241,7 +242,8 @@ const StudyDetail = () => {
         <div style={{ width: "50%" }}>
           <img
             className="study-detail-img"
-            src="/dinosaur_hello.gif"
+            // src="/dinosaur_hello.gif"
+            src={ActivationLevel[studyDetail.activationLevel]}
             alt="스터디 메인 이미지"
           ></img>
           <h1 className="study-underline-green">
