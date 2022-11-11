@@ -8,8 +8,11 @@ import { useRecoilState } from "recoil";
 import { correctCode } from "../../store/states";
 import { codeReply } from "../../api/code";
 import { useNavigate } from "react-router-dom";
+import AlertModal from "../../components/AlertModal";
 
 const CodeCorrect = () => {
+  const [alertModalShow, setAlertModalShow] = useState(false)
+  const [message, setMessage] = useState('')
   const previousCode = sessionStorage.getItem('previousCode')
   const studyName = sessionStorage.getItem('studyName')
   const sender = sessionStorage.getItem('sender')
@@ -32,6 +35,11 @@ const CodeCorrect = () => {
   }
   return (
     <main className="correct-main">
+      <AlertModal 
+      show={alertModalShow}
+      onHide={() => setAlertModalShow(false)}
+      message={message}
+      />
       <section className="correct-header">
         <p>
           <span>✨ 요청받은 코드에 대한</span>
@@ -120,12 +128,15 @@ const CodeCorrect = () => {
           <button className="correctBtn" onClick={()=>{
             codeReply(reply)
             .then(()=>{
-              alert('답장을 보냈습니다.')
-              navigate('/review/list')
+              setMessage('답장을 보냈습니다.')
+              setAlertModalShow(true)
+              // alert('답장을 보냈습니다.')
+              // navigate('/review/list')
             })
             .catch((err)=>{
-              console.log(err)
-              alert('답장 보내기에 실패했습니다.')
+              setMessage('답장 보내기에 실패했습니다.')
+              setAlertModalShow(true)
+              // alert('답장 보내기에 실패했습니다.')
             })
           }}>답장 보내기</button>
         </div>
