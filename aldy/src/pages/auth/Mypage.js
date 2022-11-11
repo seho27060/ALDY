@@ -117,9 +117,10 @@ const Mypage = () => {
     <main>
       <section className="study-list-banner">
         <img
-          className="study-main-img"
-          src="/dinosaur.png"
+          className="mb-2"
+          src="/pinkAldy.gif"
           alt="마이 페이지"
+          style={{ width: "350px" }}
         ></img>
         <p>
           <span>✨내가 활동하고 있는 </span>
