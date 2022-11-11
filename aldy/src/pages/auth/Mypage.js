@@ -136,7 +136,7 @@ const Mypage = () => {
               alt="티어 이미지"
               className="Mypage-tier-img"
             />
-            <h2>{nickname}님 안녕하세요</h2>
+            <h2 className="Mypage-section1-userInfo-h2">{nickname}님 안녕하세요</h2>
           </div>
           <div>
             <RedButton onClick={navigateUserinfo} className="study-button">
