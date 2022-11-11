@@ -188,6 +188,13 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
     }
 
+    @Override
+    public void changeLeader(Long studyId) {
+        memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList)
+                .get(0)
+                .setAuth(1);
+    }
+
     public int getNumberOfSolvedTogether(MemberInStudy memberInStudy) {
 
         List<Code> codeList = codeRepository.findByStudy_idAndWriter_id(memberInStudy.getStudy().getId(), memberInStudy.getMember().getId());

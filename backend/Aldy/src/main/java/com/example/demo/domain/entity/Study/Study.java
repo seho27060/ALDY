@@ -37,6 +37,7 @@ public class Study {
     private int visibility;
 
     private int level;
+    // 0 -> 5(해골, 눈물, 알, 아기, 안녕, 불)
     private int activationLevel;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
@@ -56,6 +57,6 @@ public class Study {
     @PrePersist
     public void prePersist() {
         this.level = 0;
-        this.activationLevel = 0;
+        this.activationLevel = 2;
     }
 }
