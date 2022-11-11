@@ -14,6 +14,8 @@ import { BsPerson, BsPower } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../store/states";
 
+import LoginAlert from "./LoginAlert";
+
 import "./AldyNav.css";
 import styled from "styled-components";
 
@@ -34,6 +36,7 @@ const AldyNav = () => {
   const location = useLocation();
   const [logged, setLogged] = useRecoilState(isLoggedIn);
   const [username] = useRecoilState(userName);
+  const [loginAlertShow, setLoginAlertShow] = useState(false)
 
   const navigateMain = () => {
     navigate("/");
@@ -42,18 +45,20 @@ const AldyNav = () => {
     if (logged) {
       navigate("/study/list");
     } else {
-      if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
-        navigate('/login')
-      }
+      setLoginAlertShow(true)
+      // if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
+      //   navigate('/login')
+      // }
     }
   };
   const navigateReview = () => {
     if (logged) {
       navigate("/review/list");
     } else {
-      if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
-        navigate('/login')
-      }
+      setLoginAlertShow(true)
+      // if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
+      //   navigate('/login')
+      // }
     }
   };
   const navigateMypage = () => {
@@ -87,6 +92,10 @@ const AldyNav = () => {
 
   return (
     <Navbar expand="md">
+      <LoginAlert 
+      show={loginAlertShow}
+      onHide={() => setLoginAlertShow(false)}
+      />
       <Container fluid>
         <Navbar.Brand onClick={navigateMain} className="nav-title">
           ALDY

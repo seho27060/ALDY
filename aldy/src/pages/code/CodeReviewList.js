@@ -132,7 +132,7 @@ const RequestToMe = () => {
       setTotalElements(res.data.totalElements)
     })
     .catch((err)=>{
-      alert('코드 리스트를 불러올 수 없습니다.')
+      // alert('코드 리스트를 불러올 수 없습니다.')
     })
   }, [pageNum])
   return (
@@ -169,7 +169,7 @@ const RequestByMe = () => {
       setTotalElements(res.data.totalElements)
     })
     .catch((err)=>{
-      alert('코드리스트를 불러 올 수 없습니다.')
+      // alert('코드리스트를 불러 올 수 없습니다.')
     })
   }, [pageNum])
   return (
@@ -208,7 +208,7 @@ const ReviewedCode = () => {
       setTotalElements(res.data.totalElements)
     })
     .catch((err)=>{
-      alert('코드리스트를 불러 올 수 없습니다.')
+      // alert('코드리스트를 불러 올 수 없습니다.')
     })
   }, [pageNum])
   return (
@@ -239,7 +239,7 @@ const FinalCode = (props) => {
       setTotalElements(res.data.totalElements)
     })
     .catch((err) => {
-      alert('최종코드 리스트를 불러올 수 없습니다.')
+      // alert('최종코드 리스트를 불러올 수 없습니다.')
     })
   }, [pageNum])
   return (
