@@ -47,9 +47,11 @@ const Userinfo = () => {
   const [emailShow, setEmailShow] = useState(false);
   const [nicknameShow, setNicknameShow] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
+
   const emailInput = useRef();
   const nicknameInput = useRef();
   const passwordInput = useRef();
+
   const [sendEmail, setSendEmail] = useState({ email: "" });
   const [sendNickname, setSendNickname] = useState({ nickname: "" });
   const [sendPassword, setSendPassword] = useState({ password: "" });
