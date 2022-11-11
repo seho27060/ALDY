@@ -31,6 +31,11 @@ export const changepassword = (data) => {
 };
 
 // 회원탈퇴
-export const withdraw = (data) => {
+export const withdrawApi = (data) => {
   return api.post("/member/withdrawal", data);
+};
+
+// 티어 갱신
+export const tierRenewApi = () => {
+  return api.put("/member/renew");
 };
