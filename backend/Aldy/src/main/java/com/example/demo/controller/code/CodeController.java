@@ -2,9 +2,12 @@ package com.example.demo.controller.code;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
 import com.example.demo.domain.dto.code.*;
+import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.domain.dto.study.StudyPageResponseDto;
 import com.example.demo.service.code.CodeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -173,7 +176,7 @@ public class CodeController {
 
     @Operation(summary = "최종 제출 코드 모음 API", description = "이 스터디에서 특정 문제에 대해 내가 최종 제출한 코드들을 반환해준다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "200", description = "성공, page형식으로 반환",content = @Content(schema = @Schema(implementation = FinalCodeResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "실패"),
     })
     @GetMapping("/my-final-codes")
@@ -185,7 +188,7 @@ public class CodeController {
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
         Page<CodeDto> codeDtoPage = codeService.getMyFinalCodeList(page-1,size,loginMember);
-
+        FinalCodeResponseDto finalCodeResponseDto = new FinalCodeResponseDto(codeDtoPage.getTotalPages(),codeDtoPage.getTotalElements(),codeDtoPage);
         return new ResponseEntity(codeDtoPage, HttpStatus.OK);
     }
 }
