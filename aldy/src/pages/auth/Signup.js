@@ -166,6 +166,7 @@ const Signup = () => {
                       .catch((err) => {
                         console.log(err);
                         alert("백준 회원이 아닙니다.");
+                        window.location.reload(); //새로고침
                       });
                   }}
                 >

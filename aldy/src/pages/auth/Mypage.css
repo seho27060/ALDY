@@ -13,6 +13,12 @@
 
 .Mypage-tier-nickname {
   display: flex;
+  align-items: center;
+  width: 40%;
+
+}
+.Mypage-section1-userInfo-h2 {
+  padding-left: 3%;
 }
 
 .Mypage-tier-img {
@@ -47,7 +53,7 @@
   border-style: solid;
   box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
   border-radius: 29px;
-  width: 30%;
+  width: 40%;
   justify-content: space-around;
 }
 
@@ -55,7 +61,7 @@
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 900;
-  font-size: 135%;
+  font-size: 165%;
   display: flex;
   align-items: center;
   text-align: center;
@@ -81,7 +87,7 @@
   align-items: center;
   letter-spacing: -0.005em;
   color: #999999;
-  width: 30%;
+  width: 40%;
   justify-content: space-evenly;
 }
 .Mypage-recommend-box-content-text {
