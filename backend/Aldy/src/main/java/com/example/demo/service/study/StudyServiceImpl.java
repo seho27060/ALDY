@@ -103,7 +103,14 @@ public class StudyServiceImpl implements StudyService {
         memberInStudyRepository.findByStudy_IdAndMember_BaekjoonIdAndAuthIn(study.getId(), loginMember, authList)
                         .ifPresentOrElse(
                                 m -> studyDetailResponseDto.setIsMember(true),
-                                () -> studyDetailResponseDto.setIsMember(false)
+                                () -> {
+                                    memberInStudyRepository.findByStudy_IdAndMember_BaekjoonIdAndAuthIn(study.getId(), loginMember, List.of(0))
+                                                    .ifPresentOrElse(
+                                                            k -> studyDetailResponseDto.setIsKick(true),
+                                                            () -> studyDetailResponseDto.setIsKick(false)
+                                                    );
+                                    studyDetailResponseDto.setIsMember(false);
+                                }
                         );
 
         studyDetailResponseDto.setCountMember(countMember(study.getId()));
