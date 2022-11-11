@@ -115,3 +115,26 @@ button.active {
   padding: 10px;
   margin-bottom: 8px;
 }
+
+.final-code-header {
+  display: flex;
+  justify-content: center;
+  background-color: #28500F;
+  color: white;
+  border-radius: 20px;
+  width: 600px;
+  margin: auto;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.final-code-editor {
+  margin-top: 20px;
+  height: 500px;
+}
+
+.final-code-select {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
