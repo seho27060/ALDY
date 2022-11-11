@@ -110,7 +110,7 @@ const MainPage = () => {
       <section className="aldy_step_info">
         <div className="aldy_step_info_title">Game + Education </div>
         <img
-          src={process.env.PUBLIC_URL + "/joystick.png"}
+          src={process.env.PUBLIC_URL + "/joystick.gif"}
           alt=""
           width="150px"
         ></img>
@@ -120,7 +120,7 @@ const MainPage = () => {
       </section>
       <div className="main-page-description-title">ALDY의 메인 캐릭터 소개</div>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-up-right">
+        <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-text">
             <p>
               <span>1단계 </span>
@@ -133,7 +133,7 @@ const MainPage = () => {
             ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-up-left">
+        <div className="section1-right" data-aos="fade-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
@@ -149,7 +149,7 @@ const MainPage = () => {
         </div>
       </section>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-up-right">
+        <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
@@ -163,7 +163,7 @@ const MainPage = () => {
             ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-up-left">
+        <div className="section1-right" data-aos="fade-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
@@ -182,7 +182,7 @@ const MainPage = () => {
         ALDY에 접속한지 오래되었을 경우
       </div>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-up-right">
+        <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-text">
             <p>
               <span>소멸 직전 </span>
@@ -195,7 +195,7 @@ const MainPage = () => {
             ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-up-left">
+        <div className="section1-right" data-aos="fade-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
