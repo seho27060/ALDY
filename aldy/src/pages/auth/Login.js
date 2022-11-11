@@ -120,7 +120,8 @@ const Login = () => {
             </div>
           </div>
           <img
-            src={process.env.PUBLIC_URL + "/login_dinosaur.png"}
+            className="login_img"
+            src={process.env.PUBLIC_URL + "/keyboardAldy.gif"}
             alt=""
           ></img>
         </section>
