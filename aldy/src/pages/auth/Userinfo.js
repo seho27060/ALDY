@@ -1,19 +1,31 @@
 import "./Userinfo.css";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { updateEmail, updateNickname } from "../../api/user";
+import { updateEmail, updateNickname, withdrawApi } from "../../api/user";
 import { getUserInfo } from "../../api/user";
 import { emailValid, nicknameValid } from "../../api/auth";
 
 const RedButton = styled.button`
-  width: 170px;
+  width: 120px;
   border-radius: 8px;
-  background-color: red;
+  background-color: rgb(40, 80, 15);
   border: none;
   outline: none;
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+`;
+
+const WhiteButton = styled.button`
+  width: 95px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
+  outline: none;
+  color: rgb(40, 80, 15);
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  margin: 4px;
 `;
 
 const Userinfo = () => {
@@ -34,10 +46,15 @@ const Userinfo = () => {
 
   const [emailShow, setEmailShow] = useState(false);
   const [nicknameShow, setNicknameShow] = useState(false);
+  const [passwordShow, setPasswordShow] = useState(false);
+
   const emailInput = useRef();
   const nicknameInput = useRef();
+  const passwordInput = useRef();
+
   const [sendEmail, setSendEmail] = useState({ email: "" });
   const [sendNickname, setSendNickname] = useState({ nickname: "" });
+  const [sendPassword, setSendPassword] = useState({ password: "" });
 
   const onClickEmail = () => {
     setEmailShow((prev) => !prev);
@@ -45,6 +62,10 @@ const Userinfo = () => {
 
   const onClickNickname = () => {
     setNicknameShow((prev) => !prev);
+  };
+
+  const onClickWithdraw = () => {
+    setPasswordShow((prev) => !prev);
   };
 
   // 이메일 유효성 검사
@@ -121,6 +142,41 @@ const Userinfo = () => {
     </div>
   );
 
+  const Withdraw = () => (
+    <div className="form-title">
+      <div>비밀번호</div>
+      <div className="form-title-id">
+        <input
+          name="password"
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+          ref={passwordInput}
+        ></input>
+        <RedButton
+          onClick={() => {
+            setSendPassword(
+              (sendPassword.password = passwordInput.current.value)
+            );
+            console.log("회원 탈퇴");
+            withdrawApi(sendPassword)
+              .then((res) => {
+                alert("탈퇴 되었습니다.");
+                console.log(res.data);
+                window.location.reload(); //새로고침
+              })
+              .catch((err) => {
+                alert("탈퇴에 실패하였습니다. 다시 시도해주세요.");
+                console.log(err);
+                window.location.reload(); //새로고침
+              });
+          }}
+        >
+          탈퇴하기
+        </RedButton>
+      </div>
+    </div>
+  );
+
   return (
     <main className="userinfo-page-main">
       <div className="userinfo-page-bg">
@@ -132,7 +188,7 @@ const Userinfo = () => {
               <div>이메일</div>
               <div className="userinfo-form-title-id">
                 <div>{email}</div>
-                <RedButton onClick={onClickEmail}>수정하기</RedButton>
+                <WhiteButton onClick={onClickEmail}>수정하기</WhiteButton>
               </div>
             </div>
             {emailShow ? <ChangeEmail /> : null}
@@ -140,10 +196,24 @@ const Userinfo = () => {
               <div>닉네임</div>
               <div className="userinfo-form-title-id">
                 <div>{nickname}</div>
-                <RedButton onClick={onClickNickname}>수정하기</RedButton>
+                <WhiteButton onClick={onClickNickname}>수정하기</WhiteButton>
               </div>
             </div>
             {nicknameShow ? <ChangeNickname /> : null}
+            <div className="form-title">
+              <div></div>
+              <div className="userinfo-withdraw-title-id">
+                {/* <div>{nickname}</div> */}
+                <div
+                  className="userinfo-withdraw"
+                  style={{ color: "rgb(40, 80, 15)" }}
+                  onClick={onClickWithdraw}
+                >
+                  회원 탈퇴
+                </div>
+              </div>
+            </div>
+            {passwordShow ? <Withdraw /> : null}
           </div>
         </section>
         <section className="userinfo-page-right">

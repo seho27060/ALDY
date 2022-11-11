@@ -1,26 +1,35 @@
 import "./Mypage.css";
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import { getUserInfo, mypageCode } from "../../api/user";
+import { getUserInfo, mypageCode, tierRenewApi } from "../../api/user";
 import { getMyStudy } from "../../api/study";
 import { recommendation } from "../../api/user";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 
-const RedButton = styled.button`
-  width: 170px;
+const WhiteButton = styled.button`
+  width: 110px;
   border-radius: 8px;
-  background-color: red;
-  border: none;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
   outline: none;
-  color: white;
+  color: rgb(40, 80, 15);
   font-weight: bold;
   transition: transform 30ms ease-in;
-  margin: 10px;
+  margin: 4px;
+`;
+
+const WhiteButtonL = styled.button`
+  width: 200px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
+  outline: none;
+  color: rgb(40, 80, 15);
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  font-size: 20px;
 `;
 
 const Mypage = () => {
@@ -110,8 +119,21 @@ const Mypage = () => {
     window.open(`https://www.acmicpc.net/problem/${problemId}`, "_blank");
   };
 
-  // console.log(credentials, "t");
-  console.log(baekjoonId, "t");
+  const onRenew = () => {
+    console.log("티어 갱신");
+    tierRenewApi()
+      .then((res) => {
+        alert("티어가 갱신되었습니다.");
+        sessionStorage.setItem("tier", res.data.tier);
+        console.log(res.data);
+        window.location.reload(); //새로고침
+      })
+      .catch((err) => {
+        alert("갱신에 실패하였습니다. 다시 시도해주세요.");
+        console.log(err);
+        window.location.reload(); //새로고침
+      });
+  };
 
   return (
     <main>
@@ -137,15 +159,20 @@ const Mypage = () => {
               alt="티어 이미지"
               className="Mypage-tier-img"
             />
-            <h2 className="Mypage-section1-userInfo-h2">{nickname}님 안녕하세요</h2>
+            <h2 className="Mypage-section1-userInfo-h2">
+              {nickname}님 안녕하세요
+            </h2>
           </div>
           <div>
-            <RedButton onClick={navigateUserinfo} className="study-button">
+            <WhiteButton onClick={navigateUserinfo} className="study-button">
               회원정보 수정
-            </RedButton>
-            <RedButton onClick={navigateChangePw} className="study-button">
+            </WhiteButton>
+            <WhiteButton onClick={navigateChangePw} className="study-button">
               비밀번호 수정
-            </RedButton>
+            </WhiteButton>
+            <WhiteButton onClick={onRenew} className="study-button">
+              티어 갱신
+            </WhiteButton>
           </div>
         </div>
         <div>
@@ -203,7 +230,7 @@ const Mypage = () => {
           </div>
         </div>
         <div>
-          <RedButton onClick={mvBoj}>문제 풀러 가기!</RedButton>
+          <WhiteButtonL onClick={mvBoj}>문제 풀러 가기!</WhiteButtonL>
         </div>
       </section>
       <section className="study-search">
