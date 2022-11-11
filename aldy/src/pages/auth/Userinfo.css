@@ -115,3 +115,21 @@ input:focus {
 .userinfo-submit-btn {
   padding: 30px;
 }
+
+.userinfo-withdraw-title-id {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userinfo-withdraw {
+  display: flex;
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #2b6e30;
+  padding-left: 3px;
+  padding-right: 15px;
+  cursor: pointer;
+}
