@@ -12,15 +12,15 @@ import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 
 const RedButton = styled.button`
-  width: 170px;
+  width: 100px;
   border-radius: 8px;
-  background-color: red;
+  background-color: rgb(40, 80, 15);
   border: none;
   outline: none;
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
-  margin: 10px;
+  margin: 4px;
 `;
 
 const Mypage = () => {
@@ -137,7 +137,9 @@ const Mypage = () => {
               alt="티어 이미지"
               className="Mypage-tier-img"
             />
-            <h2 className="Mypage-section1-userInfo-h2">{nickname}님 안녕하세요</h2>
+            <h2 className="Mypage-section1-userInfo-h2">
+              {nickname}님 안녕하세요
+            </h2>
           </div>
           <div>
             <RedButton onClick={navigateUserinfo} className="study-button">
@@ -145,6 +147,9 @@ const Mypage = () => {
             </RedButton>
             <RedButton onClick={navigateChangePw} className="study-button">
               비밀번호 수정
+            </RedButton>
+            <RedButton onClick={navigateChangePw} className="study-button">
+              티어 갱신
             </RedButton>
           </div>
         </div>
