@@ -26,6 +26,7 @@ const StudyChart = ({ studyData }) => {
           "rgb(54, 162, 235)",
         ],
         fill: true,
+        hoverOffset: 5,
       },
     ],
   };
@@ -36,12 +37,12 @@ const StudyChart = ({ studyData }) => {
         options={{
           legend: {
             display: false,
-            position: "bottom",
           },
         }}
         data={expData}
         height={250}
         width={250}
+        style={{ padding: "20px" }}
       />
     </div>
   );
