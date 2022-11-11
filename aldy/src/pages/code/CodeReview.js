@@ -1,5 +1,7 @@
 import "./CodeReview.css";
 import { useState, useRef, useEffect } from "react";
+import AlertModal from '../../components/AlertModal' // alert 정의
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import Editor from '@monaco-editor/react'
@@ -25,6 +27,12 @@ const CodeReview = () => {
   const [selected, setSelected] = useState(null)
   const sessionEditCode = sessionStorage.getItem('editedCode')
   const [step, setStep] = useState(0);
+  // alert를 위한 정의
+  const [alertModalShow, setAlertModalShow] = useState(false);
+  const [message, setMessage] = useState('')
+  // alert를 위한 정의
+  // alertRefresh를 위한 정의
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false)
   const [requestModalShow, setRequestModalShow] = useState(false);
   const [stepModalShow1, setStepModalShow1] = useState(false);
   const [stepModalShow2, setStepModalShow2] = useState(false);
@@ -128,6 +136,19 @@ const CodeReview = () => {
         problemId={problemId}
         show={requestModalShow}
         onHide={() => setRequestModalShow(false)}
+        setAlertModalShow={setAlertModalShow}
+        setMessage={setMessage}
+        setAlertRefreshModalShow={setAlertRefreshModalShow}
+      />
+      <AlertModal 
+      show={alertModalShow}
+      onHide={() => setAlertModalShow(false)}
+      message={message}
+      />
+      <AlertRefreshModal 
+      show={alertRefreshModalShow}
+      onHide={() => setAlertRefreshModalShow(false)}
+      message={message}
       />
       {
         modals[step]
@@ -353,7 +374,9 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 if (typeof(submitOneTwoThree.code) === 'object') {
-                  alert('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
+                  setMessage('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
+                  setAlertModalShow(true)
+                  // alert('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
                 } else {
                   saveCode(submitOneTwoThree)
                   .then((res) => {
@@ -378,9 +401,10 @@ const CodeReview = () => {
                 // 제출하는 axios 요청 추가
                 saveCode(submitOneTwoThree)
                 .then((res)=>{
-                  alert('코드를 제출하였습니다.')
-                  // setStep(prev => prev+1)
-                  window.location.reload()
+                  setMessage('코드를 제출하였습니다.')
+                  setAlertRefreshModalShow(true)
+                  // alert('코드를 제출하였습니다.')
+                  // window.location.reload()
                 })
                 .catch((err)=>{
                   console.log('1단계 제출에러', err)
@@ -400,11 +424,14 @@ const CodeReview = () => {
                 console.log(subimtCode)
                 saveCode(subimtCode)
                 .then((res) => {
-                  alert('코드를 최종 제출하였습니다.')
+                  setMessage('코드를 최종 제출하였습니다.')
+                  setAlertModalShow(true)
+                  // alert('코드를 최종 제출하였습니다.')
                 })
                 .catch((err) => {
-                  console.log('최종코드 실패', err)
-                  alert('최종코드 제출에 실패하였습니다.')
+                  setMessage('최종코드 제출에 실패했습니다.')
+                  setAlertModalShow(true)
+                  // alert('최종코드 제출에 실패하였습니다.')
                 })
               }}
             >
@@ -439,6 +466,9 @@ function RequestModal(props) {
   const [collegue, setCollegue] = useState();
   const studyId = props.studyId
   const problemId = props.problemId
+  const setAlertModalShow = props.setAlertModalShow
+  const setMessage = props.setMessage
+  const setAlertRefreshModalShow = props.setAlertRefreshModalShow
   useEffect(() => {
     getStudyMember(sessionStorage.getItem('reviewStudyId'))
     .then((res) => {
@@ -506,11 +536,15 @@ function RequestModal(props) {
               //서버로 리뷰 요청하는 axios 추가
               reviewRequest(selected)
               .then(() => {
-                alert('리뷰요청을 보냈습니다.')
-                window.location.reload()
+                setMessage('리뷰요청을 보냈습니다.')
+                setAlertRefreshModalShow(true)
+                // alert('리뷰요청을 보냈습니다.')
+                // window.location.reload()
               })
               .catch(() => {
-                alert('리뷰 요청에 실패했습니다.')
+                setMessage('리뷰 요청에 실패했습니다.')
+                setAlertModalShow(true)
+                // alert('리뷰 요청에 실패했습니다.')
               })
             }}
           >
