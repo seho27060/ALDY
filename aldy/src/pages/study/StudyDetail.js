@@ -256,7 +256,7 @@ const StudyDetail = () => {
             </span>
             은{" "}
             <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
-              lv.20
+              lv.{studyDetail.level}
             </span>
             입니다.
           </div>
