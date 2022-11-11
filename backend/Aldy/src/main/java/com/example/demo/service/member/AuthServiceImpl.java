@@ -14,6 +14,7 @@ import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.service.solvedac.SolvedacService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.*;
@@ -131,8 +132,9 @@ public class AuthServiceImpl implements AuthService{
 
         hashOperations.put(baekjoonId,"authString", String.valueOf(newWord));
         hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacMemberResponseDto.getTier()));
+        hashOperations.getOperations().expire(baekjoonId,7,TimeUnit.DAYS);
 //        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
-
+        System.out.printf("issue %s %s",baekjoonId,newWord);
         return newWord.toString();
     }
 
@@ -145,7 +147,10 @@ public class AuthServiceImpl implements AuthService{
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
         Map<String, String> entries = hashOperations.entries(baekjoonId);
         String authString = entries.get("authString");
-
+        System.out.println("baekjoonId " + baekjoonId);
+        System.out.println("authString: "+authString);
+        System.out.println("hash oper:"+hashOperations.get(baekjoonId,"authString"));
+        System.out.println("entries:"+entries.get("authString"));
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
 

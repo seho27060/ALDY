@@ -25,6 +25,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -151,11 +152,10 @@ public class SolvedacServiceImpl implements SolvedacService {
             Collections.shuffle(indexList);
 
             randomIndex = indexList.get(0);
-
             hashOperations.put(baekjoonId,"indexList",indexList);
             hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
             hashOperations.put(baekjoonId,"count",1);
-
+            hashOperations.getOperations().expire(baekjoonId,7, TimeUnit.DAYS);
         } else{
             System.out.println("GET REDIS");
             Map<Object, Object> entries = hashOperations.entries(baekjoonId);
@@ -175,6 +175,7 @@ public class SolvedacServiceImpl implements SolvedacService {
             randomIndex = indexList.get(count);
 
             count = count + 1;
+            System.out.printf("문제추천 %d 번째 중",count);
             if(count >= indexList.size()){
                 hashOperations.delete(baekjoonId,"items","count","indexList");
                 System.out.println("DELETE REDIS");
