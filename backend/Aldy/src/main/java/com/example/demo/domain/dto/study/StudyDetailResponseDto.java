@@ -27,6 +27,7 @@ public class StudyDetailResponseDto {
     private HashMap<String, Integer> statsByTag;
 
     private Boolean isMember;
+    private Boolean isKick;
 
     private int level;
     private int activationLevel;
