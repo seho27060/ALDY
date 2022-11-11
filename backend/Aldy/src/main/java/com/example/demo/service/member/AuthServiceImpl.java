@@ -132,7 +132,7 @@ public class AuthServiceImpl implements AuthService{
 
         hashOperations.put(baekjoonId,"authString", String.valueOf(newWord));
         hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacMemberResponseDto.getTier()));
-        hashOperations.getOperations().expire(baekjoonId,7,TimeUnit.DAYS);
+//        hashOperations.getOperations().expire(baekjoonId,7,TimeUnit.DAYS);
 //        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
         System.out.printf("issue %s %s",baekjoonId,newWord);
         return newWord.toString();
