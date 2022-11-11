@@ -1,5 +1,5 @@
 import "./StudyList.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
@@ -22,18 +22,44 @@ const RedButton = styled.button`
 
 const StudyList = () => {
   const navigate = useNavigate();
+  const searchInput = useRef("");
 
   const [tab, setTab] = useState("studyListAll");
   const [studyList, setStudyList] = useState(null);
   const [myStudyList, setMyStudyList] = useState(null);
+  const [searchList, setSearchList] = useState([]);
   // Pagination
   const [studyPageNum, setStudyPageNum] = useState(1);
   const [myStudyPageNum, setMyStudyPageNum] = useState(1);
+  const [searchPageNum, setSearchPageNum] = useState(1);
   const [studyTotal, setStudyTotal] = useState(0);
   const [myStudyTotal, setMyStudyTotal] = useState(0);
+  const [searchTotal, setSearchTotal] = useState(0);
+  const [searchShow, setSearchShow] = useState(false);
 
   const navigateStudyCreate = () => {
     navigate("/study/create");
+  };
+
+  const onKeypress = (e) => {
+    if (e.key === "Enter") {
+      console.log(searchInput.current.value);
+      studySearch();
+    }
+  };
+
+  const studySearch = () => {
+    setSearchShow(true);
+    getStudyList(searchPageNum, 10, searchInput.current.value)
+      .then((res) => {
+        const data = res.data.studyDtoPage;
+        // console.log(data);
+        setSearchList(data.content);
+        setSearchTotal(data.totalElements);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -61,6 +87,10 @@ const StudyList = () => {
         console.log(err);
       });
   }, [myStudyPageNum]);
+
+  useEffect(() => {
+    studySearch();
+  }, [searchPageNum]);
 
   return (
     <main>
@@ -96,18 +126,51 @@ const StudyList = () => {
           <span>원하는 스터디 페이지로 들어가 가입신청을 해주세요!</span>
         </h2>
         <div className="search-box">
-          <Form className="d-flex search-bar">
+          <div className="d-flex search-bar">
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              ref={searchInput}
+              onKeyPress={onKeypress}
             />
-            <Button variant="outline-success" className="search-button">
+            <Button
+              variant="outline-success"
+              className="search-button"
+              onClick={studySearch}
+            >
               Search
             </Button>
-          </Form>
+          </div>
         </div>
+        {searchShow && (
+          <section className="study-list">
+            <div>
+              <div className="Mypage-study-list-box">
+                <div style={{ width: "100%", textAlign: "end" }}>
+                  <button
+                    className="review-modal-close-btn"
+                    style={{ margin: "5px" }}
+                    onClick={() => {
+                      setSearchShow(false);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+                {searchList?.map((item, i) => (
+                  <StudyListItem key={i} item={item} />
+                ))}
+                <Paging
+                  page={searchPageNum}
+                  setPage={setSearchPageNum}
+                  totalElements={searchTotal}
+                />
+              </div>
+            </div>
+          </section>
+        )}
       </section>
       <section className="study-list">
         <div className="study-tab-list">
