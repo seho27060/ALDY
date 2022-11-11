@@ -90,10 +90,10 @@
   width: 40%;
   justify-content: space-evenly;
 }
-.Mypage-recommend-box-content-text{
+.Mypage-recommend-box-content-text {
   display: inline-grid;
   justify-items: start;
 }
-.Algorithm-category{
+.Algorithm-category {
   word-break: keep-all;
 }
