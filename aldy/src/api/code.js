@@ -59,3 +59,13 @@ export const getEditedCode = (page, size) => {
         }
     })
 }
+
+// 최종코드 리스트 조회
+export const getFinalCode = (page, size) => {
+    return api.get('/code/my-final-codes', {
+        params: {
+            page:page,
+            size:size,
+        }
+    })
+}

@@ -18,8 +18,8 @@ const CodeReview = () => {
   const problemId = sessionStorage.getItem('reviewProblemId')
   const problemNum = sessionStorage.getItem('reviewProblemNum')
   const problemName = sessionStorage.getItem('reviewProblemName')
-  const year = sessionStorage.getItem('reviewYear')
-  const month = sessionStorage.getItem('reviewMonth')
+  // const year = sessionStorage.getItem('reviewYear')
+  // const month = sessionStorage.getItem('reviewMonth')
   const isFinal = sessionStorage.getItem('isFinal') || ''
   //
   const [selected, setSelected] = useState(null)
@@ -53,8 +53,8 @@ const CodeReview = () => {
     process: step,
     studyId: Number(studyId),
     problemId: Number(problemId),
-    calendarMonth: Number(month),
-    calendarYear: Number(year),
+    // calendarMonth: Number(month),
+    // calendarYear: Number(year),
   })
 
   const [subimtCode, setSumbitCode] = useState({
@@ -62,8 +62,8 @@ const CodeReview = () => {
     process: step,
     studyId: Number(studyId),
     problemId: Number(problemId),
-    calendarMonth: Number(month),
-    calendarYear: Number(year),
+    // calendarMonth: Number(month),
+    // calendarYear: Number(year),
   })
 
   function handleEditorChange(value, event) {
