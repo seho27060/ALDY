@@ -28,6 +28,9 @@ public class StudyDetailResponseDto {
 
     private Boolean isMember;
 
+    private int level;
+    private int activationLevel;
+
     public StudyDetailResponseDto(Study study) {
         this.id = study.getId();
         this.createdDate = study.getCreatedDate();
@@ -36,6 +39,8 @@ public class StudyDetailResponseDto {
         this.introduction = study.getIntroduction();
         this.threshold = study.getThreshold();
         this.visibility = study.getVisibility();
+        this.level = study.getLevel();
+        this.activationLevel = study.getActivationLevel();
     }
 
 }

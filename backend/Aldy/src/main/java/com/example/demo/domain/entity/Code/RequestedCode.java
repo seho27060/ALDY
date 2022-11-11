@@ -23,7 +23,6 @@ public class RequestedCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // private Boolean isDone=false;
     private Boolean isDone;
 
     private Boolean isChecked;
