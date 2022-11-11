@@ -61,7 +61,6 @@
 /* middle */
 .study-detail-middle {
   display: flex;
-  flex-direction: column;
   padding: 20px 15% 40px 15%;
   align-items: center;
   gap: 20px;
@@ -107,6 +106,7 @@ h1.underline-green {
   display: flex;
   flex-direction: column;
   padding: 20px 40px 40px 40px;
+  width: 50%;
 }
 
 .study-underline-orange > span {
