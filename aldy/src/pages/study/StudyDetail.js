@@ -11,6 +11,7 @@ import {
   getSelectedDay,
 } from "../../api/study";
 import TierData from "../../data/tier";
+import ActivationLevel from "../../data/ActivationLevel";
 import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
 import ProblemModal from "../../components/study/ProblemModal";
@@ -18,6 +19,7 @@ import StudyMember from "../../components/study/StudyMember";
 import { useRecoilState } from "recoil";
 import { recoilLeaderBaekjoonId } from "../../store/states";
 import moment from "moment";
+import StudyChart from "../../components/study/StudyChart";
 
 const RedButton = styled.button`
   width: 80px;
@@ -68,6 +70,8 @@ const StudyDetail = () => {
     statsByTier: {},
     statsByTag: {},
     isMember: false,
+    level: 0,
+    activationLevel: 0,
   });
 
   const [sendLeaderId, setSendLeaderId] = useRecoilState(
@@ -235,26 +239,49 @@ const StudyDetail = () => {
         )}
       </section>
       <section className="study-detail-middle">
-        <img
-          className="study-detail-img"
-          src="/dinosaur_hello.gif"
-          alt="스터디 메인 이미지"
-        ></img>
-        <h1 className="study-underline-green">
-          <span>
-            안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
+        <div style={{ width: "50%" }}>
+          <img
+            className="study-detail-img"
+            // src="/dinosaur_hello.gif"
+            src={ActivationLevel[studyDetail.activationLevel]}
+            alt="스터디 메인 이미지"
+          ></img>
+          <h1 className="study-underline-green">
+            <span>
+              안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
+            </span>
+          </h1>
+          <div className="dinosaur-description">
+            지금 우리 스터디{" "}
+            <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
+              공룡의 레벨
+            </span>
+            은{" "}
+            <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
+              lv.{studyDetail.level}
+            </span>
+            입니다.
+          </div>
+        </div>
+        <div className="study-detail-info">
+          <span className="study-detail-number">
+            스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
           </span>
-        </h1>
-        <div className="dinosaur-description">
-          지금 우리 스터디{" "}
-          <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
-            공룡의 레벨
-          </span>
-          은{" "}
-          <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
-            lv.20
-          </span>
-          입니다.
+          <h3 className="study-underline-orange">
+            <span>{studyDetail.name}</span>
+          </h3>
+          <div className="study-detail-rank">
+            <img
+              src={`https://d2gd6pc034wcta.cloudfront.net/tier/${studyDetail.threshold}.svg`}
+              alt="티어 이미지"
+              className="tier-image"
+            ></img>
+            {TierData[studyDetail.threshold]}
+          </div>
+          <div className="description">
+            <div>✨ 스터디 소개 ✨</div>
+            {studyDetail.introduction}
+          </div>
         </div>
       </section>
       <section className="study-detail-bottom">
@@ -266,11 +293,6 @@ const StudyDetail = () => {
           <Calendar
             onChange={setDate}
             date={date}
-            // tileClassName={({ date, view }) => {
-            //   if (mark.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
-            //     return "highlight";
-            //   }
-            // }}
             tileContent={({ date, view }) => {
               if (mark.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
                 return (
@@ -288,38 +310,18 @@ const StudyDetail = () => {
           />
         </div>
         <div className="study-detail-bottom-right">
-          <div className="study-detail-info">
-            <span className="study-detail-number">
-              스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
-            </span>
-            <h3 className="study-underline-orange">
-              <span>{studyDetail.name}</span>
-            </h3>
-            <div className="study-detail-rank">
-              <img
-                src={`https://d2gd6pc034wcta.cloudfront.net/tier/${studyDetail.threshold}.svg`}
-                alt="티어 이미지"
-                className="tier-image"
-              ></img>
-              {TierData[studyDetail.threshold]}
-            </div>
-            <div className="description">
-              <div>✨ 스터디 소개 ✨</div>
-              {studyDetail.introduction}
-            </div>
-          </div>
           <div className="study-detail-graph">
             <div>
               <h5 className="study-underline-orange">
                 <span>카테고리 별 푼 문제</span>
               </h5>
-              <div>그래프 뿅뿅</div>
+              <StudyChart studyData={studyDetail.statsByTag} />
             </div>
             <div>
               <h5 className="study-underline-orange">
                 <span>난이도 별 푼 문제</span>
               </h5>
-              <div>그래프 뿅뿅</div>
+              <StudyChart studyData={studyDetail.statsByTier} />
             </div>
           </div>
         </div>
