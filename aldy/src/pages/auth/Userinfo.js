@@ -16,6 +16,30 @@ const RedButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
+const WhiteButton = styled.button`
+  width: 110px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
+  outline: none;
+  color: rgb(40, 80, 15);
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  margin: 4px;
+`;
+
+const WhiteButtonL = styled.button`
+  width: 200px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
+  outline: none;
+  color: rgb(40, 80, 15);
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  font-size: 20px;
+`;
+
 const Userinfo = () => {
   const [nickname, setNickname] = useState(null);
   const [email, setEmail] = useState(null);
@@ -132,7 +156,7 @@ const Userinfo = () => {
               <div>이메일</div>
               <div className="userinfo-form-title-id">
                 <div>{email}</div>
-                <RedButton onClick={onClickEmail}>수정하기</RedButton>
+                <WhiteButton onClick={onClickEmail}>수정하기</WhiteButton>
               </div>
             </div>
             {emailShow ? <ChangeEmail /> : null}
@@ -140,11 +164,12 @@ const Userinfo = () => {
               <div>닉네임</div>
               <div className="userinfo-form-title-id">
                 <div>{nickname}</div>
-                <RedButton onClick={onClickNickname}>수정하기</RedButton>
+                <WhiteButton onClick={onClickNickname}>수정하기</WhiteButton>
               </div>
             </div>
             {nicknameShow ? <ChangeNickname /> : null}
           </div>
+          <WhiteButton onClick={onClickNickname}>회원 탈퇴</WhiteButton>
         </section>
         <section className="userinfo-page-right">
           <div className="userinfo-page-right-title">✨Welcome to Aldy✨</div>

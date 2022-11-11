@@ -1,29 +1,26 @@
 import "./Mypage.css";
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { getUserInfo, mypageCode, tierRenewApi } from "../../api/user";
 import { getMyStudy } from "../../api/study";
 import { recommendation } from "../../api/user";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 
-const RedButton = styled.button`
-  width: 100px;
+const WhiteButton = styled.button`
+  width: 110px;
   border-radius: 8px;
-  background-color: rgb(40, 80, 15);
-  border: none;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
   outline: none;
-  color: white;
+  color: rgb(40, 80, 15);
   font-weight: bold;
   transition: transform 30ms ease-in;
   margin: 4px;
 `;
 
-const WhiteButton = styled.button`
+const WhiteButtonL = styled.button`
   width: 200px;
   border-radius: 8px;
   background-color: white;
@@ -167,15 +164,15 @@ const Mypage = () => {
             </h2>
           </div>
           <div>
-            <RedButton onClick={navigateUserinfo} className="study-button">
+            <WhiteButton onClick={navigateUserinfo} className="study-button">
               회원정보 수정
-            </RedButton>
-            <RedButton onClick={navigateChangePw} className="study-button">
+            </WhiteButton>
+            <WhiteButton onClick={navigateChangePw} className="study-button">
               비밀번호 수정
-            </RedButton>
-            <RedButton onClick={onRenew} className="study-button">
+            </WhiteButton>
+            <WhiteButton onClick={onRenew} className="study-button">
               티어 갱신
-            </RedButton>
+            </WhiteButton>
           </div>
         </div>
         <div>
@@ -233,7 +230,7 @@ const Mypage = () => {
           </div>
         </div>
         <div>
-          <WhiteButton onClick={mvBoj}>문제 풀러 가기!</WhiteButton>
+          <WhiteButtonL onClick={mvBoj}>문제 풀러 가기!</WhiteButtonL>
         </div>
       </section>
       <section className="study-search">
