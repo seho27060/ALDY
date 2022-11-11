@@ -90,7 +90,7 @@ const MainPage = () => {
           <div className="main-page-description-text">
             <p>
               <span>문제풀이 과정을 </span>
-              <span className="main-page-highlight">4단계로 세분화!</span>
+              <span className="main-page-highlight">3단계로 세분화!</span>
             </p>
             <img
               src={process.env.PUBLIC_URL + "/codereview4.png"}

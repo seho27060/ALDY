@@ -43,7 +43,6 @@ const StudyList = () => {
 
   const onKeypress = (e) => {
     if (e.key === "Enter") {
-      console.log(searchInput.current.value);
       studySearch();
     }
   };
@@ -58,6 +57,8 @@ const StudyList = () => {
         setSearchTotal(data.totalElements);
       })
       .catch((err) => {
+        alert("검색결과가 없습니다.");
+        setSearchShow(false);
         console.log(err);
       });
   };
@@ -89,7 +90,9 @@ const StudyList = () => {
   }, [myStudyPageNum]);
 
   useEffect(() => {
-    studySearch();
+    if (searchInput.current.value !== "") {
+      studySearch();
+    }
   }, [searchPageNum]);
 
   return (
