@@ -7,6 +7,7 @@ import { getMyStudy } from "../../api/study";
 import { recommendation } from "../../api/user";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const WhiteButton = styled.button`
   width: 110px;
@@ -62,6 +63,9 @@ const Mypage = () => {
   const [myStudyPageNum, setMyStudyPageNum] = useState(1);
 
   const [myStudyTotal, setMyStudyTotal] = useState(0);
+
+  const [message, setMessage] = useState("");
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
 
   useEffect(() => {
     getUserInfo()
@@ -123,20 +127,29 @@ const Mypage = () => {
     console.log("티어 갱신");
     tierRenewApi()
       .then((res) => {
-        alert("티어가 갱신되었습니다.");
         sessionStorage.setItem("tier", res.data.tier);
         console.log(res.data);
-        window.location.reload(); //새로고침
+        // alert("티어가 갱신되었습니다.");
+        // window.location.reload(); //새로고침
+        setMessage("티어가 갱신되었습니다.");
+        setAlertRefreshModalShow(true); //새로고침
       })
       .catch((err) => {
-        alert("갱신에 실패하였습니다. 다시 시도해주세요.");
         console.log(err);
-        window.location.reload(); //새로고침
+        // alert("갱신에 실패하였습니다. 다시 시도해주세요.");
+        // window.location.reload(); //새로고침
+        setMessage("갱신에 실패하였습니다. 다시 시도해주세요.");
+        setAlertRefreshModalShow(true); //새로고침
       });
   };
 
   return (
     <main>
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <section className="study-list-banner">
         <img
           className="mb-2"
