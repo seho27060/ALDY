@@ -1,5 +1,6 @@
-package com.example.demo.domain.dto;
+package com.example.demo.domain.dto.study;
 
+import com.example.demo.domain.dto.study.StudyDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
