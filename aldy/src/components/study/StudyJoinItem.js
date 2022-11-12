@@ -3,6 +3,8 @@ import "./MyStudyListItem.css";
 import { acceptMemberApi, rejectMemberApi } from "../../api/study";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import styled from "styled-components";
+import AlertModal from "../../components/AlertModal";
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 70px;
@@ -18,50 +20,76 @@ const RedButton = styled.button`
 
 const StudyJoinItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
-  console.log(props.item, "후아유");
 
   const [credentials, setCredentials] = useState({
     memberId: null,
     studyId: null,
   });
 
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
+
   const onAccept = () => {
     setCredentials((credentials.memberId = props.item.memberId));
     setCredentials((credentials.studyId = props.item.studyId));
-    console.log("멤버 가입 수락");
-    console.log(credentials);
+
+    console.log(credentials, "멤버 가입 수락");
     acceptMemberApi(credentials)
       .then((res) => {
-        alert(`${props.item.nickname}님 가입이 수락 되었습니다`);
-        window.location.reload(); //새로고침
+        // alert(`${props.item.nickname}님 가입이 수락 되었습니다`);
+        // window.location.reload(); //새로고침
+        setMessage(`${props.item.nickname}님 가입이 수락 되었습니다`);
+        setAlertRefreshModalShow(true); //새로고침
       })
       .catch((err) => {
-        alert(
+        // alert(
+        //   `에러입니다. ${props.item.nickname}님 가입 수락을 다시 실행해주세요`
+        // );
+        setMessage(
           `에러입니다. ${props.item.nickname}님 가입 수락을 다시 실행해주세요`
         );
+        setAlertRefreshModalShow(true); //새로고침
       });
   };
 
   const onReject = () => {
     setCredentials((credentials.memberId = props.item.memberId));
     setCredentials((credentials.studyId = props.item.studyId));
-    console.log("멤버 가입 거절");
-    console.log(credentials);
+    console.log(credentials, "멤버 가입 거절");
     rejectMemberApi(credentials)
       .then((res) => {
-        alert(`${props.item.nickname}님 가입이 거절 되었습니다`);
-        window.location.reload(); //새로고침
+        // alert(`${props.item.nickname}님 가입이 거절 되었습니다`);
+        // window.location.reload(); //새로고침
+        setMessage(`${props.item.nickname}님 가입이 거절 되었습니다.`);
+        setAlertRefreshModalShow(true); //새로고침
       })
       .catch((err) => {
         console.log(err);
-        alert(
+        // alert(
+        //   `에러입니다. ${props.item.nickname}님 가입 거절을 다시 실행해주세요`
+        // );
+        setMessage(
           `에러입니다. ${props.item.nickname}님 가입 거절을 다시 실행해주세요`
         );
+        setAlertRefreshModalShow(true); //새로고침
       });
   };
 
   return (
     <div className="study-list-item">
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+        }}
+        message={message}
+      />
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <div className="study-list-title">
         <div className="study-id">{props.num + 1}</div>
         <h5 className="study-name" style={{ margin: "3px" }}>
