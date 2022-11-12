@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto.study;
+package com.example.demo.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,5 +17,10 @@ public class StudyPageResponseDto {
     private long numberOfObject;
 
     private Page<StudyDto> studyDtoPage;
+
+    public StudyPageResponseDto(int numberOfPages, Page<StudyDto> studyDtoPage) {
+        this.numberOfPages = numberOfPages;
+        this.studyDtoPage = studyDtoPage;
+    }
 
 }
