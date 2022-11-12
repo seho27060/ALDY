@@ -15,6 +15,8 @@ public class CodeSaveRequestDto {
     private int process;
     private long studyId;
     private long problemId;
-    private String problemName;
-    private int problemTier;
+    private Integer calendarMonth;
+    private Integer calendarYear;
+//    private String problemName;
+//    private int problemTier;
 }

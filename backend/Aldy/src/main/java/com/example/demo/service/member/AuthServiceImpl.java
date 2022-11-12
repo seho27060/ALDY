@@ -6,17 +6,17 @@ import com.example.demo.domain.dto.member.request.MemberRequestDto;
 import com.example.demo.domain.dto.member.response.DoubleCheckResponseDto;
 import com.example.demo.domain.dto.member.response.InterlockResponseDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.dto.member.response.SolvedacResponseDto;
+import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.dto.member.response.TokenDto;
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;
-import com.example.demo.repository.Member.MemberRepository;
-import com.example.demo.service.SolvedacService;
+import com.example.demo.repository.member.MemberRepository;
+import com.example.demo.service.solvedac.SolvedacService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,20 +49,16 @@ public class AuthServiceImpl implements AuthService{
         String rawPassword = memberRequestDto.getPassword();
         String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
 
+        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
+
         if(memberRepository.existsByBaekjoonId(memberRequestDto.getBaekjoonId())){
             throw new CustomException(ErrorCode.ALREADY_JOIN);
         }
 
-        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
         Map<String, String> entries = valueOperations.entries(memberRequestDto.getBaekjoonId());
-        int tier = Integer.parseInt(Optional.ofNullable(entries.get("tier"))
-                .orElse(String.valueOf(0)));
-//        try{
-//            tier = Integer.parseInt(entries.get("tier"));
-//        } catch (Exception e ){
-//            tier = 0;
-//        }
-
+        Long tier = Long.valueOf(Optional.ofNullable(entries.get("tier"))
+                .orElseGet(()->String.valueOf(0L)));
+        System.out.printf(String.format("entries: %s get tier:%d",entries.get("tier"),tier));
         Member member = Member.builder()
                 .baekjoonId(memberRequestDto.getBaekjoonId())
                 .nickname(memberRequestDto.getNickname())
@@ -74,6 +69,7 @@ public class AuthServiceImpl implements AuthService{
 
         memberRepository.save(member);
         valueOperations.delete(memberRequestDto.getBaekjoonId(),"tier");
+        valueOperations.delete(memberRequestDto.getBaekjoonId(),"authString");
         return new MemberResponseDto(member);
     }
 
@@ -109,7 +105,7 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public String issueAuthString(String baekjoonId) {
-        SolvedacResponseDto solvedacResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
+        SolvedacMemberResponseDto solvedacMemberResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_MEMBER));
 
         Random random = new Random();
@@ -133,25 +129,28 @@ public class AuthServiceImpl implements AuthService{
             }
         }
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
+
         hashOperations.put(baekjoonId,"authString", String.valueOf(newWord));
-        hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacResponseDto.getTier()));
-        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
-//        hashOperations.(backjoonId, 5L, TimeUnit.MINUTES);
+        hashOperations.put(baekjoonId,"tier", String.valueOf(solvedacMemberResponseDto.getTier()));
+        hashOperations.getOperations().expire(baekjoonId,7,TimeUnit.DAYS);
+//        hashOperations.getOperations().expire(baekjoonId,5L, TimeUnit.MINUTES);
+        System.out.printf("issue %s %s",baekjoonId,newWord);
         return newWord.toString();
     }
 
     @Override
     public InterlockResponseDto interlock(String baekjoonId) {
 
-        SolvedacResponseDto solvedacResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
+        SolvedacMemberResponseDto solvedacMemberResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        List<String> solvedacBio = List.of(solvedacResponseDto.getBio().split(" "));
-
-        HashOperations<String, String, String> valueOperations = stringRedisTemplate.opsForHash();
-        Map<String, String> entries = valueOperations.entries(baekjoonId);
+        List<String> solvedacBio = List.of(solvedacMemberResponseDto.getBio().split(" "));
+        HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
+        Map<String, String> entries = hashOperations.entries(baekjoonId);
         String authString = entries.get("authString");
-        valueOperations.delete(baekjoonId,"authString");
-
+        System.out.println("baekjoonId " + baekjoonId);
+        System.out.println("authString: "+authString);
+        System.out.println("hash oper:"+hashOperations.get(baekjoonId,"authString"));
+        System.out.println("entries:"+entries.get("authString"));
         return new InterlockResponseDto(solvedacBio.get(solvedacBio.size()-1).equals(authString));
     }
 

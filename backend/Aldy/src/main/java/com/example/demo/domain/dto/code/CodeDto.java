@@ -1,8 +1,9 @@
 package com.example.demo.domain.dto.code;
 
-import com.example.demo.domain.dto.StudyDto;
+import com.example.demo.domain.dto.study.ProblemDto;
+import com.example.demo.domain.dto.study.StudyDto;
 import com.example.demo.domain.dto.member.response.MemberResponseDto;
-import com.example.demo.domain.entity.Code;
+import com.example.demo.domain.entity.Code.Code;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,11 +24,15 @@ public class CodeDto {
 
     private int process;
 
-    private Long problemId;
+    private long problemId;
+
+//    private Long problemId;
 
     private String problemName;
 
     private int problemTier;
+
+    private int problemNum;
 
     public CodeDto(Code code){
         this.code= code.getCode();
@@ -36,8 +41,10 @@ public class CodeDto {
         this.studyDto = new StudyDto(code.getStudy(),0);
         this.id = code.getId();
         this.process = code.getProcess();
-        this.problemId = code.getProblemId();
-        this.problemName = code.getProblemName();
-        this.problemTier = code.getProblemTier();
+        this.problemId = code.getProblem().getId();
+//        this.problemId = code.getProblemId();
+        this.problemName = code.getProblem().getProblemName();
+        this.problemTier = code.getProblem().getProblemTier();
+        this.problemNum = code.getProblem().getProblemNum();
     }
 }

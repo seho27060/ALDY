@@ -35,8 +35,8 @@ public enum ErrorCode {
     STUDY_NOT_FOUND(NOT_FOUND, "해당 스터디를 찾을 수 없습니다"),
     MEMBERINSTUDY_NOT_FOUND(NOT_FOUND, "해당 맴버를 스터디에서 찾을 수 없습니다"),
     CALENDAR_NOT_FOUND(NOT_FOUND, "해당 캘린더를 찾을 수 없습니다"),
-    REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "로그아웃 된 사용자입니다"),
-    NOT_FOLLOW(NOT_FOUND, "팔로우 중이지 않습니다"),
+    PROBLEMTABLE_NOT_FOUND(NOT_FOUND,"해당 문제를 찾을 수 없습니다"),
+    REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "존재하지 않는 리프레쉬 토큰입니다."),
 
     /* 403 FORBIDDEN : 권한에 의한 거절 */
 //    TEST_TEST(HttpStatus.),
@@ -47,7 +47,8 @@ public enum ErrorCode {
     ALREADY_JOIN(CONFLICT,"이미 회원가입 한 유저입니다"),
 
     /* 500 */
-    SAVE_ERROR(INTERNAL_SERVER_ERROR, "데이터 저장에 실패했습니다")
+    SAVE_ERROR(INTERNAL_SERVER_ERROR, "데이터 저장에 실패했습니다"),
+    SOLVEDAC_ERROR(INTERNAL_SERVER_ERROR, "solvedac api 요청에 실패했습니다.")
     ;
 
     private final HttpStatus httpStatus;

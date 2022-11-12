@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MemberResponseDto {
+    private Long id;
+
     private String baekjoonId;
     private String nickname;
     private String email;
-    private int tier;
+    private Long tier;
 
     public MemberResponseDto(Member member){
+        this.id = member.getId();
         this.baekjoonId = member.getBaekjoonId();
         this.email = member.getEmail();
         this.nickname = member.getNickname();

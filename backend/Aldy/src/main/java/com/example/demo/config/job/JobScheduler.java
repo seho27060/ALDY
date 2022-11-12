@@ -25,7 +25,7 @@ public class JobScheduler {
     private final JobConfig jobConfig;
 
     @Scheduled(cron = "0 0 0 * * *")
-    public void runJob() {
+    public void runcountAlertJob() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
         confMap.put("time", new JobParameter(System.currentTimeMillis()));
@@ -33,6 +33,20 @@ public class JobScheduler {
 
         try {
             jobLauncher.run(jobConfig.countAlertJob(), jobParameters);
+        } catch (JobInstanceAlreadyCompleteException | JobExecutionAlreadyRunningException | JobParametersInvalidException | JobRestartException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void runCheckLevelJob() {
+
+        Map<String, JobParameter> confMap = new HashMap<>();
+        confMap.put("time", new JobParameter(System.currentTimeMillis()));
+        JobParameters jobParameters = new JobParameters(confMap);
+
+        try {
+            jobLauncher.run(jobConfig.checkLevelJob(), jobParameters);
         } catch (JobInstanceAlreadyCompleteException | JobExecutionAlreadyRunningException | JobParametersInvalidException | JobRestartException e) {
             log.error(e.getMessage());
         }
