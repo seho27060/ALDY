@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { changepassword } from "../../api/user";
+import AlertModal from "../../components/AlertModal";
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 170px;
@@ -22,8 +24,14 @@ const Changepw = () => {
     navigate("/mypage");
   };
   const [sendPw, setSendPw] = useState({ password: "" });
+
   const passwordInput = useRef(null);
   const passwordCheckInput = useRef(null);
+
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
+
   const passwordDoubleCheck = () => {
     if (passwordInput.current.value === passwordCheckInput.current.value) {
       return true;
@@ -31,8 +39,42 @@ const Changepw = () => {
     return false;
   };
 
+  const onChangePassword = () => {
+    setSendPw((sendPw.password = passwordInput.current.value));
+    console.log(sendPw);
+    if (passwordDoubleCheck()) {
+      console.log("성공");
+      changepassword(sendPw)
+        .then((res) => {
+          // alert("비밀번호가 변경 되었습니다.");
+          setMessage("비밀번호가 변경 되었습니다.");
+          setAlertModalShow(true);
+        })
+        .catch((err) => {
+          console.log(err, "에러ㅠㅠ");
+        });
+    } else {
+      // alert("비밀번호가 일치하지 않습니다.");
+      setMessage("비밀번호가 일치하지 않습니다");
+      setAlertRefreshModalShow(true); //새로고침
+    }
+  };
+
   return (
     <main className="Changepw-page-main">
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+          navigateMypage();
+        }}
+        message={message}
+      />
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <div className="Changepw-page-bg">
         <section className="Changepw-page-left">
           <div>✨변경할 비밀번호를 입력해주세요.✨</div>
@@ -60,20 +102,7 @@ const Changepw = () => {
               ></input>
             </div>
             <div className="Changepw-submit-btn">
-              <RedButton
-                onClick={() => {
-                  setSendPw((sendPw.password = passwordInput.current.value));
-                  console.log(sendPw);
-                  if (passwordDoubleCheck()) {
-                    console.log("성공");
-                    changepassword(sendPw);
-                    alert("비밀번호가 변경 되었습니다.");
-                    navigateMypage();
-                  } else {
-                    alert("비밀번호가 일치하지 않습니다.");
-                  }
-                }}
-              >
+              <RedButton onClick={onChangePassword}>
                 비밀번호 변경하기
               </RedButton>
             </div>
