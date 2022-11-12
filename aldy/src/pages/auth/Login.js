@@ -6,6 +6,7 @@ import { FcLike } from "react-icons/fc";
 import { login } from "../../api/auth";
 import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../../store/states";
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 170px;
@@ -28,6 +29,10 @@ const Login = () => {
   });
   const [logged, setLogged] = useRecoilState(isLoggedIn);
   const [username, setUsername] = useRecoilState(userName);
+
+  const [message, setMessage] = useState("");
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
+
   const navigateSignup = () => {
     navigate("/signup");
   };
@@ -55,13 +60,20 @@ const Login = () => {
         navigateMain();
       })
       .catch((err) => {
-        alert("로그인에 실패하였습니다.");
-        window.location.reload(); //새로고침
+        // alert("로그인에 실패하였습니다.");
+        // window.location.reload(); //새로고침
+        setMessage("로그인에 실패하였습니다.");
+        setAlertRefreshModalShow(true); //새로고침
       });
   };
 
   return (
     <main className="login-page-main">
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <div className="login-page-bg">
         <section className="login-page-left">
           <div className="nnnnnn">Login</div>

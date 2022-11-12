@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { updateEmail, updateNickname, withdrawApi } from "../../api/user";
 import { getUserInfo } from "../../api/user";
 import { emailValid, nicknameValid } from "../../api/auth";
+import AlertModal from "../../components/AlertModal";
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 120px;
@@ -56,6 +58,10 @@ const Userinfo = () => {
   const [sendNickname, setSendNickname] = useState({ nickname: "" });
   const [sendPassword, setSendPassword] = useState({ password: "" });
 
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
+
   const onClickEmail = () => {
     setEmailShow((prev) => !prev);
   };
@@ -89,19 +95,27 @@ const Userinfo = () => {
             if (checkIt()) {
               emailValid(emailInput.current.value).then((res) => {
                 if (res.data.doubleCheck === true) {
-                  alert("중복 확인 완료");
+                  // alert("중복 확인 완료");
+                  setMessage("중복 확인이 완료되었습니다.");
+                  setAlertModalShow(true);
                   setSendEmail((sendEmail.email = emailInput.current.value));
                   updateEmail(sendEmail).then((res) => {
                     console.log(res);
                   });
-                  alert("이메일 변경 완료");
-                  window.location.reload(); //새로고침
+                  // alert("이메일 변경 완료");
+                  // window.location.reload(); //새로고침
+                  setMessage("이메일 변경이 완료 되었습니다.");
+                  setAlertRefreshModalShow(true);
                 } else {
-                  alert("중복 된 이메일입니다. 다시 입력해주세요");
+                  setMessage("중복 된 이메일입니다. 다시 입력해주세요.");
+                  setAlertModalShow(true);
+                  // alert("중복 된 이메일입니다. 다시 입력해주세요");
                 }
               });
             } else {
-              alert("이메일 형식이 올바르지 않습니다.");
+              // alert("이메일 형식이 올바르지 않습니다.");
+              setMessage("이메일 형식이 올바르지 않습니다.");
+              setAlertModalShow(true);
             }
           }}
         >
@@ -120,18 +134,24 @@ const Userinfo = () => {
           onClick={() => {
             nicknameValid(nicknameInput.current.value).then((res) => {
               if (res.data.doubleCheck === true) {
-                alert("중복 확인 완료");
+                // alert("중복 확인 완료");
+                setMessage("중복 확인이 완료 되었습니다.");
+                setAlertModalShow(true);
                 setSendNickname(
                   (sendNickname.nickname = nicknameInput.current.value)
                 );
                 updateNickname(sendNickname).then((res) => {
                   console.log(res);
                 });
-                alert("닉네임 변경 완료");
-                console.log(nicknameInput.current.value);
-                window.location.reload(); //새로고침
+                // alert("닉네임 변경 완료");
+                // console.log(nicknameInput.current.value);
+                // window.location.reload(); //새로고침
+                setMessage("닉네임 변경이 완료 되었습니다.");
+                setAlertRefreshModalShow(true);
               } else {
-                alert("중복 된 닉네임입니다. 다시 입력해주세요.");
+                // alert("중복 된 닉네임입니다. 다시 입력해주세요.");
+                setMessage("중복 된 닉네임입니다. 다시 입력해주세요.");
+                setAlertModalShow(true);
               }
             });
           }}
@@ -160,14 +180,18 @@ const Userinfo = () => {
             console.log("회원 탈퇴");
             withdrawApi(sendPassword)
               .then((res) => {
-                alert("탈퇴 되었습니다.");
-                console.log(res.data);
-                window.location.reload(); //새로고침
+                // alert("탈퇴 되었습니다.");
+                // console.log(res.data);
+                // window.location.reload(); //새로고침
+                setMessage("탈퇴 되었습니다.");
+                setAlertRefreshModalShow(true);
               })
               .catch((err) => {
-                alert("탈퇴에 실패하였습니다. 다시 시도해주세요.");
-                console.log(err);
-                window.location.reload(); //새로고침
+                // alert("탈퇴에 실패하였습니다. 다시 시도해주세요.");
+                // console.log(err);
+                // window.location.reload(); //새로고침
+                setMessage("탈퇴에 실패하였습니다. 다시 시도해주세요.");
+                setAlertRefreshModalShow(true);
               });
           }}
         >
@@ -179,6 +203,16 @@ const Userinfo = () => {
 
   return (
     <main className="userinfo-page-main">
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => setAlertModalShow(false)}
+        message={message}
+      />
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <div className="userinfo-page-bg">
         <section className="userinfo-page-left">
           <div>✨닉네임과 이메일을 변경할 수 있습니다.✨</div>

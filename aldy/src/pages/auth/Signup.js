@@ -10,6 +10,8 @@ import {
   nicknameValid,
   baekjoonVerify,
 } from "../../api/auth";
+import AlertModal from "../../components/AlertModal";
+import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 170px;
@@ -46,6 +48,11 @@ const Signup = () => {
   const [emailChecked, setEmailChecked] = useState(false);
   const [nicknameChecked, setNicknameChecked] = useState(false);
 
+  // 모달
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
+
   const [credentials, setCredentials] = useState({
     baekjoonId: "",
     password: "",
@@ -77,13 +84,19 @@ const Signup = () => {
       });
     } else {
       if (!idChecked) {
-        alert("아이디 인증을 해주세요.");
+        // alert("아이디 인증을 해주세요.");
+        setMessage("아이디 인증을 해주세요.");
+        setAlertModalShow(true);
       }
       if (!emailChecked) {
-        alert("이메일 중복 확인을 해주세요.");
+        // alert("이메일 중복 확인을 해주세요.");
+        setMessage("이메일 중복 확인을 해주세요.");
+        setAlertModalShow(true);
       }
       if (!nicknameChecked) {
-        alert("닉네임 중복 확인을 해주세요.");
+        // alert("닉네임 중복 확인을 해주세요.");
+        setMessage("닉네임 중복 확인을 해주세요.");
+        setAlertModalShow(true);
       }
     }
   };
@@ -94,6 +107,18 @@ const Signup = () => {
 
   return (
     <main className="signup-page-main">
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+        }}
+        message={message}
+      />
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <Modal size="lg" show={bojModalShow} onHide={handleBojModalShow}>
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
@@ -125,11 +150,15 @@ const Signup = () => {
                 interLock(idInput.current.value).then((res) => {
                   if (res.data.interlock === true) {
                     setIdChecked(true);
-                    alert("인증이 성공하였습니다.");
+                    // alert("인증이 성공하였습니다.");
+                    setMessage("인증이 성공하였습니다.");
+                    setAlertModalShow(true);
                     handleBojModalShow(); //모달창 닫기
                   } else {
-                    alert("인증에 실패하였습니다. 다시 인증해주세요.");
-                    window.location.reload(); //새로고침
+                    // alert("인증에 실패하였습니다. 다시 인증해주세요.");
+                    // window.location.reload(); //새로고침
+                    setMessage("인증에 실패하였습니다. 다시 인증해주세요.");
+                    setAlertRefreshModalShow(true);
                   }
                 });
               }}
@@ -165,8 +194,10 @@ const Signup = () => {
                       })
                       .catch((err) => {
                         console.log(err);
-                        alert("백준 회원이 아닙니다.");
-                        window.location.reload(); //새로고침
+                        // alert("백준 회원이 아닙니다.");
+                        // window.location.reload(); //새로고침
+                        setMessage("백준 회원이 아닙니다.");
+                        setAlertRefreshModalShow(true);
                       });
                   }}
                 >
@@ -208,13 +239,19 @@ const Signup = () => {
                       emailValid(emailInput.current.value).then((res) => {
                         if (res.data.doubleCheck === true) {
                           setEmailChecked(true);
-                          alert("중복 확인 완료");
+                          // alert("중복 확인 완료");
+                          setMessage("중복 확인이 완료 되었습니다.");
+                          setAlertModalShow(true);
                         } else {
-                          alert("중복 된 이메일입니다.");
+                          // alert("중복 된 이메일입니다.");
+                          setMessage("중복 된 이메일입니다.");
+                          setAlertModalShow(true);
                         }
                       });
                     } else {
-                      alert("이메일형식이 올바르지 않습니다.");
+                      // alert("이메일형식이 올바르지 않습니다.");
+                      setMessage("이메일형식이 올바르지 않습니다.");
+                      setAlertModalShow(true);
                     }
                   }}
                 >
@@ -237,9 +274,13 @@ const Signup = () => {
                     nicknameValid(nicknameInput.current.value).then((res) => {
                       if (res.data.doubleCheck === true) {
                         setNicknameChecked(true);
-                        alert("중복 확인 완료");
+                        // alert("중복 확인 완료");
+                        setMessage("중복 확인 완료 되었습니다.");
+                        setAlertModalShow(true);
                       } else {
-                        alert("중복 된 닉네임입니다.");
+                        // alert("중복 된 닉네임입니다.");
+                        setMessage("중복 된 닉네임입니다.");
+                        setAlertModalShow(true);
                       }
                     });
                   }}
@@ -267,7 +308,9 @@ const Signup = () => {
                   if (passwordDoubleCheck()) {
                     allInputCheck(credentials);
                   } else {
-                    alert("비밀번호가 일치하지 않습니다.");
+                    // alert("비밀번호가 일치하지 않습니다.");
+                    setMessage("비밀번호가 일치하지 않습니다.");
+                    setAlertModalShow(true);
                   }
                 }}
               >
