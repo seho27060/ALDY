@@ -15,7 +15,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -34,26 +33,16 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int port;
 
-    @Bean
-    public LettuceConnectionFactory lettuceConnectionFactory() {
-        LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder()
-                .commandTimeout(Duration.ofMinutes(1))
-                .shutdownTimeout(Duration.ZERO)
-                .build();
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host, port);
-        return new LettuceConnectionFactory(redisStandaloneConfiguration, lettuceClientConfiguration);
-    }
-
+    @Value("${spring.redis.password}")
+    private String password;
 
     @Bean
-    public CacheManager cacheManager() {
-        RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager
-                .RedisCacheManagerBuilder
-                .fromConnectionFactory(lettuceConnectionFactory());
-        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(24));
-        builder.cacheDefaults(configuration);
-        return builder.build();
+    public LettuceConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(host);
+        redisStandaloneConfiguration.setPort(port);
+        redisStandaloneConfiguration.setPassword(password);
+        return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
     @Bean
@@ -65,7 +54,7 @@ public class RedisConfig {
         stringRedisTemplate.setHashKeySerializer(new StringRedisSerializer());
         stringRedisTemplate.setHashValueSerializer(new StringRedisSerializer());
 
-        stringRedisTemplate.setConnectionFactory(lettuceConnectionFactory());
+        stringRedisTemplate.setConnectionFactory(redisConnectionFactory());
         return stringRedisTemplate;
     }
 
