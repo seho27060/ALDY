@@ -36,6 +36,17 @@ const YellowButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
+const GrayButton = styled.button`
+  width: 170px;
+  border-radius: 8px;
+  background-color: gray;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+`;
+
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -208,28 +219,32 @@ const Signup = () => {
                   ref={idInput}
                   placeholder="solved.ac 아이디를 입력해주세요."
                 ></input>
-                <RedButton
-                  onClick={() => {
-                    setSendId((sendId.baekjoonId = idInput.current.value));
-                    console.log(idInput.current.value);
-                    console.log(sendId);
-                    baekjoonVerify(sendId)
-                      .then((res) => {
-                        setBojValidationCode(res.data.authString);
-                        handleBojModalShow();
-                        console.log(res.data.authString);
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                        // alert("백준 회원이 아닙니다.");
-                        // window.location.reload(); //새로고침
-                        setMessage("백준 회원이 아닙니다.");
-                        setAlertRefreshModalShow(true);
-                      });
-                  }}
-                >
-                  인증하기
-                </RedButton>
+                {!idChecked ? (
+                  <RedButton
+                    onClick={() => {
+                      setSendId((sendId.baekjoonId = idInput.current.value));
+                      console.log(idInput.current.value);
+                      console.log(sendId);
+                      baekjoonVerify(sendId)
+                        .then((res) => {
+                          setBojValidationCode(res.data.authString);
+                          handleBojModalShow();
+                          console.log(res.data.authString);
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          // alert("백준 회원이 아닙니다.");
+                          // window.location.reload(); //새로고침
+                          setMessage("백준 회원이 아닙니다.");
+                          setAlertRefreshModalShow(true);
+                        });
+                    }}
+                  >
+                    인증하기
+                  </RedButton>
+                ) : (
+                  <GrayButton>인증 완료</GrayButton>
+                )}
               </div>
             </div>
             <div className="signup-form-title">
@@ -259,31 +274,35 @@ const Signup = () => {
                   ref={emailInput}
                   placeholder="이메일을 입력해주세요."
                 ></input>
-                <RedButton
-                  onClick={() => {
-                    if (checkIt()) {
-                      console.log(emailInput.current.value);
-                      emailValid(emailInput.current.value).then((res) => {
-                        if (res.data.doubleCheck === true) {
-                          setEmailChecked(true);
-                          // alert("중복 확인 완료");
-                          setMessage("중복 확인이 완료 되었습니다.");
-                          setAlertModalShow(true);
-                        } else {
-                          // alert("중복 된 이메일입니다.");
-                          setMessage("중복 된 이메일입니다.");
-                          setAlertModalShow(true);
-                        }
-                      });
-                    } else {
-                      // alert("이메일형식이 올바르지 않습니다.");
-                      setMessage("이메일형식이 올바르지 않습니다.");
-                      setAlertModalShow(true);
-                    }
-                  }}
-                >
-                  중복확인
-                </RedButton>
+                {!emailChecked ? (
+                  <RedButton
+                    onClick={() => {
+                      if (checkIt()) {
+                        console.log(emailInput.current.value);
+                        emailValid(emailInput.current.value).then((res) => {
+                          if (res.data.doubleCheck === true) {
+                            setEmailChecked(true);
+                            // alert("중복 확인 완료");
+                            setMessage("중복 확인이 완료 되었습니다.");
+                            setAlertModalShow(true);
+                          } else {
+                            // alert("중복 된 이메일입니다.");
+                            setMessage("중복 된 이메일입니다.");
+                            setAlertModalShow(true);
+                          }
+                        });
+                      } else {
+                        // alert("이메일형식이 올바르지 않습니다.");
+                        setMessage("이메일형식이 올바르지 않습니다.");
+                        setAlertModalShow(true);
+                      }
+                    }}
+                  >
+                    중복확인
+                  </RedButton>
+                ) : (
+                  <GrayButton>확인 완료</GrayButton>
+                )}
               </div>
             </div>
             <div className="signup-form-title">
@@ -295,25 +314,29 @@ const Signup = () => {
                   ref={nicknameInput}
                   placeholder="닉네임을 입력해주세요."
                 ></input>
-                <RedButton
-                  onClick={() => {
-                    console.log(nicknameInput.current.value);
-                    nicknameValid(nicknameInput.current.value).then((res) => {
-                      if (res.data.doubleCheck === true) {
-                        setNicknameChecked(true);
-                        // alert("중복 확인 완료");
-                        setMessage("중복 확인 완료 되었습니다.");
-                        setAlertModalShow(true);
-                      } else {
-                        // alert("중복 된 닉네임입니다.");
-                        setMessage("중복 된 닉네임입니다.");
-                        setAlertModalShow(true);
-                      }
-                    });
-                  }}
-                >
-                  중복확인
-                </RedButton>
+                {!nicknameChecked ? (
+                  <RedButton
+                    onClick={() => {
+                      console.log(nicknameInput.current.value);
+                      nicknameValid(nicknameInput.current.value).then((res) => {
+                        if (res.data.doubleCheck === true) {
+                          setNicknameChecked(true);
+                          // alert("중복 확인 완료");
+                          setMessage("중복 확인 완료 되었습니다.");
+                          setAlertModalShow(true);
+                        } else {
+                          // alert("중복 된 닉네임입니다.");
+                          setMessage("중복 된 닉네임입니다.");
+                          setAlertModalShow(true);
+                        }
+                      });
+                    }}
+                  >
+                    중복확인
+                  </RedButton>
+                ) : (
+                  <GrayButton>확인 완료</GrayButton>
+                )}
               </div>
             </div>
             <div className="signup-submit-btn">
