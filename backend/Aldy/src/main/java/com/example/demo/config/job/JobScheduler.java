@@ -24,15 +24,17 @@ public class JobScheduler {
 
     private final JobConfig jobConfig;
 
+    private final CountAlertJobConfig countAlertJobConfig;
+
     @Scheduled(cron = "0 0 0 * * *")
-    public void runcountAlertJob() {
+    public void countAlertJob() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
         confMap.put("time", new JobParameter(System.currentTimeMillis()));
         JobParameters jobParameters = new JobParameters(confMap);
 
         try {
-            jobLauncher.run(jobConfig.countAlertJob(), jobParameters);
+            jobLauncher.run(countAlertJobConfig.countAlertJob(), jobParameters);
         } catch (JobInstanceAlreadyCompleteException | JobExecutionAlreadyRunningException | JobParametersInvalidException | JobRestartException e) {
             log.error(e.getMessage());
         }
@@ -51,4 +53,6 @@ public class JobScheduler {
             log.error(e.getMessage());
         }
     }
+
+
 }
