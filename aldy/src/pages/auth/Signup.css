@@ -144,3 +144,7 @@ input:focus {
   color: black;
   cursor: default;
 }
+
+.CopyToClipboard-Btn {
+  color: FFE1AA;
+}

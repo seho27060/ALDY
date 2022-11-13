@@ -16,6 +16,7 @@
     "react-bootstrap": "^2.5.0",
     "react-calendar": "^3.9.0",
     "react-chartjs-2": "^4.3.1",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-js-pagination": "^3.0.3",

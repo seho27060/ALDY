@@ -12,11 +12,23 @@ import {
 } from "../../api/auth";
 import AlertModal from "../../components/AlertModal";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const RedButton = styled.button`
   width: 170px;
   border-radius: 8px;
   background-color: red;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+`;
+
+const YellowButton = styled.button`
+  width: 35px;
+  border-radius: 8px;
+  background-color: lightgoldenrodyellow;
   border: none;
   outline: none;
   color: white;
@@ -125,6 +137,15 @@ const Signup = () => {
             <div>
               <p className="beakjonn-modal-title">
                 인증 코드 : <span>{bojValidationCode}</span>
+                <CopyToClipboard text={bojValidationCode}>
+                  <YellowButton className="CopyToClipboard-Btn">
+                    <img
+                      src={process.env.PUBLIC_URL + "/copyIcon.png"}
+                      alt=""
+                      style={{ width: "30px" }}
+                    ></img>
+                  </YellowButton>
+                </CopyToClipboard>
               </p>
               <p style={{ fontSize: "12px", color: "#646464" }}>
                 solved.ac 가입 후, solved.ac 자기소개 끝에 인증코드를
