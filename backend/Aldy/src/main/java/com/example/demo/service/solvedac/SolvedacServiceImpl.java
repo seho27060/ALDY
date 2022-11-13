@@ -129,6 +129,7 @@ public class SolvedacServiceImpl implements SolvedacService {
         List<ProblemWithTagDisplayNamesVo> problemWithTagDisplayNamesVoList = new ArrayList<>();
 
         if(!hashOperations.hasKey(baekjoonId,"items")){
+            renewRecommendProblemList(request);
             System.out.println("PUT REDIS");
 
             String algorithmQuery = String.valueOf(GetAlgorithmQuery(baekjoonId));
@@ -144,18 +145,19 @@ public class SolvedacServiceImpl implements SolvedacService {
             SolvedacSearchProblemDto solvedacSearchProblemDto = SearchProblemWithQuery(query)
                     .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-            problemWithTagDisplayNamesVoList = solvedacSearchProblemDto.getItems();
             int maxCount = (int) Math.min(solvedacSearchProblemDto.getCount(),50);
             List<Integer> indexList = IntStream.iterate(0, i -> i < maxCount, i -> i + 1)
                     .boxed()
                     .collect(Collectors.toList());
             Collections.shuffle(indexList);
 
-            randomIndex = indexList.get(0);
             hashOperations.put(baekjoonId,"indexList",indexList);
             hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
             hashOperations.put(baekjoonId,"count",1);
             hashOperations.getOperations().expire(baekjoonId,7, TimeUnit.DAYS);
+
+            problemWithTagDisplayNamesVoList = solvedacSearchProblemDto.getItems();
+            randomIndex = indexList.get(0);
         } else{
             System.out.println("GET REDIS");
             Map<Object, Object> entries = hashOperations.entries(baekjoonId);
@@ -279,4 +281,36 @@ public class SolvedacServiceImpl implements SolvedacService {
         return algos;
     }
 
+    public void renewRecommendProblemList(HttpServletRequest request) throws IOException {
+        String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
+        Member loginMember = memberRepository.findByBaekjoonId(baekjoonId)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        HashOperations<String, Object, Object> hashOperations = problemRedisTemplate.opsForHash();
+        hashOperations.delete(baekjoonId,"items","count","indexList");
+        System.out.println("PUT REDIS");
+
+        String algorithmQuery = String.valueOf(GetAlgorithmQuery(baekjoonId));
+
+        String query = String.format(
+                "(~solved_by:%s)&(tag:%s)&(tier:%d..%d)&(lang:ko)&(solveable:true)",
+                loginMember.getBaekjoonId(),
+                algorithmQuery,
+                Math.max(0,loginMember.getTier()-1),
+                Math.min(31,loginMember.getTier()+1));
+
+        // 랜덤한 문제를 뽑고.해당 문제의 알고리즘 중 랜덤하게 출력하는 과정.
+        SolvedacSearchProblemDto solvedacSearchProblemDto = SearchProblemWithQuery(query)
+                .orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        int maxCount = (int) Math.min(solvedacSearchProblemDto.getCount(),50);
+        List<Integer> indexList = IntStream.iterate(0, i -> i < maxCount, i -> i + 1)
+                .boxed()
+                .collect(Collectors.toList());
+        Collections.shuffle(indexList);
+
+        hashOperations.put(baekjoonId,"indexList",indexList);
+        hashOperations.put(baekjoonId,"items", solvedacSearchProblemDto.getItems());
+        hashOperations.put(baekjoonId,"count",1);
+        hashOperations.getOperations().expire(baekjoonId,7, TimeUnit.DAYS);
+    }
 }

@@ -101,8 +101,9 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = MemberResponseDto.class))),
     })
     @PutMapping("/renew")
-    public ResponseEntity<MemberResponseDto> renewTier(HttpServletRequest request){
+    public ResponseEntity<MemberResponseDto> renewTier(HttpServletRequest request) throws IOException {
         MemberResponseDto memberResponseDto = memberService.renewTier(request);
+        solvedacService.renewRecommendProblemList(request);
         return new ResponseEntity<>(memberResponseDto,HttpStatus.OK);
     }
 
