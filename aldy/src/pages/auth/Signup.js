@@ -148,7 +148,7 @@ const Signup = () => {
                 </CopyToClipboard>
               </p>
               <p style={{ fontSize: "12px", color: "#646464" }}>
-                solved.ac 가입 후, solved.ac 자기소개 끝에 인증코드를
+                solved.ac 프로필 편집을 누르신 뒤, 자기소개 끝에 인증코드를
                 추가해주세요.
               </p>
             </div>
@@ -162,7 +162,11 @@ const Signup = () => {
             </div>
           </div>
           <div className="review-modal-content">
-            <img src={process.env.PUBLIC_URL + "/solved.png"} alt=""></img>
+            <img
+              src={process.env.PUBLIC_URL + "/solved.png"}
+              alt=""
+              style={{ width: "100%" }}
+            ></img>
           </div>
           <div className="solved-btn">
             <RedButton onClick={solvedAc}>solved.ac로 이동</RedButton>
