@@ -19,7 +19,7 @@ const RedButton = styled.button`
 
 const StudyMemberItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
-  const [penalty, setPenalty] = useState(props.item.penalty);
+  const [penalty, setPenalty] = useState(props.item.numberOfAlerts);
   const [sendLeaderId, setSendLeaderId] = useRecoilState(
     recoilLeaderBaekjoonId
   );
@@ -100,6 +100,7 @@ const StudyMemberItem = (props) => {
       >
         <div>백준 아이디 : {props.item.baekjoonId}</div>
         <div>함께 푼 문제 수 : {props.item.solvedTogether}개</div>
+        <div>경고 누적 {props.item.numberOfAlerts}회</div>
         {myId === sendLeaderId && !("Leader" === props.item.message) && (
           <RedButton onClick={onKickMember}>강퇴</RedButton>
         )}
