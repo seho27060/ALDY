@@ -171,15 +171,17 @@ const Signup = () => {
       <div className="signup-page-bg">
         <section className="signup-page-left">
           <div className="nnnnnn">Sign Up</div>
+          <div>✨ ALDY는 solved.ac를 연동하여 서비스를 제공하므로</div>
+          <div>solved.ac 회원만 사이트 이용이 가능합니다. ✨</div>
           <div>
             <div className="signup-form-title">
-              <div>백준 아이디</div>
+              <div>solved.ac 아이디</div>
               <div className="form-title-id">
                 <input
                   type="text"
                   name="id"
                   ref={idInput}
-                  placeholder="백준 아이디를 입력해주세요."
+                  placeholder="solved.ac 아이디를 입력해주세요."
                 ></input>
                 <RedButton
                   onClick={() => {
