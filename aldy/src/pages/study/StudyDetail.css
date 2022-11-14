@@ -290,3 +290,16 @@ h1.underline-green {
 .gray {
   color: rgb(200, 200, 200);
 }
+
+/* lock */
+.calendar-lock {
+  height: 355px;
+  min-height: 100%;
+  background: #f0e6d1;
+  box-shadow: 4px 4px 10px rgb(0 0 0 / 10%);
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

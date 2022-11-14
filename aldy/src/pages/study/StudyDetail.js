@@ -19,6 +19,7 @@ import StudyMember from "../../components/study/StudyMember";
 import moment from "moment";
 import StudyChart from "../../components/study/StudyChart";
 import AlertModal from "../../components/AlertModal";
+import { FcLock } from "react-icons/fc";
 
 const RedButton = styled.button`
   width: 80px;
@@ -297,40 +298,52 @@ const StudyDetail = () => {
             <span className="dot"></span> 빨간색 동그라미가 있는 날짜는 문제가
             등록되어 있는 날짜입니다.
           </div>
-          <Calendar
-            onChange={setDate}
-            date={date}
-            tileContent={({ date, view }) => {
-              if (mark.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
-                return (
-                  <>
-                    <div className="dot-box">
-                      <div
-                        className="dot"
-                        style={{ position: "absolute" }}
-                      ></div>
-                    </div>
-                  </>
-                );
-              }
-            }}
-          />
+          {studyDetail.isMember ? (
+            <Calendar
+              onChange={setDate}
+              date={date}
+              tileContent={({ date, view }) => {
+                if (mark.find((x) => x === moment(date).format("DD-MM-YYYY"))) {
+                  return (
+                    <>
+                      <div className="dot-box">
+                        <div
+                          className="dot"
+                          style={{ position: "absolute" }}
+                        ></div>
+                      </div>
+                    </>
+                  );
+                }
+              }}
+            />
+          ) : (
+            <div className="calendar-lock">
+              <FcLock style={{ fontSize: "120px" }} />
+            </div>
+          )}
         </div>
         <div className="study-detail-bottom-right">
-          <div className="study-detail-graph">
-            <div>
-              <h5 className="study-underline-orange">
-                <span>카테고리 별 푼 문제</span>
-              </h5>
-              <StudyChart studyData={studyDetail.statsByTag} />
+          {studyDetail.isMember ? (
+            <div className="study-detail-graph">
+              <div>
+                <h5 className="study-underline-orange">
+                  <span>카테고리 별 푼 문제</span>
+                </h5>
+                <StudyChart studyData={studyDetail.statsByTag} />
+              </div>
+              <div>
+                <h5 className="study-underline-orange">
+                  <span>난이도 별 푼 문제</span>
+                </h5>
+                <StudyChart studyData={studyDetail.statsByTier} />
+              </div>
             </div>
-            <div>
-              <h5 className="study-underline-orange">
-                <span>난이도 별 푼 문제</span>
-              </h5>
-              <StudyChart studyData={studyDetail.statsByTier} />
+          ) : (
+            <div className="calendar-lock" style={{ marginTop: "20px" }}>
+              <FcLock style={{ fontSize: "120px" }} />
             </div>
-          </div>
+          )}
         </div>
       </section>
     </main>
