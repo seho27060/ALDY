@@ -1,9 +1,10 @@
-import TierData from "../../data/tier";
+import TierSelect from "../../data/tierSelect";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./StudyCreate.css";
 import styled from "styled-components";
 import { createStudy } from "../../api/study";
+import Select from "react-select";
 
 const RedButton = styled.button`
   width: 170px;
@@ -25,12 +26,16 @@ const StudyCreate = () => {
     threshold: null,
     visibility: null,
   });
-  const [tierLabel, setTierLabel] = useState([0, "티어를 선택해주세요."]);
+  const studyNumber = [
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+    { value: 5, label: 5 },
+    { value: 6, label: 6 },
+  ];
 
-  // input 값 변경
-  const tierChange = (e) => {
+  const onChange = (e) => {
     const { name, value } = e.target;
-    setTierLabel([value, TierData[value]]);
     setNewStudy((prev) => {
       return {
         ...prev,
@@ -38,8 +43,8 @@ const StudyCreate = () => {
       };
     });
   };
-  const onChange = (e) => {
-    const { name, value } = e.target;
+  const onSelectChange = (e, name) => {
+    const value = e.value;
     setNewStudy((prev) => {
       return {
         ...prev,
@@ -65,7 +70,6 @@ const StudyCreate = () => {
       <div className="StudyCreate-page-bg">
         <section className="StudyCreate-page-left">
           <div>✨우리만의 스터디를 생성해 보세요.✨</div>
-          {/* 여기 수정 */}
           <div className="nnnnnn">스터디 생성</div>
           <form>
             <div className="StudyCreate-form-title">
@@ -83,21 +87,15 @@ const StudyCreate = () => {
             <div className="StudyCreate-form-second">
               <div className="StudyCreate-form-title">
                 <div>스터디 제한 인원</div>
-                <input
-                  type="number"
-                  min="2"
-                  max="6"
-                  step="1"
-                  name="upperLimit"
-                  placeholder="2~6명"
-                  value={newStudy.upperLimit || ""}
-                  onChange={onChange}
-                  required
-                ></input>
+                <Select
+                  onChange={(e) => {
+                    onSelectChange(e, "upperLimit");
+                  }}
+                  options={studyNumber}
+                ></Select>
               </div>
               <div className="StudyCreate-form-title">
                 <div>스터디 공개 범위</div>
-                {/* <input placeholder="공개, 비공개"></input> */}
                 <label>
                   <input
                     type="radio"
@@ -126,31 +124,15 @@ const StudyCreate = () => {
                 value={newStudy.introduction}
                 onChange={onChange}
               ></textarea>
-              {/* <input placeholder="스터디 설명을 입력해 주세요."></input> */}
             </div>
             <div className="StudyCreate-form-title">
               <div>스터디 가입 요건</div>
-              {/* <input placeholder="스터디 가입 요건을 입력해 주세요."></input> */}
-              <input
-                type="number"
-                min="1"
-                max={sessionStorage.getItem("tier")}
-                step="1"
-                name="threshold"
-                placeholder="티어"
-                value={newStudy.threshold || ""}
-                id="tier"
-                onChange={tierChange}
-              ></input>
-              <label htmlFor="tier">
-                {" "}
-                <img
-                  src={`https://d2gd6pc034wcta.cloudfront.net/tier/${tierLabel[0]}.svg`}
-                  alt="티어 이미지"
-                  className="tier-image"
-                ></img>
-                {tierLabel[1]}
-              </label>
+              <Select
+                onChange={(e) => {
+                  onSelectChange(e, "threshold");
+                }}
+                options={TierSelect}
+              ></Select>
             </div>
             <div className="StudyCreate-submit-btn">
               <RedButton onClick={createNewStudy}>스터디 생성하기</RedButton>
