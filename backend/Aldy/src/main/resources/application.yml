@@ -4,11 +4,26 @@ spring:
 #    username: sa
 #    password:
 #    driver-class-name: org.h2.Driver
+#  h2:
+#    console:
+#      enabled: true
   datasource:
     driver-class-name : org.mariadb.jdbc.Driver
     url : jdbc:mariadb://k7c206.p.ssafy.io:3306/test
     username : test
     password : c206
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  redis:
+    host: k7c206.p.ssafy.io
+    port: 6379
+    password: c206
 
   mail:
     host : smtp.gmail.com
@@ -22,25 +37,9 @@ spring:
           starttls :
             enable : true
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-  h2:
-    console:
-      enabled: true
-  # redis
-  redis:
-    host: k7c206.p.ssafy.io
-    port: 6379
-    password: c206
-
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: never
     job:
       enabled: false
 
@@ -66,3 +65,4 @@ springdoc:
     operations-sorter: alpha
     tags-sorter: alpha
     path: /swagger-ui.html
+    doc-expansion: operation
