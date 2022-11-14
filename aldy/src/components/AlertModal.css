@@ -1,44 +1,66 @@
 .alert-modal-body {
-    outline: none;
-    border: 8px solid #D9AE81;
-    border-radius: 8px;
-    background-color: #2B6E30;
-    height: 170px;
-    width: 500px;
-    padding-top: 30px;
+  outline: none;
+  border: 8px solid #d9ae81;
+  border-radius: 8px;
+  background-color: #2b6e30;
+  height: 170px;
+  width: 500px;
+  padding: 20px;
 }
 
 .alert-btn {
-    border-radius: 10px;
-    background-color: #28500F;
-    color: white;
-    border: none;
-    outline: none;
-    padding: 5px 14px;
+  border-radius: 10px;
+  background-color: #28500f;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 5px 14px;
+  font-family: "uhbeeBold";
 }
 
 .alert-message {
-    font-size: 20px;
-    text-align: center;
-    color: white;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  font-family: "uhbeeBold";
 }
 
 .alert-footer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -50px;
 }
 
 .img-left {
-    width: 80px;
-    transform: translateX(-80px);
+  width: 80px;
+  transform: translateX(-80px);
 }
 
 .img-right {
-    width: 80px;
-    transform: translate(70px);
+  width: 80px;
+  transform: translate(70px);
 }
 
 .alert-close-btn {
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.alert-board-title {
+  position: relative;
+  width: 120px;
+  padding: 6px 14px 7px;
+  background: #1e5b24;
+  border-radius: 81.7073px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin: auto;
+  margin-bottom: 7px;
+  font-family: "uhbeeBold";
 }

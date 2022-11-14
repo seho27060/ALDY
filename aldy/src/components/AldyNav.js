@@ -18,6 +18,7 @@ import LoginAlert from "./LoginAlert";
 
 import "./AldyNav.css";
 import styled from "styled-components";
+import AlertModal from "../components/AlertModal";
 
 const RedButton = styled.button`
   width: 170px;
@@ -36,7 +37,11 @@ const AldyNav = () => {
   const location = useLocation();
   const [logged, setLogged] = useRecoilState(isLoggedIn);
   const [username] = useRecoilState(userName);
-  const [loginAlertShow, setLoginAlertShow] = useState(false)
+  const [loginAlertShow, setLoginAlertShow] = useState(false);
+
+  // 모달
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
 
   const navigateMain = () => {
     navigate("/");
@@ -45,7 +50,7 @@ const AldyNav = () => {
     if (logged) {
       navigate("/study/list");
     } else {
-      setLoginAlertShow(true)
+      setLoginAlertShow(true);
       // if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
       //   navigate('/login')
       // }
@@ -55,7 +60,7 @@ const AldyNav = () => {
     if (logged) {
       navigate("/review/list");
     } else {
-      setLoginAlertShow(true)
+      setLoginAlertShow(true);
       // if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
       //   navigate('/login')
       // }
@@ -92,9 +97,16 @@ const AldyNav = () => {
 
   return (
     <Navbar expand="md">
-      <LoginAlert 
-      show={loginAlertShow}
-      onHide={() => setLoginAlertShow(false)}
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+        }}
+        message={message}
+      />
+      <LoginAlert
+        show={loginAlertShow}
+        onHide={() => setLoginAlertShow(false)}
       />
       <Container fluid>
         <Navbar.Brand onClick={navigateMain} className="nav-title">
@@ -167,7 +179,8 @@ const AldyNav = () => {
                       onClick={() => {
                         sessionStorage.clear();
                         setLogged(false);
-                        alert("로그아웃 되었습니다.");
+                        setMessage("로그아웃되었습니다.");
+                        setAlertModalShow(true);
                         navigateMain();
                       }}
                     >

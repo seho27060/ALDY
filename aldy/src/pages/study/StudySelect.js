@@ -6,6 +6,7 @@ import TierData from "../../data/tier";
 import Option from "../../components/Option";
 import Problem from "../../components/Problem";
 import { getStudyProblem, getOptionList, addProblem } from "../../api/study";
+import AlertModal from "../../components/AlertModal";
 
 const RedButton = styled.button`
   width: 200px;
@@ -52,6 +53,9 @@ const StudySelect = () => {
   // 체크된 문제
   const [problem, setProblem] = useState([]);
   console.log(problem);
+  // 모달
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
 
   useEffect(() => {
     getOptionList(studyId)
@@ -99,8 +103,8 @@ const StudySelect = () => {
     addProblem(data)
       .then((res) => {
         console.log(res);
-        alert("문제선정이 완료되었습니다!");
-        navigate(`/study/detail/${studyId}`);
+        setMessage("문제선정이 완료되었습니다!");
+        setAlertModalShow(true);
       })
       .catch((err) => {
         console.log(err);
@@ -109,6 +113,14 @@ const StudySelect = () => {
 
   return (
     <main style={{ textAlign: "start" }}>
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+          navigate(`/study/detail/${studyId}`);
+        }}
+        message={message}
+      />
       <section className="study-select-title-box">
         <h1 className="study-select-title">
           <span>문제 선정 하기</span>

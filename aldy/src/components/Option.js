@@ -25,7 +25,7 @@ const StyledTable = styled.table`
 const Option = ({ optionData, checkItems, setCheckItems }) => {
   const data = Object.keys(optionData).filter((i) => i !== "0");
   const optionName = data[0];
-  console.log(optionName);
+  console.log(optionName, checkItems);
 
   // 체크박스 단일 선택
   const handleSingleCheck = (checked, id) => {

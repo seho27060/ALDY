@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { kickMemberApi } from "../../api/study";
 import styled from "styled-components";
-import { recoilLeaderBaekjoonId } from "../../store/states";
-import { useRecoilState } from "recoil";
+import AlertRefreshModal from "../AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 70px;
@@ -20,9 +19,11 @@ const RedButton = styled.button`
 const StudyMemberItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
   const [penalty, setPenalty] = useState(props.item.numberOfAlerts);
-  const [sendLeaderId, setSendLeaderId] = useRecoilState(
-    recoilLeaderBaekjoonId
-  );
+  const sendLeaderId = sessionStorage.getItem("sendLeaderId");
+
+  // alert modal
+  const [message, setMessage] = useState("");
+  const [AlertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
 
   const penaltyColor = () => {
     if (penalty === 1) {
@@ -52,17 +53,28 @@ const StudyMemberItem = (props) => {
     console.log(credentials);
     kickMemberApi(credentials)
       .then((res) => {
-        alert("강퇴되었습니다");
-        window.location.reload(); //새로고침
+        // alert("강퇴되었습니다");
+        // window.location.reload(); //새로고침
+        setMessage("강퇴되었습니다");
+        setAlertRefreshModalShow(true);
       })
       .catch((err) => {
         console.log(err);
-        alert("에러입니다. 다시 실행해주세요.");
+        // alert("에러입니다. 다시 실행해주세요.");
+        setMessage("에러입니다. 다시 실행해주세요.");
+        setAlertRefreshModalShow(true);
       });
   };
 
   return (
     <div className={`${penalty} study-list-item`}>
+      <AlertRefreshModal
+        show={AlertRefreshModalShow}
+        onHide={() => {
+          setAlertRefreshModalShow(false);
+        }}
+        message={message}
+      />
       <div className="study-list-title">
         <div className="study-id">{props.num + 1}</div>
         <p className="study-name" style={{ margin: "3px" }}>

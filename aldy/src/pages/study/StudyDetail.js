@@ -16,10 +16,9 @@ import "./Calendar.css";
 import StudyJoinModal from "../../components/study/StudyJoinModal.js";
 import ProblemModal from "../../components/study/ProblemModal";
 import StudyMember from "../../components/study/StudyMember";
-import { useRecoilState } from "recoil";
-import { recoilLeaderBaekjoonId } from "../../store/states";
 import moment from "moment";
 import StudyChart from "../../components/study/StudyChart";
+import AlertModal from "../../components/AlertModal";
 
 const RedButton = styled.button`
   width: 80px;
@@ -56,6 +55,9 @@ const StudyDetail = () => {
   const navigateReviewList = () => {
     navigate(`/review/list`);
   };
+  const navigateStudy = () => {
+    navigate("/study/list");
+  };
 
   const [studyDetail, setStudyDetail] = useState({
     id: id,
@@ -74,10 +76,6 @@ const StudyDetail = () => {
     activationLevel: 0,
   });
 
-  const [sendLeaderId, setSendLeaderId] = useRecoilState(
-    recoilLeaderBaekjoonId
-  );
-
   // 달력 날짜
   const [date, setDate] = useState(new Date());
   const [mark, setMark] = useState([]);
@@ -94,21 +92,21 @@ const StudyDetail = () => {
   const handleMemberModalShow = (e) => {
     setMemberModalShow((prev) => !prev);
   };
+  // 모달
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
 
   // 스터디 탈퇴
   const studyOut = () => {
-    if (window.confirm(`${studyDetail.name}에서 탈퇴하시겠습니까?`) === true) {
-      studyWithdrawal(Number(id))
-        .then((res) => {
-          alert(`${studyDetail.name}에서 탈퇴되었습니다.`);
-          navigate(`/study/list`);
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-    }
+    studyWithdrawal(Number(id))
+      .then((res) => {
+        setMessage(`${studyDetail.name}에서 탈퇴되었습니다.`);
+        setAlertModalShow(true);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // 문제 가져오기
@@ -130,7 +128,8 @@ const StudyDetail = () => {
       .then((res) => {
         // console.log(res.data);
         setStudyDetail(res.data);
-        setSendLeaderId(res.data.leaderBaekjoonId);
+        // setSendLeaderId(res.data.leaderBaekjoonId);
+        sessionStorage.setItem("sendLeaderId", res.data.leaderBaekjoonId);
       })
       .catch((err) => {
         console.log(err);
@@ -150,6 +149,14 @@ const StudyDetail = () => {
 
   return (
     <main>
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+          navigateStudy();
+        }}
+        message={message}
+      />
       <Modal size="lg" show={memberModalShow} onHide={handleMemberModalShow}>
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
