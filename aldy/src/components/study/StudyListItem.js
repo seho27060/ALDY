@@ -22,6 +22,11 @@ const StudyListItem = (props) => {
         >
           {props.item.name}
         </h5>
+        {`${props.item.visibility}` === "1" ? (
+          <div className="secret-study">공개</div>
+        ) : (
+          <div className="secret-study">비공개</div>
+        )}
         <div className="study-number">
           {props.item.countMember}/{props.item.upperLimit}
         </div>
