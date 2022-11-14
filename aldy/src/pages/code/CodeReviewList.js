@@ -234,7 +234,7 @@ const FinalCode = (props) => {
   useEffect(() => {
     getFinalCode(pageNum)
     .then((res) => {
-      console.log(res.data.content)
+      console.log(res.data.content, '최종')
       setList(res.data.content)
       setTotalElements(res.data.totalElements)
     })
@@ -264,11 +264,11 @@ const CardRequestToMe = (props) => {
   return (
     <Container className='review-list-item'>
       <Row>
-        <Col>{item.codeDto.studyDto.name}</Col>
-        <Col>{item.sender.nickname}</Col>
-        <Col>{item.codeDto.problemNum}</Col>
-        <Col>{item.codeDto.problemName}</Col>
-        <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
+        <Col className='code-review-studyName' onClick={() => {navigate(`/study/detail/${item.codeDto.studyDto.id}`)}}>{item.codeDto.studyDto.name}</Col>
+        <Col className='code-review-col'>{item.sender.nickname}</Col>
+        <Col className='code-review-col'>{item.codeDto.problemNum}</Col>
+        <Col className='code-review-col'>{item.codeDto.problemName}</Col>
+        <Col className='code-review-col'>{item.codeDto.createdDate.substring(0,10)}</Col>
         <Col>{item.done ? "완료" : <button className='correctBtn' onClick={()=>{
             // 코드 첨삭 페이지로 이동
             sessionStorage.setItem('studyName', item.codeDto.studyDto.name)
@@ -289,15 +289,16 @@ const CardRequestToMe = (props) => {
 // 요청 한 코드 카드 컴포넌트
 const CardRequestByMe = (props) => {
   const item = props.item;
+  const navigate = useNavigate()
   return (
     <Container className='review-list-item'>
       <Row>
-        <Col>{item.codeDto.studyDto.name}</Col>
-        <Col>{item.receiver.nickname}</Col>
-        <Col>{item.codeDto.problemNum}</Col>
-        <Col>{item.codeDto.problemName}</Col>
-        <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
-        <Col>{item.done ? "완료" : <div style={{'color':'red', 'fontWeight':'bold'}}>미완료</div>}</Col>
+        <Col className='code-review-studyName' onClick={() => {navigate(`/study/detail/${item.codeDto.studyDto.id}`)}}>{item.codeDto.studyDto.name}</Col>
+        <Col className='code-review-col'>{item.receiver.nickname}</Col>
+        <Col className='code-review-col'>{item.codeDto.problemNum}</Col>
+        <Col className='code-review-col'>{item.codeDto.problemName}</Col>
+        <Col className='code-review-col'>{item.codeDto.createdDate.substring(0,10)}</Col>
+        <Col className='code-review-col'>{item.done ? "완료" : <div style={{'color':'red', 'fontWeight':'bold'}}>미완료</div>}</Col>
       </Row>
     </Container>
   )
@@ -311,11 +312,11 @@ const CardReviewdCode = (props) => {
   return (
     <Container className='review-list-item'>
       <Row>
-        <Col>{item.codeDto.studyDto.name}</Col>
-        <Col>{item.sender.nickname}</Col>
-        <Col>{item.codeDto.problemNum}</Col>
-        <Col>{item.codeDto.problemName}</Col>
-        <Col>{item.codeDto.createdDate.substring(0,10)}</Col>
+        <Col className='code-review-studyName' onClick={() => {navigate(`/study/detail/${item.codeDto.studyDto.id}`)}}>{item.codeDto.studyDto.name}</Col>
+        <Col className='code-review-col'>{item.sender.nickname}</Col>
+        <Col className='code-review-col'>{item.codeDto.problemNum}</Col>
+        <Col className='code-review-col'>{item.codeDto.problemName}</Col>
+        <Col className='code-review-col'>{item.codeDto.createdDate.substring(0,10)}</Col>
         <Col><button className='correctBtn' onClick={()=>{
           // setProcess(4)
           // setMyCode(item.codeDto.code)
@@ -339,15 +340,16 @@ const CardReviewdCode = (props) => {
 const CardFinalCode = (props) => {
   const item = props.item
   const finalCode = props.item.code
+  const navigate = useNavigate()
   const setFinalCodeModalShow = props.setFinalCodeModalShow
   return (
     <div>
       <Container className='review-list-item'>
         <Row>
-          <Col>{item.studyDto.name}</Col>
-          <Col>{item.problemNum}</Col>
-          <Col>{item.problemName}</Col>
-          <Col>{item.createdDate.substring(0,10)}</Col>
+          <Col className='code-review-studyName' onClick={() => {navigate(`/study/detail/${item.studyDto.id}`)}}>{item.studyDto.name}</Col>
+          <Col className='code-review-col'>{item.problemNum}</Col>
+          <Col className='code-review-col'>{item.problemName}</Col>
+          <Col className='code-review-col'>{item.createdDate.substring(0,10)}</Col>
           <Col><button className='correctBtn' onClick={() => {
             sessionStorage.setItem('finalCode', finalCode)
             sessionStorage.setItem('finalProblemNum', item.problemNum)
@@ -360,6 +362,7 @@ const CardFinalCode = (props) => {
   )
 }
 
+// 최종제출 모달
 const FinalCodeModal = (props) => {
   const finalProblemNum = sessionStorage.getItem('finalProblemNum')
   const finalStudyName = sessionStorage.getItem('finalStudyName')

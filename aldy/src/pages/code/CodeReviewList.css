@@ -61,7 +61,7 @@ h2.underline-green {
 }
 
 button.correctBtn {
-  width: 170px;
+  width: 150px;
   border-radius: 8px;
   background-color: #e63246;
   border: none;
@@ -95,8 +95,8 @@ button.active {
   color: black;
   box-shadow: inset 0 -12px 0 #dcf0be;
   line-height: 32px;
-  width: 12%;
-  margin: auto;
+  /* width: 12%;
+  margin: auto; */
 }
 
 .review-list-header {
@@ -137,4 +137,13 @@ button.active {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+}
+
+.code-review-studyName {
+  cursor: pointer;
+  padding-top: 5px;
+}
+
+.code-review-col {
+  padding-top: 5px;
 }
