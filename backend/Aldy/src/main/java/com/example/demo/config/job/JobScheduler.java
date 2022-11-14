@@ -22,7 +22,7 @@ public class JobScheduler {
 
     private final JobLauncher jobLauncher;
 
-    private final JobConfig jobConfig;
+    private final CheckLevelJobConfig jobConfig;
 
     private final CountAlertJobConfig countAlertJobConfig;
 
@@ -40,7 +40,7 @@ public class JobScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void runCheckLevelJob() {
 
         Map<String, JobParameter> confMap = new HashMap<>();

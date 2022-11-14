@@ -37,8 +37,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CountAlertJobConfig {
 
-    private int chunkSize = 5;
-
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
@@ -66,6 +64,7 @@ public class CountAlertJobConfig {
     }
 
     public Step countAlertStep() {
+        int chunkSize = 5;
         return stepBuilderFactory.get("countAlertStep")
                 .<Study, Study>chunk(chunkSize)
                 .reader(
@@ -77,104 +76,101 @@ public class CountAlertJobConfig {
                                 .build()
                 )
                 .processor(
-                        new ItemProcessor<Study, Study>() {
-                            @Override
-                            public Study process(Study item) throws Exception {
+                        (ItemProcessor<Study, Study>) item -> {
 
-                                LocalDate now = LocalDate.now();
+                            LocalDate now = LocalDate.now();
 
-                                List<Calendar> calendarList = calendarRepository.findByStudy_id(item.getId());
-                                for(Calendar calendar : calendarList) {
+                            List<Calendar> calendarList = calendarRepository.findByStudy_id(item.getId());
+                            for(Calendar calendar : calendarList) {
 
-                                    List<Problem> problemList = problemRepository.findByCalendar_id(calendar.getId());
-                                    for(Problem problem : problemList) {
+                                List<Problem> problemList = problemRepository.findByCalendar_id(calendar.getId());
+                                for(Problem problem : problemList) {
 
-                                        LocalDate problemDate = LocalDate.of(problem.getCalendar().getCalendarYear(), problem.getCalendar().getCalendarMonth(), problem.getProblemDay());
-                                        if(ChronoUnit.DAYS.between(problemDate, now) <= 0) {
-                                            continue;
-                                        }
+                                    LocalDate problemDate = LocalDate.of(problem.getCalendar().getCalendarYear(), problem.getCalendar().getCalendarMonth(), problem.getProblemDay());
+                                    if(ChronoUnit.DAYS.between(problemDate, now) <= 0) {
+                                        continue;
+                                    }
 
-                                        // 문제 제출 안한 study원 판별 - study에 속한 member hashmap에 저장
-                                        HashMap<Member, Boolean> memberMap = new HashMap<>();
-                                        for(MemberInStudy memberInStudy : memberInStudyRepository.findByStudy_Id(item.getId())) {
-                                            memberMap.put(memberInStudy.getMember(), false);
-                                        }
+                                    // 문제 제출 안한 study원 판별 - study에 속한 member hashmap에 저장
+                                    HashMap<Member, Boolean> memberMap = new HashMap<>();
+                                    for(MemberInStudy memberInStudy : memberInStudyRepository.findByStudy_Id(item.getId())) {
+                                        memberMap.put(memberInStudy.getMember(), false);
+                                    }
 
-                                        List<Long> receiverList = new ArrayList<>();
-                                        List<Code> codeList = codeRepository.findByStudy_idAndProblem_id(item.getId(), problem.getId());
-                                        for(Code code : codeList) {
-                                            // 문제 제출 안한 study원 판별 - code 제출한 member hash 값 수정
-                                            memberMap.put(code.getWriter(), true);
+                                    List<Long> receiverList = new ArrayList<>();
+                                    List<Code> codeList = codeRepository.findByStudy_idAndProblem_id(item.getId(), problem.getId());
+                                    for(Code code : codeList) {
+                                        // 문제 제출 안한 study원 판별 - code 제출한 member hash 값 수정
+                                        memberMap.put(code.getWriter(), true);
 
-                                            List<RequestedCode> requestedCodeList = requestedCodeRepository.findByCodeId(code.getId());
-                                            for(RequestedCode reqCode : requestedCodeList) {
-                                                // 데이터 필터 - 진작경고를 받거나, 응담이 있으면 패스
-                                                if(reqCode.getIsChecked() || reqCode.getIsDone()) {
-                                                    reqCode.batchCheck();
-                                                    continue;
-                                                }
-
-                                                // 데이터 필터 - 응답을 보낸지 3일이 지나지 않았으면 패스
-                                                LocalDateTime reqDate = reqCode.getRequestDate();
-                                                LocalDateTime nowTime = LocalDateTime.now();
-                                                if(ChronoUnit.SECONDS.between(reqDate, nowTime) <= 24 * 60 * 60 * 3) {
-                                                    continue;
-                                                }
-
-                                                // 데이터 필터 - 스터디 활동중인 사람만 카운트
-                                                Long memberId = reqCode.getReceiver().getId();
-                                                MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(item.getId(), memberId).get();
-                                                if(!(memberInStudy.getAuth() == 1 || memberInStudy.getAuth() == 2)) {
-                                                    problem.batchCheck();
-                                                    continue;
-                                                }
-
-                                                // 한 문제에 여러 응답요청을 받았을 경우
-                                                Boolean checkMember = false;
-
-                                                for(Long receiver : receiverList) {
-                                                    if(memberId == receiver) {
-                                                        checkMember = true;
-                                                        break;
-                                                    }
-                                                }
-                                                if(checkMember) {
-                                                    reqCode.batchCheck();
-                                                    continue;
-                                                } else {
-                                                    receiverList.add(memberId);
-                                                }
-
-                                                // 경고 카운터
-                                                plusAlert(memberInStudy);
-
+                                        List<RequestedCode> requestedCodeList = requestedCodeRepository.findByCodeId(code.getId());
+                                        for(RequestedCode reqCode : requestedCodeList) {
+                                            // 데이터 필터 - 진작경고를 받거나, 응담이 있으면 패스
+                                            if(reqCode.getIsChecked() || reqCode.getIsDone()) {
                                                 reqCode.batchCheck();
+                                                continue;
                                             }
-                                        }
 
-                                        // 이 전에 Batch에서 확인해서 패널티를 먹었으면 확인 안함
-                                        if(problem.getIsChecked()) {
-                                            continue;
-                                        }
-
-                                        // 문제 제출 안한 study원 판별 - code 제출하지 않은 스터디원 조회
-                                        memberMap.forEach((key, value) -> {
-                                            if(value) {
-                                                return;
+                                            // 데이터 필터 - 응답을 보낸지 3일이 지나지 않았으면 패스
+                                            LocalDateTime reqDate = reqCode.getRequestDate();
+                                            LocalDateTime nowTime = LocalDateTime.now();
+                                            if(ChronoUnit.SECONDS.between(reqDate, nowTime) <= 24 * 60 * 60 * 3) {
+                                                continue;
                                             }
-                                            MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(item.getId(), key.getId()).get();
+
+                                            // 데이터 필터 - 스터디 활동중인 사람만 카운트
+                                            Long memberId = reqCode.getReceiver().getId();
+                                            MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(item.getId(), memberId).get();
                                             if(!(memberInStudy.getAuth() == 1 || memberInStudy.getAuth() == 2)) {
-                                                return;
+                                                problem.batchCheck();
+                                                continue;
+                                            }
+
+                                            // 한 문제에 여러 응답요청을 받았을 경우
+                                            boolean checkMember = false;
+
+                                            for(Long receiver : receiverList) {
+                                                if(memberId.equals(receiver)) {
+                                                    checkMember = true;
+                                                    break;
+                                                }
+                                            }
+                                            if(checkMember) {
+                                                reqCode.batchCheck();
+                                                continue;
+                                            } else {
+                                                receiverList.add(memberId);
                                             }
 
                                             // 경고 카운터
                                             plusAlert(memberInStudy);
-                                        });
-                                        problem.batchCheck();
+
+                                            reqCode.batchCheck();
+                                        }
                                     }
+
+                                    // 이 전에 Batch에서 확인해서 패널티를 먹었으면 확인 안함
+                                    if(problem.getIsChecked()) {
+                                        continue;
+                                    }
+
+                                    // 문제 제출 안한 study원 판별 - code 제출하지 않은 스터디원 조회
+                                    memberMap.forEach((key, value) -> {
+                                        if(value) {
+                                            return;
+                                        }
+                                        MemberInStudy memberInStudy = memberInStudyRepository.findByStudy_IdAndMember_Id(item.getId(), key.getId()).get();
+                                        if(!(memberInStudy.getAuth() == 1 || memberInStudy.getAuth() == 2)) {
+                                            return;
+                                        }
+
+                                        // 경고 카운터
+                                        plusAlert(memberInStudy);
+                                    });
+                                    problem.batchCheck();
                                 }
-                                return item;
                             }
+                            return item;
                         }
                 )
                 .writer(countAlertItemWriter())
@@ -207,7 +203,7 @@ public class CountAlertJobConfig {
                 memberInStudyList.get(0).setAuth(1);
             }
 
-//            emailService.sendEvictionMail(memberInStudy.getStudy(), memberInStudy.getMember().getEmail(), memberInStudy.getMember().getNickname(), "evict");
+            emailService.sendEvictionMail(memberInStudy.getStudy(), memberInStudy.getMember().getEmail(), memberInStudy.getMember().getNickname(), "evict");
         }
     }
 
