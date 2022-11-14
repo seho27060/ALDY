@@ -22,9 +22,7 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
   const navigateStudySelect = () => {
     navigate("/study/select", { state: { date: date, studyId: studyId } });
   };
-  const [sendLeaderId, setSendLeaderId] = useRecoilState(
-    recoilLeaderBaekjoonId
-  );
+  const sendLeaderId = sessionStorage.getItem("sendLeaderId");
   const myId = sessionStorage.getItem("userName");
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -33,7 +31,7 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   return (
-    <Modal size="lg" show={modal} onHide={handleModal}>
+    <Modal size="lg" show={modal} onHide={handleModal} centered>
       <Modal.Body className="review-modal-body">
         <div className="review-modal-header">
           <div>

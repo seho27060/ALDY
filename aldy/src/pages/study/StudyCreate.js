@@ -25,12 +25,12 @@ const StudyCreate = () => {
     threshold: null,
     visibility: null,
   });
-  const [tierLabel, setTierLabel] = useState("티어를 선택해주세요.");
+  const [tierLabel, setTierLabel] = useState([0, "티어를 선택해주세요."]);
 
   // input 값 변경
   const tierChange = (e) => {
     const { name, value } = e.target;
-    setTierLabel(TierData[value]);
+    setTierLabel([value, TierData[value]]);
     setNewStudy((prev) => {
       return {
         ...prev,
@@ -134,7 +134,7 @@ const StudyCreate = () => {
               <input
                 type="number"
                 min="1"
-                max="31"
+                max={sessionStorage.getItem("tier")}
                 step="1"
                 name="threshold"
                 placeholder="티어"
@@ -142,7 +142,15 @@ const StudyCreate = () => {
                 id="tier"
                 onChange={tierChange}
               ></input>
-              <label htmlFor="tier">{tierLabel}</label>
+              <label htmlFor="tier">
+                {" "}
+                <img
+                  src={`https://d2gd6pc034wcta.cloudfront.net/tier/${tierLabel[0]}.svg`}
+                  alt="티어 이미지"
+                  className="tier-image"
+                ></img>
+                {tierLabel[1]}
+              </label>
             </div>
             <div className="StudyCreate-submit-btn">
               <RedButton onClick={createNewStudy}>스터디 생성하기</RedButton>

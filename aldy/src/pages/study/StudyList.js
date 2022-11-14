@@ -8,6 +8,7 @@ import StudyListItem from "../../components/study/StudyListItem";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
+import AlertModal from "../../components/AlertModal";
 
 const RedButton = styled.button`
   width: 170px;
@@ -36,7 +37,9 @@ const StudyList = () => {
   const [myStudyTotal, setMyStudyTotal] = useState(0);
   const [searchTotal, setSearchTotal] = useState(0);
   const [searchShow, setSearchShow] = useState(false);
-
+  // alert Modal
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
   const navigateStudyCreate = () => {
     navigate("/study/create");
   };
@@ -57,7 +60,8 @@ const StudyList = () => {
         setSearchTotal(data.totalElements);
       })
       .catch((err) => {
-        alert("검색결과가 없습니다.");
+        setMessage("검색결과가 없습니다.");
+        setAlertModalShow(true);
         setSearchShow(false);
         console.log(err);
       });
@@ -97,6 +101,13 @@ const StudyList = () => {
 
   return (
     <main>
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+        }}
+        message={message}
+      />
       <section className="study-list-banner">
         <img
           className="study-main-img"

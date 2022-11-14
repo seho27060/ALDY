@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteProblem, getProblemStage } from "../../api/study";
 import "../../pages/study/StudyDetail.css";
+import AlertRefreshModal from "../AlertRefreshModal";
 
 const WhiteButton = styled.button`
   width: 70px;
@@ -45,17 +46,20 @@ const ProblemListItem = (props) => {
   const studyName = props.studyName;
   const year = props.year;
   const month = props.month;
-  const handleModal = props.handleModal;
   const navigate = useNavigate();
+
+  // alert modal
+  const [message, setMessage] = useState("");
+  const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
 
   const delProblem = () => {
     console.log(props.item);
     deleteProblem(props.item.id)
       .then((res) => {
-        alert(
+        setMessage(
           `${props.item.problemNum}번 ${props.item.problemName} 문제가 삭제되었습니다.`
         );
-        handleModal();
+        setAlertRefreshModalShow(true);
         console.log(res);
       })
       .catch((err) => {
@@ -76,6 +80,11 @@ const ProblemListItem = (props) => {
 
   return (
     <div className="problem-list-item">
+      <AlertRefreshModal
+        show={alertRefreshModalShow}
+        onHide={() => setAlertRefreshModalShow(false)}
+        message={message}
+      />
       <div className="problem-list-title">
         <b className="problem-name">{props.item.problemNum}번</b>
         <div className="problem-name">{props.item.problemName}</div>

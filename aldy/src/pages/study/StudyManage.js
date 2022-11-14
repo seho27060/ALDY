@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import "./StudyManage.css";
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { deleteStudy } from "../../api/study";
+import { useLocation } from "react-router-dom";
 import TierData from "../../data/tier";
 import styled from "styled-components";
 import StudyMember from "../../components/study/StudyMember";
 import StudyJoin from "../../components/study/StudyJoin";
+import StudyDeleteAlert from "../../components/StudyDeleteAlert";
 
 const RedButton = styled.button`
   width: 70px;
@@ -21,39 +20,32 @@ const RedButton = styled.button`
 `;
 
 const StudyManage = () => {
-  const params = useParams();
-  const id = params.id || "";
-  const navigate = useNavigate();
   const location = useLocation();
   const studyDetail = location.state.studyDetail;
   console.log(studyDetail);
   const createdDate = new Date(studyDetail.createdDate);
   const myId = sessionStorage.getItem("userName");
-
-  const deleteMyStudy = () => {
-    if (
-      window.confirm(`스터디(${studyDetail.name})를 정말 삭제하시겠습니까?`) ===
-      true
-    ) {
-      deleteStudy(id)
-        .then((res) => {
-          alert(`스터디(${studyDetail.name})가 삭제되었습니다.`);
-          // console.log(res);
-          navigate("/study/list");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-    }
-  };
+  // 모달
+  const [studyDeleteAlertShow, setStudyDeleteAlertShow] = useState(false);
 
   return (
     <main>
+      <StudyDeleteAlert
+        show={studyDeleteAlertShow}
+        onHide={() => setStudyDeleteAlertShow(false)}
+        name={studyDetail.name}
+        id={studyDetail.id}
+      />
       <section className="study-manage-top">
         {myId === studyDetail.leaderBaekjoonId && (
           <div className="delete-study">
-            <RedButton onClick={deleteMyStudy}>스터디 삭제</RedButton>
+            <RedButton
+              onClick={() => {
+                setStudyDeleteAlertShow(true);
+              }}
+            >
+              스터디 삭제
+            </RedButton>
           </div>
         )}
         <h5>{studyDetail.name} 스터디원 살펴보기</h5>
@@ -120,13 +112,13 @@ const StudyManage = () => {
         <h3 className="study-detail-title">
           <span>스터디원</span>
         </h3>
-        <StudyMember id={id}></StudyMember>
+        <StudyMember id={studyDetail.id}></StudyMember>
       </section>
       <section className="study-manage-member">
         <h3 className="study-detail-title">
           <span>스터디원 신청목록</span>
         </h3>
-        <StudyJoin id={id}></StudyJoin>
+        <StudyJoin id={studyDetail.id}></StudyJoin>
       </section>
     </main>
   );
