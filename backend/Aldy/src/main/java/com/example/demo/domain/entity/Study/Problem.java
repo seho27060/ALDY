@@ -32,6 +32,8 @@ public class Problem {
 
     private Boolean isChecked;
 
+    private Boolean isLevelChecked;
+
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
     private List<Code> codeList;
 
@@ -45,10 +47,14 @@ public class Problem {
     @PrePersist
     public void prePersist() {
         this.isChecked = false;
+        this.isLevelChecked = false;
     }
 
     public void batchCheck() {
         this.isChecked = true;
+    }
+    public void batchLevelCheck() {
+        this.isLevelChecked = true;
     }
 
 }
