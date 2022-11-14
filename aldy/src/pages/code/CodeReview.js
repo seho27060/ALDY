@@ -96,6 +96,7 @@ const CodeReview = () => {
   useEffect(()=>{
     getCode(studyId, problemId)
     .then((res) => {
+      console.log(res.data)
       // setStep(res.data.currentProcess+1)
       setCodes(res.data)
       // 1단계 작성해야한다면 step을 1단계로 설정
@@ -114,8 +115,13 @@ const CodeReview = () => {
         setDefaultCode1(res.data.firstProcessCode.code)
         setDefaultCode2(res.data.secondProcessCode.code)
       }
+      if (res.data.currentProcess === 3) {
+        setStep(3)
+        setDefaultCode1(res.data.firstProcessCode.code)
+        setDefaultCode2(res.data.secondProcessCode.code)
+      }
     })
-    .catch('사용자의 코드정보를 불러올 수 없습니다.')
+    .catch()
   }, [])
 
   // 최종제출은 세션스토리지 이용! (코드리뷰 4단계 버튼으로만 가능, 달력 모달에서 문제풀기는 3단계(리뷰요청) 제출하면 제출로 바뀌게 해주기(api필요))
@@ -383,6 +389,8 @@ const CodeReview = () => {
     
                   })
                   .catch((err) => {
+                    setMessage('1단계 코드를 먼저 작성하고 2단계를 작성해주세요.')
+                    setAlertModalShow(true)
                     console.log('2단계 제출에러',err)
                   })
                   setRequestModalShow(true);
