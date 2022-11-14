@@ -12,6 +12,7 @@ const LoginAlert = (props) => {
       backdrop="static"
     >
       <Modal.Body className="alert-modal-body">
+        <div className="alert-board-title">✨ 알림 ✨</div>
         <p className="alert-message">
           로그인이 필요합니다. 로그인 페이지로 이동할까요?
         </p>
