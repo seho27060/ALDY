@@ -40,7 +40,7 @@ public class JobScheduler {
         }
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void runCheckLevelJob() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
