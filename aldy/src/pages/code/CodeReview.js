@@ -383,6 +383,8 @@ const CodeReview = () => {
     
                   })
                   .catch((err) => {
+                    setMessage('1단계 코드를 먼저 작성하고 2단계를 작성해주세요.')
+                    setAlertModalShow(true)
                     console.log('2단계 제출에러',err)
                   })
                   setRequestModalShow(true);
