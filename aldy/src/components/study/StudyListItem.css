@@ -81,3 +81,12 @@
   width: 20px;
   margin-right: 5px;
 }
+
+.secret-study {
+  font-size: 10x;
+  color: white;
+  background-color: darkkhaki;
+  border-radius: 3px;
+  width: 50px;
+  font-family: "uhbeeBold";
+}
