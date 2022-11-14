@@ -17,4 +17,5 @@ public interface SolvedacService {
     Optional<SolvedacMemberResponseDto> solvedacMemberFindAPI(String baekjoonId);
     ProblemWithTagDisplayNamesVo recommendProblem(HttpServletRequest request) throws IOException;
 
+    void renewRecommendProblemList(HttpServletRequest request) throws IOException;
 }
