@@ -105,7 +105,7 @@ public class CodeController {
     @GetMapping("/my-requested-codes")
     public ResponseEntity getMyRequestedCodes(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
     ) {
 
@@ -125,7 +125,7 @@ public class CodeController {
     @GetMapping("/my-requesting-codes")
     public ResponseEntity getMyRequestingCodes(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
     ) {
 
@@ -144,7 +144,7 @@ public class CodeController {
     @GetMapping("/my-edited-codes")
     public ResponseEntity getMyEditedCodes(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
     ) {
 
@@ -163,7 +163,7 @@ public class CodeController {
     @GetMapping("/my-editing-codes")
     public ResponseEntity getMyEditingCodes(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "15") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             HttpServletRequest request
     ) {
 
@@ -182,7 +182,7 @@ public class CodeController {
     @GetMapping("/my-final-codes")
     public ResponseEntity getMyFinalCodeList(
         @RequestParam(value = "page", defaultValue = "1") int page,
-        @RequestParam(value = "size", defaultValue = "15") int size,
+        @RequestParam(value = "size", defaultValue = "10") int size,
         HttpServletRequest request){
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
