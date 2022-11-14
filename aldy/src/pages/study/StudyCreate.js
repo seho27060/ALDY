@@ -19,6 +19,7 @@ const RedButton = styled.button`
 
 const StudyCreate = () => {
   const navigate = useNavigate();
+  const myTier = sessionStorage.getItem("tier");
   const [newStudy, setNewStudy] = useState({
     name: "",
     upperLimit: null,
@@ -33,6 +34,7 @@ const StudyCreate = () => {
     { value: 5, label: 5 },
     { value: 6, label: 6 },
   ];
+  const tierSelectOption = TierSelect.filter((item) => item.value <= myTier);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -131,7 +133,7 @@ const StudyCreate = () => {
                 onChange={(e) => {
                   onSelectChange(e, "threshold");
                 }}
-                options={TierSelect}
+                options={tierSelectOption}
               ></Select>
             </div>
             <div className="StudyCreate-submit-btn">
