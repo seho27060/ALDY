@@ -9,6 +9,8 @@ section.main-page-banner {
   position: relative;
   min-height: 650px;
   padding: 110px;
+  user-select: none;
+
 }
 
 .main-page-banner > h1 {
@@ -17,6 +19,7 @@ section.main-page-banner {
   font-size: 60px;
   color: rgb(40, 80, 15);
   text-align: center;
+  user-select: none;
 }
 
 section.main-page-description {
@@ -26,6 +29,7 @@ section.main-page-description {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  user-select: none;
 }
 
 .main-page-banner-text {
@@ -124,6 +128,8 @@ h1 {
   z-index: 1;
   /* margin-bottom: 10px; */
   background-color: #373737;
+  user-select: none;
+
 }
 
 .main-page-highlight {
@@ -138,6 +144,7 @@ h1 {
 }
 .aldy_step_info {
   background-color: #c8e687;
+  user-select: none;
 }
 .aldy_step_info_title {
   color: #373737;

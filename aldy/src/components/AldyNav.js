@@ -30,6 +30,7 @@ const RedButton = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   margin-left: 20px;
+  user-select: none;
 `;
 
 const AldyNav = () => {

@@ -1,6 +1,8 @@
 .userinfo-page-main {
   height: 100%;
   overflow-x: hidden;
+  user-select: none;
+
 }
 
 .userinfo-page-bg {

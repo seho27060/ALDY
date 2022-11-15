@@ -26,6 +26,8 @@
   font-weight: bold;
   margin-left: 12px;
   margin-right: 13px;
+  user-select: none;
+
 }
 
 .nav-link-active {
@@ -43,4 +45,6 @@
 
 .nav_info {
   display: flex;
+  user-select: none;
+
 }

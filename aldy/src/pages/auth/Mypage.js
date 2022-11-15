@@ -144,7 +144,7 @@ const Mypage = () => {
   };
 
   return (
-    <main>
+    <main style={{"userSelect":"none"}}>
       <AlertRefreshModal
         show={alertRefreshModalShow}
         onHide={() => setAlertRefreshModalShow(false)}
