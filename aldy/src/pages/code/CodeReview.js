@@ -10,6 +10,7 @@ import { recoilMyCode, recoilStep } from "../../store/states";
 import { getEditedCodes, saveCode, getCode, reviewRequest } from "../../api/code";
 import { useNavigate } from "react-router-dom";
 import { getStudyMember } from "../../api/study";
+import ReviewListAlert from "../../components/ReviewListAlert";
 
 const CodeReview = () => {
   // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
@@ -32,6 +33,7 @@ const CodeReview = () => {
   const [message, setMessage] = useState('')
   // alert를 위한 정의
   // alertRefresh를 위한 정의
+  const [reviewAlertShow, setReviewAlertShow] = useState(false)
   const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false)
   const [requestModalShow, setRequestModalShow] = useState(false);
   const [stepModalShow1, setStepModalShow1] = useState(false);
@@ -144,7 +146,7 @@ const CodeReview = () => {
         onHide={() => setRequestModalShow(false)}
         setAlertModalShow={setAlertModalShow}
         setMessage={setMessage}
-        setAlertRefreshModalShow={setAlertRefreshModalShow}
+        setReviewAlertShow={setReviewAlertShow}
       />
       <AlertModal 
       show={alertModalShow}
@@ -154,6 +156,11 @@ const CodeReview = () => {
       <AlertRefreshModal 
       show={alertRefreshModalShow}
       onHide={() => setAlertRefreshModalShow(false)}
+      message={message}
+      />
+      <ReviewListAlert 
+      show={reviewAlertShow}
+      onHide={() => setReviewAlertShow(false)}
       message={message}
       />
       {
@@ -438,8 +445,7 @@ const CodeReview = () => {
                 saveCode(subimtCode)
                 .then((res) => {
                   setMessage('코드를 최종 제출하였습니다.')
-                  setAlertModalShow(true)
-                  navigate('/review/list')
+                  setReviewAlertShow(true)
                   // alert('코드를 최종 제출하였습니다.')
                 })
                 .catch((err) => {
@@ -482,7 +488,7 @@ function RequestModal(props) {
   const problemId = props.problemId
   const setAlertModalShow = props.setAlertModalShow
   const setMessage = props.setMessage
-  const setAlertRefreshModalShow = props.setAlertRefreshModalShow
+  const setReviewAlertShow = props.setReviewAlertShow
   const navigate = useNavigate()
   useEffect(() => {
     getStudyMember(sessionStorage.getItem('reviewStudyId'))
@@ -551,8 +557,7 @@ function RequestModal(props) {
               reviewRequest(selected)
               .then(() => {
                 setMessage('리뷰요청을 보냈습니다.')
-                setAlertRefreshModalShow(true)
-                navigate('/review/list')
+                setReviewAlertShow(true)
                 // alert('리뷰요청을 보냈습니다.')
                 // window.location.reload()
               })
