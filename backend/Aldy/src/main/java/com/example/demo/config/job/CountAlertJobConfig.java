@@ -1,6 +1,7 @@
 package com.example.demo.config.job;
 
 
+import com.example.demo.domain.dto.study.MemberInStudyDto;
 import com.example.demo.domain.entity.Code.Code;
 import com.example.demo.domain.entity.Code.RequestedCode;
 import com.example.demo.domain.entity.Member.Member;
@@ -14,6 +15,7 @@ import com.example.demo.repository.study.CalendarRepository;
 import com.example.demo.repository.study.MemberInStudyRepository;
 import com.example.demo.repository.study.ProblemRepository;
 import com.example.demo.service.study.EmailServiceImpl;
+import com.example.demo.service.study.MemberInStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -44,6 +46,8 @@ public class CountAlertJobConfig {
     private final EntityManagerFactory entityManagerFactory;
 
     private final MemberInStudyRepository memberInStudyRepository;
+
+    private final MemberInStudyService memberInStudyService;
 
     private final CalendarRepository calendarRepository;
 
@@ -195,13 +199,7 @@ public class CountAlertJobConfig {
         if(numberOfAlerts > 3) {
             memberInStudy.setAuth(0);
 
-            if(auth == 1) {
-                List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(memberInStudy.getStudy().getId(), List.of(1, 2));
-                if(memberInStudyList.isEmpty()) {
-                    return;
-                }
-                memberInStudyList.get(0).setAuth(1);
-            }
+            memberInStudyService.checkLeader(new MemberInStudyDto(memberInStudy));
 
             emailService.sendEvictionMail(memberInStudy.getStudy(), memberInStudy.getMember().getEmail(), memberInStudy.getMember().getNickname(), "evict");
         }

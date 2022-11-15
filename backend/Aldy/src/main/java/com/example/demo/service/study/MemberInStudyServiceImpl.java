@@ -189,6 +189,18 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     }
 
     @Override
+    public void checkLeader(MemberInStudyDto memberInStudyDto) {
+
+        if(memberInStudyRepository.countAllByStudyIdAndAuthIn(memberInStudyDto.getStudyId(), authList) == 0) {
+            studyRepository.deleteById(memberInStudyDto.getStudyId());
+        }
+
+        if(memberInStudyDto.getAuth() == 1) {
+            changeLeader(memberInStudyDto.getStudyId());
+        }
+
+    }
+
     public void changeLeader(Long studyId) {
         memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList)
                 .get(0)

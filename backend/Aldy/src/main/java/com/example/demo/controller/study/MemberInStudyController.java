@@ -144,11 +144,9 @@ public class MemberInStudyController {
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(studyId, loginMember, 4);
 
-        if(auth == 1) {
-            memberInStudyService.changeLeader(studyId);
-        }
+        memberInStudyService.checkLeader(memberInStudyDto);
 
-        return new ResponseEntity<>(memberInStudyDto, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
