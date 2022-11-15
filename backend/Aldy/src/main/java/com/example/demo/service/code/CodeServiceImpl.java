@@ -95,7 +95,6 @@ public class CodeServiceImpl implements CodeService {
         // 첨삭한 코드 내용
         String text = codeReviewReplyDto.getCode();
 
-
         // 첨삭한 사람 아이디
         String sender_id = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -115,18 +114,28 @@ public class CodeServiceImpl implements CodeService {
         Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(study_id, problem_id, receiver_index,2).orElseThrow(
                 () -> new CustomException(ErrorCode.CODE_NOT_FOUND)
         );
-
-
-        EditedCode editedCode = EditedCode.builder()
-                .code(code)
-                .receiver(receiver)
-                .sender(sender)
-                .text(text)
-                .build();
-        try{
-            ecRepository.save(editedCode);
-        }catch(Exception e){
-            throw new CustomException(ErrorCode.SAVE_ERROR);
+        // 내가 첨삭한 코드가 있는지
+        Optional<EditedCode> preEditedCode = ecRepository.findAllByCode_idAndReceiver_idAndSender_id(
+                code.getId(), receiver.getId(), sender.getId()
+        );
+        EditedCode editedCode = null;
+        // 첨삭한 코드가 있다면 첨삭 내용만 바꿈
+        if(preEditedCode.isPresent()){
+            editedCode = preEditedCode.get();
+            editedCode.changeCode(text);
+        }else {
+        // 첨삭한 코드가 없으면 새로 만들어줌.
+            editedCode = EditedCode.builder()
+                    .code(code)
+                    .receiver(receiver)
+                    .sender(sender)
+                    .text(text)
+                    .build();
+            try{
+                ecRepository.save(editedCode);
+            }catch(Exception e){
+                throw new CustomException(ErrorCode.SAVE_ERROR);
+            }
         }
 
         RequestedCode requestedCode = rcRepository.findByCode_idAndSender_idAndReceiver_id(code.getId(), receiver.getId(),
@@ -204,15 +213,22 @@ public class CodeServiceImpl implements CodeService {
             Member receiver = memberRepository.findByBaekjoonId(receiverId).orElseThrow(
                     () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
             );
-
-            RequestedCode requestedCode = RequestedCode.builder()
+            Optional<RequestedCode> preRequestedCode = rcRepository.findByCode_idAndSender_idAndReceiver_id(
+                    original_code.getId(), sender.getId(), receiver.getId()
+            );
+            RequestedCode requestedCode = null;
+            if(preRequestedCode.isPresent()){
+                requestedCode = preRequestedCode.get();
+            }else{
+                requestedCode = RequestedCode.builder()
                     .code(original_code)
                     .receiver(receiver)
                     .sender(sender)
                     .isDone(false)
                     .build();
 
-            rcRepository.save(requestedCode);
+                rcRepository.save(requestedCode);
+            }
 
             Study study = studyRepository.findById(codeReviewRequestDto.getStudyId()).orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
             emailServiceImpl.sendCodeAlertEmail(study, receiver.getEmail(), sender.getNickname(), receiver.getNickname(), "request");

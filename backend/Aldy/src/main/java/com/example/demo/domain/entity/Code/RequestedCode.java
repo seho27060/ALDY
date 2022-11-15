@@ -56,5 +56,4 @@ public class RequestedCode {
     public void batchCheck() {
         this.isChecked = true;
     }
-
 }
