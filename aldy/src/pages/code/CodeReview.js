@@ -407,16 +407,21 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
-                saveCode(submitOneTwoThree)
-                .then((res)=>{
-                  setMessage('코드를 제출하였습니다.')
-                  setAlertRefreshModalShow(true)
-                  // alert('코드를 제출하였습니다.')
-                  // window.location.reload()
-                })
-                .catch((err)=>{
-                  console.log('1단계 제출에러', err)
-                })
+                if (submitOneTwoThree.length === 0) {
+                  setMessage('입력된 내용이 없습니다.')
+                  alertModalShow(true)
+                } else {
+                  saveCode(submitOneTwoThree)
+                  .then((res)=>{
+                    setMessage('코드를 제출하였습니다.')
+                    setAlertRefreshModalShow(true)
+                    // alert('코드를 제출하였습니다.')
+                    // window.location.reload()
+                  })
+                  .catch((err)=>{
+                    console.log('1단계 제출에러', err)
+                  })
+                }
               }}
             >
               코드 제출하기
