@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EditedCodeRepository extends JpaRepository<EditedCode, Long> {
     List<EditedCode> findBySender_id(long member_id);
@@ -18,4 +19,6 @@ public interface EditedCodeRepository extends JpaRepository<EditedCode, Long> {
 
     Long countBySender_id(long member_id);
     Long countByReceiver_id(long member_id);
+
+    Optional<EditedCode> findAllByCode_idAndReceiver_idAndSender_id(Long id, Long id1, Long id2);
 }

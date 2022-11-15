@@ -43,7 +43,10 @@ public class EditedCode {
     @CreatedDate
     private LocalDateTime editedDate;
 
+    @Column(length = 10000)
     private String text;
 
-
+    public void changeCode(String text){
+        this.text = text;
+    }
 }
