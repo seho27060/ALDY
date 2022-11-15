@@ -90,3 +90,13 @@
   width: 50px;
   font-family: "uhbeeBold";
 }
+
+.not-secret-study {
+  font-size: 10x;
+  background-color: white;
+  color: darkkhaki;
+  border-radius: 3px;
+  border: 2px solid darkkhaki;
+  width: 50px;
+  font-family: "uhbeeBold";
+}

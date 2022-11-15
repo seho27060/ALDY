@@ -20,10 +20,10 @@ const StudyListItem = (props) => {
           className={`study-name ${dropdown === "active" ? "big-size" : ""}`}
           onClick={navigateStudyDetail}
         >
-          {props.item.name}
+          {props.item.name} {props.item.visibility}
         </h5>
         {`${props.item.visibility}` === "1" ? (
-          <div className="secret-study">공개</div>
+          <div className="not-secret-study">공개</div>
         ) : (
           <div className="secret-study">비공개</div>
         )}
