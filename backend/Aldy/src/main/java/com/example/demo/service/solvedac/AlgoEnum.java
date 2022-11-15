@@ -1,6 +1,5 @@
 package com.example.demo.service.solvedac;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
@@ -42,12 +41,9 @@ public enum AlgoEnum {
 
 
 
-    private String ko;
+    private final String ko;
 
-    private AlgoEnum() {
-
-    }
-    private AlgoEnum(String ko) {
+    AlgoEnum(String ko) {
         this.ko = ko;
     }
 

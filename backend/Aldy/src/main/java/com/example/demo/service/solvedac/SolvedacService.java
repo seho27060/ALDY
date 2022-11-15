@@ -2,9 +2,7 @@ package com.example.demo.service.solvedac;
 
 import com.example.demo.domain.dto.solvedac.ProblemWithTagDisplayNamesVo;
 import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
-import com.example.demo.domain.dto.solvedac.response.ProblemRecommendationResponseDto;
 import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
-import com.example.demo.domain.dto.solvedac.ProblemWithTagsVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

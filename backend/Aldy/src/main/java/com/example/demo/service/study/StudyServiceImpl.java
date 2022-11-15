@@ -20,10 +20,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 @Service
@@ -136,7 +134,7 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public StudyInfoListDto getStudyInfoList(Long studyId) {
 
-        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findByStudy_Id(studyId);
+        List<MemberInStudy> memberInStudyList = memberInStudyRepository.findAllByStudyIdAndAuthIn(studyId, authList);
 
         HashMap<String, String> memberHash = new HashMap<>();
         for(MemberInStudy memberInStudy : memberInStudyList) {

@@ -1,9 +1,7 @@
 package com.example.demo.controller.solvedac;
 
-import com.example.demo.domain.dto.member.response.MemberResponseDto;
 import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.domain.dto.study.StudyInfoListDto;
-import com.example.demo.exception.ErrorResponse;
 import com.example.demo.service.solvedac.SolvedacService;
 import com.example.demo.service.study.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
