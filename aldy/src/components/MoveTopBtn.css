@@ -1,0 +1,15 @@
+.move-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 30ms ease-in;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.move-to-top:hover {
+    transform: scale(1.1);
+}
