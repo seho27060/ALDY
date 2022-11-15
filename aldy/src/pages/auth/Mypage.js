@@ -31,18 +31,10 @@ const WhiteButtonL = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   font-size: 20px;
+  margin: 10px;
 `;
 
 const Mypage = () => {
-  // const [recommendProblem, setRecommendProblem] = useState({
-  //   acceptedUserCount: null,
-  //   algorithm: null,
-  //   averageTries: null,
-  //   level: null,
-  //   problemId: null,
-  //   titleKo: null,
-  // });
-
   const [baekjoonId, setBaekjoonId] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [email, setEmail] = useState(null);
@@ -143,8 +135,20 @@ const Mypage = () => {
       });
   };
 
+  const newRecommend = () => {
+    recommendation().then((res) => {
+      setAcceptedUserCount(res.data.acceptedUserCount);
+      setAlgorithm(res.data.algorithm);
+      setAverageTries(res.data.averageTries);
+      setLevel(res.data.level);
+      setProblemId(res.data.problemId);
+      setTitleKo(res.data.titleKo);
+      console.log("새로운 문제 갱신 잘 뜨는지 확인");
+    });
+  };
+
   return (
-    <main style={{"userSelect":"none"}}>
+    <main style={{ userSelect: "none" }}>
       <AlertRefreshModal
         show={alertRefreshModalShow}
         onHide={() => setAlertRefreshModalShow(false)}
@@ -243,6 +247,7 @@ const Mypage = () => {
           </div>
         </div>
         <div>
+          <WhiteButtonL onClick={newRecommend}>새로운 문제 추천</WhiteButtonL>
           <WhiteButtonL onClick={mvBoj}>문제 풀러 가기!</WhiteButtonL>
         </div>
       </section>
