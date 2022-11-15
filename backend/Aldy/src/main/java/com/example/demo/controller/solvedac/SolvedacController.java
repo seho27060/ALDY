@@ -32,8 +32,6 @@ public class SolvedacController {
 
     private final StudyService studyService;
 
-//    private final WebClient webClient;
-
     @Operation(summary = "스터디 문제 추천 API", description = "[algoList : 알고리즘 목록], [tierList : 티어 목록], [backjoonIdList : 유저 목록]")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = SolvedacSearchProblemDto.class))),
@@ -63,5 +61,22 @@ public class SolvedacController {
         return new ResponseEntity<>(studyInfoListDto, HttpStatus.OK);
 
     }
+
+    @Operation(summary = "스터디 문제 검색 API", description = "[keyword : 검석애]")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = SolvedacSearchProblemDto.class))),
+    })
+    @GetMapping("/search")
+    public ResponseEntity<SolvedacSearchProblemDto> filterProblem(
+            @RequestParam(required = false) String keyword
+//            , @RequestParam(defaultValue = "1") int page
+    ) {
+
+        SolvedacSearchProblemDto solvedacSearchProblemDto = solvedacService.search(keyword);
+
+        return new ResponseEntity<>(solvedacSearchProblemDto, HttpStatus.OK);
+
+    }
+
 
 }

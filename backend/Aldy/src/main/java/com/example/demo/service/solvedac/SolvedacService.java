@@ -14,8 +14,13 @@ import java.util.Optional;
 public interface SolvedacService {
 
     SolvedacSearchProblemDto filter(List<String> algoList, List<Integer> tierList, List<String> baekjoonIdList, int page);
+
+    SolvedacSearchProblemDto search(String keyword);
+
     Optional<SolvedacMemberResponseDto> solvedacMemberFindAPI(String baekjoonId);
+
     ProblemWithTagDisplayNamesVo recommendProblem(HttpServletRequest request) throws IOException;
 
     void renewRecommendProblemList(HttpServletRequest request) throws IOException;
+
 }
