@@ -36,6 +36,18 @@
   src: url("./fonts/강원교육새음.ttf");
 }
 
+@font-face {
+  font-family: "KOFIHDrLEEJWTTF-B";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+}
+
 .App {
   text-align: center;
 }
@@ -45,13 +57,13 @@ main {
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(250, 235, 200);
-  border-radius: 5px;
+  background-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
   background-clip: padding-box;
   border: 1px solid transparent;
 }

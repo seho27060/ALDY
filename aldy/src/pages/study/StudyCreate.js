@@ -7,14 +7,17 @@ import { createStudy } from "../../api/study";
 import Select from "react-select";
 
 const RedButton = styled.button`
-  width: 170px;
+  width: 200px;
   border-radius: 8px;
-  background-color: red;
-  border: none;
+  background-color: white;
   outline: none;
-  color: white;
+  border: 1px solid rgba(40, 80, 15, 1);
+  color: rgba(40, 80, 15, 1);
+  font-family: "KOFIHDrLEEJWTTF-B";
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  font-size: 18px;
+  padding: 7px 0px 5px 0px;
+  transition: all 200ms ease-in;
 `;
 
 const StudyCreate = () => {
@@ -68,86 +71,109 @@ const StudyCreate = () => {
   };
 
   return (
-    <main className="StudyCreate-page-main">
-      <div className="StudyCreate-page-bg">
-        <section className="StudyCreate-page-left">
-          <div>✨우리만의 스터디를 생성해 보세요.✨</div>
-          <div className="nnnnnn">스터디 생성</div>
+    <main className="study-create-page-main">
+      <div className="study-create-page-bg">
+        <section className="study-create-page-left">
+          <div className="study-create-info">
+            ✨우리만의 스터디를 생성해 보세요.✨
+          </div>
+          <div className="study-create-title study-underline-orange">
+            스터디 생성
+          </div>
           <form>
-            <div className="StudyCreate-form-title">
-              <div>스터디 이름</div>
-              <div className="form-title-id">
-                <input
-                  name="name"
-                  placeholder="스터디 이름을 입력해 주세요."
-                  value={newStudy.name}
-                  onChange={onChange}
-                  required
-                ></input>
-              </div>
+            <div className="study-create-form-title">
+              <div className="study-create-form-info">스터디 이름</div>
+              <input
+                name="name"
+                placeholder="스터디 이름을 입력해 주세요."
+                value={newStudy.name}
+                onChange={onChange}
+                className="study-create-input"
+                required
+              ></input>
             </div>
-            <div className="StudyCreate-form-second">
-              <div className="StudyCreate-form-title">
-                <div>스터디 제한 인원</div>
+            <div className="study-create-form-second">
+              <div className="study-create-form-title">
+                <div className="study-create-form-info">스터디 제한 인원</div>
                 <Select
                   onChange={(e) => {
                     onSelectChange(e, "upperLimit");
                   }}
                   options={studyNumber}
+                  theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                      ...theme.colors,
+                      primary25: "rgb(235, 235, 235)",
+                      primary: "rgb(150, 150, 150)",
+                    },
+                  })}
                 ></Select>
               </div>
-              <div className="StudyCreate-form-title">
-                <div>스터디 공개 범위</div>
-                <label>
-                  <input
-                    type="radio"
-                    name="visibility"
-                    value={1}
-                    onChange={onChange}
-                  />{" "}
-                  공개
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="visibility"
-                    value={0}
-                    onChange={onChange}
-                  />{" "}
-                  비공개
-                </label>
+              <div className="study-create-form-title">
+                <div className="study-create-form-info">스터디 공개 범위</div>
+                <input
+                  type="radio"
+                  name="visibility"
+                  className="study-create-radio"
+                  value={1}
+                  id="public"
+                  onChange={onChange}
+                />
+                <label htmlFor="public">공개</label>
+                <input
+                  type="radio"
+                  name="visibility"
+                  className="study-create-radio"
+                  value={0}
+                  id="private"
+                  onChange={onChange}
+                />
+                <label htmlFor="private">비공개</label>
               </div>
             </div>
-            <div className="StudyCreate-form-title">
-              <div>스터디 설명</div>
+            <div className="study-create-form-title">
+              <div className="study-create-form-info">스터디 설명</div>
               <textarea
                 placeholder="스터디 설명을 입력해 주세요."
                 name="introduction"
                 value={newStudy.introduction}
                 onChange={onChange}
+                className="study-create-textarea"
               ></textarea>
             </div>
-            <div className="StudyCreate-form-title">
-              <div>스터디 가입 요건</div>
+            <div className="study-create-form-title">
+              <div className="study-create-form-info">스터디 가입 요건</div>
               <Select
                 onChange={(e) => {
                   onSelectChange(e, "threshold");
                 }}
                 options={tierSelectOption}
+                theme={(theme) => ({
+                  ...theme,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "rgb(235, 235, 235)",
+                    primary: "rgb(150, 150, 150)",
+                  },
+                })}
               ></Select>
             </div>
-            <div className="StudyCreate-submit-btn">
-              <RedButton onClick={createNewStudy}>스터디 생성하기</RedButton>
+            <div className="study-create-submit-btn">
+              <RedButton className="study-create-btn" onClick={createNewStudy}>
+                스터디 생성하기
+              </RedButton>
             </div>
           </form>
         </section>
-        <section className="StudyCreate-page-right">
-          <div className="StudyCreate-page-right-title">
+        <section className="study-create-page-right">
+          <div className="study-create-page-right-title">
             ✨Welcome to Aldy✨
+            <div className="study-create-page-right-text">
+              Aldy와 함께 알고리즘 스터디를 키워보세요!
+            </div>
           </div>
-          <div className="StudyCreate-page-right-text">
-            Aldy와 함께 알고리즘 스터디를 키워보세요!
-          </div>
+
           <img
             src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}
             alt=""

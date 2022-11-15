@@ -46,7 +46,7 @@
   border-radius: 10px;
 }
 
-.study-underline-green > span {
+.study-detail-top-info > span {
   width: 80%;
   margin: auto;
   user-select: none;
@@ -109,7 +109,7 @@ h1.underline-green {
   width: 50%;
 }
 
-.study-underline-orange > span {
+.study-title-orange > span {
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0) 60%,
@@ -118,7 +118,7 @@ h1.underline-green {
   font-weight: 900;
   /* text-shadow: 0px 4px 4px rgba(150, 150, 150, 0.25); */
 }
-.study-underline-orange {
+.study-title-orange {
   margin-bottom: 20px;
 }
 
