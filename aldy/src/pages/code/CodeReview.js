@@ -393,14 +393,13 @@ const CodeReview = () => {
                 } else {
                   saveCode(submitOneTwoThree)
                   .then((res) => {
-    
+                    setRequestModalShow(true);
                   })
                   .catch((err) => {
                     setMessage('1단계 코드를 먼저 작성하고 2단계를 작성해주세요.')
                     setAlertModalShow(true)
                     console.log('2단계 제출에러',err)
                   })
-                  setRequestModalShow(true);
                 }
               }}
             >
@@ -449,7 +448,7 @@ const CodeReview = () => {
                   // alert('코드를 최종 제출하였습니다.')
                 })
                 .catch((err) => {
-                  setMessage('최종코드 제출에 실패했습니다.')
+                  setMessage('2단계를 먼저 수행하고 제출해주세요.')
                   setAlertModalShow(true)
                   // alert('최종코드 제출에 실패하였습니다.')
                 })
