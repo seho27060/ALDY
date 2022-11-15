@@ -17,6 +17,7 @@ import CodeReview from "./pages/code/CodeReview";
 import CodeReviewList from "./pages/code/CodeReviewList";
 import AldyNav from "./components/AldyNav";
 import AldyFooter from "./components/AldyFooter";
+import MoveTopBtn from "./components/MoveTopBtn";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route element={<CodeCorrect />} path="/correct"></Route>
         <Route element={<CodeReview />} path="/review"></Route>
       </Routes>
+      <MoveTopBtn />
       <AldyFooter />
     </div>
   );
