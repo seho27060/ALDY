@@ -89,6 +89,7 @@ const ProblemListItem = (props) => {
         <b className="problem-name">{props.item.problemNum}번</b>
         <div className="problem-name">{props.item.problemName}</div>
         <div className="problem-list-right">
+          <WhiteButton onClick={() => {window.open(`https://www.acmicpc.net/problem/${props.item.problemNum}`, "_blank")}}>문제 풀기</WhiteButton>
           <WhiteButton
             onClick={() => {
               sessionStorage.setItem("reviewProblemId", props.item.id);
