@@ -137,11 +137,6 @@ public class MemberInStudyController {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
-        int auth = memberInStudyRepository.findByStudy_IdAndMember_BaekjoonId(studyId, loginMember)
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
-                .getAuth();
-
-
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(studyId, loginMember, 4);
 
         memberInStudyService.checkLeader(memberInStudyDto);
