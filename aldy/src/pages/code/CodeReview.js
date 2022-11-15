@@ -50,7 +50,7 @@ const CodeReview = () => {
     setSubmitOneTwoThree((prev) => {
       return {...prev, process:step}
     })
-    setSumbitCode((prev) => {
+    setSubmitCode((prev) => {
       return {...prev, process:step}
     })
     if (step === 3 && !isFinal) {
@@ -67,8 +67,8 @@ const CodeReview = () => {
     // calendarYear: Number(year),
   })
 
-  const [subimtCode, setSumbitCode] = useState({
-    code: "",
+  const [submitCode, setSubmitCode] = useState({
+    code: myCode,
     process: step,
     studyId: Number(studyId),
     problemId: Number(problemId),
@@ -83,7 +83,7 @@ const CodeReview = () => {
   }
 
   function handleEditorChange3(value, event) {
-    setSumbitCode((prev) => {
+    setSubmitCode((prev) => {
       return {...prev, code:value}
     })
   }
@@ -440,8 +440,7 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={()=>{
                 // 최종코드 제출하기
-                console.log(subimtCode)
-                saveCode(subimtCode)
+                saveCode(submitCode)
                 .then((res) => {
                   setMessage('코드를 최종 제출하였습니다.')
                   setReviewAlertShow(true)
