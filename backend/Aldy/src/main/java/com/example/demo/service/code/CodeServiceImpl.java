@@ -114,14 +114,17 @@ public class CodeServiceImpl implements CodeService {
         Code code = codeRepository.findByStudy_idAndProblem_idAndWriter_idAndProcess(study_id, problem_id, receiver_index,2).orElseThrow(
                 () -> new CustomException(ErrorCode.CODE_NOT_FOUND)
         );
+        // 내가 첨삭한 코드가 있는지
         Optional<EditedCode> preEditedCode = ecRepository.findAllByCode_idAndReceiver_idAndSender_id(
                 code.getId(), receiver.getId(), sender.getId()
         );
         EditedCode editedCode = null;
+        // 첨삭한 코드가 있다면 첨삭 내용만 바꿈
         if(preEditedCode.isPresent()){
             editedCode = preEditedCode.get();
             editedCode.changeCode(text);
         }else {
+        // 첨삭한 코드가 없으면 새로 만들어줌.
             editedCode = EditedCode.builder()
                     .code(code)
                     .receiver(receiver)
