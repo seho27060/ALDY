@@ -59,6 +59,7 @@ public class AuthController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(schema = @Schema(implementation = AuthStringResonseDto.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 baekjoonId 입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "409", description = "이미 회원가입 한 유저입니다.",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping("/verification")
     public ResponseEntity<AuthStringResonseDto> issueAuthString(@RequestBody MemberBaekjoonIdRequestDto memberBaekjoonIdRequestDto) {

@@ -108,6 +108,10 @@ public class AuthServiceImpl implements AuthService{
         SolvedacMemberResponseDto solvedacMemberResponseDto = solvedacService.solvedacMemberFindAPI(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_MEMBER));
 
+        if(memberRepository.findByBaekjoonId(baekjoonId).isPresent()){
+            throw new CustomException(ErrorCode.ALREADY_JOIN);
+        }
+
         Random random = new Random();
         int length = 7;
 
