@@ -233,7 +233,7 @@ const StudyDetail = () => {
             className="study-description-detail"
             onClick={navigateReviewList}
           >
-            <img src="/CodeReviewIcon.png" alt="코드리뷰 이미지"></img>
+            <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
             <h4 className="study-underline-green">
               <span>내게 요청 온 목록</span>
