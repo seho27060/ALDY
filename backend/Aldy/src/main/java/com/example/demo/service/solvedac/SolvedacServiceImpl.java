@@ -23,6 +23,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -50,6 +52,24 @@ public class SolvedacServiceImpl implements SolvedacService {
                         uriBuilder.path("/search/problem")
                                 .queryParam("query", query)
                                 .queryParam("page", page)
+                                .queryParam("sort", "solved")
+                                .queryParam("direction", "desc")
+                                .build())
+                .acceptCharset(StandardCharsets.UTF_8)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(SolvedacSearchProblemDto.class)
+                .blockOptional().get();
+
+    }
+
+    @Override
+    public SolvedacSearchProblemDto search(String keyword) {
+
+        return webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/search/problem")
+                                .queryParam("query", keyword)
                                 .queryParam("sort", "solved")
                                 .queryParam("direction", "desc")
                                 .build())
