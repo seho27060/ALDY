@@ -18,17 +18,17 @@ const MyStudyListItem = (props) => {
     <div className="study-list-item">
       <div className="study-list-title">
         <div className="study-id">공룡</div>
+        {`${props.item.visibility}` === "1" ? (
+          <div className="not-secret-study">공개</div>
+        ) : (
+          <div className="secret-study">비공개</div>
+        )}
         <h5
           className={`study-name ${dropdown === "active" ? "big-size" : ""}`}
           onClick={navigateMyStudyDetail}
         >
           {props.item.name}
         </h5>
-        {`${props.item.visibility}` === "1" ? (
-          <div className="not-secret-study">공개</div>
-        ) : (
-          <div className="secret-study">비공개</div>
-        )}
         <div className="study-number">
           {props.item.countMember}/{props.item.upperLimit}
         </div>

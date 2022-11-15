@@ -1,6 +1,9 @@
 .review-main {
   background-color: #dcf0be;
   padding: 20px;
+  user-select: none;
+
+  
 }
 
 .review-header {

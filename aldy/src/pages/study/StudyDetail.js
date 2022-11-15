@@ -149,7 +149,7 @@ const StudyDetail = () => {
   }, [date]);
 
   return (
-    <main>
+    <main style={{"userSelect":"none"}}>
       <AlertModal
         show={alertModalShow}
         onHide={() => {

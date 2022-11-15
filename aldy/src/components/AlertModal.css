@@ -6,6 +6,7 @@
   height: 170px;
   width: 500px;
   padding: 20px;
+  user-select: none;
 }
 
 .alert-btn {

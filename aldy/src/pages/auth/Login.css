@@ -23,6 +23,8 @@
 
 .login-page-left {
   padding-left: 10%;
+  user-select: none;
+
 }
 
 .nnnnnn {
@@ -47,6 +49,8 @@
   padding-left: 12%;
   /* align-items: center; */
   align-items: center;
+  user-select: none;
+
 }
 
 .login-page-right-title {
@@ -63,6 +67,8 @@
   padding-bottom: 30px;
 
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
+  user-select: none;
+
 }
 
 .login-page-right-text {
@@ -143,9 +149,12 @@ input:focus {
 
 .login-page-right-item {
   margin: 15px;
+  user-select: none;
+
 }
 
 .login_img {
   width: 350px;
   margin-right: 150px;
+  user-select: none;
 }
