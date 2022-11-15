@@ -3,7 +3,6 @@ package com.example.demo.service.study;
 import com.example.demo.domain.dto.study.ApplicateStudyRequestDto;
 import com.example.demo.domain.dto.study.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.study.MemberInStudyDto;
-import com.example.demo.domain.dto.solvedac.response.SolvedacMemberResponseDto;
 import com.example.demo.domain.entity.Code.Code;
 import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Study.MemberInStudy;
@@ -16,13 +15,9 @@ import com.example.demo.repository.member.MemberRepository;
 import com.example.demo.repository.study.MemberInStudyRepository;
 import com.example.demo.repository.study.StudyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +27,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional
 public class MemberInStudyServiceImpl implements MemberInStudyService {
-
-    private final WebClient webClient;
 
     private final MemberInStudyRepository memberInStudyRepository;
 

@@ -3,7 +3,6 @@ package com.example.demo.service.study;
 import com.example.demo.domain.dto.study.MailDto;
 import com.example.demo.domain.entity.Study.Study;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Time;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;

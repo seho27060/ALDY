@@ -1,18 +1,10 @@
 package com.example.demo.controller.study;
 
 import com.example.demo.config.jwt.JwtTokenProvider;
-import com.example.demo.domain.dto.solvedac.SolvedacSearchProblemDto;
 import com.example.demo.domain.dto.study.ApplicateStudyRequestDto;
 import com.example.demo.domain.dto.study.MemberInStudyChangeAuthDto;
 import com.example.demo.domain.dto.study.MemberInStudyDto;
 import com.example.demo.domain.dto.study.MemberInStudyResponseDto;
-import com.example.demo.domain.entity.Member.Member;
-import com.example.demo.domain.entity.Study.MemberInStudy;
-import com.example.demo.exception.CustomException;
-import com.example.demo.exception.ErrorCode;
-import com.example.demo.exception.ErrorResponse;
-import com.example.demo.repository.member.MemberRepository;
-import com.example.demo.repository.study.MemberInStudyRepository;
 import com.example.demo.service.study.MemberInStudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,8 +27,6 @@ import java.util.List;
 public class MemberInStudyController {
 
     private final JwtTokenProvider jwtTokenProvider;
-
-    private final MemberInStudyRepository memberInStudyRepository;
 
     private final MemberInStudyService memberInStudyService;
 
