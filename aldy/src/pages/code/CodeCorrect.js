@@ -104,7 +104,7 @@ const CodeCorrect = () => {
             </div>
           </div>
           <div className="correct-my-code-box">
-            <div className="correct-code-type">내가 첨삭한 코드</div>
+            <div className="correct-code-type">내가 첨삭한 코드 (여기에 코드를 작성하세요)</div>
             <div className="correct-my-code">
               <Editor
                 className='review-code-editor'
@@ -131,6 +131,7 @@ const CodeCorrect = () => {
             .then(()=>{
               setMessage('답장을 보냈습니다.')
               setAlertModalShow(true)
+              navigate('/review/list')
               // alert('답장을 보냈습니다.')
               // navigate('/review/list')
             })
