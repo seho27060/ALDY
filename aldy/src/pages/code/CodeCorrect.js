@@ -24,8 +24,8 @@ const CodeCorrect = () => {
   const [reply, setReply] = useState({
     code:"",
     receiverId: sender,
-    problemId: problemId,
-    studyId: studyId
+    problemId: Number(problemId),
+    studyId: Number(studyId)
   })
   const navigate = useNavigate()
   function handleEditorChange(value, event) {
@@ -126,6 +126,7 @@ const CodeCorrect = () => {
         </div>
         <div className="correct-btns">
           <button className="correctBtn" onClick={()=>{
+            console.log(reply)
             codeReply(reply)
             .then(()=>{
               setMessage('답장을 보냈습니다.')

@@ -163,7 +163,7 @@ const CodeReview = () => {
         {step === 1 && 
           <div className="review-header-step">
             <img src='/dinosaur_hello.gif' className="review-header-step-img" style={{'marginLeft':'100px'}}></img>
-            <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드 제출하기 ✨</h2>
+            <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드  ✨</h2>
             <button className="review-header-step-btn" onClick={()=>{
               if (step === 1) {
                 setStepModalShow1(true)
