@@ -18,6 +18,7 @@ public class MyStudyDto {
     private int upperLimit;
     private String introduction;
     private int threshold;
+    private int visibility;
     private int countMember;
     private int numberOfSolvedProblem;
     private int tierOfRecentSolvedProblem;
@@ -30,6 +31,7 @@ public class MyStudyDto {
         this.introduction = study.getIntroduction();
         this.threshold = study.getThreshold();
         this.countMember = countMember;
+        this.visibility = study.getVisibility();
     }
 
 }
