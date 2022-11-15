@@ -216,7 +216,6 @@ public class CodeServiceImpl implements CodeService {
             RequestedCode requestedCode = null;
             if(preRequestedCode.isPresent()){
                 requestedCode = preRequestedCode.get();
-                rcRepository.delete(requestedCode);
             }else{
                 requestedCode = RequestedCode.builder()
                     .code(original_code)
