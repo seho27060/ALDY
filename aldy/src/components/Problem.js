@@ -29,6 +29,14 @@ const Problem = ({ optionData, checkItems, setCheckItems }) => {
   // 체크박스 단일 선택
   const handleSingleCheck = (checked, item) => {
     if (checked) {
+      for (let i = 0; i < checkItems.length; i++) {
+        if (checkItems[i].problemId === item.problemId) {
+          setCheckItems(
+            checkItems.filter((el) => el.problemId !== item.problemId)
+          );
+          break;
+        }
+      }
       setCheckItems((prev) => [...prev, item]);
     } else {
       setCheckItems(checkItems.filter((el) => el !== item));

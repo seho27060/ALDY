@@ -56,6 +56,15 @@ export const getOptionList = (studyId) => {
   });
 };
 
+// 스터디 문제 검색 API
+export const getSearchProblem = (keyword) => {
+  return api.get("/solvedac/search", {
+    params: {
+      keyword: keyword,
+    },
+  });
+};
+
 // 전체 스터디 목록 조회
 export const getStudyList = (page, size, keyword) => {
   return api.get("/study", {
