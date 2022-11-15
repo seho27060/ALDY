@@ -83,9 +83,13 @@ const StudyDetail = () => {
   // 모달창
   const [studyJoinModalShow, setStudyJoiModalShow] = useState(false);
   const handleStudyJoinModalShow = (e) => {
-    if (studyDetail.threshold > sessionStorage.getItem('tier')) {
-      setMessage(`${sessionStorage.getItem('nickname')}님의 티어가 가입요건을 충족하지 않습니다.`)
-      setAlertModalShow(true)
+    if (studyDetail.threshold > sessionStorage.getItem("tier")) {
+      setMessage(
+        `${sessionStorage.getItem(
+          "nickname"
+        )}님의 티어가 가입요건을 충족하지 않습니다.`
+      );
+      setAlertModalShow(true);
     } else {
       setStudyJoiModalShow((prev) => !prev);
     }
@@ -153,7 +157,7 @@ const StudyDetail = () => {
   }, [date]);
 
   return (
-    <main style={{"userSelect":"none"}}>
+    <main style={{ userSelect: "none" }}>
       <AlertModal
         show={alertModalShow}
         onHide={() => {
@@ -166,7 +170,7 @@ const StudyDetail = () => {
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
             <div>
-              <h3 className="study-underline-orange">
+              <h3 className="study-title-orange">
                 <span>✨{studyDetail.name}✨</span>
               </h3>
             </div>
@@ -219,7 +223,7 @@ const StudyDetail = () => {
           >
             <img src="/pencil.png" alt="연필 이미지"></img>
             <div>알고리즘 코드리뷰</div>
-            <h4 className="study-underline-green">
+            <h4 className="study-detail-top-info">
               <span>오늘의 문제 풀어보기</span>
             </h4>
           </div>
@@ -229,7 +233,7 @@ const StudyDetail = () => {
           >
             <img src="/code_person.png" alt="코딩하는사람"></img>
             <div>함께 푼 문제 수 확인하기</div>
-            <h4 className="study-underline-green">
+            <h4 className="study-detail-top-info">
               <span>스터디원 살펴보기</span>
             </h4>
           </div>
@@ -239,7 +243,7 @@ const StudyDetail = () => {
           >
             <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
-            <h4 className="study-underline-green">
+            <h4 className="study-detail-top-info">
               <span>내게 요청 온 목록</span>
             </h4>
           </div>
@@ -258,7 +262,7 @@ const StudyDetail = () => {
             src={ActivationLevel[studyDetail.activationLevel]}
             alt="스터디 메인 이미지"
           ></img>
-          <h1 className="study-underline-green">
+          <h1 className="study-detail-top-info">
             <span>
               안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
             </span>
@@ -279,7 +283,7 @@ const StudyDetail = () => {
           <span className="study-detail-number">
             스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
           </span>
-          <h3 className="study-underline-orange">
+          <h3 className="study-title-orange">
             <span>{studyDetail.name}</span>
           </h3>
           <div className="study-detail-rank">
@@ -331,13 +335,13 @@ const StudyDetail = () => {
           {studyDetail.isMember ? (
             <div className="study-detail-graph">
               <div>
-                <h5 className="study-underline-orange">
+                <h5 className="study-title-orange">
                   <span>카테고리 별 푼 문제</span>
                 </h5>
                 <StudyChart studyData={studyDetail.statsByTag} />
               </div>
               <div>
-                <h5 className="study-underline-orange">
+                <h5 className="study-title-orange">
                   <span>난이도 별 푼 문제</span>
                 </h5>
                 <StudyChart studyData={studyDetail.statsByTier} />

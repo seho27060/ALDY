@@ -130,8 +130,8 @@ const StudyList = () => {
           <span className="study-highlight-green">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <h2 className="study-underline-green">
-          <span>지금 바로 스터디를 만들어보세요!</span>
+        <h2 className="study-underline-green" style={{ margin: "auto" }}>
+          지금 바로 스터디를 만들어보세요!
         </h2>
         <RedButton onClick={navigateStudyCreate} className="study-button">
           스터디 생성하기
@@ -145,8 +145,8 @@ const StudyList = () => {
           <span className="study-highlight-orange">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <h2 className="study-underline-orange">
-          <span>원하는 스터디 페이지로 들어가 가입신청을 해주세요!</span>
+        <h2 className="study-underline-orange " style={{ margin: "auto" }}>
+          원하는 스터디 페이지로 들어가 가입신청을 해주세요!
         </h2>
         <div className="search-box">
           <div className="d-flex search-bar">
