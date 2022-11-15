@@ -122,7 +122,7 @@ const Login = () => {
               &#123;
             </div>
             <button className="join-btn" onClick={navigateSignup}>
-              JOIN US
+              <div style={{ userSelect: "none" }}>JOIN US</div>
             </button>
             <div
               className="login-page-right-item"

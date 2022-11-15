@@ -23,6 +23,8 @@
 
 .signup-page-left {
   padding-left: 10%;
+  user-select: none;
+
 }
 
 .nnnnnn {
@@ -46,6 +48,8 @@
 .signup-page-right {
   padding-left: 12%;
   /* align-items: center; */
+  user-select: none;
+
 }
 
 .signup-page-right-title {

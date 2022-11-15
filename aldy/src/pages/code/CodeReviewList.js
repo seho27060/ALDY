@@ -16,7 +16,7 @@ const CodeReviewList = () => {
   const [tab, setTab] = useState('requestToMe')
   const [finalCodeModalShow, setFinalCodeModalShow] = useState(false)
   return (
-    <main>
+    <main style={{"userSelect":"none"}}>
       <FinalCodeModal 
       show={finalCodeModalShow}
       onHide={() => setFinalCodeModalShow(false)}

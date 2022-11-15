@@ -160,6 +160,7 @@ const MainPage = () => {
               src={process.env.PUBLIC_URL + "/step3.gif"}
               alt=""
               width="200px"
+              style={{"paddingTop":"41px"}}
             ></img>
           </div>
         </div>
