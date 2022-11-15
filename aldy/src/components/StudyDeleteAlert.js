@@ -42,7 +42,7 @@ const StudyDeleteAlert = (props) => {
         <Modal.Body className="alert-modal-body">
           <div className="alert-board-title">✨ 알림 ✨</div>
           <p className="alert-message">
-            스터디{props.name}를 정말 삭제하시겠습니까?
+            스터디 ({props.name})를 정말 삭제하시겠습니까?
           </p>
           <div className="alert-close-btn">
             <button

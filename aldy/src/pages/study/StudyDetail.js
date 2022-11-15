@@ -83,7 +83,12 @@ const StudyDetail = () => {
   // 모달창
   const [studyJoinModalShow, setStudyJoiModalShow] = useState(false);
   const handleStudyJoinModalShow = (e) => {
-    setStudyJoiModalShow((prev) => !prev);
+    if (studyDetail.threshold > sessionStorage.getItem('tier')) {
+      setMessage(`${sessionStorage.getItem('nickname')}님의 티어가 가입요건을 충족하지 않습니다.`)
+      setAlertModalShow(true)
+    } else {
+      setStudyJoiModalShow((prev) => !prev);
+    }
   };
   const [problemModalShow, setProblemJoiModalShow] = useState(false);
   const handleProblemModalShow = (e) => {
@@ -127,7 +132,6 @@ const StudyDetail = () => {
   useEffect(() => {
     getStudyDetail(id)
       .then((res) => {
-        // console.log(res.data);
         setStudyDetail(res.data);
         // setSendLeaderId(res.data.leaderBaekjoonId);
         sessionStorage.setItem("sendLeaderId", res.data.leaderBaekjoonId);
