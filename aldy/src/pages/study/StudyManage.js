@@ -29,7 +29,7 @@ const StudyManage = () => {
   const [studyDeleteAlertShow, setStudyDeleteAlertShow] = useState(false);
 
   return (
-    <main>
+    <main style={{"userSelect":"none"}}>
       <StudyDeleteAlert
         show={studyDeleteAlertShow}
         onHide={() => setStudyDeleteAlertShow(false)}

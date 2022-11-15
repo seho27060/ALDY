@@ -1,6 +1,7 @@
 .StudyCreate-page-main {
   height: 100%;
   overflow-x: hidden;
+  user-select: none;
 }
 
 .StudyCreate-page-bg {

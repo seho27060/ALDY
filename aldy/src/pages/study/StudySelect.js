@@ -112,7 +112,7 @@ const StudySelect = () => {
   };
 
   return (
-    <main style={{ textAlign: "start" }}>
+    <main style={{ textAlign: "start" ,"userSelect": "none"}}>
       <AlertModal
         show={alertModalShow}
         onHide={() => {
