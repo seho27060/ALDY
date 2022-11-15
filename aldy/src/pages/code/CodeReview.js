@@ -316,7 +316,7 @@ const CodeReview = () => {
                           }}></Editor>
                   </div>
                   <div className="step-four-my-code">
-                  <div className="step-four-type">내가 작성했던 코드</div>
+                  <div className="step-four-type">내가 작성했던 코드 (여기에 코드를 작성하세요)</div>
                     <Editor className='review-code-editor'
                           height='95%'
                           language={language}
@@ -439,6 +439,7 @@ const CodeReview = () => {
                 .then((res) => {
                   setMessage('코드를 최종 제출하였습니다.')
                   setAlertModalShow(true)
+                  navigate('/review/list')
                   // alert('코드를 최종 제출하였습니다.')
                 })
                 .catch((err) => {
@@ -482,6 +483,7 @@ function RequestModal(props) {
   const setAlertModalShow = props.setAlertModalShow
   const setMessage = props.setMessage
   const setAlertRefreshModalShow = props.setAlertRefreshModalShow
+  const navigate = useNavigate()
   useEffect(() => {
     getStudyMember(sessionStorage.getItem('reviewStudyId'))
     .then((res) => {
@@ -545,12 +547,12 @@ function RequestModal(props) {
             className="review-modal-request-btn"
             onClick={() => {
               props.onHide();
-              console.log(selected, '요청보내는 데이터');
               //서버로 리뷰 요청하는 axios 추가
               reviewRequest(selected)
               .then(() => {
                 setMessage('리뷰요청을 보냈습니다.')
                 setAlertRefreshModalShow(true)
+                navigate('/review/list')
                 // alert('리뷰요청을 보냈습니다.')
                 // window.location.reload()
               })
