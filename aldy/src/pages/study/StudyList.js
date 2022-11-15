@@ -51,20 +51,29 @@ const StudyList = () => {
   };
 
   const studySearch = () => {
-    setSearchShow(true);
-    getStudyList(searchPageNum, 10, searchInput.current.value)
-      .then((res) => {
-        const data = res.data.studyDtoPage;
-        // console.log(data);
-        setSearchList(data.content);
-        setSearchTotal(data.totalElements);
-      })
-      .catch((err) => {
-        setMessage("검색결과가 없습니다.");
-        setAlertModalShow(true);
-        setSearchShow(false);
-        console.log(err);
-      });
+    if (searchInput.current.value) {
+      getStudyList(searchPageNum, 10, searchInput.current.value)
+        .then((res) => {
+          const data = res.data.studyDtoPage;
+          if (data.content.length > 0) {
+            setSearchShow(true);
+            setSearchList(data.content);
+            setSearchTotal(data.totalElements);
+          } else {
+            setMessage("검색결과가 없습니다.");
+            setAlertModalShow(true);
+          }
+        })
+        .catch((err) => {
+          setMessage("검색결과가 없습니다.");
+          setAlertModalShow(true);
+          setSearchShow(false);
+          console.log(err);
+        });
+    } else {
+      setMessage("검색어를 입력해주세요.");
+      setAlertModalShow(true);
+    }
   };
 
   useEffect(() => {
@@ -100,7 +109,7 @@ const StudyList = () => {
   }, [searchPageNum]);
 
   return (
-    <main style={{"userSelect":"none"}}>
+    <main style={{ userSelect: "none" }}>
       <AlertModal
         show={alertModalShow}
         onHide={() => {
@@ -143,7 +152,7 @@ const StudyList = () => {
           <div className="d-flex search-bar">
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="검색어를 입력해주세요."
               className="me-2"
               aria-label="Search"
               ref={searchInput}

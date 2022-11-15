@@ -1,12 +1,19 @@
 import "./StudySelect.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import TierData from "../../data/tier";
 import Option from "../../components/Option";
 import Problem from "../../components/Problem";
-import { getStudyProblem, getOptionList, addProblem } from "../../api/study";
+import {
+  getStudyProblem,
+  getOptionList,
+  addProblem,
+  getSearchProblem,
+} from "../../api/study";
 import AlertModal from "../../components/AlertModal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const RedButton = styled.button`
   width: 200px;
@@ -52,10 +59,43 @@ const StudySelect = () => {
   const [result, setResult] = useState([]);
   // 체크된 문제
   const [problem, setProblem] = useState([]);
-  console.log(problem);
   // 모달
   const [message, setMessage] = useState("");
   const [alertModalShow, setAlertModalShow] = useState(false);
+  const [searchAlertModalShow, setSearchAlertModalShow] = useState(false);
+  // 문제 검색
+  const searchInput = useRef("");
+
+  const onKeypress = (e) => {
+    if (e.key === "Enter") {
+      problemSearch();
+    }
+  };
+
+  const problemSearch = () => {
+    if (searchInput.current.value) {
+      getSearchProblem(searchInput.current.value)
+        .then((res) => {
+          const data = res.data;
+          console.log(data.items.length);
+          if (data.items.length > 0) {
+            setResult(data.items);
+          } else {
+            setMessage("검색결과가 없습니다.");
+            setSearchAlertModalShow(true);
+          }
+          console.log(data.items);
+        })
+        .catch((err) => {
+          setMessage("검색결과가 없습니다.");
+          setSearchAlertModalShow(true);
+          console.log(err);
+        });
+    } else {
+      setMessage("검색어를 입력해주세요.");
+      setSearchAlertModalShow(true);
+    }
+  };
 
   useEffect(() => {
     getOptionList(studyId)
@@ -89,7 +129,7 @@ const StudySelect = () => {
 
   const deleteProblem = (item) => {
     setProblem(problem.filter((el) => el !== item));
-    console.log(problem);
+    // console.log(problem);
   };
 
   const choiceProblem = () => {
@@ -118,6 +158,13 @@ const StudySelect = () => {
         onHide={() => {
           setAlertModalShow(false);
           navigate(`/study/detail/${studyId}`);
+        }}
+        message={message}
+      />
+      <AlertModal
+        show={searchAlertModalShow}
+        onHide={() => {
+          setSearchAlertModalShow(false);
         }}
         message={message}
       />
@@ -178,6 +225,25 @@ const StudySelect = () => {
       </section>
       <div style={{ margin: "0px 10%", textAlign: "end" }}>
         <WhiteButton onClick={searchProblem}>검색</WhiteButton>
+      </div>
+      <div className="search-box">
+        <div className="d-flex search-bar">
+          <Form.Control
+            type="search"
+            placeholder="검색어를 입력해주세요."
+            className="me-2"
+            aria-label="Search"
+            ref={searchInput}
+            onKeyPress={onKeypress}
+          />
+          <Button
+            variant="outline-success"
+            className="search-button"
+            onClick={problemSearch}
+          >
+            Search
+          </Button>
+        </div>
       </div>
       <section className="study-select-problem-box">
         <div className="green-line">
