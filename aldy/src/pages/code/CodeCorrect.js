@@ -9,9 +9,11 @@ import { correctCode } from "../../store/states";
 import { codeReply } from "../../api/code";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "../../components/AlertModal";
+import ReviewListAlert from "../../components/ReviewListAlert";
 
 const CodeCorrect = () => {
   const [alertModalShow, setAlertModalShow] = useState(false)
+  const [reviewAlertShow, setReviewAlertShow] = useState(false)
   const [message, setMessage] = useState('')
   const previousCode = sessionStorage.getItem('previousCode')
   const studyName = sessionStorage.getItem('studyName')
@@ -38,6 +40,11 @@ const CodeCorrect = () => {
       <AlertModal 
       show={alertModalShow}
       onHide={() => setAlertModalShow(false)}
+      message={message}
+      />
+      <ReviewListAlert 
+      show={reviewAlertShow}
+      onHide={() => setReviewAlertShow(false)}
       message={message}
       />
       <section className="correct-header">
@@ -130,8 +137,7 @@ const CodeCorrect = () => {
             codeReply(reply)
             .then(()=>{
               setMessage('답장을 보냈습니다.')
-              setAlertModalShow(true)
-              navigate('/review/list')
+              setReviewAlertShow(true)
               // alert('답장을 보냈습니다.')
               // navigate('/review/list')
             })
