@@ -142,7 +142,7 @@ const StudyList = () => {
         </p>
         <div
           className="study-underline-green"
-          style={{ margin: "auto", fontSize: "35px" }}
+          style={{ margin: "auto", fontSize: "45px" }}
         >
           지금 바로 스터디를 만들어보세요!
         </div>
