@@ -184,10 +184,11 @@ const StudyList = () => {
           </div>
         </div>
         {searchShow && (
-          <section className="study-list">
+          <section className="study-list-search">
             <div>
               <div className="Mypage-study-list-box">
-                <div style={{ width: "100%", textAlign: "end" }}>
+                <div className="study-search-top">
+                  <div className="study-search-result-title">검색결과</div>
                   <button
                     className="review-modal-close-btn"
                     style={{ margin: "5px" }}

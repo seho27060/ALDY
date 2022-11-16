@@ -42,6 +42,8 @@ const ProblemListItem = (props) => {
       process: 0,
     },
   ]);
+  const myId = sessionStorage.getItem("userName");
+  const leader = props.leader;
   const studyId = props.studyId;
   const studyName = props.studyName;
   const year = props.year;
@@ -89,7 +91,16 @@ const ProblemListItem = (props) => {
         <b className="problem-name">{props.item.problemNum}번</b>
         <div className="problem-name">{props.item.problemName}</div>
         <div className="problem-list-right">
-          <WhiteButton onClick={() => {window.open(`https://www.acmicpc.net/problem/${props.item.problemNum}`, "_blank")}}>문제 풀기</WhiteButton>
+          <WhiteButton
+            onClick={() => {
+              window.open(
+                `https://www.acmicpc.net/problem/${props.item.problemNum}`,
+                "_blank"
+              );
+            }}
+          >
+            문제 풀기
+          </WhiteButton>
           <WhiteButton
             onClick={() => {
               sessionStorage.setItem("reviewProblemId", props.item.id);
@@ -134,32 +145,35 @@ const ProblemListItem = (props) => {
       >
         <table className="stage-table">
           <tbody>
-            {problemStage.length >= 1
-              ? problemStage.map((item, i) => (
-                  <tr key={i}>
-                    <td>
-                      <b>{item.nickname}</b>
-                      <div>백준ID : {item.baekjoonId}</div>
-                    </td>
-                    <td className={item.process === 1 ? "black" : "gray"}>
-                      1단계
-                    </td>
-                    <td className={item.process === 2 ? "black" : "gray"}>
-                      2단계
-                    </td>{" "}
-                    <td className={item.process === 3 ? "black" : "gray"}>
-                      3단계
-                    </td>{" "}
-                    <td className={item.process === 4 ? "black" : "gray"}>
-                      4단계
-                    </td>
-                  </tr>
-                ))
-              : null}
+            {problemStage.length >= 1 ? (
+              problemStage.map((item, i) => (
+                <tr key={i}>
+                  <td>
+                    <b>{item.nickname}</b>
+                    <div>백준ID : {item.baekjoonId}</div>
+                  </td>
+                  <td className={item.process === 1 ? "black" : "gray"}>
+                    1단계
+                  </td>
+                  <td className={item.process === 2 ? "black" : "gray"}>
+                    2단계
+                  </td>
+                  <td className={item.process === 3 ? "black" : "gray"}>
+                    3단계
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <div style={{ color: "rgb(150, 150, 150)", marginTop: "10px" }}>
+                문제를 푼 팀원이 아직 없습니다.
+              </div>
+            )}
           </tbody>
         </table>
 
-        <RedButton onClick={delProblem}>문제 삭제</RedButton>
+        {myId === leader && (
+          <RedButton onClick={delProblem}>문제 삭제</RedButton>
+        )}
       </div>
     </div>
   );
