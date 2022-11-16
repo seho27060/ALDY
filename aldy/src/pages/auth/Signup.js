@@ -15,7 +15,8 @@ import AlertRefreshModal from "../../components/AlertRefreshModal";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const RedButton = styled.button`
-  width: 170px;
+  width: 120px;
+  height: 30px;
   border-radius: 8px;
   background-color: red;
   border: none;
@@ -37,7 +38,8 @@ const YellowButton = styled.button`
 `;
 
 const GrayButton = styled.button`
-  width: 170px;
+  width: 120px;
+  height: 30px;
   border-radius: 8px;
   background-color: gray;
   border: none;
@@ -302,7 +304,7 @@ const Signup = () => {
                       }
                     }}
                   >
-                    중복확인
+                    중복 확인
                   </RedButton>
                 ) : (
                   <GrayButton>확인 완료</GrayButton>
@@ -336,7 +338,7 @@ const Signup = () => {
                       });
                     }}
                   >
-                    중복확인
+                    중복 확인
                   </RedButton>
                 ) : (
                   <GrayButton>확인 완료</GrayButton>
@@ -375,8 +377,11 @@ const Signup = () => {
         </section>
         <section className="signup-page-right">
           <div className="signup-page-right-title">✨Welcome to Aldy✨</div>
-          <div className="signup-page-right-text">
-            Aldy와 함께 알고리즘 스터디를 키워보세요!
+          <div className="signup-page-right-sub-title">
+            알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡
+            <div className="signup-page-right-sub-title">
+              진화하는 공룡과 함께 알고리즘 실력도 키울 수 있어요!
+            </div>
           </div>
           <img
             src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}

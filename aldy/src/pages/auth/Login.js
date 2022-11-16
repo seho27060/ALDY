@@ -8,8 +8,29 @@ import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../../store/states";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 
+const WhiteRedButton = styled.button`
+  width: 120px;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  border: 2px solid red;
+  color: red;
+  font-family: "GmarketSansMedium";
+  font-weight: bold;
+  font-size: 15px;
+  padding: 5px 0px 3px 0px;
+  transition: all 200ms ease-in;
+  user-select: none;
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
+`;
+
 const RedButton = styled.button`
-  width: 170px;
+  width: 120px;
+  height: 30px;
   border-radius: 8px;
   background-color: red;
   border: none;
@@ -17,6 +38,7 @@ const RedButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  font-size: 15px;
 `;
 
 const Login = () => {
@@ -97,20 +119,29 @@ const Login = () => {
               ></input>
             </div>
             <div className="login-submit-btn">
-              <RedButton onClick={onSubmit}>Log In</RedButton>
+              <RedButton onClick={onSubmit}>LOGIN</RedButton>
             </div>
           </div>
           <div className="login-page-join">
             <div>아직 계정이 없으신가요? </div>
             <div className="login-page-link" onClick={navigateSignup}>
-              <FcLike />
-              회원가입 하러 가기
-              <FcLike />
+              <div class="box-vibration">
+                <FcLike />
+              </div>
+              &#32;회원가입 하러 가기&#32;
+              <div class="box-vibration">
+                &#32;
+                <FcLike />
+                &#32;
+              </div>
             </div>
           </div>
         </section>
         <section className="login-page-right">
           <div className="login-page-right-title">✨Welcome to Aldy✨</div>
+          <div className="login-page-right-sub-title">
+            알디에 오신 것을 환영합니다 <span>♡</span>ᐡ・_・ᐡ<span>♡</span>
+          </div>
           <div className="login-page-right-text">
             <div className="login-page-right-item">
               if (not&#32; &#32;a&#32; &#32;member?){" "}
@@ -121,9 +152,9 @@ const Login = () => {
             >
               &#123;
             </div>
-            <button className="join-btn" onClick={navigateSignup}>
+            <WhiteRedButton onClick={navigateSignup}>
               <div style={{ userSelect: "none" }}>JOIN US</div>
-            </button>
+            </WhiteRedButton>
             <div
               className="login-page-right-item"
               style={{ textAlign: "left" }}
