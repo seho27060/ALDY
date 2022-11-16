@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -111,5 +112,10 @@ public class AuthController {
         ValidateTokenResponseDto validateTokenResponseDto = jwtService.validateRefreshToken(validateRefreshtokenRequestDto.getRefreshToken());
         System.out.println(validateTokenResponseDto);
         return new ResponseEntity<>(validateTokenResponseDto,HttpStatus.OK);
+    }
+
+    @GetMapping("/lunch")
+    public String whatIsLunch(){
+        return "chickenCuttlet";
     }
 }
