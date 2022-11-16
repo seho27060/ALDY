@@ -21,7 +21,7 @@ const RedButton = styled.button`
 
 const WhiteButton = styled.button`
   width: 170px;
-  height: 44px;
+  height: 46px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
@@ -30,7 +30,7 @@ const WhiteButton = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   font-size: 20px;
-  margin: 12px;
+  margin: 2px;
   font-family: "uhbeeBold";
 `;
 
@@ -156,8 +156,6 @@ const MainPage = () => {
             ></img>
           </div>
         </div>
-      </section>
-      <section className="main-page-description">
         <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
@@ -188,6 +186,7 @@ const MainPage = () => {
           </div>
         </div>
       </section>
+      <section className="main-page-description"></section>
       <div className="main-page-description-title">
         ALDY에 접속한지 오래되었을 경우
       </div>
