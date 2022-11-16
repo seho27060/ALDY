@@ -91,7 +91,11 @@ const MainPage = () => {
       </section>
       <section className="main-page-description">
         <div className="section1-left">
-          <div className="main-page-description-title" data-aos="fade-up">
+          <div
+            className="main-page-description-title"
+            data-aos="fade-up"
+            // data-aos-anchor-placement="bottom-center"
+          >
             ALDY만의 코드리뷰 이용하기
           </div>
           <div className="main-page-description-text" data-aos="fade-up">
@@ -128,7 +132,7 @@ const MainPage = () => {
       </section>
       <div
         className="main-page-description-title"
-        style={{ paddingTop: "80px" }}
+        style={{ paddingTop: "150px" }}
       >
         ALDY의 메인 캐릭터 소개
       </div>
@@ -192,7 +196,7 @@ const MainPage = () => {
       </section>
       <div
         className="main-page-description-title"
-        style={{ paddingTop: "80px" }}
+        style={{ paddingTop: "70px" }}
       >
         ALDY에 접속한지 오래되었을 경우
       </div>

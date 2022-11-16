@@ -23,7 +23,7 @@ section.main-page-banner {
 section.main-page-description {
   background-color: #373737;
   color: white;
-  padding: 80px 15%;
+  padding: 150px 15%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -33,7 +33,7 @@ section.main-page-description {
 section.main-page-description-aldylist {
   background-color: #373737;
   color: white;
-  padding: 80px 15%;
+  padding: 50px 15% 80px 15%;
   display: flex;
   justify-content: space-evenly;
   user-select: none;
@@ -132,7 +132,7 @@ h1 {
 .aldy_step_info {
   background-color: #c8e687;
   user-select: none;
-  padding: 50px 15%;
+  padding: 80px 15%;
 }
 .aldy_step_info_title {
   color: #373737;

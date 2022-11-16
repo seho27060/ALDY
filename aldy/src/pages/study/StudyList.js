@@ -10,15 +10,25 @@ import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
 import AlertModal from "../../components/AlertModal";
 
-const RedButton = styled.button`
+const WhiteRedButton = styled.button`
   width: 170px;
   border-radius: 8px;
-  background-color: red;
-  border: none;
+  background-color: white;
   outline: none;
-  color: white;
+  border: 2px solid red;
+  color: red;
+  font-family: "GmarketSansMedium";
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  font-size: 15px;
+  padding: 5px 0px 3px 0px;
+  transition: all 200ms ease-in;
+  margin-top: 20px;
+  user-select: none;
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const StudyList = () => {
@@ -130,12 +140,15 @@ const StudyList = () => {
           <span className="study-highlight-green">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <h2 className="study-underline-green" style={{ margin: "auto" }}>
+        <div
+          className="study-underline-green"
+          style={{ margin: "auto", fontSize: "35px" }}
+        >
           지금 바로 스터디를 만들어보세요!
-        </h2>
-        <RedButton onClick={navigateStudyCreate} className="study-button">
+        </div>
+        <WhiteRedButton onClick={navigateStudyCreate} className="study-button">
           스터디 생성하기
-        </RedButton>
+        </WhiteRedButton>
       </section>
       <section className="study-search">
         <p>
@@ -145,9 +158,12 @@ const StudyList = () => {
           <span className="study-highlight-orange">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <h2 className="study-underline-orange " style={{ margin: "auto" }}>
+        <div
+          className="study-underline-orange "
+          style={{ margin: "auto", fontSize: "30px" }}
+        >
           원하는 스터디 페이지로 들어가 가입신청을 해주세요!
-        </h2>
+        </div>
         <div className="search-box">
           <div className="d-flex search-bar">
             <Form.Control
@@ -183,7 +199,7 @@ const StudyList = () => {
                   </button>
                 </div>
                 {searchList?.map((item, i) => (
-                  <StudyListItem key={i} item={item} />
+                  <StudyListItem key={i} item={item} num={i} />
                 ))}
                 <Paging
                   page={searchPageNum}
