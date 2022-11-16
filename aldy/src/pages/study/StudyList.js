@@ -222,7 +222,7 @@ const StudyList = () => {
           {tab === "studyListAll" && (
             <div className="study-list-box">
               {studyList?.map((item, i) => (
-                <StudyListItem key={i} item={item} />
+                <StudyListItem key={i} item={item} num={i} />
               ))}
               <Paging
                 page={studyPageNum}
