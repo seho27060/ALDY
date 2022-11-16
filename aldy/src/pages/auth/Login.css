@@ -4,15 +4,8 @@
 }
 
 .login-page-bg {
-  /* height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background: url(../../../public/auth_background.png) no-repeat 50% 50%;
-  background-size: cover; */
-  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
-  height: 100vh;
+  height: 87vh;
   width: 100vw;
   background-size: cover;
   display: flex;
@@ -24,7 +17,6 @@
 .login-page-left {
   padding-left: 10%;
   user-select: none;
-
 }
 
 .nnnnnn {
@@ -50,25 +42,22 @@
   /* align-items: center; */
   align-items: center;
   user-select: none;
-
 }
 
 .login-page-right-title {
   font-family: "Merriweather Sans";
   font-style: normal;
   font-weight: 700;
-  font-size: 55px;
+  font-size: 65px;
   line-height: 69px;
   display: flex;
   align-items: center;
   text-align: center;
   letter-spacing: -0.005em;
   color: #dcf0be;
-  padding-bottom: 30px;
-
+  padding-bottom: 10px;
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
   user-select: none;
-
 }
 
 .login-page-right-text {
@@ -81,7 +70,7 @@
   text-align: center;
   letter-spacing: -0.005em;
   color: #ffffff;
-  width: 250px;
+  width: 300px;
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
 }
 
@@ -136,7 +125,7 @@ input:focus {
 }
 
 .join-btn {
-  width: 100px;
+  width: 120px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
@@ -144,17 +133,45 @@ input:focus {
   color: red;
   font-weight: bold;
   transition: transform 30ms ease-in;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .login-page-right-item {
-  margin: 15px;
+  width: 100%;
   user-select: none;
-
 }
 
 .login_img {
   width: 350px;
   margin-right: 150px;
   user-select: none;
+}
+
+.login-page-right-sub-title {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  color: white;
+  padding-bottom: 70px;
+}
+
+@keyframes vibration {
+  from {
+    transform: rotate(7deg);
+  }
+  to {
+    transform: rotate(-7deg);
+  }
+}
+.box-vibration {
+  animation: vibration 0.3s infinite;
+  font-size: 20px;
+  padding-bottom: 2px;
+}
+
+.login-page-right-sub-title > span {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  color: white;
+  padding-bottom: 70px;
+  animation: vibration 0.3s infinite;
 }
