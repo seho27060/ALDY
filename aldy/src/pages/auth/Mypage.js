@@ -154,7 +154,7 @@ const Mypage = () => {
         onHide={() => setAlertRefreshModalShow(false)}
         message={message}
       />
-      <section className="study-list-banner">
+      <section className="myPage-list-banner">
         <img
           className="mb-2"
           src="/pinkAldy.gif"
