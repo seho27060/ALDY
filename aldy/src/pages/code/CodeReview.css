@@ -154,6 +154,7 @@ h2.review-orange {
   background: white;
   border-radius: 8px;
   padding: 0 16px;
+  margin-right: 24px;
   height: 40px;
   transition: tranform 30ms ease-in;
 }
