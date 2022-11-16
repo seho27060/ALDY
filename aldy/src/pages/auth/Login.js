@@ -8,6 +8,26 @@ import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../../store/states";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 
+const WhiteRedButton = styled.button`
+  width: 120px;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  border: 2px solid red;
+  color: red;
+  font-family: "GmarketSansMedium";
+  font-weight: bold;
+  font-size: 15px;
+  padding: 5px 0px 3px 0px;
+  transition: all 200ms ease-in;
+  user-select: none;
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
+`;
+
 const RedButton = styled.button`
   width: 120px;
   height: 30px;
@@ -132,9 +152,9 @@ const Login = () => {
             >
               &#123;
             </div>
-            <button className="join-btn" onClick={navigateSignup}>
+            <WhiteRedButton onClick={navigateSignup}>
               <div style={{ userSelect: "none" }}>JOIN US</div>
-            </button>
+            </WhiteRedButton>
             <div
               className="login-page-right-item"
               style={{ textAlign: "left" }}
