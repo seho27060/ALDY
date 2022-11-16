@@ -23,9 +23,18 @@ section.main-page-banner {
 section.main-page-description {
   background-color: #373737;
   color: white;
-  padding: 40px;
+  padding: 80px 15%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+section.main-page-description-aldylist {
+  background-color: #373737;
+  color: white;
+  padding: 80px 15%;
+  display: flex;
   justify-content: space-evenly;
   user-select: none;
 }
@@ -88,7 +97,6 @@ h1 {
 .board-text {
   position: relative;
   font-weight: 800;
-  line-height: 150%;
   text-align: center;
   color: #ffffff;
   font-size: 37px;
@@ -97,9 +105,10 @@ h1 {
 }
 
 .main-page-description-title {
+  font-family: "onemobile";
   font-style: normal;
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 40px;
+  font-weight: 500;
   line-height: 150%;
   letter-spacing: -0.04em;
   color: #ffffff;
@@ -118,10 +127,12 @@ h1 {
   font-family: "uhbeeBold";
   font-size: 25px;
   margin-top: 10px;
+  white-space: nowrap;
 }
 .aldy_step_info {
   background-color: #c8e687;
   user-select: none;
+  padding: 50px 15%;
 }
 .aldy_step_info_title {
   color: #373737;
