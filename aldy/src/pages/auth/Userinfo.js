@@ -9,6 +9,7 @@ import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 120px;
+  font-size: 15px;
   border-radius: 8px;
   background-color: rgb(40, 80, 15);
   border: none;
@@ -20,6 +21,7 @@ const RedButton = styled.button`
 
 const WhiteButton = styled.button`
   width: 95px;
+  font-size: 15px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid rgb(40, 80, 15);
@@ -119,7 +121,7 @@ const Userinfo = () => {
             }
           }}
         >
-          중복확인
+          중복 확인
         </RedButton>
       </div>
     </div>
@@ -156,7 +158,7 @@ const Userinfo = () => {
             });
           }}
         >
-          중복확인
+          중복 확인
         </RedButton>
       </div>
     </div>
@@ -252,8 +254,8 @@ const Userinfo = () => {
         </section>
         <section className="userinfo-page-right">
           <div className="userinfo-page-right-title">✨Welcome to Aldy✨</div>
-          <div className="userinfo-page-right-text">
-            Aldy와 함께 알고리즘 스터디를 키워보세요!
+          <div className="userinfo-page-right-sub-title">
+            알디에서 알고리즘 스터디를 하며 공룡을 키워보세요!
           </div>
           <img
             src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}
