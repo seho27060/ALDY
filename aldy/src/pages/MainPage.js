@@ -20,7 +20,8 @@ const RedButton = styled.button`
 `;
 
 const WhiteButton = styled.button`
-  width: 200px;
+  width: 170px;
+  height: 44px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
@@ -29,6 +30,8 @@ const WhiteButton = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   font-size: 20px;
+  margin: 12px;
+  font-family: "uhbeeBold";
 `;
 
 const MainPage = () => {
@@ -70,7 +73,7 @@ const MainPage = () => {
           <div className="board-image">
             <span>
               <img
-                src={process.env.PUBLIC_URL + "/blackboard.png"}
+                src={process.env.PUBLIC_URL + "/mainboardL.png"}
                 alt=""
               ></img>
             </span>
@@ -78,16 +81,21 @@ const MainPage = () => {
           <div className="board-title">
             ✨ 스터디 레벨에 따라 성장하는 공룡 ✨
           </div>
-          <div className="board-text">스터디원들과 함께 공룡을 키워봐요!</div>
+          <div className="board-text">
+            <div className="board-text">스터디원들과 함께 공룡을 키워봐요!</div>
+            <WhiteButton onClick={navigateSignUp}>
+              회원가입 하러가기
+            </WhiteButton>
+          </div>
         </div>
         <RedButton>스터디 생성하기</RedButton>
       </section>
       <section className="main-page-description">
-        <div className="section1-left" data-aos="fade-right">
-          <div className="main-page-description-title">
+        <div className="section1-left">
+          <div className="main-page-description-title" data-aos="fade-up">
             ALDY만의 코드리뷰 이용하기
           </div>
-          <div className="main-page-description-text">
+          <div className="main-page-description-text" data-aos="fade-up">
             <p>
               <span>문제풀이 과정을 </span>
               <span className="main-page-highlight">3단계로 세분화!</span>
@@ -96,6 +104,7 @@ const MainPage = () => {
               src={process.env.PUBLIC_URL + "/codereview4.png"}
               alt=""
               width="500px"
+              data-aos="fade-right"
             ></img>
           </div>
         </div>
@@ -160,7 +169,7 @@ const MainPage = () => {
               src={process.env.PUBLIC_URL + "/step3.gif"}
               alt=""
               width="200px"
-              style={{"paddingTop":"41px"}}
+              style={{ paddingTop: "41px" }}
             ></img>
           </div>
         </div>

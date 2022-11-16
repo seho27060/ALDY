@@ -10,7 +10,6 @@ section.main-page-banner {
   min-height: 650px;
   padding: 110px;
   user-select: none;
-
 }
 
 .main-page-banner > h1 {
@@ -107,14 +106,13 @@ h1 {
 
 .board-text {
   position: relative;
-  /* font-family: Pretendard, serif;
-  font-style: normal; */
   font-weight: 800;
   line-height: 150%;
   text-align: center;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 37px;
   font-family: "uhbeeBold";
+  margin-top: 5px;
 }
 
 .main-page-description-title {
@@ -129,7 +127,6 @@ h1 {
   /* margin-bottom: 10px; */
   background-color: #373737;
   user-select: none;
-
 }
 
 .main-page-highlight {
