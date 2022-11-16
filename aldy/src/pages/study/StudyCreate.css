@@ -21,8 +21,6 @@
 
 .study-create-page-bg {
   background: url(../../../public/auth_background.png) no-repeat 50% 50%;
-  height: calc(100vh - 100px);
-  overflow-x: hidden;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -32,6 +30,9 @@
   padding-left: 10%;
   padding-right: 5%;
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .study-create-info {
@@ -39,10 +40,11 @@
   font-weight: 300;
   text-align: start;
   margin-bottom: 5px;
+  margin-top: 40px;
 }
 
 .study-create-title {
-  margin-bottom: 70px;
+  margin-bottom: 30px;
   font-family: "KOFIHDrLEEJWTTF-B";
   font-style: normal;
   font-weight: 700;
@@ -57,7 +59,7 @@
 /* form */
 .study-create-form-title {
   text-align: left;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
   color: rgb(100, 100, 100);
   font-family: "GmarketSansMedium";
   font-weight: 500;
@@ -68,7 +70,7 @@
 .study-create-form-title > label {
   font-family: "GmarketSansMedium";
   font-size: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   padding-left: 3px;
 }
 
@@ -141,7 +143,7 @@ input[type="radio"] {
 }
 
 .study-create-submit-btn {
-  padding: 30px;
+  margin: 30px;
 }
 
 .study-create-btn:hover {
@@ -152,9 +154,11 @@ input[type="radio"] {
 
 /* 공룡 */
 .study-create-page-right {
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 50%;
 }
 
@@ -162,7 +166,7 @@ input[type="radio"] {
   font-family: "KOFIHDrLEEJWTTF-B";
   font-style: normal;
   font-weight: 700;
-  font-size: 60px;
+  font-size: 50px;
   color: #dcf0be;
 
   display: flex;
@@ -170,7 +174,6 @@ input[type="radio"] {
   align-items: center;
   text-align: center;
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.3);
-  margin-bottom: 10%;
   padding: 30px;
 
   /* border: 12px solid rgba(217, 174, 129, 1);
@@ -183,7 +186,7 @@ input[type="radio"] {
   font-family: "GmarketSansMedium";
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 25px;
   color: #ffffff;
 
   display: flex;
@@ -192,5 +195,5 @@ input[type="radio"] {
 }
 
 .study-create-page-right > img {
-  width: 600px;
+  width: 500px;
 }
