@@ -238,7 +238,7 @@ const Signup = () => {
                           err.response.status === 409
                             ? // alert("백준 회원이 아닙니다.");
                               // window.location.reload(); //새로고침
-                              setMessage("이미 가입 된 회원입니다.")
+                              setMessage("이미 가입된 회원입니다.")
                             : setMessage("백준 회원이 아닙니다.");
                           setAlertRefreshModalShow(true);
                         });

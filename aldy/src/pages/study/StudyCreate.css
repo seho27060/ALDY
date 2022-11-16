@@ -3,7 +3,9 @@
   box-shadow: inset 0 -15px 0 rgba(255, 225, 170, 1);
   width: fit-content;
   line-height: 42px;
+
   font-weight: 700;
+  font-family: "KOFIHDrLEEJWTTF-B";
 }
 
 .study-underline-green {
@@ -11,7 +13,9 @@
   box-shadow: inset 0 -15px 0 rgba(220, 240, 190, 1);
   width: fit-content;
   line-height: 42px;
+
   font-weight: 700;
+  font-family: "KOFIHDrLEEJWTTF-B";
 }
 
 /* study-create */

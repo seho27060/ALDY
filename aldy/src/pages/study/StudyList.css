@@ -1,16 +1,19 @@
 /* Top */
 section.study-list-banner {
-  background-color: rgba(250, 255, 230, 1);
   padding: 80px;
+  background-image: url(../../../public/study_list_bg.png);
+  min-height: 450px;
 }
 
 .study-list-banner > p {
   font-weight: 700;
   margin-bottom: 2px;
+  font-size: 18px;
 }
 
 .study-main-img {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
+  width: 220px;
 }
 
 .study-highlight-green {
@@ -26,7 +29,9 @@ section.study-list-banner {
 
 /* middle */
 .study-search {
-  margin: 50px;
+  margin-top: 120px;
+  margin-bottom: 50px;
+  padding: 0 15%;
 }
 
 .study-search > p {
@@ -48,7 +53,7 @@ section.study-list-banner {
 
 .search-bar {
   display: flex;
-  width: 80%;
+  width: 100%;
 }
 
 .form-control:focus {
@@ -91,8 +96,8 @@ section.study-list-banner {
 
 /* study list */
 .study-list {
-  width: 80%;
-  margin: 0 10%;
+  width: 70%;
+  margin: 0 15%;
   padding-bottom: 20px;
   margin-bottom: 50px;
   border-radius: 20px;
@@ -116,6 +121,7 @@ section.study-list-banner {
   transition: transform 30ms ease-in;
   width: 45%;
   padding: 15px;
+  margin-top: 10px;
 }
 
 .study-tab-active {
