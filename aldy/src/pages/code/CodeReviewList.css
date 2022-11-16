@@ -61,18 +61,32 @@ h2.underline-green {
 }
 
 button.correctBtn {
-  width: 150px;
+  /* width: 150px;
   border-radius: 8px;
   background-color: #e63246;
   border: none;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  transition: transform 30ms ease-in; */
+  width: 150px;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  border: 1px solid rgba(40, 80, 15, 1);
+  color: rgba(40, 80, 15, 1);
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-weight: bold;
+  font-size: 18px;
+  padding: 7px 0px 5px 0px;
+  transition: all 200ms ease-in;
 }
 
 button.correctBtn:hover {
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
+  background-color: rgba(40, 80, 15, 1);
+  color: white;
+  transition: all 200ms ease-in;
 }
 
 button.tabBtn {
