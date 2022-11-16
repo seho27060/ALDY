@@ -7,7 +7,7 @@ import { createStudy } from "../../api/study";
 import Select from "react-select";
 import AlertModal from "../../components/AlertModal";
 
-const RedButton = styled.button`
+const GreenButton = styled.button`
   width: 200px;
   border-radius: 8px;
   background-color: white;
@@ -182,9 +182,12 @@ const StudyCreate = () => {
               ></Select>
             </div>
             <div className="study-create-submit-btn">
-              <RedButton className="study-create-btn" onClick={createNewStudy}>
+              <GreenButton
+                className="study-create-btn"
+                onClick={createNewStudy}
+              >
                 스터디 생성하기
-              </RedButton>
+              </GreenButton>
             </div>
           </form>
         </section>

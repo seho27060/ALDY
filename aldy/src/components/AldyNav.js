@@ -20,17 +20,25 @@ import "./AldyNav.css";
 import styled from "styled-components";
 import AlertModal from "../components/AlertModal";
 
-const RedButton = styled.button`
-  width: 170px;
+const WhiteRedButton = styled.button`
+  width: 120px;
   border-radius: 8px;
-  background-color: red;
-  border: none;
+  background-color: white;
   outline: none;
-  color: white;
+  border: 2px solid red;
+  color: red;
+  font-family: "GmarketSansMedium";
   font-weight: bold;
-  transition: transform 30ms ease-in;
-  margin-left: 20px;
+  font-size: 15px;
+  padding: 5px 0px 3px 0px;
+  transition: all 200ms ease-in;
+  margin: 3px 5px 0px 20px;
   user-select: none;
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const AldyNav = () => {
@@ -180,7 +188,7 @@ const AldyNav = () => {
                       onClick={() => {
                         sessionStorage.clear();
                         setLogged(false);
-                        setMessage("로그아웃되었습니다.");
+                        setMessage("로그아웃 되었습니다.");
                         setAlertModalShow(true);
                         navigateMain();
                       }}
@@ -191,16 +199,16 @@ const AldyNav = () => {
                   </NavDropdown>
                 </div>
               ) : (
-                <RedButton
+                <WhiteRedButton
                   onClick={() => {
                     navigateLogin();
                   }}
                 >
                   로그인
-                </RedButton>
+                </WhiteRedButton>
               )}
             </Nav>
-            {!userObject ? <RedButton>로그인</RedButton> : ""}
+            {!userObject ? <WhiteRedButton>로그인</WhiteRedButton> : ""}
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
