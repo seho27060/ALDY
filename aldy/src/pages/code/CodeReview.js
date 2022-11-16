@@ -389,7 +389,8 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={() => {
-                if (typeof(submitOneTwoThree.code) === 'object') {
+                console.log(submitOneTwoThree)
+                if (submitOneTwoThree.code.length === 0) {
                   setMessage('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
                   setAlertModalShow(true)
                 } else {
@@ -414,9 +415,9 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
-                if (submitOneTwoThree.length === 0) {
+                if (submitOneTwoThree.code.length === 0) {
                   setMessage('입력된 내용이 없습니다.')
-                  alertModalShow(true)
+                  setAlertModalShow(true)
                 } else {
                   saveCode(submitOneTwoThree)
                   .then((res)=>{
