@@ -76,8 +76,8 @@ const CodeCorrect = () => {
       </section>
       <section className="correct-board">
         <div className="correct-board-title">
-          <p style={{ margin: "0 25px" }}>✨ {problemId}번</p>
-          <p style={{ margin: "0 25px" }}>{problemName} ✨</p>
+          <p style={{ margin: "0 25px", fontFamily:'uhbeeBold', fontSize:'28px' }}>✨ {problemId}번</p>
+          <p style={{ margin: "0 25px", fontFamily:'uhbeeBold', fontSize:'28px' }}>{problemName} ✨</p>
         </div>
         <div className="correct-language-select">
           <select name='language' id='language-select' onChange={(e)=>{setLanguage(e.target.value)}}>

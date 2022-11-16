@@ -246,9 +246,9 @@ const CodeReview = () => {
       </section>
       <section className="review-board">
         <div className="review-title">
-          <p style={{ margin: "0 25px" }}>✨ {studyName}</p>
-          <p style={{ margin: "0 25px" }}>{problemNum}번</p>
-          <p style={{ margin: "0 25px" }}>{problemName} ✨</p>
+          <p style={{ margin: "0 25px", fontFamily:'uhbeeBold', fontSize:'24px' }}>✨ {studyName}</p>
+          <p style={{ margin: "0 25px", fontFamily:'uhbeeBold', fontSize:'24px' }}>{problemNum}번</p>
+          <p style={{ margin: "0 25px", fontFamily:'uhbeeBold', fontSize:'24px' }}>{problemName} ✨</p>
         </div>
         <div className="review-language-select">
           <select name='language' id='language-select' onChange={(e)=>{setLanguage(e.target.value)}}>
@@ -262,8 +262,9 @@ const CodeReview = () => {
         </div>
         <div className="review-content">
           <div className="review-step">
-            <p style={{ fontSize: "20px" }}>✨코드리뷰 단계✨</p>
+            <p style={{ fontSize: "24px", fontFamily:'uhbeeBold' }}>✨코드리뷰 단계✨</p>
             <button
+              style={{fontFamily:'uhbeeBold', fontSize: "22px"}}
               className={`review-step-btn ${step === 1 ? "act" : ""}`}
               onClick={() => {
                 setStep(1);
@@ -272,6 +273,7 @@ const CodeReview = () => {
               1단계
             </button>
             <button
+            style={{fontFamily:'uhbeeBold', fontSize: "22px"}}
               className={`review-step-btn ${step === 2 ? "act" : ""}`}
               onClick={() => {
                 setStep(2);
@@ -288,6 +290,7 @@ const CodeReview = () => {
               3단계
             </button> */}
             <button
+            style={{fontFamily:'uhbeeBold', fontSize: "22px"}}
               className={`review-step-btn ${step === 3 ? "act" : ""}`}
               onClick={() => {
                 setStep(3)
@@ -386,10 +389,10 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={() => {
-                if (typeof(submitOneTwoThree.code) === 'object') {
+                console.log(submitOneTwoThree)
+                if (submitOneTwoThree.code.length === 0) {
                   setMessage('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
                   setAlertModalShow(true)
-                  // alert('코드에 변경사항이 없습니다. 수정 후 제출해주세요')
                 } else {
                   saveCode(submitOneTwoThree)
                   .then((res) => {
@@ -398,7 +401,6 @@ const CodeReview = () => {
                   .catch((err) => {
                     setMessage('1단계 코드를 먼저 작성하고 2단계를 작성해주세요.')
                     setAlertModalShow(true)
-                    console.log('2단계 제출에러',err)
                   })
                 }
               }}
@@ -413,9 +415,9 @@ const CodeReview = () => {
               className="reviewBtn"
               onClick={() => {
                 // 제출하는 axios 요청 추가
-                if (submitOneTwoThree.length === 0) {
+                if (submitOneTwoThree.code.length === 0) {
                   setMessage('입력된 내용이 없습니다.')
-                  alertModalShow(true)
+                  setAlertModalShow(true)
                 } else {
                   saveCode(submitOneTwoThree)
                   .then((res)=>{
