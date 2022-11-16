@@ -21,7 +21,6 @@ const RedButton = styled.button`
 
 const WhiteButton = styled.button`
   width: 170px;
-  height: 46px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
@@ -121,14 +120,19 @@ const MainPage = () => {
         <img
           src={process.env.PUBLIC_URL + "/joystick.gif"}
           alt=""
-          width="150px"
+          style={{ width: "150px", margin: "25px" }}
         ></img>
         <div className="aldy_step_info_text">
           알디는 게이미피케이션을 활용하여 스터디를 진행합니다.
         </div>
       </section>
-      <div className="main-page-description-title">ALDY의 메인 캐릭터 소개</div>
-      <section className="main-page-description">
+      <div
+        className="main-page-description-title"
+        style={{ paddingTop: "80px" }}
+      >
+        ALDY의 메인 캐릭터 소개
+      </div>
+      <section className="main-page-description-aldylist">
         <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-text">
             <p>
@@ -186,11 +190,13 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      <section className="main-page-description"></section>
-      <div className="main-page-description-title">
+      <div
+        className="main-page-description-title"
+        style={{ paddingTop: "80px" }}
+      >
         ALDY에 접속한지 오래되었을 경우
       </div>
-      <section className="main-page-description">
+      <section className="main-page-description-aldylist">
         <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-text">
             <p>
