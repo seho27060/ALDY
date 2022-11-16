@@ -5,6 +5,7 @@ import "./StudyCreate.css";
 import styled from "styled-components";
 import { createStudy } from "../../api/study";
 import Select from "react-select";
+import AlertModal from "../../components/AlertModal";
 
 const RedButton = styled.button`
   width: 200px;
@@ -38,6 +39,9 @@ const StudyCreate = () => {
     { value: 6, label: 6 },
   ];
   const tierSelectOption = TierSelect.filter((item) => item.value <= myTier);
+  // alert Modal
+  const [message, setMessage] = useState("");
+  const [alertModalShow, setAlertModalShow] = useState(false);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -60,18 +64,36 @@ const StudyCreate = () => {
   // 스터디 생성
   const createNewStudy = async (e) => {
     e.preventDefault();
-    await createStudy(newStudy)
-      .then((res) => {
-        console.log(res.data);
-        navigate(`/study/detail/${res.data.id}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (
+      newStudy.name &&
+      newStudy.introduction &&
+      newStudy.threshold &&
+      newStudy.upperLimit &&
+      newStudy.visibility
+    ) {
+      await createStudy(newStudy)
+        .then((res) => {
+          console.log(res.data);
+          navigate(`/study/detail/${res.data.id}`);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setMessage("스터디 정보를 모두 입력해주세요.");
+      setAlertModalShow(true);
+    }
   };
 
   return (
     <main className="study-create-page-main">
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => {
+          setAlertModalShow(false);
+        }}
+        message={message}
+      />
       <div className="study-create-page-bg">
         <section className="study-create-page-left">
           <div className="study-create-info">

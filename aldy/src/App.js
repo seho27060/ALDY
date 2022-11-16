@@ -18,6 +18,7 @@ import CodeReviewList from "./pages/code/CodeReviewList";
 import AldyNav from "./components/AldyNav";
 import AldyFooter from "./components/AldyFooter";
 import MoveTopBtn from "./components/MoveTopBtn";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route element={<CodeReviewList />} path="/review/list"></Route>
         <Route element={<CodeCorrect />} path="/correct"></Route>
         <Route element={<CodeReview />} path="/review"></Route>
+        <Route element={<PageNotFound />} path="*"></Route>
       </Routes>
       <MoveTopBtn />
       <AldyFooter />
