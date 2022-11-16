@@ -22,27 +22,42 @@ import AlertModal from "../../components/AlertModal";
 import { FcLock } from "react-icons/fc";
 
 const RedButton = styled.button`
-  width: 80px;
+  width: 90px;
   border-radius: 8px;
   background-color: red;
-  border: none;
+  border: 2px solid red;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  padding: 4px 0px 2px 0px;
   font-size: 12px;
-  padding: 3px;
+  transition: all 200ms ease-in;
+  user-select: none;
+  &:hover {
+    background-color: white;
+    color: red;
+    transition: all 200ms ease-in;
+    border: 2px solid red;
+  }
 `;
 
 const WhiteButton = styled.button`
-  width: 120px;
+  width: 110px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
   outline: none;
   color: red;
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  font-size: 14px;
+  padding: 4px 0px 2px 0px;
+  transition: all 200ms ease-in;
+  user-select: none;
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const StudyDetail = () => {
@@ -76,6 +91,7 @@ const StudyDetail = () => {
     level: 0,
     activationLevel: 0,
   });
+  const keys = Object.keys(studyDetail.statsByTag);
 
   // 달력 날짜
   const [date, setDate] = useState(new Date());
@@ -156,6 +172,8 @@ const StudyDetail = () => {
       });
   }, [date]);
 
+  console.log(studyDetail.statsByTag, "아");
+
   return (
     <main style={{ userSelect: "none" }}>
       <AlertModal
@@ -170,9 +188,16 @@ const StudyDetail = () => {
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
             <div>
-              <h3 className="study-title-orange">
+              <div
+                className="study-underline-orange"
+                style={{
+                  lineHeight: "35px",
+                  fontSize: "25px",
+                  marginBottom: "10px",
+                }}
+              >
                 <span>✨{studyDetail.name}✨</span>
-              </h3>
+              </div>
             </div>
             <div>
               <button
@@ -213,7 +238,7 @@ const StudyDetail = () => {
         <div className="study-detail-description">
           코드 리뷰를 통해 공룡을 키워보세요~
         </div>
-        <h1 className="study-title">{studyDetail.name}</h1>
+        <div className="study-title">{studyDetail.name}</div>
         <div className="study-detail-banner">
           <div
             className="study-description-detail"
@@ -223,9 +248,17 @@ const StudyDetail = () => {
           >
             <img src="/pencil.png" alt="연필 이미지"></img>
             <div>알고리즘 코드리뷰</div>
-            <h4 className="study-detail-top-info">
-              <span>오늘의 문제 풀어보기</span>
-            </h4>
+            <div
+              className="study-underline-green"
+              style={{
+                margin: "auto",
+                lineHeight: "35px",
+                fontSize: "25px",
+                marginBottom: "10px",
+              }}
+            >
+              오늘의 문제 풀어보기
+            </div>
           </div>
           <div
             className="study-description-detail"
@@ -233,9 +266,17 @@ const StudyDetail = () => {
           >
             <img src="/code_person.png" alt="코딩하는사람"></img>
             <div>함께 푼 문제 수 확인하기</div>
-            <h4 className="study-detail-top-info">
-              <span>스터디원 살펴보기</span>
-            </h4>
+            <div
+              className="study-underline-green"
+              style={{
+                margin: "auto",
+                lineHeight: "35px",
+                fontSize: "25px",
+                marginBottom: "10px",
+              }}
+            >
+              스터디원 살펴보기
+            </div>
           </div>
           <div
             className="study-description-detail"
@@ -243,9 +284,17 @@ const StudyDetail = () => {
           >
             <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
-            <h4 className="study-detail-top-info">
-              <span>내게 요청 온 목록</span>
-            </h4>
+            <div
+              className="study-underline-green"
+              style={{
+                margin: "auto",
+                lineHeight: "35px",
+                fontSize: "25px",
+                marginBottom: "10px",
+              }}
+            >
+              내게 요청 온 목록
+            </div>
           </div>
         </div>
         {studyDetail.isMember && myId !== studyDetail.leaderBaekjoonId && (
@@ -258,15 +307,20 @@ const StudyDetail = () => {
         <div style={{ width: "50%" }}>
           <img
             className="study-detail-img"
-            // src="/dinosaur_hello.gif"
             src={ActivationLevel[studyDetail.activationLevel]}
             alt="스터디 메인 이미지"
           ></img>
-          <h1 className="study-detail-top-info">
-            <span>
-              안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
-            </span>
-          </h1>
+          <div
+            className="study-underline-green"
+            style={{
+              margin: "auto",
+              lineHeight: "35px",
+              fontSize: "35px",
+              marginBottom: "10px",
+            }}
+          >
+            안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
+          </div>
           <div className="dinosaur-description">
             지금 우리 스터디{" "}
             <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
@@ -283,9 +337,17 @@ const StudyDetail = () => {
           <span className="study-detail-number">
             스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
           </span>
-          <h3 className="study-title-orange">
-            <span>{studyDetail.name}</span>
-          </h3>
+          <div
+            className="study-underline-orange"
+            style={{
+              alignSelf: "center",
+              lineHeight: "35px",
+              fontSize: "30px",
+              margin: "10px",
+            }}
+          >
+            {studyDetail.name}
+          </div>
           <div className="study-detail-rank">
             <img
               src={`https://d2gd6pc034wcta.cloudfront.net/tier/${studyDetail.threshold}.svg`}
@@ -295,7 +357,9 @@ const StudyDetail = () => {
             {TierData[studyDetail.threshold]}
           </div>
           <div className="description">
-            <div>✨ 스터디 소개 ✨</div>
+            <div>
+              <b>✨스터디 소개✨</b>
+            </div>
             {studyDetail.introduction}
           </div>
         </div>
@@ -333,19 +397,34 @@ const StudyDetail = () => {
         </div>
         <div className="study-detail-bottom-right">
           {studyDetail.isMember ? (
-            <div className="study-detail-graph">
-              <div>
-                <h5 className="study-title-orange">
-                  <span>카테고리 별 푼 문제</span>
-                </h5>
-                <StudyChart studyData={studyDetail.statsByTag} />
+            <div className="study-detail-graph-box">
+              <div
+                className="study-underline-orange"
+                style={{
+                  alignSelf: "center",
+                  lineHeight: "35px",
+                  fontSize: "25px",
+                  marginBottom: "20px",
+                }}
+              >
+                선정된 문제
               </div>
-              <div>
-                <h5 className="study-title-orange">
-                  <span>난이도 별 푼 문제</span>
-                </h5>
-                <StudyChart studyData={studyDetail.statsByTier} />
-              </div>
+              {keys.length ? (
+                <div className="study-detail-graph">
+                  <div>
+                    <div className="study-title-graph">카테고리 별</div>
+                    <StudyChart studyData={studyDetail.statsByTag} />
+                  </div>
+                  <div>
+                    <div className="study-title-graph">난이도 별</div>
+                    <StudyChart studyData={studyDetail.statsByTier} />
+                  </div>
+                </div>
+              ) : (
+                <div style={{ margin: "110px", fontSize: "20px" }}>
+                  선정된 문제가 없습니다.
+                </div>
+              )}
             </div>
           ) : (
             <div className="calendar-lock" style={{ marginTop: "20px" }}>

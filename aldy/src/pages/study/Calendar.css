@@ -1,6 +1,6 @@
 .react-calendar {
   /* width: 350px; */
-  min-height: 100%;
+  min-height: calc(100% - 25px);
   /* width: 50%; */
   background: #fffaf0;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
@@ -41,6 +41,11 @@
   height: 44px;
   margin-bottom: 1em;
 }
+.react-calendar__navigation > button:nth-child(1),
+.react-calendar__navigation > button:nth-child(5) {
+  display: none;
+}
+
 .react-calendar__navigation button {
   min-width: 44px;
   background: none;
@@ -100,11 +105,11 @@
   border-radius: 15px;
 }
 .react-calendar__tile--now > abbr {
-  /* background: linear-gradient(
+  background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0) 50%,
     rgba(255, 225, 170, 1) 50%
-  ); */
+  );
   font-weight: 900;
 }
 .react-calendar__tile--now {
