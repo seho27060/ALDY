@@ -15,7 +15,13 @@ const StudyListItem = (props) => {
   return (
     <div className="study-list-item">
       <div className="study-list-title">
-        <div className="study-id">공룡</div>
+        <div className="study-id">
+          <img
+            src={process.env.PUBLIC_URL + `/aldyhead${props.num + 1}.png`}
+            alt=""
+            width="100%"
+          ></img>
+        </div>
         {`${props.item.visibility}` === "1" ? (
           <div className="not-secret-study">공개</div>
         ) : (

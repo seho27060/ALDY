@@ -15,7 +15,6 @@
   display: flex;
   align-items: center;
   width: 40%;
-
 }
 .Mypage-section1-userInfo-h2 {
   padding-left: 3%;
@@ -96,4 +95,10 @@
 }
 .Algorithm-category {
   word-break: keep-all;
+}
+
+section.myPage-list-banner {
+  padding: 80px;
+  background-color: #fffaf0;
+  min-height: 450px;
 }

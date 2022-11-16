@@ -142,7 +142,7 @@ const StudyList = () => {
         </p>
         <div
           className="study-underline-green"
-          style={{ margin: "auto", fontSize: "35px" }}
+          style={{ margin: "auto", fontSize: "45px" }}
         >
           지금 바로 스터디를 만들어보세요!
         </div>
@@ -238,7 +238,7 @@ const StudyList = () => {
           {tab === "studyListAll" && (
             <div className="study-list-box">
               {studyList?.map((item, i) => (
-                <StudyListItem key={i} item={item} />
+                <StudyListItem key={i} item={item} num={i} />
               ))}
               <Paging
                 page={studyPageNum}
@@ -250,7 +250,7 @@ const StudyList = () => {
           {tab === "studyListMy" && (
             <div className="study-list-box">
               {myStudyList?.map((item, i) => (
-                <MyStudyListItem key={i} item={item} />
+                <MyStudyListItem key={i} item={item} num={i} />
               ))}
               <Paging
                 page={myStudyPageNum}
