@@ -304,7 +304,10 @@ const StudyDetail = () => {
         )}
       </section>
       <section className="study-detail-middle">
-        <div style={{ width: "50%" }}>
+        <div
+          className="study-detail-aldy"
+          style={{ width: "50%", display: "flex", flexDirection: "colunm" }}
+        >
           <img
             className="study-detail-img"
             src={ActivationLevel[studyDetail.activationLevel]}
@@ -313,7 +316,7 @@ const StudyDetail = () => {
           <div
             className="study-underline-green"
             style={{
-              margin: "auto",
+              margin: "10px auto",
               lineHeight: "35px",
               fontSize: "35px",
               marginBottom: "10px",
@@ -358,9 +361,34 @@ const StudyDetail = () => {
           </div>
           <div className="description">
             <div>
-              <b>✨스터디 소개✨</b>
+              <div style={{ marginBottom: "5px" }}>
+                <b>✨스터디 소개✨</b>
+              </div>
+              {studyDetail.introduction.split("\n").map((line) => {
+                //this.props.data.content: 내용
+                return (
+                  <span>
+                    {line}
+                    <br />
+                  </span>
+                );
+              })}
+              <hr style={{ margin: "5px 0px 15px 0px" }} />
+              <div style={{ marginBottom: "5px" }}>
+                <b>🔔스터디 공지🔔</b>
+              </div>
+              <div style={{ color: "rgb(80,80,80)", fontSize: "15px" }}>
+                코드 리뷰 요청 혹은 응답 시 알림 메일이 전송됩니다.
+              </div>
+              <div style={{ color: "red", marginTop: "15px" }}>
+                경고(패널티)🚦
+              </div>
+              <div style={{ color: "rgb(80,80,80)", fontSize: "15px" }}>
+                정해진 날짜까지 문제 1단계를 제출 안했을 시<br></br>
+                코드 리뷰 요청을 받고 일주일 안에 응답 안했을 시<br></br>총 경고
+                3회 받을 경우 스터디에서 자동으로 강제 퇴장
+              </div>
             </div>
-            {studyDetail.introduction}
           </div>
         </div>
       </section>

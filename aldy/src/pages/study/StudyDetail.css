@@ -314,3 +314,10 @@
   align-items: center;
   justify-content: center;
 }
+
+.study-detail-aldy {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
