@@ -153,6 +153,7 @@ const Userinfo = () => {
                 // console.log(nicknameInput.current.value);
                 // window.location.reload(); //새로고침
                 setMessage("닉네임 변경이 완료 되었습니다.");
+                sessionStorage.setItem("nickname", sendNickname.nickname);
                 setAlertRefreshModalShow(true);
               } else {
                 // alert("중복 된 닉네임입니다. 다시 입력해주세요.");
@@ -249,7 +250,7 @@ const Userinfo = () => {
                   style={{ color: "rgb(40, 80, 15)" }}
                   onClick={onClickWithdraw}
                 >
-                  회원 탈퇴
+                  회원 탈퇴😥
                 </div>
               </div>
             </div>
