@@ -226,7 +226,7 @@ const StudySelect = () => {
       <div style={{ margin: "0px 10%", textAlign: "end" }}>
         <WhiteButton onClick={searchProblem}>검색</WhiteButton>
       </div>
-      <div className="search-box">
+      <div className="search-box" style={{ margin: "50px 10%" }}>
         <div className="d-flex search-bar">
           <Form.Control
             type="search"

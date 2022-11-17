@@ -85,7 +85,7 @@
 
 .study-create-input {
   border: none;
-  border-bottom: 1px solid rgb(200, 200, 200);
+  border-bottom: 2px solid rgb(200, 200, 200);
   width: 100%;
   font-size: 20px;
   padding-bottom: 3px;
@@ -99,7 +99,7 @@
 
 .study-create-input:focus {
   outline: none;
-  border-bottom: 1px solid rgb(100, 100, 100);
+  border-bottom: 2px solid rgb(100, 100, 100);
   transition: all 200ms ease-in;
 }
 

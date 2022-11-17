@@ -14,22 +14,23 @@
 }
 
 .login-page-left {
-  padding-left: 10%;
+  margin-left: 10%;
+  margin-right: 5%;
   user-select: none;
+  width: 40%;
 }
 
-.nnnnnn {
-  padding-bottom: 30px;
-  font-family: "Noto Sans KR";
+.login-title {
+  padding-bottom: 40px;
+  font-family: "KOFIHDrLEEJWTTF-B";
   font-style: normal;
   font-weight: 900;
-  font-size: 40px;
+  font-size: 45px;
   line-height: 58px;
   /* identical to box height */
 
   display: flex;
   align-items: center;
-  letter-spacing: -0.005em;
 
   color: #000000;
 
@@ -37,14 +38,15 @@
 }
 
 .login-page-right {
-  padding-left: 12%;
+  margin-left: 7%;
   /* align-items: center; */
   align-items: center;
   user-select: none;
+  width: 40%;
 }
 
 .login-page-right-title {
-  font-family: "Merriweather Sans";
+  font-family: "KOFIHDrLEEJWTTF-B";
   font-style: normal;
   font-weight: 700;
   font-size: 65px;
@@ -57,10 +59,10 @@
   padding-bottom: 10px;
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
   user-select: none;
+  white-space: nowrap;
 }
 
 .login-page-right-text {
-  font-family: "Merriweather Sans";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -70,14 +72,14 @@
   letter-spacing: -0.005em;
   color: #ffffff;
   width: 300px;
+  margin-left: 20px;
   text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
 }
 
-.form-title {
+.login-form-title {
   text-align: left;
-  padding: 20px;
+  /* padding: 20px; */
   color: #787878;
-  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -104,23 +106,22 @@ input:focus {
 
 .login-page-join {
   display: flex;
-  font-family: "Noto Sans";
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 22px;
 }
 
 .login-page-link {
   display: flex;
-  font-family: "Noto Sans";
   font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
+  font-weight: 300;
+  font-size: 18px;
   line-height: 22px;
-  color: #2b6e30;
+  color: #000000;
   padding-left: 3px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .join-btn {
