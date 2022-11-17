@@ -8,6 +8,8 @@ import { recommendation } from "../../api/user";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
+import Lottie from "lottie-react";
+import reload from "../../lotties/reload.json";
 
 const WhiteButton = styled.button`
   width: 110px;
@@ -22,7 +24,7 @@ const WhiteButton = styled.button`
 `;
 
 const WhiteButtonL = styled.button`
-  width: 200px;
+  width: 203px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid rgb(40, 80, 15);
@@ -32,6 +34,7 @@ const WhiteButtonL = styled.button`
   transition: transform 30ms ease-in;
   font-size: 20px;
   margin: 10px;
+  padding-top: 5px;
 `;
 
 const Mypage = () => {
@@ -238,16 +241,26 @@ const Mypage = () => {
           </div>
           <div className="Mypage-recommend-box-content">
             <div className="Mypage-recommend-box-content-text">
-              <div>맞힌 사람 : {acceptedUserCount}명</div>
-              <div>알고리즘 종류 : {algorithm}</div>
-              <div>평균 시도 : {averageTries}회</div>
+              <div>👩🏻‍💻맞힌 사람 : {acceptedUserCount}명</div>
+              <div>🧮알고리즘 종류 : {algorithm}</div>
+              <div>📊평균 시도 : {averageTries}회</div>
               {/* <div>티어 : {level}</div> */}
               {/* <div>문제 번호 : {problemId}번</div> */}
             </div>
           </div>
         </div>
-        <div>
-          <WhiteButtonL onClick={newRecommend}>새로운 문제 추천</WhiteButtonL>
+        <div className="mypage-reload-Btn">
+          <WhiteButtonL
+            onClick={newRecommend}
+            style={{ display: "flex", paddingLeft: "12px" }}
+          >
+            새로운 문제 추천
+            <Lottie
+              animationData={reload}
+              onClick={newRecommend}
+              style={{ width: "30px", cursor: "pointer" }}
+            ></Lottie>
+          </WhiteButtonL>
           <WhiteButtonL onClick={mvBoj}>문제 풀러 가기!</WhiteButtonL>
         </div>
       </section>
