@@ -21,7 +21,7 @@ const RedButton = styled.button`
 `;
 
 const WhiteButton = styled.button`
-  width: 170px;
+  width: 180px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
@@ -29,8 +29,8 @@ const WhiteButton = styled.button`
   color: red;
   font-weight: bold;
   transition: transform 30ms ease-in;
-  font-size: 20px;
-  margin: 2px;
+  font-size: 24px;
+  margin: 4px;
   font-family: "uhbeeBold";
 `;
 
@@ -63,8 +63,8 @@ const MainPage = () => {
   };
 
   const navigateStudy = () => {
-    navigate('study/list')
-  }
+    navigate("study/list");
+  };
   return (
     <main>
       <MoveBar></MoveBar>
@@ -74,11 +74,11 @@ const MainPage = () => {
         <br></br>
         <div className="main-page-banner-text">코드리뷰를 통해 공룡 키우기</div>
         <h1>ALDY</h1>
-        <div className="board">
+        <div className="board" style={{ margin: "30px" }}>
           <div className="board-image">
             <span>
               <img
-                src={process.env.PUBLIC_URL + "/mainboardL.png"}
+                src={process.env.PUBLIC_URL + "/mainboardLL.png"}
                 alt=""
               ></img>
             </span>
@@ -88,9 +88,13 @@ const MainPage = () => {
           </div>
           <div className="board-text">
             <div className="board-text">스터디원들과 함께 공룡을 키워봐요!</div>
-            {logged ? <WhiteButton onClick={navigateStudy}>스터디하러 가기</WhiteButton> : <WhiteButton onClick={navigateSignUp}>
-              회원가입 하러가기
-            </WhiteButton>}
+            {logged ? (
+              <WhiteButton onClick={navigateStudy}>스터디하러 가기</WhiteButton>
+            ) : (
+              <WhiteButton onClick={navigateSignUp}>
+                회원가입 하러가기
+              </WhiteButton>
+            )}
           </div>
         </div>
       </section>
@@ -141,7 +145,10 @@ const MainPage = () => {
       >
         ALDY의 메인 캐릭터 소개
       </div>
-      <section className="main-page-description-aldylist" id="main-page-description-aldylist">
+      <section
+        className="main-page-description-aldylist"
+        id="main-page-description-aldylist"
+      >
         <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-text">
             <p>
@@ -234,7 +241,9 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      <section className="main-page-study-description">이곳에 스터디 설명을 작성하세요</section>
+      <section className="main-page-study-description">
+        이곳에 스터디 설명을 작성하세요
+      </section>
     </main>
   );
 };
