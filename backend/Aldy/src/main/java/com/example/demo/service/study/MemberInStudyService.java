@@ -25,4 +25,6 @@ public interface MemberInStudyService {
 
     void checkLeader(MemberInStudyDto memberInStudyDto);
 
+    void sendMessage(MemberInStudyDto memberInStudyDto);
+
 }

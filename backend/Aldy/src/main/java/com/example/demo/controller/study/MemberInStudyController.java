@@ -78,6 +78,8 @@ public class MemberInStudyController {
 
         MemberInStudyDto memberInStudyDto = memberInStudyService.changeAuth(requestDto, loginMember, 2);
 
+        memberInStudyService.sendMessage(memberInStudyDto);
+
         return new ResponseEntity<>(memberInStudyDto, HttpStatus.OK);
 
     }

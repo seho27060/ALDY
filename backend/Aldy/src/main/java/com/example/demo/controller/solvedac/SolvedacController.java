@@ -38,10 +38,10 @@ public class SolvedacController {
     public ResponseEntity<SolvedacSearchProblemDto> filterProblem(
             @RequestParam(required = false) List<String> algoList,
             @RequestParam(required = false) List<Integer> tierList,
-            @RequestParam(required = false) List<String> backjoonIdList,
+            @RequestParam(required = false) List<String> baekjoonIdList,
             @RequestParam(defaultValue = "1") int page) {
 
-        SolvedacSearchProblemDto problemFilterDto = solvedacService.filter(algoList, tierList, backjoonIdList, page);
+        SolvedacSearchProblemDto problemFilterDto = solvedacService.filter(algoList, tierList, baekjoonIdList, page);
 
         return new ResponseEntity<>(problemFilterDto, HttpStatus.OK);
 
