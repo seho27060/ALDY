@@ -17,6 +17,8 @@ public class EmailServiceImpl {
     private String title_type_1 = "알디 코드 리뷰 요청 메일 알림";
     private String title_type_2 = "알디 코드 리뷰 응답 메일 알림";
     private String title_type_3 = "알디 스터디 강퇴 알림 메일";
+    private String title_type_4 = "알디 스터디 가입 신청 알림 메일";
+    private String title_type_5 = "알디 스터디 가입 완료 알림 메일";
     private String template_1 ="안녕하세요, %s 님. 알고리즘 코드 리뷰 서비스 알디입니다.\n" +
             "이 메일은 알디에서 자동으로 발송된 이메일입니다.\n" +
             "%s 스터디에서 %s 님이 보내신 코드 리뷰 요청이 도착했습니다. 일주일 안에 코드 리뷰에 응답해주시길 바랍니다.";
@@ -27,6 +29,14 @@ public class EmailServiceImpl {
     private String template_3 ="안녕하세요, %s 님. 알고리즘 코드 리뷰 서비스 알디입니다.\n" +
             "이 메일은 알디에서 자동으로 발송된 이메일입니다.\n" +
             "%s 님께서 속하신 %s 스터디에서 3회 코드 리뷰 무응답으로 인해 추방되었음을 알려드립니다.";
+
+    private String template_4 ="안녕하세요, %s 님. 알고리즘 코드 리뷰 서비스 알디입니다.\n" +
+            "이 메일은 알디에서 자동으로 발송된 이메일입니다.\n" +
+            "%s 님께서 스터디장이신 %s 스터디에 스터디원 가입 요청이 왔음을 알려드립니다.";
+
+    private String template_5 ="안녕하세요, %s 님. 알고리즘 코드 리뷰 서비스 알디입니다.\n"+
+            "이 메일은 알디에서 자동으로 발송된 이메일입니다.\n" +
+            "%s 님께서 가입 신청하신 %s 스터디에 가입이 완료되었음을 알려드립니다.";
 
 //    메일 발송 핵심 기능을 맡고 있는 함수
     public void sendSimpleMessage(MailDto mailDto) {
@@ -55,13 +65,28 @@ public class EmailServiceImpl {
                         mailDto.getReceiverNickname(),
                         mailDto.getStudyName());
                 break;
+            case "apply":
+                title = title_type_4;
+                text = String.format(template_4, mailDto.getReceiverNickname(),
+                        mailDto.getReceiverNickname(),
+                        mailDto.getStudyName());
+                break;
+            case "approve":
+                title = title_type_5;
+                text = String.format(template_5, mailDto.getReceiverNickname(),
+                        mailDto.getReceiverNickname(),
+                        mailDto.getStudyName());
+                break;
         }
-        System.out.println(text);
+//        System.out.println(text);
         message.setSubject(title);
         message.setText(text);
         emailSender.send(message);
         }
-        // 실제 서비스단에서 코드 리뷰 요청, 응답 시 메일 발송 함수
+//  밑에 4개의 함수들은 어차피 type에 따라 내용이 결정된다. 따라서 함수들을 1개로 만들어서 재활용할 수도 있음.
+
+
+    // 실제 서비스단에서 코드 리뷰 요청, 응답 시 메일 발송 함수
     @Async
     public void sendCodeAlertEmail(Study study, String mail_address, String sender_nickname, String receiver_nickname, String type){
         MailDto mailDto = MailDto.builder()
@@ -85,4 +110,29 @@ public class EmailServiceImpl {
                 .build();
         sendSimpleMessage(mailDto);
     }
+    // 실제 서비스단에서 스터디 가입 신청 시 스터디장에게 메일 발송하는 함수,
+    @Async
+    public void sendApplicationMail(Study study, String mail_address, String receiver_nickname, String type){
+        type = "apply";
+        MailDto mailDto = MailDto.builder()
+                .studyName(study.getName())
+                .address(mail_address)
+                .receiverNickname(receiver_nickname)
+                .type(type)
+                .build();
+        sendSimpleMessage(mailDto);
+    }
+    @Async
+    public void sendApproveMail(Study study, String mail_address, String receiver_nickname, String type){
+        type = "approve";
+        MailDto mailDto = MailDto.builder()
+                .studyName(study.getName())
+                .address(mail_address)
+                .receiverNickname(receiver_nickname)
+                .type(type)
+                .build();
+        sendSimpleMessage(mailDto);
+    }
+
+
 }

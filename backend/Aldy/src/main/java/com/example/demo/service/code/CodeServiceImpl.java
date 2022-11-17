@@ -61,7 +61,7 @@ public class CodeServiceImpl implements CodeService {
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member writer = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         List<Code> codeList = codeRepository.findByStudy_idAndProblem_idAndWriter_id(study_id, problem_id, writer.getId());
-        List<CodeDto> codeDtoList = codeList.stream().map(o -> new CodeDto(o)).collect(Collectors.toList());
+        List<CodeDto> codeDtoList = codeList.stream().map(CodeDto::new).collect(Collectors.toList());
         CodeResponseDto codeResponseDto = new CodeResponseDto(codeDtoList);
         return codeResponseDto;
     }
