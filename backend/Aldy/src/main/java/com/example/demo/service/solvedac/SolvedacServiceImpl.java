@@ -105,9 +105,7 @@ public class SolvedacServiceImpl implements SolvedacService {
             query.append(")&");
         }
 
-        if(query.length() > 0) {
-            query.deleteCharAt(query.length() - 1);
-        }
+        query.append("(lang:ko)");
 
         return query.toString();
     }

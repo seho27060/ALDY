@@ -30,7 +30,7 @@ public class EmailServiceImpl {
             "이 메일은 알디에서 자동으로 발송된 이메일입니다.\n" +
             "%s 님께서 속하신 %s 스터디에서 3회 코드 리뷰 무응답으로 인해 추방되었음을 알려드립니다.";
 
-    private String template_4 ="안녕하세요, %s 님. 알고리즘 코드 리뷰 서비스 알디입니다.\n" +
+    private String template_4 ="안녕하세요, %s 스터디장 님. 알고리즘 코드 리뷰 서비스 알디입니다.\n" +
             "이 메일은 알디에서 자동으로 발송된 이메일입니다.\n" +
             "%s 님께서 %s 스터디에 스터디원 가입 요청이 왔음을 알려드립니다.";
 
@@ -61,19 +61,19 @@ public class EmailServiceImpl {
             case "evict":
                 title = title_type_3;
                 text = String.format(template_3, mailDto.getReceiverNickname(),
-                        mailDto.getSenderNickname(),
+                        mailDto.getReceiverNickname(),
                         mailDto.getStudyName());
                 break;
             case "apply":
                 title = title_type_4;
-                text = String.format(template_4, mailDto.getReceiverNickname(),
-                        mailDto.getSenderNickname(),
+                text = String.format(template_4, mailDto.getStudyName(),
+                        mailDto.getReceiverNickname(),
                         mailDto.getStudyName());
                 break;
             case "approve":
                 title = title_type_5;
                 text = String.format(template_5, mailDto.getReceiverNickname(),
-                        mailDto.getSenderNickname(),
+                        mailDto.getReceiverNickname(),
                         mailDto.getStudyName());
                 break;
         }

@@ -107,7 +107,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
             );
         }
 
-        emailService.sendApplicationMail(study, member.getEmail(), member.getNickname(), "apply");
+        String leaderEmail = memberInStudyRepository.findByStudyAndAuth(study, 1).get().getMember().getEmail();
+        emailService.sendApplicationMail(study, leaderEmail, member.getNickname(), "apply");
 
         return new MemberInStudyDto(memberInStudyRepository.findByStudy_IdAndMember_Id(study.getId(), member.getId())
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND)));
