@@ -9,6 +9,7 @@ section.main-page-banner {
   min-height: 650px;
   padding: 110px;
   user-select: none;
+  height: 800px;
 }
 
 .main-page-banner > h1 {
