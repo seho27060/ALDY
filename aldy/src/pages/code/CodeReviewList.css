@@ -133,13 +133,18 @@ button.active {
 .final-code-header {
   display: flex;
   justify-content: center;
-  background-color: #28500F;
+  background-color: #28500f;
   color: white;
   border-radius: 20px;
   width: 600px;
   margin: auto;
   padding: 10px;
   font-size: 20px;
+}
+
+.final-code-header > div {
+  font-family: "uhbeeBold";
+  font-size: 24px;
 }
 
 .final-code-editor {
@@ -160,4 +165,10 @@ button.active {
 
 .code-review-col {
   padding-top: 5px;
+}
+
+.blackboard {
+  background-color: #2b6e30;
+  border: 10px solid #ffe1aa;
+  border-radius: 10px;
 }

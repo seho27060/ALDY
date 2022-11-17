@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MainPage from "./pages/MainPage.js";
 import Changepw from "./pages/auth/Changepw";
@@ -20,14 +20,18 @@ import AldyFooter from "./components/AldyFooter";
 import MoveTopBtn from "./components/MoveTopBtn";
 import PageNotFound from "./pages/PageNotFound";
 import { useRecoilState } from "recoil";
-import { isFooter } from "../src/store/states";
+import { isFooter, isNav } from "../src/store/states";
 
 function App() {
   const [footer] = useRecoilState(isFooter);
+  const [nav] = useRecoilState(isNav);
+
+  const params = useParams();
+  console.log(params, "네브");
 
   return (
     <div className="App">
-      <AldyNav />
+      {nav ? <AldyNav /> : null}
       <Routes>
         <Route element={<MainPage />} path="/"></Route>
         <Route element={<Login />} path="/login"></Route>
@@ -46,7 +50,7 @@ function App() {
         <Route element={<PageNotFound />} path="*"></Route>
       </Routes>
       <MoveTopBtn />
-      {footer ? <AldyFooter /> : null}
+      {/* {footer ? <AldyFooter /> : null} */}
     </div>
   );
 }

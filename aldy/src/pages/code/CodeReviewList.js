@@ -473,8 +473,13 @@ const FinalCodeModal = (props) => {
   const finalCode = sessionStorage.getItem("finalCode");
   const [language, setLanguage] = useState("python");
   return (
-    <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter">
-      <Modal.Body>
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      className="blackboard-modal"
+    >
+      <Modal.Body className="blackboard">
         <div>
           <div className="final-code-header">
             <div style={{ paddingRight: "20px" }}>
@@ -491,6 +496,7 @@ const FinalCodeModal = (props) => {
               onChange={(e) => {
                 setLanguage(e.target.value);
               }}
+              className="language-select-box"
             >
               <option value="">--사용할 언어를 선택해주세요--</option>
               <option value="c++">C++</option>

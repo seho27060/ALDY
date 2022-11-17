@@ -139,6 +139,7 @@ const StudyDetail = () => {
   const [problemList, setProblemList] = useState([]);
   useEffect(() => {
     handleProblemModalShow();
+    console.log(date, "방금찍음");
     getProblem(id, date.getFullYear(), date.getMonth() + 1, date.getDate())
       .then((res) => {
         // console.log(res.data);
@@ -222,6 +223,7 @@ const StudyDetail = () => {
         modal={problemModalShow}
         handleModal={handleProblemModalShow}
         problemList={problemList}
+        setProblemList={setProblemList}
       />
       <section className="study-detail-top">
         <div className="top">

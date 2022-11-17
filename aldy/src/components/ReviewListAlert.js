@@ -1,9 +1,13 @@
 import Modal from "react-bootstrap/Modal";
 import "./AlertModal.css";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { isFooter, isNav } from "../store/states";
 
 const ReviewListAlert = (props) => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [footer, setFooter] = useRecoilState(isFooter);
+  const [nav, setNav] = useRecoilState(isNav);
   return (
     <Modal
       {...props}
@@ -15,10 +19,15 @@ const ReviewListAlert = (props) => {
         <div className="alert-board-title">✨ 알림 ✨</div>
         <p className="alert-message">{props.message}</p>
         <div className="alert-close-btn">
-          <button className="alert-btn" onClick={() => {
-            props.onHide();
-            navigate('/review/list')
-          }}>
+          <button
+            className="alert-btn"
+            onClick={() => {
+              props.onHide();
+              navigate("/review/list");
+              setFooter(true);
+              setNav(true);
+            }}
+          >
             확인
           </button>
         </div>
