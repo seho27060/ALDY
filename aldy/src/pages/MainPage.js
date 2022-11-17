@@ -60,6 +60,10 @@ const MainPage = () => {
   const navigateSignUp = () => {
     navigate("/signup");
   };
+
+  const navigateStudy = () => {
+    navigate('/study/list')
+  }
   return (
     <main>
       <section className="main-page-banner">
@@ -82,12 +86,11 @@ const MainPage = () => {
           </div>
           <div className="board-text">
             <div className="board-text">스터디원들과 함께 공룡을 키워봐요!</div>
-            <WhiteButton onClick={navigateSignUp}>
+            {logged ? <WhiteButton onClick={navigateStudy}>스터디하러 가기</WhiteButton> : <WhiteButton onClick={navigateSignUp}>
               회원가입 하러가기
-            </WhiteButton>
+            </WhiteButton>}
           </div>
         </div>
-        <RedButton>스터디 생성하기</RedButton>
       </section>
       <section className="main-page-description">
         <div className="section1-left">
