@@ -1,6 +1,6 @@
 .move-bar {
     position: fixed;
-    top: 600px;
+    bottom: 20px;
     left: 20px;
     border-radius: 30px;
     background-color: gray;
