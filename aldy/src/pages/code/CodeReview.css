@@ -318,3 +318,25 @@ h2.review-orange {
   border: none;
   outline: none;
 }
+
+.go-to-baekjoon-btn {
+  width: 170px;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  border: 2px solid red;
+  color: red;
+  font-family: "GmarketSansMedium";
+  font-weight: bold;
+  font-size: 15px;
+  padding: 5px 0px 3px 0px;
+  transition: all 200ms ease-in;
+  margin-top: 20px;
+  user-select: none;
+}
+
+.go-to-baekjoon-btn:hover {
+  background-color: red;
+  color: white;
+  transition: all 200ms ease-in;
+}

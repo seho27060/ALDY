@@ -104,6 +104,7 @@ const CodeReview = () => {
   const modals = {
     1: (
       <StepModal1
+        problemNum={problemNum}
         show={stepModalShow1}
         onHide={() => {
           setStepModalShow1(false);
@@ -686,6 +687,7 @@ function RequestModal(props) {
 }
 
 function StepModal1(props) {
+  const problemNum = props.problemNum
   return (
     <Modal
       {...props}
@@ -703,6 +705,9 @@ function StepModal1(props) {
             <span className="highlight">풀었던 코드를</span>
             <span>제출해주세요.</span>
             <br></br>
+            <button className="go-to-baekjoon-btn" onClick={() => {
+              window.open(`https://www.acmicpc.net/problem/${problemNum}`, "_blank")
+            }}>백준으로 이동하기</button>
             {/* <span>해당 문제의 풀이코드를</span>
             <span className='highlight'> 공개</span>
             <span>로 설정하였을 경우</span><br></br>
