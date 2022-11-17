@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Editor from "@monaco-editor/react";
 import { useRecoilState } from "recoil";
-import { correctCode, isFooter } from "../../store/states";
+import { correctCode, isFooter, isNav } from "../../store/states";
 import { codeReply } from "../../api/code";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "../../components/AlertModal";
@@ -13,7 +13,9 @@ import ReviewListAlert from "../../components/ReviewListAlert";
 
 const CodeCorrect = () => {
   const [footer, setFooter] = useRecoilState(isFooter);
+  const [nav, setNav] = useRecoilState(isNav);
   setFooter(false);
+  setNav(false);
 
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [reviewAlertShow, setReviewAlertShow] = useState(false);
@@ -52,38 +54,21 @@ const CodeCorrect = () => {
       />
       <section className="correct-header">
         <p>
-          <span>✨ 요청받은 코드에 대한</span>
+          <span>✨ 요청받은 코드에 대한 </span>
           <span className="highlight">코드첨삭</span>
           <span>을 진행해주세요 ✨</span>
         </p>
-        <h2 className="correct-orange">이번 주 스터디 선정 문제</h2>
-      </section>
-      <section className="correct-title">
-        <Container>
-          <Row style={{ color: "#28500F", fontWeight: "bold" }}>
-            <Col>스터디 이름</Col>
-            <Col>보낸 사람</Col>
-            <Col>문제 이름</Col>
-            <Col>문제 번호</Col>
-            <Col>요청 날짜</Col>
-          </Row>
-          <hr></hr>
-          <Row>
-            <Col>{studyName}</Col>
-            <Col>{sender}</Col>
-            <Col>{problemName}</Col>
-            <Col>{problemId}</Col>
-            <Col>{createDate}</Col>
-          </Row>
-        </Container>
+        {/* <h2 className="correct-orange">이번 주 스터디 선정 문제</h2> */}
       </section>
       <section className="correct-board">
         <div className="correct-board-title">
+          {studyName}
           <p
             style={{
               margin: "0 25px",
               fontFamily: "uhbeeBold",
               fontSize: "28px",
+              color: "white",
             }}
           >
             ✨ {problemId}번
@@ -93,10 +78,12 @@ const CodeCorrect = () => {
               margin: "0 25px",
               fontFamily: "uhbeeBold",
               fontSize: "28px",
+              color: "white",
             }}
           >
             {problemName} ✨
           </p>
+          {createDate}
         </div>
         <div className="correct-language-select">
           <select
@@ -105,10 +92,11 @@ const CodeCorrect = () => {
             onChange={(e) => {
               setLanguage(e.target.value);
             }}
+            className="language-select-box"
           >
-            <option value="">--사용할 언어를 선택해주세요--</option>
+            <option value="">--언어선택--</option>
             <option value="c++">C++</option>
-            <option value="java">Java</option>
+            요청 받은 코드 <option value="java">Java</option>
             <option value="python">Python</option>
             <option value="javascript">Javascript</option>
             <option value="sql">SQL</option>
@@ -116,7 +104,12 @@ const CodeCorrect = () => {
         </div>
         <div className="correct-content">
           <div className="correct-your-code-box">
-            <div className="correct-code-type">요청 받은 코드</div>
+            <div className="correct-code-type">
+              <span style={{ color: "#ffe1aa", fontFamily: "uhbeeBold" }}>
+                {sender}
+              </span>
+              님에게 요청 받은 코드
+            </div>
             <div className="correct-your-code">
               <Editor
                 className="review-code-editor"

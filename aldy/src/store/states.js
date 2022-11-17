@@ -39,3 +39,8 @@ export const isFooter = atom({
   key: "isFooter",
   default: true,
 });
+
+export const isNav = atom({
+  key: "isNav",
+  default: true,
+});
