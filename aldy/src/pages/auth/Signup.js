@@ -42,7 +42,7 @@ const RedButton = styled.button`
 `;
 
 const YellowButton = styled.button`
-  width: 35px;
+  width: 50px;
   border-radius: 8px;
   background-color: lightgoldenrodyellow;
   border: none;
@@ -50,6 +50,7 @@ const YellowButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  margin-left: 5px;
 `;
 
 const GrayButton = styled.button`
@@ -184,7 +185,7 @@ const Signup = () => {
                   </YellowButton>
                 </CopyToClipboard>
               </p>
-              <p style={{ fontSize: "15px", color: "#646464" }}>
+              <p style={{ fontSize: "16px", color: "#646464" }}>
                 solved.ac 프로필 편집을 누르신 뒤, 자기소개 끝에 인증코드를
                 추가해주세요.
               </p>

@@ -115,6 +115,7 @@ const StudyCreate = () => {
                 value={newStudy.name}
                 onChange={onChange}
                 className="study-create-input"
+                maxLength={12}
                 required
               ></input>
             </div>
@@ -166,6 +167,9 @@ const StudyCreate = () => {
                 value={newStudy.introduction}
                 onChange={onChange}
                 className="study-create-textarea"
+                wrap="hard"
+                cols={20}
+                rows={2}
               ></textarea>
             </div>
             <div className="study-create-form-title">

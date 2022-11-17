@@ -116,13 +116,14 @@ input:focus {
 
 .beakjonn-modal-title {
   margin: 0;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: bold;
   text-decoration-line: underline;
   text-decoration-color: #ffe1aa;
   text-decoration-thickness: 10px;
   text-underline-offset: -5px;
   margin: auto;
+  font-family: "KOFIHDrLEEJWTTF-B";
 }
 
 .beakjonn-modal-title > span {
@@ -130,6 +131,7 @@ input:focus {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  font-family: "KOFIHDrLEEJWTTF-B";
 }
 
 #tier {

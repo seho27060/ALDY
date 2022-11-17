@@ -133,6 +133,7 @@ input[type="radio"] {
   resize: none;
   padding: 10px;
   transition: all 200ms ease-in;
+  white-space: pre-wrap;
 }
 
 .study-create-textarea::placeholder {
