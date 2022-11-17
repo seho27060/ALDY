@@ -646,14 +646,6 @@ function RequestModal(props) {
           </div>
         </div>
         <div className="review-modal-content">
-          {/* {collegue?.map((person) => (
-            <div className="review-modal-item">
-              {person.label}
-              <button className='review-modal-selectBtn' onClick={() => {
-                setSelected(person.value)
-              }}>✔</button>
-            </div>
-          ))} */}
           <Select
             isMulti
             onChange={(select) => {
@@ -668,20 +660,21 @@ function RequestModal(props) {
           <button
             className="review-modal-request-btn"
             onClick={() => {
-              props.onHide();
-              //서버로 리뷰 요청하는 axios 추가
-              reviewRequest(selected)
-                .then(() => {
-                  setMessage("리뷰요청을 보냈습니다.");
-                  setReviewAlertShow(true);
-                  // alert('리뷰요청을 보냈습니다.')
-                  // window.location.reload()
-                })
-                .catch(() => {
-                  setMessage("리뷰 요청에 실패했습니다.");
-                  setAlertModalShow(true);
-                  // alert('리뷰 요청에 실패했습니다.')
-                });
+              if (selected.receiverId.length === 0) {
+                setMessage('리뷰어를 한명 이상 선택해주세요')
+                setAlertModalShow(true)
+              } else {
+                props.onHide();
+                reviewRequest(selected)
+                  .then(() => {
+                    setMessage("리뷰요청을 보냈습니다.");
+                    setReviewAlertShow(true);
+                  })
+                  .catch(() => {
+                    setMessage("리뷰 요청에 실패했습니다.");
+                    setAlertModalShow(true);
+                  });
+              }
             }}
           >
             요청하기
