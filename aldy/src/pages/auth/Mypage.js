@@ -21,6 +21,12 @@ const WhiteButton = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   margin: 4px;
+
+  &:hover {
+    background-color: rgb(40, 80, 15);
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const WhiteButtonL = styled.button`
@@ -35,6 +41,11 @@ const WhiteButtonL = styled.button`
   font-size: 20px;
   margin: 10px;
   padding-top: 5px;
+  &:hover {
+    background-color: rgb(40, 80, 15);
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const Mypage = () => {
@@ -209,7 +220,7 @@ const Mypage = () => {
           </div>
         </div>
       </section>
-      <section>
+      <section style={{ margin: "30px" }}>
         <img
           className="Mypage-icon"
           src={process.env.PUBLIC_URL + "/mypageRecommend.png"}
