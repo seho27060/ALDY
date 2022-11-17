@@ -192,16 +192,16 @@ public class CountAlertJobConfig {
 
     private void plusAlert(MemberInStudy memberInStudy) {
         int numberOfAlerts = memberInStudy.getNumberOfAlerts() + 1;
-        int auth = memberInStudy.getAuth();
+
         memberInStudy.setNumberOfAlerts(numberOfAlerts);
 
         // 경고 횟수 3회 초과 시 강퇴 & 메일 보내기
         if(numberOfAlerts > 3) {
             memberInStudy.setAuth(0);
 
-            memberInStudyService.checkLeader(new MemberInStudyDto(memberInStudy));
-
             emailService.sendEvictionMail(memberInStudy.getStudy(), memberInStudy.getMember().getEmail(), memberInStudy.getMember().getNickname(), "evict");
+
+            memberInStudyService.checkLeader(new MemberInStudyDto(memberInStudy));
         }
     }
 
