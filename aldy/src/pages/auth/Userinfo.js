@@ -135,7 +135,12 @@ const Userinfo = () => {
     <div className="form-title">
       <div>변경 할 닉네임</div>
       <div className="form-title-id">
-        <input name="nickname" ref={nicknameInput}></input>
+        <input
+          name="nickname"
+          ref={nicknameInput}
+          maxlength="10"
+          placeholder="최대 10자까지 입력 가능합니다."
+        ></input>
         <RedButton
           onClick={() => {
             nicknameValid(nicknameInput.current.value).then((res) => {
