@@ -4,7 +4,8 @@ import { Doughnut } from "react-chartjs-2";
 const StudyChart = ({ studyData }) => {
   const labels = Object.keys(studyData);
   const data = Object.values(studyData);
-  console.log(labels, data);
+  console.log(labels,'label');
+  console.log(data, 'data')
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const expData = {
@@ -35,7 +36,7 @@ const StudyChart = ({ studyData }) => {
     <div>
       <Doughnut
         options={{
-          legend: {
+          Legend: {
             display: false,
           },
         }}
