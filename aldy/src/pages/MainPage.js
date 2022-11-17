@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import { getUserInfo } from "../api/user";
 import { useRecoilState } from "recoil";
 import { isLoggedIn } from "../store/states";
+import MoveBar from "../components/MobeBar";
 
 const RedButton = styled.button`
   width: 170px;
@@ -66,6 +67,7 @@ const MainPage = () => {
   }
   return (
     <main>
+      <MoveBar></MoveBar>
       <section className="main-page-banner">
         <img src={process.env.PUBLIC_URL + "/MainDinosaur.png"} alt=""></img>
         <br></br>
@@ -139,7 +141,7 @@ const MainPage = () => {
       >
         ALDY의 메인 캐릭터 소개
       </div>
-      <section className="main-page-description-aldylist">
+      <section className="main-page-description-aldylist" id="main-page-description-aldylist">
         <div className="section1-left" data-aos="fade-right">
           <div className="main-page-description-text">
             <p>
@@ -232,6 +234,7 @@ const MainPage = () => {
           </div>
         </div>
       </section>
+      <section className="main-page-study-description">이곳에 스터디 설명을 작성하세요</section>
     </main>
   );
 };

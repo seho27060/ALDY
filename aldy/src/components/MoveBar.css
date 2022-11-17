@@ -1,0 +1,28 @@
+.move-bar {
+    position: fixed;
+    top: 600px;
+    left: 20px;
+    border-radius: 30px;
+    background-color: gray;
+    opacity: 0.5;
+    height: 300px;
+    width: 120px;
+    z-index: 1000;
+    padding: 30px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.move-bar:hover {
+    opacity: 1;
+}
+
+.move-bar-btn {
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    background: none;
+}
