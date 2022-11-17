@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FcLike } from "react-icons/fc";
 import { login } from "../../api/auth";
 import { useRecoilState } from "recoil";
-import { isLoggedIn, userName } from "../../store/states";
+import { isLoggedIn, userName, isFooter } from "../../store/states";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const WhiteRedButton = styled.button`
@@ -50,6 +50,8 @@ const Login = () => {
     password: "",
   });
   const [logged, setLogged] = useRecoilState(isLoggedIn);
+  const [footer, setFooter] = useRecoilState(isFooter);
+  setFooter(false);
   const [username, setUsername] = useRecoilState(userName);
 
   const [message, setMessage] = useState("");
@@ -125,11 +127,11 @@ const Login = () => {
           <div className="login-page-join">
             <div>아직 계정이 없으신가요? </div>
             <div className="login-page-link" onClick={navigateSignup}>
-              <div class="box-vibration">
+              <div className="box-vibration">
                 <FcLike />
               </div>
               &#32;회원가입 하러 가기&#32;
-              <div class="box-vibration">
+              <div className="box-vibration">
                 &#32;
                 <FcLike />
                 &#32;

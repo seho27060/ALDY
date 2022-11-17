@@ -19,8 +19,12 @@ import AldyNav from "./components/AldyNav";
 import AldyFooter from "./components/AldyFooter";
 import MoveTopBtn from "./components/MoveTopBtn";
 import PageNotFound from "./pages/PageNotFound";
+import { useRecoilState } from "recoil";
+import { isFooter } from "../src/store/states";
 
 function App() {
+  const [footer] = useRecoilState(isFooter);
+
   return (
     <div className="App">
       <AldyNav />
@@ -42,7 +46,7 @@ function App() {
         <Route element={<PageNotFound />} path="*"></Route>
       </Routes>
       <MoveTopBtn />
-      <AldyFooter />
+      {footer ? <AldyFooter /> : null}
     </div>
   );
 }

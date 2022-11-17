@@ -34,3 +34,8 @@ export const recoilLeaderBaekjoonId = atom({
   key: "recoilLeaderBaekjoonId",
   default: null,
 });
+
+export const isFooter = atom({
+  key: "isFooter",
+  default: true,
+});

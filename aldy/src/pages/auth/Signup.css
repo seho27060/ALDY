@@ -12,8 +12,7 @@
   background: url(../../../public/auth_background.png) no-repeat 50% 50%;
   background-size: cover; */
   background: url(../../../public/auth_background.png) no-repeat 50% 50%;
-  height: 87vh;
-  width: 100vw;
+  height: calc(100vh - 73px);
   background-size: cover;
   display: flex;
   align-items: center;
@@ -144,7 +143,7 @@ input:focus {
 }
 
 .CopyToClipboard-Btn {
-  color: FFE1AA;
+  color: #ffe1aa;
 }
 
 .signup-page-right-sub-title {

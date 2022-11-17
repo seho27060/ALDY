@@ -13,8 +13,10 @@ import {
 import AlertModal from "../../components/AlertModal";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useRecoilState } from "recoil";
+import { isFooter } from "../../store/states";
 
-const RedButton = styled.button`
+const RedButtonSmall = styled.button`
   width: 120px;
   height: 30px;
   border-radius: 8px;
@@ -24,6 +26,19 @@ const RedButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  padding: 2px 0px 0px 0px;
+`;
+
+const RedButton = styled.button`
+  width: 160px;
+  border-radius: 8px;
+  background-color: red;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  padding: 6px 0px 4px 0px;
 `;
 
 const YellowButton = styled.button`
@@ -47,6 +62,7 @@ const GrayButton = styled.button`
   color: white;
   font-weight: bold;
   transition: transform 30ms ease-in;
+  padding: 2px 0px 1px 0px;
 `;
 
 const Signup = () => {
@@ -64,6 +80,9 @@ const Signup = () => {
     }
     return true;
   }
+
+  const [footer, setFooter] = useRecoilState(isFooter);
+  setFooter(false);
 
   const [bojModalShow, setBojModalShow] = useState(false);
   const [bojValidationCode, setBojValidationCode] = useState("");
@@ -144,7 +163,12 @@ const Signup = () => {
         onHide={() => setAlertRefreshModalShow(false)}
         message={message}
       />
-      <Modal size="lg" show={bojModalShow} onHide={handleBojModalShow}>
+      <Modal
+        size="lg"
+        show={bojModalShow}
+        onHide={handleBojModalShow}
+        backdrop="static"
+      >
         <Modal.Body className="review-modal-body">
           <div className="review-modal-header">
             <div>
@@ -160,7 +184,7 @@ const Signup = () => {
                   </YellowButton>
                 </CopyToClipboard>
               </p>
-              <p style={{ fontSize: "12px", color: "#646464" }}>
+              <p style={{ fontSize: "15px", color: "#646464" }}>
                 solved.ac 프로필 편집을 누르신 뒤, 자기소개 끝에 인증코드를
                 추가해주세요.
               </p>
@@ -168,7 +192,10 @@ const Signup = () => {
             <div>
               <button
                 className="review-modal-close-btn"
-                onClick={handleBojModalShow}
+                onClick={() => {
+                  handleBojModalShow();
+                  window.location.reload();
+                }}
               >
                 X
               </button>
@@ -178,7 +205,7 @@ const Signup = () => {
             <img
               src={process.env.PUBLIC_URL + "/solved.png"}
               alt=""
-              style={{ width: "100%" }}
+              style={{ width: "100%", marginBottom: "30px" }}
             ></img>
           </div>
           <div className="solved-btn">
@@ -222,7 +249,7 @@ const Signup = () => {
                   placeholder="solved.ac 아이디를 입력해주세요."
                 ></input>
                 {!idChecked ? (
-                  <RedButton
+                  <RedButtonSmall
                     onClick={() => {
                       setSendId((sendId.baekjoonId = idInput.current.value));
                       console.log(idInput.current.value);
@@ -247,7 +274,7 @@ const Signup = () => {
                     }}
                   >
                     인증하기
-                  </RedButton>
+                  </RedButtonSmall>
                 ) : (
                   <GrayButton>인증 완료</GrayButton>
                 )}
@@ -281,7 +308,7 @@ const Signup = () => {
                   placeholder="이메일을 입력해주세요."
                 ></input>
                 {!emailChecked ? (
-                  <RedButton
+                  <RedButtonSmall
                     onClick={() => {
                       if (checkIt()) {
                         console.log(emailInput.current.value);
@@ -305,7 +332,7 @@ const Signup = () => {
                     }}
                   >
                     중복 확인
-                  </RedButton>
+                  </RedButtonSmall>
                 ) : (
                   <GrayButton>확인 완료</GrayButton>
                 )}
@@ -321,7 +348,7 @@ const Signup = () => {
                   placeholder="닉네임을 입력해주세요."
                 ></input>
                 {!nicknameChecked ? (
-                  <RedButton
+                  <RedButtonSmall
                     onClick={() => {
                       console.log(nicknameInput.current.value);
                       nicknameValid(nicknameInput.current.value).then((res) => {
@@ -339,7 +366,7 @@ const Signup = () => {
                     }}
                   >
                     중복 확인
-                  </RedButton>
+                  </RedButtonSmall>
                 ) : (
                   <GrayButton>확인 완료</GrayButton>
                 )}

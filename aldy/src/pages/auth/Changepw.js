@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { changepassword } from "../../api/user";
 import AlertModal from "../../components/AlertModal";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
+import { useRecoilState } from "recoil";
+import { isFooter } from "../../store/states";
 
 const RedButton = styled.button`
   width: 170px;
@@ -19,6 +21,9 @@ const RedButton = styled.button`
 
 const Changepw = () => {
   const navigate = useNavigate();
+
+  const [footer, setFooter] = useRecoilState(isFooter);
+  setFooter(false);
 
   const navigateMypage = () => {
     navigate("/mypage");
