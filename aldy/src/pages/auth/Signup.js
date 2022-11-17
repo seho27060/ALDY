@@ -346,7 +346,8 @@ const Signup = () => {
                   type="text"
                   name="nickname"
                   ref={nicknameInput}
-                  placeholder="닉네임을 입력해주세요."
+                  maxlength="10"
+                  placeholder="최대 10자까지 입력 가능합니다."
                 ></input>
                 {!nicknameChecked ? (
                   <RedButtonSmall
