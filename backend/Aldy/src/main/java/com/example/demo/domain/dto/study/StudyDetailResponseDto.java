@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto.study;
 
+import com.example.demo.domain.entity.Member.Member;
 import com.example.demo.domain.entity.Study.Study;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class StudyDetailResponseDto {
     private int countMember;
 
     private String leaderBaekjoonId;
+    private String leaderEmail;
     private HashMap<Integer, Integer> statsByTier;
     private HashMap<String, Integer> statsByTag;
 
@@ -42,6 +44,11 @@ public class StudyDetailResponseDto {
         this.visibility = study.getVisibility();
         this.level = study.getLevel();
         this.activationLevel = study.getActivationLevel();
+    }
+
+    public void setLeaderInfo(Member member) {
+        this.leaderBaekjoonId = member.getBaekjoonId();
+        this.leaderEmail = member.getEmail();
     }
 
 }

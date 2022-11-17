@@ -113,11 +113,9 @@ public class StudyServiceImpl implements StudyService {
 
         studyDetailResponseDto.setCountMember(countMember(study.getId()));
 
-        studyDetailResponseDto.setLeaderBaekjoonId(
-                memberInStudyRepository.findByStudyAndAuth(study, 1)
-                        .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
-                        .getMember().getBaekjoonId()
-        );
+        studyDetailResponseDto.setLeaderInfo(memberInStudyRepository.findByStudyAndAuth(study, 1)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND))
+                .getMember());
 
         return getDetailInfo(study, studyDetailResponseDto);
 

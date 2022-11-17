@@ -36,6 +36,8 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
     private final CodeRepository codeRepository;
 
+    private final EmailServiceImpl emailService;
+
     private final List<Integer> authList = List.of(1, 2);
 
     @Override
@@ -104,6 +106,9 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
                     () -> memberInStudyRepository.save(new MemberInStudy(study, member, 3, requestDto.getMessage()))
             );
         }
+
+        emailService.sendApplicationMail(study, member.getEmail(), member.getNickname(), "apply");
+
         return new MemberInStudyDto(memberInStudyRepository.findByStudy_IdAndMember_Id(study.getId(), member.getId())
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBERINSTUDY_NOT_FOUND)));
 
@@ -192,6 +197,17 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
             changeLeader(memberInStudyDto.getStudyId());
         }
 
+    }
+
+    @Override
+    public void sendMessage(MemberInStudyDto memberInStudyDto) {
+        Study study = studyRepository.findById(memberInStudyDto.getStudyId())
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+
+        Member member = memberRepository.findById(memberInStudyDto.getMemberId())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        emailService.sendApproveMail(study, member.getEmail(), member.getNickname(), "approve");
     }
 
     public void changeLeader(Long studyId) {
