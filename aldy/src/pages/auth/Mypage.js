@@ -21,6 +21,12 @@ const WhiteButton = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   margin: 4px;
+
+  &:hover {
+    background-color: rgb(40, 80, 15);
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const WhiteButtonL = styled.button`
@@ -35,6 +41,11 @@ const WhiteButtonL = styled.button`
   font-size: 20px;
   margin: 10px;
   padding-top: 5px;
+  &:hover {
+    background-color: rgb(40, 80, 15);
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const Mypage = () => {
@@ -44,21 +55,16 @@ const Mypage = () => {
   const [tier, setTier] = useState(null);
   const [answerCodeReviewNumber, setAnswerCodeReviewNumber] = useState(null);
   const [replyCodeReviewNumber, setReplyCodeReviewNumber] = useState(null);
-
   const [acceptedUserCount, setAcceptedUserCount] = useState(null);
   const [algorithm, setAlgorithm] = useState(null);
   const [averageTries, setAverageTries] = useState(null);
   const [level, setLevel] = useState(null);
   const [problemId, setProblemId] = useState(null);
   const [titleKo, setTitleKo] = useState(null);
-
   const [myStudyList, setMyStudyList] = useState(null);
   // Pagination
-
   const [myStudyPageNum, setMyStudyPageNum] = useState(1);
-
   const [myStudyTotal, setMyStudyTotal] = useState(0);
-
   const [message, setMessage] = useState("");
   const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
 
@@ -214,7 +220,7 @@ const Mypage = () => {
           </div>
         </div>
       </section>
-      <section>
+      <section style={{ margin: "30px" }}>
         <img
           className="Mypage-icon"
           src={process.env.PUBLIC_URL + "/mypageRecommend.png"}
@@ -284,7 +290,7 @@ const Mypage = () => {
           {/* <StudyListMy /> */}
           <div className="Mypage-study-list-box">
             {myStudyList?.map((item, i) => (
-              <MyStudyListItem key={i} item={item} />
+              <MyStudyListItem key={i} item={item} num={i} />
             ))}
             <Paging
               page={myStudyPageNum}
