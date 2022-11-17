@@ -17,28 +17,35 @@ import { useRecoilState } from "recoil";
 import { isFooter } from "../../store/states";
 
 const RedButtonSmall = styled.button`
-  width: 120px;
-  height: 30px;
+  width: 100px;
+  height: 32px;
   border-radius: 8px;
   background-color: red;
   border: none;
   outline: none;
   color: white;
-  font-weight: bold;
   transition: transform 30ms ease-in;
   padding: 2px 0px 0px 0px;
+  font-size: 15px;
+  margin-top: 5px;
 `;
 
 const RedButton = styled.button`
   width: 160px;
   border-radius: 8px;
   background-color: red;
-  border: none;
+  border: 2px solid red;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
-  padding: 6px 0px 4px 0px;
+  transition: all 200ms ease-in;
+  padding: 8px 0px 6px 0px;
+  &:hover {
+    background-color: white;
+    border: 2px solid red;
+    color: red;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const YellowButton = styled.button`
@@ -197,6 +204,7 @@ const Signup = () => {
                   handleBojModalShow();
                   window.location.reload();
                 }}
+                style={{ padding: "1px 0 0" }}
               >
                 X
               </button>
@@ -236,18 +244,21 @@ const Signup = () => {
       </Modal>
       <div className="signup-page-bg">
         <section className="signup-page-left">
-          <div className="nnnnnn">Sign Up</div>
-          <div>✨ ALDY는 solved.ac를 연동하여 서비스를 제공하므로</div>
-          <div>solved.ac 회원만 사이트 이용이 가능합니다. ✨</div>
+          <div className="sign-title">SIGN UP</div>
+          <div className="sign-title-info">
+            ✨ ALDY는 solved.ac를 연동하여 서비스를 제공하므로
+            <br></br>solved.ac 회원만 사이트 이용이 가능합니다. ✨
+          </div>
           <div>
-            <div className="signup-form-title">
-              <div>solved.ac 아이디</div>
+            <div className="sign-form-title">
+              <div className="study-create-form-info">solved.ac 아이디</div>
               <div className="form-title-id">
                 <input
                   type="text"
                   name="id"
                   ref={idInput}
                   placeholder="solved.ac 아이디를 입력해주세요."
+                  className="study-create-input"
                 ></input>
                 {!idChecked ? (
                   <RedButtonSmall
@@ -281,32 +292,35 @@ const Signup = () => {
                 )}
               </div>
             </div>
-            <div className="signup-form-title">
-              <div>비밀번호</div>
+            <div className="sign-form-title">
+              <div className="study-create-form-info">비밀번호</div>
               <input
                 type="password"
                 name="password"
                 ref={passwordInput}
                 placeholder="비밀번호를 입력해주세요."
+                className="study-create-input"
               ></input>
             </div>
-            <div className="signup-form-title">
-              <div>비밀번호 확인</div>
+            <div className="sign-form-title">
+              <div className="study-create-form-info">비밀번호 확인</div>
               <input
                 type="password"
                 name="passwordCheck"
                 ref={passwordCheckInput}
                 placeholder="비밀번호를 다시 입력해주세요."
+                className="study-create-input"
               ></input>
             </div>
-            <div className="signup-form-title">
-              <div>이메일</div>
+            <div className="sign-form-title">
+              <div className="study-create-form-info">이메일</div>
               <div className="form-title-id">
                 <input
                   type="email"
                   name="email"
                   ref={emailInput}
                   placeholder="이메일을 입력해주세요."
+                  className="study-create-input"
                 ></input>
                 {!emailChecked ? (
                   <RedButtonSmall
@@ -339,8 +353,8 @@ const Signup = () => {
                 )}
               </div>
             </div>
-            <div className="signup-form-title">
-              <div>닉네임</div>
+            <div className="sign-form-title">
+              <div className="study-create-form-info">닉네임</div>
               <div className="form-title-id">
                 <input
                   type="text"
@@ -348,6 +362,7 @@ const Signup = () => {
                   ref={nicknameInput}
                   maxlength="10"
                   placeholder="최대 10자까지 입력 가능합니다."
+                  className="study-create-input"
                 ></input>
                 {!nicknameChecked ? (
                   <RedButtonSmall
@@ -399,13 +414,13 @@ const Signup = () => {
                   }
                 }}
               >
-                Sign Up
+                SIGN UP
               </RedButton>
             </div>
           </div>
         </section>
         <section className="signup-page-right">
-          <div className="signup-page-right-title">✨Welcome to Aldy✨</div>
+          <div className="signup-page-right-title">✨Welcome to ALDY✨</div>
           <div className="signup-page-right-sub-title">
             알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡
             <div className="signup-page-right-sub-title">
