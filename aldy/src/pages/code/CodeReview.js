@@ -60,6 +60,12 @@ const CodeReview = () => {
     setSubmitCode((prev) => {
       return { ...prev, process: step };
     });
+    if (step === 1) {
+      setStepModalShow1(true)
+    }
+    if (step === 2) {
+      setStepModalShow2(true)
+    }
     if (step === 3 && !isFinal) {
       setStepModalShow3(true);
     }
@@ -698,11 +704,11 @@ function StepModal1(props) {
         <div className="step-modal-header">
           <h2 className="step-modal-title">코드 리뷰 1단계 방법 알아보기</h2>
         </div>
-        <div className="step-modal-content">
+        <div className="step-modal-content" style={{'fontSize':'20px'}}>
           <p>
-            <span>백준에서</span>
-            <span className="highlight">풀었던 코드</span>
-            <span>를 제출해주세요.</span>
+            <span>백준에서 </span>
+            <span className="highlight">풀었던 코드를</span>
+            <span>제출해주세요.</span>
             <br></br>
             {/* <span>해당 문제의 풀이코드를</span>
             <span className='highlight'> 공개</span>
@@ -728,7 +734,7 @@ function StepModal2(props) {
         <div className="step-modal-header">
           <h2 className="step-modal-title">코드 리뷰 2단계 방법 알아보기</h2>
         </div>
-        <div className="step-modal-content">
+        <div className="step-modal-content" style={{'fontSize':'20px'}}>
           <p>
             <span>스터디원들이 이해하기 편하도록</span>
             <br></br>
@@ -782,7 +788,7 @@ function StepModal3(props) {
         <div className="step-modal-header">
           <h2 className="step-modal-title">코드 리뷰 3단계 방법 알아보기</h2>
         </div>
-        <div className="step-modal-content">
+        <div className="step-modal-content" style={{'fontSize':'20px'}}>
           <p>
             <span>상단의 코드리뷰 페이지의</span>
             <span>내가 보낸 요청탭에서</span>
