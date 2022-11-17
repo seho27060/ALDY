@@ -32,6 +32,11 @@ const WhiteButton = styled.button`
   font-size: 24px;
   margin: 4px;
   font-family: "uhbeeBold";
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const MainPage = () => {
