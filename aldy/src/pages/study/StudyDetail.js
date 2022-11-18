@@ -18,6 +18,7 @@ import ProblemModal from "../../components/study/ProblemModal";
 import StudyMember from "../../components/study/StudyMember";
 import moment from "moment";
 import StudyChart from "../../components/study/StudyChart";
+import StudyChartTier from "../../components/study/StudyChartTier";
 import AlertModal from "../../components/AlertModal";
 import { FcLock } from "react-icons/fc";
 import { useRecoilState } from "recoil";
@@ -464,7 +465,7 @@ const StudyDetail = () => {
                   </div>
                   <div>
                     <div className="study-title-graph">난이도 별</div>
-                    <StudyChart studyData={studyDetail.statsByTier} />
+                    <StudyChartTier studyData={studyDetail.statsByTier} />
                   </div>
                 </div>
               ) : (

@@ -10,25 +10,27 @@ const WhiteButton = styled.button`
   width: 75px;
   border-radius: 8px;
   background-color: white;
-  border: 2px solid red;
+  border: 2px solid rgb(40, 80, 15);
   outline: none;
-  color: red;
+  color: rgb(40, 80, 15);
   font-size: 13px;
   transition: transform 30ms ease-in;
   padding-top: 3px;
+  font-weight: bold;
 `;
 
 const RedButton = styled.button`
   width: 75px;
   border-radius: 8px;
-  background-color: red;
+  background-color: white;
   border: 2px solid red;
   outline: none;
-  color: white;
+  color: red;
   transition: transform 30ms ease-in;
   margin-left: auto;
   font-size: 13px;
   padding-top: 3px;
+  font-weight: bold;
 `;
 
 const ProblemListItem = (props) => {
