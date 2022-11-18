@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import Editor from "@monaco-editor/react";
 import { useRecoilState } from "recoil";
-import { recoilMyCode, recoilStep, isFooter } from "../../store/states";
+import { recoilMyCode, recoilStep, isFooter, isNav } from "../../store/states";
 import {
   getEditedCodes,
   saveCode,
@@ -19,7 +19,9 @@ import ReviewListAlert from "../../components/ReviewListAlert";
 
 const CodeReview = () => {
   const [footer, setFooter] = useRecoilState(isFooter);
+  const [nav, setNav] = useRecoilState(isNav);
   setFooter(false);
+  setNav(false);
   // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
   // const convertCodes = {2:"firstProcessCode"}
   // studyInfo
@@ -52,6 +54,11 @@ const CodeReview = () => {
   const [codes, setCodes] = useState({});
   const [defaultCode1, setDefaultCode1] = useState("");
   const [defaultCode2, setDefaultCode2] = useState("");
+  const navigateMain = () => {
+    navigate("/");
+    setNav(true);
+    setFooter(true);
+  };
 
   useEffect(() => {
     setSubmitOneTwoThree((prev) => {
@@ -61,10 +68,10 @@ const CodeReview = () => {
       return { ...prev, process: step };
     });
     if (step === 1) {
-      setStepModalShow1(true)
+      setStepModalShow1(true);
     }
     if (step === 2) {
-      setStepModalShow2(true)
+      setStepModalShow2(true);
     }
     if (step === 3 && !isFinal) {
       setStepModalShow3(true);
@@ -202,11 +209,18 @@ const CodeReview = () => {
       <section className="review-header">
         {step === 1 && (
           <div className="review-header-step">
-            <img
+            <div
+              onClick={navigateMain}
+              className="nav-title"
+              style={{ marginLeft: "40px", fontSize: "60px" }}
+            >
+              ALDY
+            </div>
+            {/* <img
               src="/dinosaur_hello.gif"
               className="review-header-step-img"
-              style={{ marginLeft: "100px" }}
-            ></img>
+              // style={{ marginLeft: "100px" }}
+            ></img> */}
             <h2 className="review-orange">✨ 코드리뷰 1단계 : 코드 ✨</h2>
             <button
               className="review-header-step-btn"
@@ -234,11 +248,18 @@ const CodeReview = () => {
         )}
         {step === 2 && (
           <div className="review-header-step">
-            <img
-              src="/dinosaur_hello.gif"
-              className="review-header-step-img"
-              style={{ marginLeft: "100px" }}
-            ></img>
+            <div
+              onClick={navigateMain}
+              className="nav-title"
+              style={{ marginLeft: "40px", fontSize: "60px" }}
+            >
+              ALDY
+            </div>
+            {/* <img
+            src="/dinosaur_hello.gif"
+            className="review-header-step-img"
+            // style={{ marginLeft: "100px" }}
+          ></img> */}
             <h2 className="review-orange">
               ✨ 코드리뷰 2단계 : 코드 주석달기 ✨
             </h2>
@@ -268,11 +289,18 @@ const CodeReview = () => {
         )}
         {step === 3 && (
           <div className="review-header-step">
-            <img
-              src="/dinosaur_hello.gif"
-              className="review-header-step-img"
-              style={{ marginLeft: "100px" }}
-            ></img>
+            <div
+              onClick={navigateMain}
+              className="nav-title"
+              style={{ marginLeft: "40px", fontSize: "60px" }}
+            >
+              ALDY
+            </div>
+            {/* <img
+            src="/dinosaur_hello.gif"
+            className="review-header-step-img"
+            // style={{ marginLeft: "100px" }}
+          ></img> */}
             <h2 className="review-orange">
               ✨ 코드리뷰 3단계 : 최종 코드 제출하기 ✨
             </h2>
@@ -356,8 +384,9 @@ const CodeReview = () => {
             onChange={(e) => {
               setLanguage(e.target.value);
             }}
+            className="language-select-box"
           >
-            <option value="">--사용할 언어를 선택해주세요--</option>
+            <option value="">--언어 선택--</option>
             <option value="c++">C++</option>
             <option value="java">Java</option>
             <option value="python">Python</option>
@@ -377,6 +406,10 @@ const CodeReview = () => {
                 setStep(1);
               }}
             >
+              <img
+                src="/star.png"
+                className={`${step === 1 ? "star" : "none"}`}
+              ></img>
               1단계
             </button>
             <button
@@ -386,6 +419,11 @@ const CodeReview = () => {
                 setStep(2);
               }}
             >
+              {" "}
+              <img
+                src="/star.png"
+                className={`${step === 2 ? "star" : "none"}`}
+              ></img>
               2단계
             </button>
             {/* <button
@@ -404,6 +442,11 @@ const CodeReview = () => {
                 // setStepModalShow3(true)
               }}
             >
+              {" "}
+              <img
+                src="/star.png"
+                className={`${step === 3 ? "star" : "none"}`}
+              ></img>
               3단계
             </button>
           </div>
@@ -411,9 +454,7 @@ const CodeReview = () => {
             {step === 3 && (
               <div className="step-four-main">
                 <div className="step-four-your-code">
-                  <div className="step-four-type">
-                    <span>리뷰 받은 코드</span>
-                  </div>
+                  <div className="step-four-type">리뷰 받은 코드</div>
                   <Editor
                     className="review-code-editor"
                     height="95%"
@@ -662,8 +703,8 @@ function RequestModal(props) {
             className="review-modal-request-btn"
             onClick={() => {
               if (selected.receiverId.length === 0) {
-                setMessage('리뷰어를 한명 이상 선택해주세요')
-                setAlertModalShow(true)
+                setMessage("리뷰어를 한명 이상 선택해주세요");
+                setAlertModalShow(true);
               } else {
                 props.onHide();
                 reviewRequest(selected)
@@ -687,7 +728,7 @@ function RequestModal(props) {
 }
 
 function StepModal1(props) {
-  const problemNum = props.problemNum
+  const problemNum = props.problemNum;
   return (
     <Modal
       {...props}
@@ -697,17 +738,27 @@ function StepModal1(props) {
     >
       <Modal.Body className="step-modal-body">
         <div className="step-modal-header">
-          <h2 className="step-modal-title">코드 리뷰 1단계 방법 알아보기</h2>
+          <h2 className="step-modal-title study-underline-orange">
+            코드 리뷰 1단계 방법 알아보기
+          </h2>
         </div>
-        <div className="step-modal-content" style={{'fontSize':'20px'}}>
+        <div className="step-modal-content" style={{ fontSize: "20px" }}>
           <p>
             <span>백준에서 </span>
-            <span className="highlight">풀었던 코드를</span>
-            <span>제출해주세요.</span>
+            <span className="highlight">풀었던 코드</span>
+            <span>를 제출해주세요.</span>
             <br></br>
-            <button className="go-to-baekjoon-btn" onClick={() => {
-              window.open(`https://www.acmicpc.net/problem/${problemNum}`, "_blank")
-            }}>백준으로 이동하기</button>
+            <button
+              className="go-to-baekjoon-btn"
+              onClick={() => {
+                window.open(
+                  `https://www.acmicpc.net/problem/${problemNum}`,
+                  "_blank"
+                );
+              }}
+            >
+              백준으로 이동하기
+            </button>
             {/* <span>해당 문제의 풀이코드를</span>
             <span className='highlight'> 공개</span>
             <span>로 설정하였을 경우</span><br></br>
@@ -730,9 +781,11 @@ function StepModal2(props) {
     >
       <Modal.Body className="step-modal-body">
         <div className="step-modal-header">
-          <h2 className="step-modal-title">코드 리뷰 2단계 방법 알아보기</h2>
+          <h2 className="step-modal-title study-underline-orange">
+            코드 리뷰 2단계 방법 알아보기
+          </h2>
         </div>
-        <div className="step-modal-content" style={{'fontSize':'20px'}}>
+        <div className="step-modal-content" style={{ fontSize: "20px" }}>
           <p>
             <span>스터디원들이 이해하기 편하도록</span>
             <br></br>
@@ -775,6 +828,8 @@ function StepModal2(props) {
 // }
 
 function StepModal3(props) {
+  const navigate = useNavigate();
+  const [showNav, setShowNav] = useRecoilState(isNav)
   return (
     <Modal
       {...props}
@@ -784,25 +839,29 @@ function StepModal3(props) {
     >
       <Modal.Body className="step-modal-body">
         <div className="step-modal-header">
-          <h2 className="step-modal-title">코드 리뷰 3단계 방법 알아보기</h2>
+          <h2 className="step-modal-title study-underline-orange">
+            코드 리뷰 3단계 방법 알아보기
+          </h2>
         </div>
-        <div className="step-modal-content" style={{'fontSize':'20px'}}>
+        <div className="step-modal-content" style={{ fontSize: "20px" }}>
           <p>
-            <span>상단의 코드리뷰 페이지의</span>
-            <span>내가 보낸 요청탭에서</span>
+            <span>코드리뷰 리스트의 내가 보낸 요청 탭에서</span>
             <br />
-            <span className="highlight">코드리뷰 3단계</span>
+            <span className="highlight">코드리뷰 3단계 </span>
             <span>버튼을 눌러주세요</span>
             <br />
             <span className="highlight">코드리뷰</span>
             <span>를 받은 부분과</span>
             <br></br>
             <span className="highlight">내가 작성한 코드</span>
-            <span>를 비교해보세요!</span>
-            <br></br>
-            <span>코드리뷰를 받은 내용을 바탕으로</span>
+            <span>를 비교하고</span>
             <br></br>
             <span>최종코드를 완성해서 제출해보세요.</span>
+            <br></br>
+            <button className='go-to-review-list' onClick={() => {
+              setShowNav(true)
+              navigate('/review/list')
+            }}>코드리뷰 리스트로 이동</button>
           </p>
         </div>
       </Modal.Body>

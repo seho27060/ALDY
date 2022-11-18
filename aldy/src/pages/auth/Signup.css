@@ -21,30 +21,36 @@
 }
 
 .signup-page-left {
-  padding-left: 10%;
+  padding-left: 7%;
+  padding-right: 12%;
   user-select: none;
+  width: 50%;
 }
 
-.nnnnnn {
-  padding-bottom: 30px;
-  font-family: "Noto Sans KR";
+.sign-title {
+  padding-bottom: 10px;
+  font-family: "KOFIHDrLEEJWTTF-B";
   font-style: normal;
   font-weight: 900;
-  font-size: 40px;
+  font-size: 45px;
   line-height: 58px;
   /* identical to box height */
 
   display: flex;
   align-items: center;
-  letter-spacing: -0.005em;
 
   color: #000000;
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.sign-title-info {
+  text-align: start;
+  margin-bottom: 45px;
+}
+
 .signup-page-right {
-  padding-left: 12%;
+  /* padding-left: 12%; */
   /* align-items: center; */
   user-select: none;
 }
@@ -153,4 +159,13 @@ input:focus {
   font-size: 30px;
   color: white;
   padding-bottom: 35px;
+}
+
+.sign-form-title {
+  text-align: left;
+  margin-bottom: 30px;
+  color: rgb(100, 100, 100);
+  font-family: "GmarketSansMedium";
+  font-weight: 500;
+  width: 100%;
 }

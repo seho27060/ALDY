@@ -1,6 +1,6 @@
 .move-bar {
     position: fixed;
-    top: 600px;
+    bottom: 20px;
     left: 20px;
     border-radius: 30px;
     background-color: gray;
@@ -15,7 +15,7 @@
 }
 
 .move-bar:hover {
-    opacity: 1;
+    opacity: 0.9;
 }
 
 .move-bar-btn {
@@ -25,4 +25,9 @@
     outline: none;
     border: none;
     background: none;
+    transition: transform 30ms ease-in;
+}
+
+.move-bar-btn:hover {
+    transform: scale(1.1);
 }

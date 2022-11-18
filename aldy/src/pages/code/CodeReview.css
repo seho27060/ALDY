@@ -2,23 +2,25 @@
   background-color: #dcf0be;
   padding: 20px;
   user-select: none;
-
-  
+  min-height: 100vh;
 }
 
 .review-header {
-  padding-bottom: 20px;
+  padding-bottom: 2.5vh;
+  margin-top: 3vh;
 }
 
 .review-header-step-img {
   width: 90px;
+  margin-left: -25px;
+  z-index: 1;
 }
-
 
 .review-header-step {
   display: flex;
   justify-content: flex-end;
   margin: auto;
+  margin-top: 20px;
 }
 
 .review-header-step-btn {
@@ -27,22 +29,28 @@
   color: #e63246;
   background: white;
   border-radius: 8px;
-  padding: 0 30px;
+  padding: 5px 30px 0;
   transform: translateY(40px);
-  height: 50px;
+  height: 45px;
+  font-size: 18px;
+  font-weight: 700;
 }
-
 
 h2.review-orange {
   /* text-decoration-line: underline;
     text-decoration-color: #FFE1AA;
     text-decoration-thickness: 10px;
     text-underline-offset: -5px; */
-  box-shadow: inset 0 -12px 0 #ffe1aa;
-  line-height: 42px;
-  width: fit-content;
   margin: auto;
-  font-weight: bold;
+
+  user-select: none;
+  box-shadow: inset 0 -15px 0 rgba(255, 225, 170, 1);
+  width: fit-content;
+  line-height: 42px;
+
+  font-weight: 700;
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-size: 45px;
 }
 
 .review-content {
@@ -53,7 +61,7 @@ h2.review-orange {
 }
 
 .review-title {
-  margin: 30px auto;
+  margin: 30px auto 0px;
   padding: 10px;
   width: fit-content;
   background-color: #28500f;
@@ -102,25 +110,37 @@ h2.review-orange {
 .act {
   text-decoration-line: underline;
   text-decoration-thickness: 8px;
+  text-decoration-color: rgba(255, 225, 225, 0.8);
+  margin-right: 30px;
+}
+
+.star {
+  width: 30px;
+  margin-right: -5px;
+  padding-bottom: 10px;
+}
+
+.none {
+  display: none;
 }
 
 .review-language-select {
-    display: flex;
-    justify-content: flex-end;
-    color: black;
-    margin-bottom: 20px;
-    margin-right: 45px;
+  display: flex;
+  justify-content: flex-end;
+  color: black;
+  margin-bottom: 20px;
+  margin-right: 45px;
 }
 
 #language-select {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 .review-code {
   background-color: #28500f;
   border-radius: 10px;
   width: 75%;
-  padding: 14px;
+  padding: 14px 14px 20px 14px;
   margin-left: 4px;
 }
 
@@ -153,14 +173,18 @@ h2.review-orange {
   color: #e63246;
   background: white;
   border-radius: 8px;
-  padding: 0 16px;
-  margin-right: 24px;
+  padding: 3px 20px 0;
+  margin-right: 3%;
   height: 40px;
-  transition: tranform 30ms ease-in;
+  transition: all 200ms ease-in;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .reviewBtn:hover {
-  transform: scale(1.1);
+  background-color: red;
+  color: white;
+  transition: all 200ms ease-in;
 }
 
 .review-modal-body {
@@ -190,7 +214,7 @@ h2.review-orange {
   outline: none;
   border: none;
   border-radius: 6px;
-  padding: 0 8px;
+  padding: 4px 8px 0;
   background-color: #e63246;
   color: white;
   width: fit-content;
@@ -265,29 +289,29 @@ h2.review-orange {
 }
 
 .review-method-img {
-    width: 100px;
-    transform: translate(-30px, -18px)
+  width: 100px;
+  transform: translate(-30px, -18px);
 }
 
 .review-method-btn {
-    transition: transform 100ms ease-in;
+  transition: transform 100ms ease-in;
 }
 
 .review-method-btn:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .step-modal-body {
-    text-align: center;
-    border-radius: 8px;
-    border: 4px solid #E63246;
+  text-align: center;
+  border-radius: 8px;
+  border: 4px solid #e63246;
 }
 
 .step-modal-title {
-    box-shadow: inset 0 -12px 0 #FFE1AA;
-    line-height: 42px;
-    margin-bottom: 30px;
-    font-weight: bold;
+  /* box-shadow: inset 0 -12px 0 #FFE1AA; */
+  line-height: 42px;
+  margin: 10px auto 30px auto;
+  font-weight: bold;
 }
 
 .step-four-main {
@@ -305,13 +329,13 @@ h2.review-orange {
 }
 
 .step-four-type {
-  background-color: white;
-  color: black;
+  color: white;
   width: fit-content;
   margin: auto;
   border-radius: 10px;
-  font-size: 18px;
-  padding: 0 10px;
+  font-size: 24px;
+  padding: 3px 15px 1px;
+  font-family: "uhbeeBold";
 }
 
 .reviewer-select {
@@ -336,6 +360,37 @@ h2.review-orange {
 }
 
 .go-to-baekjoon-btn:hover {
+  background-color: red;
+  color: white;
+  transition: all 200ms ease-in;
+}
+
+.language-select-box {
+  padding: 5px 8px;
+  border: 2px solid #28500f;
+  background-color: #ffffff;
+  color: black;
+  outline: none;
+  margin-right: 3%;
+}
+
+.go-to-review-list {
+  width: 170px;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  border: 2px solid red;
+  color: red;
+  font-family: "GmarketSansMedium";
+  font-weight: bold;
+  font-size: 15px;
+  padding: 5px 0px 3px 0px;
+  transition: all 200ms ease-in;
+  margin-top: 20px;
+  user-select: none;
+}
+
+.go-to-review-list:hover {
   background-color: red;
   color: white;
   transition: all 200ms ease-in;

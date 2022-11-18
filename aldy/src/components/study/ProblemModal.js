@@ -17,7 +17,14 @@ const RedButton = styled.button`
   transition: transform 30ms ease-in;
 `;
 
-const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
+const StudyJoin = ({
+  studyDetail,
+  date,
+  modal,
+  handleModal,
+  problemList,
+  setProblemList,
+}) => {
   const navigate = useNavigate();
   const navigateStudySelect = () => {
     navigate("/study/select", { state: { date: date, studyId: studyId } });
@@ -31,7 +38,15 @@ const StudyJoin = ({ studyDetail, date, modal, handleModal, problemList }) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   return (
-    <Modal size="lg" show={modal} onHide={handleModal} centered>
+    <Modal
+      size="lg"
+      show={modal}
+      onHide={() => {
+        handleModal();
+        setProblemList([]);
+      }}
+      centered
+    >
       <Modal.Body className="review-modal-body">
         <div className="review-modal-header">
           <div>
