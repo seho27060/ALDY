@@ -14,7 +14,7 @@ import AlertModal from "../../components/AlertModal";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useRecoilState } from "recoil";
-import { isFooter } from "../../store/states";
+import { isNav } from "../../store/states";
 
 const RedButtonSmall = styled.button`
   width: 100px;
@@ -61,16 +61,17 @@ const YellowButton = styled.button`
 `;
 
 const GrayButton = styled.button`
-  width: 120px;
-  height: 30px;
+  width: 100px;
+  height: 32px;
   border-radius: 8px;
   background-color: gray;
   border: none;
   outline: none;
   color: white;
-  font-weight: bold;
   transition: transform 30ms ease-in;
-  padding: 2px 0px 1px 0px;
+  padding: 2px 0px 0px 0px;
+  font-size: 15px;
+  margin-top: 5px;
 `;
 
 const Signup = () => {
@@ -89,8 +90,8 @@ const Signup = () => {
     return true;
   }
 
-  const [footer, setFooter] = useRecoilState(isFooter);
-  setFooter(false);
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
 
   const [bojModalShow, setBojModalShow] = useState(false);
   const [bojValidationCode, setBojValidationCode] = useState("");

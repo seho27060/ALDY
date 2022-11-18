@@ -14,6 +14,8 @@ import {
 import AlertModal from "../../components/AlertModal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useRecoilState } from "recoil";
+import { isNav } from "../../store/states";
 
 const RedButton = styled.button`
   width: 200px;
@@ -41,6 +43,9 @@ const WhiteButton = styled.button`
 `;
 
 const StudySelect = () => {
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
+
   const navigate = useNavigate();
   const location = useLocation();
   const date = location.state.date;
