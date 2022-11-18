@@ -132,7 +132,7 @@ h1 {
   white-space: nowrap;
 }
 .aldy_step_info {
-  background-color: #c8e687;
+  background-color: #e7fdb6;
   user-select: none;
   padding: 80px 15%;
 }
@@ -151,4 +151,46 @@ h1 {
 
 .main-page-description-aldy {
   justify-content: flex-start;
+}
+
+section.main-page-tutorial-description {
+  background-color: #373737;
+  color: white;
+  padding: 150px 15%;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.main-page-tutorial-title {
+  font-family: "uhbeeBold";
+  font-size: 35px;
+  margin-top: 10px;
+  white-space: nowrap;
+  margin-bottom: 30px;
+}
+
+.main-page-tutorial-title > span {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  margin-top: 10px;
+  white-space: nowrap;
+  color: #c8e687;
+}
+
+.tutorial-table {
+  align-items: center;
+  /* border: 1px solid white; */
+  border-radius: 3px;
+}
+.TutorialChangeLogin {
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 7px;
+}
+
+.tutorial-content {
+  background-color: white;
+  color: black;
+  padding: 7px;
 }
