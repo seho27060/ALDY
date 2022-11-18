@@ -21,25 +21,38 @@ const RedButton = styled.button`
   width: 200px;
   height: 50px;
   border-radius: 8px;
-  background-color: red;
-  border: none;
+  background-color: #28500f;
+  border: 2px solid #28500f;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
-  font-size: 16px;
-  box-shadow: 4px 4px 20px rgba(100, 100, 100, 0.25);
+  transition: all 200ms ease-in;
+  font-size: 20px;
+  font-family: "KOFIHDrLEEJWTTF-B";
+  padding-top: 4px;
+  &:hover {
+    background-color: white;
+    color: #28500f;
+    transition: all 200ms ease-in;
+    border: 2px solid #28500f;
+  }
 `;
 
 const WhiteButton = styled.button`
-  width: 70px;
-  border-radius: 8px;
+  width: 90px;
+  border-radius: 6px;
   background-color: white;
-  border: 2px solid red;
+  border: 2px solid #28500f;
   outline: none;
-  color: red;
-  font-weight: bold;
-  transition: transform 30ms ease-in;
+  color: #28500f;
+  transition: all 200ms ease-in;
+  padding: 6px 0 2px;
+  &:hover {
+    background-color: #28500f;
+    color: white;
+    transition: all 200ms ease-in;
+    border: 2px solid #28500f;
+  }
 `;
 
 const StudySelect = () => {
@@ -157,7 +170,7 @@ const StudySelect = () => {
   };
 
   return (
-    <main style={{ textAlign: "start" }}>
+    <main style={{ textAlign: "start" }} className="study-select-main">
       <AlertModal
         show={alertModalShow}
         onHide={() => {
@@ -174,9 +187,7 @@ const StudySelect = () => {
         message={message}
       />
       <section className="study-select-title-box">
-        <h1 className="study-select-title">
-          <span>문제 선정 하기</span>
-        </h1>
+        <h1 className="study-underline-green">문제 선정 하기</h1>
         <div>
           <div className="study-select-small-title">
             🔥필터 선택 후 검색 버튼을 눌러 문제를 선정해주세요🔥
@@ -190,8 +201,12 @@ const StudySelect = () => {
       <section className="study-select-search-box">
         <div className="study-select-option">
           <div className="green-line">
-            <img src="/code_person.png" alt="코딩하는사람"></img>
-            <div>알고리즘 분류</div>
+            <img
+              src="/code_person.png"
+              alt="코딩하는사람"
+              className="codeImg"
+            ></img>
+            <div className="study-select-info">알고리즘 분류</div>
           </div>
           <div className="option-scroll">
             <Option
@@ -203,8 +218,14 @@ const StudySelect = () => {
         </div>
         <div className="study-select-option">
           <div className="green-line">
-            <img src="/code_person.png" alt="코딩하는사람"></img>
-            <div>난이도</div>
+            <span className="imgbox">
+              <img
+                src={`https://d2gd6pc034wcta.cloudfront.net/tier/0.svg`}
+                alt="티어 이미지"
+                className="tierImg"
+              ></img>
+            </span>
+            <div className="study-select-info">난이도</div>
           </div>
           <div className="option-scroll">
             <Option
@@ -216,8 +237,8 @@ const StudySelect = () => {
         </div>
         <div className="study-select-option">
           <div className="green-line">
-            <img src="/code_person.png" alt="코딩하는사람"></img>
-            <div>안푼사람</div>
+            <span className="imgbox">❓</span>
+            <div className="study-select-info">안푼사람</div>
           </div>
           <div className="option-scroll">
             <Option
@@ -228,22 +249,22 @@ const StudySelect = () => {
           </div>
         </div>
       </section>
-      <div style={{ margin: "0px 10%", textAlign: "end" }}>
-        <WhiteButton onClick={searchProblem}>검색</WhiteButton>
+      <div style={{ margin: "0px 15%", textAlign: "end" }}>
+        <WhiteButton onClick={searchProblem}>필터 검색</WhiteButton>
       </div>
-      <div className="search-box" style={{ margin: "50px 10%" }}>
+      <div className="select-search-box">
         <div className="d-flex search-bar">
           <Form.Control
             type="search"
             placeholder="검색어를 입력해주세요."
-            className="me-2"
+            className="me-2 slect-search-form"
             aria-label="Search"
             ref={searchInput}
             onKeyPress={onKeypress}
           />
           <Button
             variant="outline-success"
-            className="search-button"
+            className="select-search-button"
             onClick={problemSearch}
           >
             Search
@@ -252,7 +273,7 @@ const StudySelect = () => {
       </div>
       <section className="study-select-problem-box">
         <div className="green-line">
-          <div>✨ 담긴 문제 ✨</div>
+          <div className="study-select-info">✨ 담긴 문제 ✨</div>
         </div>
         <div className="problem-number-box">
           {problem?.map((item, key) => (
@@ -272,8 +293,8 @@ const StudySelect = () => {
       </section>
       <section className="study-select-result">
         <div className="green-line">
-          <img src="/code_person.png" alt="코딩하는사람"></img>
-          <div>문제 목록</div>
+          <span className="imgbox">📃</span>
+          <div className="study-select-info">문제 목록</div>
           <span className="right">맞힌 사람이 많은 순</span>
         </div>
         <div className="option-scroll">
@@ -284,7 +305,7 @@ const StudySelect = () => {
           ></Problem>
         </div>
       </section>
-      <section className="study-problem-button">
+      <section className="study-problem-button study-select-info">
         <RedButton onClick={choiceProblem}>문제 선정하기</RedButton>
       </section>
     </main>

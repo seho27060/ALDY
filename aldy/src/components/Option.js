@@ -49,7 +49,7 @@ const Option = ({ optionData, checkItems, setCheckItems }) => {
 
   return (
     <StyledTable>
-      {optionName === "segtree" || optionName === "1" ? null : (
+      {optionName === "graphs" || optionName === "1" ? null : (
         <thead>
           <tr>
             <th>
