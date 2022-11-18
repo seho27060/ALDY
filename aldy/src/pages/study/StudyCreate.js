@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
 const GreenButton = styled.button`
+  margin: 30px;
   width: 200px;
   border-radius: 8px;
   background-color: white;
@@ -21,6 +22,11 @@ const GreenButton = styled.button`
   font-size: 18px;
   padding: 7px 0px 5px 0px;
   transition: all 200ms ease-in;
+  &:hover {
+    background-color: rgba(40, 80, 15, 1);
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const StudyCreate = () => {
@@ -160,19 +166,6 @@ const StudyCreate = () => {
               </div>
             </div>
             <div className="study-create-form-title">
-              <div className="study-create-form-info">스터디 설명</div>
-              <textarea
-                placeholder="스터디 설명을 입력해 주세요."
-                name="introduction"
-                value={newStudy.introduction}
-                onChange={onChange}
-                className="study-create-textarea"
-                wrap="hard"
-                cols={20}
-                rows={2}
-              ></textarea>
-            </div>
-            <div className="study-create-form-title">
               <div className="study-create-form-info">스터디 가입 요건</div>
               <Select
                 onChange={(e) => {
@@ -189,6 +182,20 @@ const StudyCreate = () => {
                 })}
               ></Select>
             </div>
+            <div className="study-create-form-title">
+              <div className="study-create-form-info">스터디 설명</div>
+              <textarea
+                placeholder="스터디 설명과 카카오톡 오픈채팅방을 입력해주세요!"
+                name="introduction"
+                value={newStudy.introduction}
+                onChange={onChange}
+                className="study-create-textarea"
+                wrap="hard"
+                cols={20}
+                rows={2}
+              ></textarea>
+            </div>
+
             <div className="study-create-submit-btn">
               <GreenButton
                 className="study-create-btn"

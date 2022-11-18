@@ -5,15 +5,23 @@ import styled from "styled-components";
 import AlertRefreshModal from "../AlertRefreshModal";
 
 const RedButton = styled.button`
-  width: 70px;
+  width: 55px;
   border-radius: 8px;
   background-color: red;
-  border: none;
+  border: 2px solid red;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
   margin-left: auto;
+  font-size: 13px;
+  padding-top: 3px;
+  transition: all 200ms ease-in;
+  &:hover {
+    background-color: white;
+    color: red;
+    transition: all 200ms ease-in;
+    border: 2px solid red;
+  }
 `;
 
 const StudyMemberItem = (props) => {

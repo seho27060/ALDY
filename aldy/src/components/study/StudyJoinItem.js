@@ -10,12 +10,40 @@ const RedButton = styled.button`
   width: 70px;
   border-radius: 8px;
   background-color: red;
-  border: none;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
   margin-left: 10px;
+  font-size: 13px;
+  padding-top: 3px;
+  border: 2px solid red;
+  transition: all 200ms ease-in;
+  &:hover {
+    background-color: white;
+    color: red;
+    transition: all 200ms ease-in;
+    border: 2px solid red;
+  }
+`;
+
+const GreenButton = styled.button`
+  width: 70px;
+  border-radius: 8px;
+  background-color: green;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 13px;
+  padding-top: 3px;
+  border: 2px solid green;
+  transition: all 200ms ease-in;
+  &:hover {
+    background-color: white;
+    color: green;
+    transition: all 200ms ease-in;
+    border: 2px solid green;
+  }
 `;
 
 const StudyJoinItem = (props) => {
@@ -128,7 +156,7 @@ const StudyJoinItem = (props) => {
         <div>백준 아이디 : {props.item.baekjoonId}</div>
         <div>가입 신청 메시지 : {props.item.message}</div>
         <div className="Join-btns">
-          <RedButton onClick={onAccept}>수락</RedButton>
+          <GreenButton onClick={onAccept}>수락</GreenButton>
           <RedButton onClick={onReject}>거절</RedButton>
         </div>
       </div>
