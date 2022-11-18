@@ -360,6 +360,24 @@ const MainPage = () => {
           <br></br>
           🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
           <br></br>
+          <img
+            src={process.env.PUBLIC_URL + "/aldyhead3.png"}
+            alt=""
+            width="80px"
+            style={{ margin: "10px" }}
+          ></img>
+          <img
+            src={process.env.PUBLIC_URL + "/aldyhead9.png"}
+            alt=""
+            width="80px"
+            style={{ margin: "10px" }}
+          ></img>
+          <img
+            src={process.env.PUBLIC_URL + "/aldyhead6.png"}
+            alt=""
+            width="80px"
+            style={{ margin: "10px" }}
+          ></img>
         </div>
       </section>
       <section className="main-page-tutorial-description">
