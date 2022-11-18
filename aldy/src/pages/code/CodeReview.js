@@ -388,7 +388,7 @@ const CodeReview = () => {
           >
             {/* <option value="">--언어 선택--</option> */}
             <option value="python">Python</option>
-            <option value="c++">C++</option>
+            <option value="cpp">C++</option>
             <option value="java">Java</option>
             <option value="javascript">Javascript</option>
             <option value="sql">SQL</option>
