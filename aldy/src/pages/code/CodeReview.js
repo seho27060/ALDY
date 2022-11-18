@@ -828,6 +828,8 @@ function StepModal2(props) {
 // }
 
 function StepModal3(props) {
+  const navigate = useNavigate();
+  const [showNav, setShowNav] = useRecoilState(isNav)
   return (
     <Modal
       {...props}
@@ -843,21 +845,23 @@ function StepModal3(props) {
         </div>
         <div className="step-modal-content" style={{ fontSize: "20px" }}>
           <p>
-            <span>상단의 코드리뷰 페이지의</span>
-            <span>내가 보낸 요청탭에서</span>
+            <span>코드리뷰 리스트의 내가 보낸 요청 탭에서</span>
             <br />
-            <span className="highlight">코드리뷰 3단계</span>
+            <span className="highlight">코드리뷰 3단계 </span>
             <span>버튼을 눌러주세요</span>
             <br />
             <span className="highlight">코드리뷰</span>
             <span>를 받은 부분과</span>
             <br></br>
             <span className="highlight">내가 작성한 코드</span>
-            <span>를 비교해보세요!</span>
-            <br></br>
-            <span>코드리뷰를 받은 내용을 바탕으로</span>
+            <span>를 비교하고</span>
             <br></br>
             <span>최종코드를 완성해서 제출해보세요.</span>
+            <br></br>
+            <button className='go-to-review-list' onClick={() => {
+              setShowNav(true)
+              navigate('/review/list')
+            }}>코드리뷰 리스트로 이동</button>
           </p>
         </div>
       </Modal.Body>
