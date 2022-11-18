@@ -8,17 +8,23 @@ import StudyJoin from "../../components/study/StudyJoin";
 import StudyDeleteAlert from "../../components/StudyDeleteAlert";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
+import ActivationLevel from "../../data/ActivationLevel";
 
 const RedButton = styled.button`
-  width: 70px;
   border-radius: 8px;
   background-color: red;
-  border: none;
+  border: 2px solid red;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  transition: all 200ms ease-in;
   margin-left: auto;
+  &:hover {
+    background-color: white;
+    color: red;
+    transition: all 200ms ease-in;
+    border: 2px solid red;
+  }
 `;
 
 const StudyManage = () => {
@@ -54,74 +60,86 @@ const StudyManage = () => {
           </div>
         )}
         <h5>{studyDetail.name} 스터디원 살펴보기</h5>
-        <h1>{studyDetail.name}</h1>
-        <div className="study-manage-blackboard">
+        <h1 className="study-underline-green">{studyDetail.name}</h1>
+        <div className="study-manage-blackboard-box">
           <img
             className="study-manage-img"
-            src="/dinosaur_hello.gif"
+            src={ActivationLevel[studyDetail.activationLevel]}
             alt="스터디 메인 이미지"
           ></img>
-          <table>
-            <tbody>
-              <tr>
-                <td style={{ color: "#B4E196" }}>공룡레벨</td>
-                <td>lv.20</td>
-                <td rowSpan="5">
-                  <div
-                    style={{
-                      color: "#B4E196",
-                      fontWeight: "700",
-                      paddingBottom: "7px",
-                    }}
-                  >
-                    ✨ 스터디 소개 ✨
-                  </div>
-                  {studyDetail.introduction}
-                </td>
-              </tr>
-              <tr>
-                <td>스터디장</td>
-                <td>{studyDetail.leaderBaekjoonId}</td>
-              </tr>
-              <tr>
-                <td>스터디원</td>
-                <td>
-                  {studyDetail.countMember}/{studyDetail.upperLimit}
-                </td>
-              </tr>
-              <tr>
-                <td>스터디 레벨</td>
-                <td>
-                  {" "}
-                  <img
-                    src={`https://d2gd6pc034wcta.cloudfront.net/tier/${studyDetail.threshold}.svg`}
-                    alt="티어 이미지"
-                    className="tier-image"
-                  ></img>
-                  {TierData[studyDetail.threshold]}
-                </td>
-              </tr>
-              <tr>
-                <td>생성 날짜</td>
-                <td>
-                  {createdDate.getFullYear()}년 {createdDate.getMonth() + 1}월{" "}
-                  {createdDate.getDate()}일
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="balckboard-box">
+            <div className="study-manage-blackboard">
+              <table>
+                <tbody>
+                  <tr>
+                    <td
+                      style={{ color: "#B4E196" }}
+                      className="study-manage-info"
+                    >
+                      공룡레벨
+                    </td>
+                    <td>lv.{studyDetail.level}</td>
+                    <td rowSpan="5">
+                      <div
+                        style={{
+                          color: "#B4E196",
+                          fontWeight: "700",
+                          paddingBottom: "7px",
+                        }}
+                        className="study-manage-info"
+                      >
+                        ✨ 스터디 소개 ✨
+                      </div>
+                      {studyDetail.introduction}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="study-manage-info">스터디장</td>
+                    <td>{studyDetail.leaderBaekjoonId}</td>
+                  </tr>
+                  <tr>
+                    <td className="study-manage-info">스터디원</td>
+                    <td>
+                      {studyDetail.countMember}/{studyDetail.upperLimit}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="study-manage-info">스터디 레벨</td>
+                    <td>
+                      {" "}
+                      <img
+                        src={`https://d2gd6pc034wcta.cloudfront.net/tier/${studyDetail.threshold}.svg`}
+                        alt="티어 이미지"
+                        className="tier-image"
+                      ></img>
+                      {TierData[studyDetail.threshold]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="study-manage-info">생성 날짜</td>
+                    <td>
+                      {createdDate.getFullYear()}년 {createdDate.getMonth() + 1}
+                      월 {createdDate.getDate()}일
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
       {/* <section className="study-manage-info">스터디 정보</section> */}
       <section className="study-manage-member">
         <h3 className="study-detail-title">
-          <span>스터디원</span>
+          <span className="study-underline-orange">👪 스터디원 👪</span>
         </h3>
         <StudyMember id={studyDetail.id}></StudyMember>
       </section>
       <section className="study-manage-member">
         <h3 className="study-detail-title">
-          <span>스터디원 신청목록</span>
+          <span className="study-underline-orange">
+            💌 스터디원 신청목록 💌
+          </span>
         </h3>
         <StudyJoin id={studyDetail.id}></StudyJoin>
       </section>
