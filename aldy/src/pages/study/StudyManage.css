@@ -95,16 +95,6 @@
   margin: 50px 5%;
 }
 
-.study-list-item {
-  border-radius: 10px;
-  margin: 10px 0;
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 .penalty-white {
   background-color: white;
 }
