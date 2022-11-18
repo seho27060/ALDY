@@ -85,7 +85,7 @@
 .secret-study {
   font-size: 10x;
   color: white;
-  background-color: darkkhaki;
+  background-color: #4b3200;
   border-radius: 3px;
   width: 50px;
   font-family: "uhbeeBold";
@@ -94,9 +94,9 @@
 .not-secret-study {
   font-size: 10x;
   background-color: white;
-  color: darkkhaki;
+  color: #4b3200;
   border-radius: 3px;
-  border: 2px solid darkkhaki;
+  border: 2px solid #4b3200;
   width: 50px;
   font-family: "uhbeeBold";
 }
