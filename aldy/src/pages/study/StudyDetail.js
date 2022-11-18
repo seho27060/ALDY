@@ -20,6 +20,8 @@ import moment from "moment";
 import StudyChart from "../../components/study/StudyChart";
 import AlertModal from "../../components/AlertModal";
 import { FcLock } from "react-icons/fc";
+import { useRecoilState } from "recoil";
+import { isNav } from "../../store/states";
 
 const RedButton = styled.button`
   width: 90px;
@@ -61,6 +63,9 @@ const WhiteButton = styled.button`
 `;
 
 const StudyDetail = () => {
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
+
   const params = useParams();
   const id = params.id || "";
   const myId = sessionStorage.getItem("userName");

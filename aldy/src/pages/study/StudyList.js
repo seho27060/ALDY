@@ -9,6 +9,8 @@ import MyStudyListItem from "../../components/study/MyStudyListItem";
 import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
 import AlertModal from "../../components/AlertModal";
+import { useRecoilState } from "recoil";
+import { isNav } from "../../store/states";
 
 const WhiteRedButton = styled.button`
   width: 170px;
@@ -32,6 +34,9 @@ const WhiteRedButton = styled.button`
 `;
 
 const StudyList = () => {
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
+
   const navigate = useNavigate();
   const searchInput = useRef("");
 

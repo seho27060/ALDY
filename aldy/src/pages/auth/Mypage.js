@@ -10,6 +10,8 @@ import Paging from "../../components/Paging";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 import Lottie from "lottie-react";
 import reload from "../../lotties/reload.json";
+import { useRecoilState } from "recoil";
+import { isNav } from "../../store/states";
 
 const WhiteButton = styled.button`
   width: 110px;
@@ -49,6 +51,9 @@ const WhiteButtonL = styled.button`
 `;
 
 const Mypage = () => {
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
+
   const [baekjoonId, setBaekjoonId] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [email, setEmail] = useState(null);

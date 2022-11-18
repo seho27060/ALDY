@@ -7,7 +7,7 @@ import { emailValid, nicknameValid } from "../../api/auth";
 import AlertModal from "../../components/AlertModal";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 import { useRecoilState } from "recoil";
-import { isFooter } from "../../store/states";
+import { isNav } from "../../store/states";
 
 const RedButton = styled.button`
   width: 120px;
@@ -35,8 +35,8 @@ const WhiteButton = styled.button`
 `;
 
 const Userinfo = () => {
-  const [footer, setFooter] = useRecoilState(isFooter);
-  setFooter(false);
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
   const [nickname, setNickname] = useState(null);
   const [email, setEmail] = useState(null);
 
