@@ -17,6 +17,11 @@ const WhiteButton = styled.button`
   transition: transform 30ms ease-in;
   padding-top: 3px;
   font-weight: bold;
+  &:hover {
+    background-color: rgb(40, 80, 15);
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const RedButton = styled.button`
@@ -31,6 +36,11 @@ const RedButton = styled.button`
   font-size: 13px;
   padding-top: 3px;
   font-weight: bold;
+  &:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms ease-in;
+  }
 `;
 
 const ProblemListItem = (props) => {

@@ -132,11 +132,6 @@ const MainPage = () => {
       </section>
       <section className="main-page-description">
         <div className="section1-left">
-          알디? 알고리즘 스터디 전용 사이트!
-          <br></br>
-          Algorithm study
-          <br></br>
-          ALDY
           <div
             className="main-page-description-title"
             data-aos="fade-up"
@@ -181,9 +176,9 @@ const MainPage = () => {
                 ></img>
               </div>
             </div>
-            <WhiteButton onClick={navigateMyPage} data-aos="fade-up">
+            {/* <WhiteButton onClick={navigateMyPage} data-aos="fade-up">
               추천 문제 풀기
-            </WhiteButton>
+            </WhiteButton> */}
           </div>
         </div>
       </section>
