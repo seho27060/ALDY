@@ -42,11 +42,12 @@ section.main-page-description-aldylist {
 
 .main-page-banner-text {
   font-weight: 800;
-  font-size: 20px;
+  font-size: 25px;
   line-height: 27px;
   letter-spacing: -0.005em;
   color: #649655;
   font-family: "uhbeeBold";
+  padding-bottom: 5px;
 }
 
 h1 {
@@ -87,7 +88,7 @@ h1 {
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 24px;
   line-height: 17px;
   text-align: center;
   color: #ffffff;
@@ -131,7 +132,7 @@ h1 {
   white-space: nowrap;
 }
 .aldy_step_info {
-  background-color: #c8e687;
+  background-color: #e7fdb6;
   user-select: none;
   padding: 80px 15%;
 }
@@ -150,4 +151,46 @@ h1 {
 
 .main-page-description-aldy {
   justify-content: flex-start;
+}
+
+section.main-page-tutorial-description {
+  background-color: #373737;
+  color: white;
+  padding: 150px 15%;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.main-page-tutorial-title {
+  font-family: "uhbeeBold";
+  font-size: 35px;
+  margin-top: 10px;
+  white-space: nowrap;
+  margin-bottom: 30px;
+}
+
+.main-page-tutorial-title > span {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  margin-top: 10px;
+  white-space: nowrap;
+  color: #c8e687;
+}
+
+.tutorial-table {
+  align-items: center;
+  /* border: 1px solid white; */
+  border-radius: 3px;
+}
+.TutorialChangeLogin {
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 7px;
+}
+
+.tutorial-content {
+  background-color: white;
+  color: black;
+  padding: 7px;
 }
