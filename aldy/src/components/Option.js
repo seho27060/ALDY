@@ -49,7 +49,7 @@ const Option = ({ optionData, checkItems, setCheckItems }) => {
 
   return (
     <StyledTable>
-      {optionName === "segtree" || optionName === "1" ? null : (
+      {/* {optionName === "segtree" || optionName === "1" ? null : (
         <thead>
           <tr>
             <th>
@@ -67,7 +67,7 @@ const Option = ({ optionData, checkItems, setCheckItems }) => {
             </th>
           </tr>
         </thead>
-      )}
+      )} */}
       <tbody>
         {data?.map((item, key) => (
           <tr key={key}>
