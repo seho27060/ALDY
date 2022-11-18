@@ -97,7 +97,7 @@
 }
 
 section.myPage-list-banner {
-  padding: 80px;
+  padding: 80px 15%;
   background-color: #fffaf0;
   min-height: 450px;
 }
@@ -106,4 +106,12 @@ section.myPage-list-banner {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.mystudy-search-result-title {
+  color: #4b3200;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: start;
+  margin: 10px 0px 20px 20px;
 }

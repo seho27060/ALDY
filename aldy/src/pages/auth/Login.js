@@ -147,10 +147,14 @@ const Login = () => {
             </div>
           </div>
           <div className="login-page-join">
-            <div style={{ color: "rgb(100,100,100)" }}>
+            <div style={{ color: "rgb(100,100,100)", whiteSpace: "nowrap" }}>
               아직 계정이 없으신가요?{" "}
             </div>
-            <div className="login-page-link" onClick={navigateSignup}>
+            <div
+              className="login-page-link"
+              onClick={navigateSignup}
+              style={{ whiteSpace: "nowrap" }}
+            >
               <div className="box-vibration">
                 <FcLike />
               </div>

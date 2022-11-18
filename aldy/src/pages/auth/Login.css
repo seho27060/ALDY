@@ -38,7 +38,7 @@
 }
 
 .login-page-right {
-  margin-left: 7%;
+  margin: 0 7%;
   /* align-items: center; */
   align-items: center;
   user-select: none;
