@@ -194,3 +194,16 @@ section.main-page-tutorial-description {
   color: black;
   padding: 7px;
 }
+
+.main-page-description-codereview {
+  background-color: #e7fdb6;
+  user-select: none;
+  padding: 80px 15%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-page-study-description {
+  display: flex;
+  justify-content: center;
+}

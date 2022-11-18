@@ -8,6 +8,12 @@ import { getUserInfo } from "../api/user";
 import { useRecoilState } from "recoil";
 import { isLoggedIn } from "../store/states";
 import MoveBar from "../components/MobeBar";
+import Lottie from "lottie-react";
+import codeTyping from "../lotties/codeTyping.json";
+import recommend from "../lotties/recommend.json";
+import codingReview from "../lotties/codingReview.json";
+import trafficLight from "../lotties/trafficLight.json";
+import onlineStudy from "../lotties/onlineStudy.json";
 
 const RedButton = styled.button`
   width: 170px;
@@ -132,11 +138,6 @@ const MainPage = () => {
       </section>
       <section className="main-page-description">
         <div className="section1-left">
-          알디? 알고리즘 스터디 전용 사이트!
-          <br></br>
-          Algorithm study
-          <br></br>
-          ALDY
           <div
             className="main-page-description-title"
             data-aos="fade-up"
@@ -155,6 +156,10 @@ const MainPage = () => {
               width="500px"
               data-aos="fade-right"
             ></img>
+            <Lottie
+              animationData={codeTyping}
+              style={{ width: "500px" }}
+            ></Lottie>
           </div>
         </div>
         <div className="section1-right" data-aos="fade-left">
@@ -165,6 +170,11 @@ const MainPage = () => {
                 data-aos="fade-up"
                 // data-aos-anchor-placement="bottom-center"
               >
+                {/* <Lottie
+                  animationData={recommend}
+                  style={{ width: "400px" }}
+                  data-aos="fade-right"
+                ></Lottie> */}
                 나만을 위한 문제 추천
               </div>
               <div className="main-page-description-text" data-aos="fade-up">
@@ -181,9 +191,9 @@ const MainPage = () => {
                 ></img>
               </div>
             </div>
-            <WhiteButton onClick={navigateMyPage} data-aos="fade-up">
+            {/* <WhiteButton onClick={navigateMyPage} data-aos="fade-up">
               추천 문제 풀기
-            </WhiteButton>
+            </WhiteButton> */}
           </div>
         </div>
       </section>
@@ -310,30 +320,65 @@ const MainPage = () => {
             <p>
               <span>코드리뷰 설명</span>
             </p>
-            <img
-              src={process.env.PUBLIC_URL + "/end1.gif"}
-              alt=""
-              width="300px"
-            ></img>
+            <Lottie
+              animationData={codingReview}
+              style={{ width: "500px" }}
+            ></Lottie>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-up">
+        <div className="section1-right" data-aos="fade-left">
           <div className="main-page-description-title"></div>
           <div className="main-page-description-text">
             <p>
-              <span>소멸 직후 </span>
-              <span className="main-page-highlight">화석이 된 알디</span>
+              <span>알디의 3단계 </span>
+              <span className="main-page-highlight">코드 리뷰</span>
             </p>
-            <img
-              src={process.env.PUBLIC_URL + "/end2.gif"}
-              alt=""
-              width="300px"
-            ></img>
+            <Lottie
+              animationData={onlineStudy}
+              style={{ width: "500px" }}
+              data-aos="fade-right"
+            ></Lottie>
           </div>
         </div>
       </section>
       <section className="main-page-study-description">
-        이곳에 스터디 설명을 작성하세요
+        {/* 이곳에 스터디 설명을 작성하세요 */}
+        <div className="section1-left" data-aos="fade-up">
+          <div className="main-page-description-text">
+            <p>
+              <span>스터디 설명</span>
+            </p>
+            <Lottie
+              animationData={trafficLight}
+              style={{ width: "300px" }}
+            ></Lottie>
+          </div>
+        </div>
+        <div style={{ marginTop: "100px" }}>
+          🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나 코드 리뷰를
+          안했다면 경고가 쌓여요!
+          <br></br>
+          🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
+          <br></br>
+          <img
+            src={process.env.PUBLIC_URL + "/aldyhead3.png"}
+            alt=""
+            width="80px"
+            style={{ margin: "10px" }}
+          ></img>
+          <img
+            src={process.env.PUBLIC_URL + "/aldyhead9.png"}
+            alt=""
+            width="80px"
+            style={{ margin: "10px" }}
+          ></img>
+          <img
+            src={process.env.PUBLIC_URL + "/aldyhead6.png"}
+            alt=""
+            width="80px"
+            style={{ margin: "10px" }}
+          ></img>
+        </div>
       </section>
       <section className="main-page-tutorial-description">
         <div className="main-page-tutorial-title">
