@@ -94,10 +94,10 @@ const CodeCorrect = () => {
             }}
             className="language-select-box"
           >
-            <option value="">--언어선택--</option>
-            <option value="c++">C++</option>
-            요청 받은 코드 <option value="java">Java</option>
+            {/* <option value="">--언어선택--</option> */}
             <option value="python">Python</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
             <option value="javascript">Javascript</option>
             <option value="sql">SQL</option>
           </select>
