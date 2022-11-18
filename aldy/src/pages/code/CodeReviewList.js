@@ -51,20 +51,50 @@ const CodeReviewList = () => {
         <h2 className="underline-orange">지금 바로 코드리뷰를 해보세요!</h2>
       </section>
       <section className="description">
-        <div className="description-detail">
+        <div className="study-description-detail">
           <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
-          <p>다른 사람에게서</p>
-          <h2 className="underline-green">내게 요청 온 목록</h2>
+          <div>다른 사람에게서</div>
+          <div
+            className="study-underline-green"
+            style={{
+              margin: "auto",
+              lineHeight: "35px",
+              fontSize: "25px",
+              marginBottom: "10px",
+            }}
+          >
+            내게 요청 온 목록
+          </div>
         </div>
-        <div className="description-detail">
+        <div className="study-description-detail">
           <img src="/book.png" alt="공책 이미지"></img>
-          <p>스터디원들에게</p>
-          <h2 className="underline-green">리뷰 받은 코드</h2>
+          <div>스터디원들에게</div>
+          <div
+            className="study-underline-green"
+            style={{
+              margin: "auto",
+              lineHeight: "35px",
+              fontSize: "25px",
+              marginBottom: "10px",
+            }}
+          >
+            리뷰 받은 코드
+          </div>
         </div>
-        <div className="description-detail">
+        <div className="study-description-detail">
           <img src="/pencil.png" alt="연필 이미지"></img>
-          <p>스터디 문제를 푼 후</p>
-          <h2 className="underline-green">내가 보낸 요청</h2>
+          <div>스터디 문제를 푼 후</div>
+          <div
+            className="study-underline-green"
+            style={{
+              margin: "auto",
+              lineHeight: "35px",
+              fontSize: "25px",
+              marginBottom: "10px",
+            }}
+          >
+            내가 보낸 요청
+          </div>
         </div>
       </section>
       <section className="request-list">
@@ -332,7 +362,7 @@ const CardRequestToMe = (props) => {
                 navigate("/correct");
               }}
             >
-              코드 첨삭하기
+              코드 리뷰
             </button>
           )}
         </Col>

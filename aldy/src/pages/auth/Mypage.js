@@ -23,7 +23,6 @@ const WhiteButton = styled.button`
   font-weight: bold;
   transition: transform 30ms ease-in;
   margin: 4px;
-
   &:hover {
     background-color: rgb(40, 80, 15);
     color: white;
@@ -191,7 +190,7 @@ const Mypage = () => {
               className="Mypage-tier-img"
             />
             <h2 className="Mypage-section1-userInfo-h2">
-              {nickname}님 안녕하세요
+              <b>{nickname}</b>님 안녕하세요
             </h2>
           </div>
           <div>
@@ -294,6 +293,7 @@ const Mypage = () => {
         <div>
           {/* <StudyListMy /> */}
           <div className="Mypage-study-list-box">
+            <div className="mystudy-search-result-title">내 스터디 목록</div>
             {myStudyList?.map((item, i) => (
               <MyStudyListItem key={i} item={item} num={i} />
             ))}

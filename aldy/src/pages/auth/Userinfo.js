@@ -14,15 +14,17 @@ const RedButton = styled.button`
   font-size: 15px;
   border-radius: 8px;
   background-color: rgb(40, 80, 15);
-  border: none;
+  border: 2px solid rgb(40, 80, 15);
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  transition: all 200ms ease-in;
+  padding-top: 5px;
 `;
 
 const WhiteButton = styled.button`
   width: 95px;
+  height: 36px;
   font-size: 15px;
   border-radius: 8px;
   background-color: white;
@@ -30,8 +32,9 @@ const WhiteButton = styled.button`
   outline: none;
   color: rgb(40, 80, 15);
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  transition: all 200ms ease-in;
   margin: 4px;
+  padding-top: 5px;
 `;
 
 const Userinfo = () => {
@@ -92,10 +95,10 @@ const Userinfo = () => {
   };
 
   const ChangeEmail = () => (
-    <div className="form-title">
+    <div className="sign-form-title">
       <div>변경 할 이메일</div>
       <div className="form-title-id">
-        <input name="email" ref={emailInput}></input>
+        <input class="study-create-input" name="email" ref={emailInput}></input>
         <RedButton
           onClick={() => {
             if (checkIt()) {
@@ -132,7 +135,7 @@ const Userinfo = () => {
   );
 
   const ChangeNickname = () => (
-    <div className="form-title">
+    <div className="sign-form-title">
       <div>변경 할 닉네임</div>
       <div className="form-title-id">
         <input
@@ -140,6 +143,7 @@ const Userinfo = () => {
           ref={nicknameInput}
           maxlength="10"
           placeholder="최대 10자까지 입력 가능합니다."
+          class="study-create-input"
         ></input>
         <RedButton
           onClick={() => {
@@ -183,6 +187,7 @@ const Userinfo = () => {
           type="password"
           placeholder="비밀번호를 입력해주세요."
           ref={passwordInput}
+          class="study-create-input"
         ></input>
         <RedButton
           onClick={() => {
@@ -227,10 +232,12 @@ const Userinfo = () => {
       />
       <div className="userinfo-page-bg">
         <section className="userinfo-page-left">
-          <div>✨닉네임과 이메일을 변경할 수 있습니다.✨</div>
-          <div className="nnnnnn">회원 정보</div>
+          <div className="sign-title">회원 정보</div>
+          <div className="sign-title-info">
+            ✨닉네임과 이메일을 변경할 수 있습니다.✨
+          </div>
           <div>
-            <div className="form-title">
+            <div className="sign-form-title">
               <div>이메일</div>
               <div className="userinfo-form-title-id">
                 <div>{email}</div>
@@ -238,7 +245,7 @@ const Userinfo = () => {
               </div>
             </div>
             {emailShow ? <ChangeEmail /> : null}
-            <div className="form-title">
+            <div className="sign-form-title">
               <div>닉네임</div>
               <div className="userinfo-form-title-id">
                 <div>{nickname}</div>
@@ -246,16 +253,15 @@ const Userinfo = () => {
               </div>
             </div>
             {nicknameShow ? <ChangeNickname /> : null}
-            <div className="form-title">
-              <div></div>
+            <div className="sign-form-title">
               <div className="userinfo-withdraw-title-id">
                 {/* <div>{nickname}</div> */}
                 <div
                   className="userinfo-withdraw"
-                  style={{ color: "rgb(40, 80, 15)" }}
+                  style={{ color: "rgb(40, 80, 15)", marginTop: "20px" }}
                   onClick={onClickWithdraw}
                 >
-                  회원 탈퇴😥
+                  <b>회원 탈퇴😥</b>
                 </div>
               </div>
             </div>
