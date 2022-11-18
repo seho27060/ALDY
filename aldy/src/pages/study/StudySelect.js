@@ -170,7 +170,7 @@ const StudySelect = () => {
   };
 
   return (
-    <main style={{ textAlign: "start" }}>
+    <main style={{ textAlign: "start" }} className="study-select-main">
       <AlertModal
         show={alertModalShow}
         onHide={() => {
