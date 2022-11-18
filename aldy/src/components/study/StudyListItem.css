@@ -18,7 +18,7 @@
 
 .study-id {
   background: none;
-  color: white;
+  color: black;
   font-size: 20px;
   font-weight: bold;
   border-radius: 50%;
@@ -34,10 +34,12 @@
   cursor: pointer;
   font-size: 20px;
   align-self: center;
+  transition: all 200ms ease-in;
 }
 
 .big-size {
-  font-size: 25px;
+  font-size: 23px;
+  transition: all 200ms ease-in;
 }
 
 .study-number {
@@ -89,6 +91,7 @@
   border-radius: 3px;
   width: 50px;
   font-family: "uhbeeBold";
+  border: 2px solid #4b3200;
 }
 
 .not-secret-study {

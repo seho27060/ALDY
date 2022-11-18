@@ -9,7 +9,7 @@
   background-position-x: center;
   position: relative;
   /* min-height: 500px; */
-  padding: 50px;
+  padding: 80px 50px 50px;
 }
 
 .delete-study > button {
@@ -17,7 +17,7 @@
   top: 30px;
   right: 30px;
   white-space: nowrap;
-  width: 80px;
+  width: 90px;
   padding: 5px;
   font-size: 12px;
 }
@@ -26,6 +26,7 @@
   color: rgba(40, 80, 15);
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-weight: 900;
+  margin: auto;
 }
 
 .study-manage-top > h5 {
@@ -35,22 +36,33 @@
 }
 
 .study-manage-img {
-  position: absolute;
-  width: 20%;
-  left: 15%;
-  bottom: 10%;
+  width: 400px;
   z-index: 1;
+  margin-right: -170px;
+}
+
+.study-manage-blackboard-box {
+  display: flex;
+  margin: 0px auto;
+  justify-content: center;
+  padding-right: 250px;
+}
+
+.balckboard-box {
+  display: flex;
+  align-items: center;
 }
 
 .study-manage-blackboard {
   background: #2b6e30;
   border: 10px solid #d9ae81;
   border-radius: 10px;
-  margin: 50px 20% 50px 20%;
   display: flex;
   justify-content: center;
   padding: 10px 0;
   padding-left: 12%;
+  max-width: 1200px;
+  min-width: 1000px;
 }
 
 .study-manage-blackboard > table {
@@ -92,17 +104,7 @@
   flex-direction: column;
   padding: 40px;
 
-  margin: 50px 5%;
-}
-
-.study-list-item {
-  border-radius: 10px;
-  margin: 10px 0;
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  margin: 50px 15%;
 }
 
 .penalty-white {
@@ -118,4 +120,8 @@
   background-color: rgba(255, 0, 0, 0.3);
 }
 
+.study-manage-info {
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-size: 18px;
+}
 /* join */

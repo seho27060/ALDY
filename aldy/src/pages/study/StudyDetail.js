@@ -18,6 +18,7 @@ import ProblemModal from "../../components/study/ProblemModal";
 import StudyMember from "../../components/study/StudyMember";
 import moment from "moment";
 import StudyChart from "../../components/study/StudyChart";
+import StudyChartTier from "../../components/study/StudyChartTier";
 import AlertModal from "../../components/AlertModal";
 import { FcLock } from "react-icons/fc";
 import { useRecoilState } from "recoil";
@@ -90,13 +91,16 @@ const StudyDetail = () => {
     visibility: 1,
     countMember: 0,
     leaderBaekjoonId: "",
+    leaderEmail: "",
     statsByTier: {},
     statsByTag: {},
     isMember: false,
+    isKick: false,
     level: 0,
     activationLevel: 0,
   });
   const keys = Object.keys(studyDetail.statsByTag);
+  console.log(studyDetail);
 
   // 달력 날짜
   const [date, setDate] = useState(new Date());
@@ -315,11 +319,13 @@ const StudyDetail = () => {
           className="study-detail-aldy"
           style={{ width: "50%", display: "flex", flexDirection: "colunm" }}
         >
-          <img
-            className="study-detail-img"
-            src={ActivationLevel[studyDetail.activationLevel]}
-            alt="스터디 메인 이미지"
-          ></img>
+          <div className="aldy-bg">
+            <img
+              className="study-detail-img"
+              src={ActivationLevel[studyDetail.activationLevel]}
+              alt="스터디 메인 이미지"
+            ></img>
+          </div>
           <div
             className="study-underline-green"
             style={{
@@ -367,6 +373,13 @@ const StudyDetail = () => {
             {TierData[studyDetail.threshold]}
           </div>
           <div className="description">
+            <div>
+              <span style={{ color: "rgb(125,125,125)" }}>
+                [스터디장 이메일]{" "}
+              </span>
+              {studyDetail.leaderEmail}
+            </div>
+            <hr style={{ margin: "5px 0px 15px 0px" }} />
             <div>
               <div style={{ marginBottom: "5px" }}>
                 <b>✨스터디 소개✨</b>
@@ -452,7 +465,7 @@ const StudyDetail = () => {
                   </div>
                   <div>
                     <div className="study-title-graph">난이도 별</div>
-                    <StudyChart studyData={studyDetail.statsByTier} />
+                    <StudyChartTier studyData={studyDetail.statsByTier} />
                   </div>
                 </div>
               ) : (

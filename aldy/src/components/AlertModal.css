@@ -4,9 +4,10 @@
   border-radius: 8px;
   background-color: #2b6e30;
   height: 170px;
-  width: 500px;
+  width: fit-content;
   padding: 20px;
   user-select: none;
+  min-width: 500px;
 }
 
 .alert-btn {
@@ -25,6 +26,7 @@
   text-align: center;
   color: white;
   font-family: "uhbeeBold";
+  white-space: nowrap;
 }
 
 .alert-footer {

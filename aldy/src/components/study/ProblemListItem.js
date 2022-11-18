@@ -7,29 +7,30 @@ import "../../pages/study/StudyDetail.css";
 import AlertRefreshModal from "../AlertRefreshModal";
 
 const WhiteButton = styled.button`
-  width: 70px;
+  width: 75px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgb(40, 80, 15);
+  outline: none;
+  color: rgb(40, 80, 15);
+  font-size: 13px;
+  transition: transform 30ms ease-in;
+  padding-top: 3px;
+  font-weight: bold;
+`;
+
+const RedButton = styled.button`
+  width: 75px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
   outline: none;
   color: red;
-  font-weight: bold;
-  font-size: 12px;
-  transition: transform 30ms ease-in;
-`;
-
-const RedButton = styled.button`
-  width: 70px;
-  border-radius: 8px;
-  background-color: red;
-  border: none;
-  outline: none;
-  color: white;
-  font-weight: bold;
   transition: transform 30ms ease-in;
   margin-left: auto;
-  font-size: 12px;
-  padding: 2.5px 0px;
+  font-size: 13px;
+  padding-top: 3px;
+  font-weight: bold;
 `;
 
 const ProblemListItem = (props) => {
@@ -89,7 +90,9 @@ const ProblemListItem = (props) => {
       />
       <div className="problem-list-title">
         <b className="problem-name">{props.item.problemNum}번</b>
-        <div className="problem-name">{props.item.problemName}</div>
+        <div className="problem-name" style={{ fontSize: "18px" }}>
+          {props.item.problemName}
+        </div>
         <div className="problem-list-right">
           <WhiteButton
             onClick={() => {

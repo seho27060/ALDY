@@ -11,14 +11,20 @@ const RedButton = styled.button`
   width: 170px;
   border-radius: 8px;
   background-color: red;
-  border: none;
+  border: 2px solid red;
   outline: none;
   color: white;
   font-weight: bold;
-  transition: transform 30ms ease-in;
+  padding: 4px 0px 2px 0px;
+  &:hover {
+    background-color: white;
+    color: red;
+    transition: all 200ms ease-in;
+    border: 2px solid red;
+  }
 `;
 
-const StudyJoin = ({ studyDetail, modal, handleModal }) => {
+const StudyJoinModal = ({ studyDetail, modal, handleModal }) => {
   const navigate = useNavigate();
 
   const navigateStudy = () => {
@@ -70,12 +76,17 @@ const StudyJoin = ({ studyDetail, modal, handleModal }) => {
       <Modal.Body className="review-modal-body">
         <div className="review-modal-header">
           <div>
-            <h3 className="study-detail-title">
-              <span>스터디 가입 신청</span>
-            </h3>
+            <div
+              className="study-underline-orange"
+              style={{ fontSize: "32px", marginBottom: "10px" }}
+            >
+              스터디 가입 신청
+            </div>
             <div>
-              {studyDetail.name}에 가입하기 위해 가입 신청 메세지를
-              작성해주세요!!
+              {studyDetail.name}
+              <span style={{ color: "rgb(120, 120, 120)" }}>
+                에 가입하기 위해 가입 신청 메세지를 작성해주세요!!
+              </span>
             </div>
           </div>
           <div>
@@ -87,7 +98,7 @@ const StudyJoin = ({ studyDetail, modal, handleModal }) => {
         <div className="review-modal-content">
           <textarea
             className="join-message"
-            placeholder=" 가입신청 메세지를 작성해주세요."
+            placeholder="가입신청 메세지를 작성해주세요."
             ref={messageInput}
           ></textarea>
         </div>
@@ -99,4 +110,4 @@ const StudyJoin = ({ studyDetail, modal, handleModal }) => {
   );
 };
 
-export default StudyJoin;
+export default StudyJoinModal;

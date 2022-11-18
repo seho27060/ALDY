@@ -63,7 +63,7 @@
 /* form */
 .study-create-form-title {
   text-align: left;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   color: rgb(100, 100, 100);
   font-family: "GmarketSansMedium";
   font-weight: 500;
@@ -144,16 +144,6 @@ input[type="radio"] {
 .study-create-textarea:focus {
   outline: none;
   border: 1px solid rgb(100, 100, 100);
-  transition: all 200ms ease-in;
-}
-
-.study-create-submit-btn {
-  margin: 30px;
-}
-
-.study-create-btn:hover {
-  background-color: rgba(40, 80, 15, 1);
-  color: white;
   transition: all 200ms ease-in;
 }
 
