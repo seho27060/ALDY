@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FcLike } from "react-icons/fc";
 import { login } from "../../api/auth";
 import { useRecoilState } from "recoil";
-import { isLoggedIn, userName, isFooter } from "../../store/states";
+import { isLoggedIn, userName, isNav } from "../../store/states";
 import AlertRefreshModal from "../../components/AlertRefreshModal";
 
 const WhiteRedButton = styled.button`
@@ -57,8 +57,8 @@ const Login = () => {
     password: "",
   });
   const [logged, setLogged] = useRecoilState(isLoggedIn);
-  const [footer, setFooter] = useRecoilState(isFooter);
-  setFooter(false);
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
   const [username, setUsername] = useRecoilState(userName);
 
   const [message, setMessage] = useState("");

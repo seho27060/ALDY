@@ -6,6 +6,8 @@ import styled from "styled-components";
 import StudyMember from "../../components/study/StudyMember";
 import StudyJoin from "../../components/study/StudyJoin";
 import StudyDeleteAlert from "../../components/StudyDeleteAlert";
+import { useRecoilState } from "recoil";
+import { isNav } from "../../store/states";
 
 const RedButton = styled.button`
   width: 70px;
@@ -20,6 +22,9 @@ const RedButton = styled.button`
 `;
 
 const StudyManage = () => {
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
+
   const location = useLocation();
   const studyDetail = location.state.studyDetail;
   console.log(studyDetail);

@@ -13,12 +13,20 @@ import {
   getFinalCode,
 } from "../../api/code";
 import { useRecoilState } from "recoil";
-import { correctCode, recoilMyCode, recoilStep } from "../../store/states";
+import {
+  correctCode,
+  recoilMyCode,
+  recoilStep,
+  isNav,
+} from "../../store/states";
 import Paging from "../../components/Paging";
 import { api } from "../../api/api";
 import Editor from "@monaco-editor/react";
 
 const CodeReviewList = () => {
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
+
   const [tab, setTab] = useState("requestToMe");
   const [finalCodeModalShow, setFinalCodeModalShow] = useState(false);
   return (

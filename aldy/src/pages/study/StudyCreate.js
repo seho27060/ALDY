@@ -7,7 +7,7 @@ import { createStudy } from "../../api/study";
 import Select from "react-select";
 import AlertModal from "../../components/AlertModal";
 import { useRecoilState } from "recoil";
-import { isFooter } from "../../store/states";
+import { isNav } from "../../store/states";
 
 const GreenButton = styled.button`
   width: 200px;
@@ -25,8 +25,8 @@ const GreenButton = styled.button`
 
 const StudyCreate = () => {
   const navigate = useNavigate();
-  const [footer, setFooter] = useRecoilState(isFooter);
-  setFooter(false);
+  const [nav, setNav] = useRecoilState(isNav);
+  setNav(true);
   const myTier = sessionStorage.getItem("tier");
   const [newStudy, setNewStudy] = useState({
     name: "",
