@@ -15,12 +15,13 @@
   color: white;
   border: none;
   outline: none;
-  padding: 5px 14px;
+  padding: 0px 14px;
   font-family: "uhbeeBold";
+  font-size: 18px;
 }
 
 .alert-message {
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
   color: white;
   font-family: "uhbeeBold";
@@ -50,10 +51,10 @@
 
 .alert-board-title {
   position: relative;
-  width: 120px;
-  padding: 6px 14px 7px;
+  width: 90px;
+  padding: 6px 0;
   background: #1e5b24;
-  border-radius: 81.7073px;
+  border-radius: 10px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
@@ -64,4 +65,5 @@
   margin: auto;
   margin-bottom: 7px;
   font-family: "uhbeeBold";
+  font-size: 16px;
 }
