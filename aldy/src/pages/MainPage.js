@@ -86,19 +86,31 @@ const MainPage = () => {
   const [tutorialPenaltyShow, setTutorialPenaltyShow] = useState(false);
 
   const TutorialChangeLogin = () => {
-    setTutorialLoginShow((prev) => !prev);
+    setTutorialLoginShow(true);
+    setTutorialStudyShow(false);
+    setTutorialCodeReviewShow(false);
+    setTutorialPenaltyShow(false);
   };
 
   const TutorialChangeStudy = () => {
-    setTutorialStudyShow((prev) => !prev);
+    setTutorialLoginShow(false);
+    setTutorialStudyShow(true);
+    setTutorialCodeReviewShow(false);
+    setTutorialPenaltyShow(false);
   };
 
   const TutorialChangeCodeReview = () => {
-    setTutorialCodeReviewShow((prev) => !prev);
+    setTutorialLoginShow(false);
+    setTutorialStudyShow(false);
+    setTutorialCodeReviewShow(true);
+    setTutorialPenaltyShow(false);
   };
 
   const TutorialChangePenalty = () => {
-    setTutorialPenaltyShow((prev) => !prev);
+    setTutorialLoginShow(false);
+    setTutorialStudyShow(false);
+    setTutorialCodeReviewShow(false);
+    setTutorialPenaltyShow(true);
   };
 
   return (
@@ -148,7 +160,7 @@ const MainPage = () => {
           <div className="main-page-description-text" data-aos="fade-up">
             <p>
               <span>문제풀이 과정을 </span>
-              <span className="main-page-highlight">3단계로 세분화!</span>
+              <span className="main-page-highlight-light">3단계로 세분화!</span>
             </p>
             <img
               src={process.env.PUBLIC_URL + "/mainReview3.gif"}
@@ -180,7 +192,9 @@ const MainPage = () => {
               <div className="main-page-description-text" data-aos="fade-up">
                 <p>
                   <span>최근 푼 문제를 바탕으로 유사한 유형의 </span>
-                  <span className="main-page-highlight">안 푼 문제 추천!</span>
+                  <span className="main-page-highlight-light">
+                    안 푼 문제 추천!
+                  </span>
                 </p>
                 <img
                   src={process.env.PUBLIC_URL + "/mainRecommend.gif"}
@@ -197,22 +211,64 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      <section className="aldy_step_info">
-        <div className="aldy_step_info_title">Game + Education </div>
-        <img
-          src={process.env.PUBLIC_URL + "/joystick.gif"}
-          alt=""
-          style={{ width: "150px", margin: "25px" }}
-        ></img>
-        <div className="aldy_step_info_text">
-          알디는 게이미피케이션을 활용하여 스터디를 진행합니다.
+      <section
+        className="aldy_step_info"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <div data-aos="zoom-in-right">
+          <div className="aldy_step_info_title">Game + Education </div>
+          <div className="aldy_step_info_text" style={{ fontSize: "25px" }}>
+            알디는{" "}
+            <span className="main-page-highlight" style={{ fontSize: "25px" }}>
+              게이미피케이션
+            </span>
+            을 활용하여 <br />
+            스터디를 진행합니다.
+          </div>
+          <div>
+            <img
+              src={process.env.PUBLIC_URL + "/aldyhead2.png"}
+              alt=""
+              width="80px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/aldyhead6.png"}
+              alt=""
+              width="80px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/aldyhead5.png"}
+              alt=""
+              width="80px"
+              style={{ margin: "10px" }}
+            ></img>
+          </div>
+        </div>
+        <div data-aos="zoom-in-left">
+          <img
+            src={process.env.PUBLIC_URL + "/joystick.gif"}
+            alt=""
+            style={{ width: "100px", margin: "25px" }}
+          ></img>
+          <div
+            className="aldy_step_info_text"
+            style={{ fontSize: "25px", color: " #435f07" }}
+          >
+            지루한 스터디는 NO~~🙅🏻‍♀️🙅🏻‍♂️
+            <br />
+            알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡
+            <br />
+            진화하는 공룡과 함께 알고리즘 실력도 UP! UP!
+          </div>
         </div>
       </section>
 
       <div className="main-page-green-title">
         <div
           className="main-page-green-title"
-          style={{ paddingTop: "150px" }}
+          // style={{ paddingTop: "150px" }}
           data-aos="fade-up"
         >
           ALDY의 메인 캐릭터 소개
@@ -313,7 +369,9 @@ const MainPage = () => {
       </section>
       <section className="main-page-study-description">
         {/* 이곳에 스터디 설명을 작성하세요 */}
-        알디 스터디 규칙 🎈
+        <span style={{ fontSize: "35px", fontFamily: "uhbeeBold" }}>
+          알디 스터디 규칙 🎈
+        </span>
         <div className="main-page-study-description-flex">
           <div className="section1-left" data-aos="fade-up">
             <div className="main-page-description-text">
@@ -322,16 +380,19 @@ const MainPage = () => {
                   스터디 설명
                 </span>
               </p>
-              <Lottie
-                animationData={trafficLight}
-                style={{ width: "300px" }}
-              ></Lottie>
             </div>
+            <Lottie
+              animationData={codingReview}
+              style={{ width: "500px" }}
+            ></Lottie>
           </div>
-
+          <Lottie
+            animationData={trafficLight}
+            style={{ width: "300px" }}
+          ></Lottie>
           <div style={{ marginTop: "100px" }}>
-            🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나 코드 리뷰를
-            안했다면 경고가 쌓여요!
+            🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br> 코드
+            리뷰를 안했다면 경고가 쌓여요!
             <br></br>
             🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
             <br></br>
@@ -357,20 +418,38 @@ const MainPage = () => {
         </div>
       </section>
       <section className="main-page-description-codereview">
-        <div className="section1-left" data-aos="fade-up">
+        <div className="section1-left" data-aos="zoom-in-right">
           <div className="main-page-description-text">
             <p>
               <span>코드리뷰 설명</span>
             </p>
-            <Lottie
+            {/* <Lottie
               animationData={codingReview}
               style={{ width: "500px" }}
-            ></Lottie>
+            ></Lottie> */}
+            <img
+              src={process.env.PUBLIC_URL + "/mainReview1.gif"}
+              alt=""
+              width="250px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/mainReview2.gif"}
+              alt=""
+              width="250px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/mainReview3.gif"}
+              alt=""
+              width="250px"
+              style={{ margin: "10px" }}
+            ></img>
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-left">
+        <div className="section1-right">
           <div className="main-page-description-title"></div>
-          <div className="main-page-description-text">
+          <div className="main-page-description-text" data-aos="zoom-in-left">
             <p>
               <span>알디의 3단계 </span>
               <span className="main-page-highlight">코드 리뷰</span>
@@ -378,7 +457,6 @@ const MainPage = () => {
             <Lottie
               animationData={onlineStudy}
               style={{ width: "500px" }}
-              data-aos="fade-right"
             ></Lottie>
           </div>
         </div>
@@ -456,7 +534,7 @@ const MainPage = () => {
                 <img
                   src={process.env.PUBLIC_URL + "/mainSearch.gif"}
                   alt=""
-                  width="700px"
+                  width="500px"
                   style={{ margin: "10px" }}
                 ></img>
                 <br></br>
@@ -480,7 +558,7 @@ const MainPage = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/mainReview1.gif"}
                     alt=""
-                    width="350px"
+                    width="450px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>
@@ -491,7 +569,7 @@ const MainPage = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/mainReview2.gif"}
                     alt=""
-                    width="550px"
+                    width="450px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>

@@ -34,7 +34,7 @@ section.main-page-description {
 section.main-page-description-aldylist {
   background-color: #e7fdb6;
   color: white;
-  padding: 50px 15% 80px 15%;
+  padding: 50px 15% 40px 15%;
   display: flex;
   justify-content: space-evenly;
   user-select: none;
@@ -123,6 +123,7 @@ h1 {
 .main-page-highlight {
   color: #435f07;
   font-size: 20px;
+  font-family: "uhbeeBold";
 }
 
 .main-page-description-text > p > span {
@@ -134,12 +135,12 @@ h1 {
 .aldy_step_info {
   background-color: #e7fdb6;
   user-select: none;
-  padding: 80px 15%;
+  padding: 80px 15% 30px 15%;
 }
 .aldy_step_info_title {
   color: #373737;
   font-family: "onemobile";
-  font-size: 35px;
+  font-size: 40px;
   padding-top: 15px;
 }
 .aldy_step_info_text {
@@ -234,4 +235,10 @@ section.main-page-tutorial-description {
   z-index: 1;
   background-color: #e7fdb6;
   user-select: none;
+  padding-top: 40px;
+}
+
+.main-page-highlight-light {
+  color: #d7f792;
+  font-size: 20px;
 }
