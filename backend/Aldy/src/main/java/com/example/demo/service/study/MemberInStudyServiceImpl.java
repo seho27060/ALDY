@@ -17,9 +17,7 @@ import com.example.demo.repository.study.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +63,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
 
 
     @Override
-    public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String baekjoonId) throws MessagingException, IOException {
+    public MemberInStudyDto applicateStudy(ApplicateStudyRequestDto requestDto, String baekjoonId) {
 
         Member member = memberRepository.findByBaekjoonId(baekjoonId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -203,7 +201,7 @@ public class MemberInStudyServiceImpl implements MemberInStudyService {
     }
 
     @Override
-    public void sendMessage(MemberInStudyDto memberInStudyDto) throws MessagingException, IOException {
+    public void sendMessage(MemberInStudyDto memberInStudyDto) {
         Study study = studyRepository.findById(memberInStudyDto.getStudyId())
                 .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
 

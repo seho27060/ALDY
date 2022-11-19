@@ -27,9 +27,7 @@ import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.mail.MessagingException;
 import javax.persistence.EntityManagerFactory;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -171,13 +169,7 @@ public class CountAlertJobConfig {
                                         }
 
                                         // 경고 카운터
-                                        try {
-                                            plusAlert(memberInStudy);
-                                        } catch (MessagingException e) {
-                                            throw new RuntimeException(e);
-                                        } catch (IOException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        plusAlert(memberInStudy);
                                     });
                                     problem.batchCheck();
                                 }
@@ -198,7 +190,7 @@ public class CountAlertJobConfig {
 
     }
 
-    private void plusAlert(MemberInStudy memberInStudy) throws MessagingException, IOException {
+    private void plusAlert(MemberInStudy memberInStudy) {
         int numberOfAlerts = memberInStudy.getNumberOfAlerts() + 1;
 
         memberInStudy.setNumberOfAlerts(numberOfAlerts);
