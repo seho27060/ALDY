@@ -17,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -40,7 +42,7 @@ public class MemberInStudyController {
             @ApiResponse(responseCode = "409", description = "DUPLICATE_RESOURCE"),
     })
     @PostMapping()
-    public ResponseEntity<MemberInStudyDto> applicateStudy(@RequestBody ApplicateStudyRequestDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<MemberInStudyDto> applicateStudy(@RequestBody ApplicateStudyRequestDto requestDto, HttpServletRequest request) throws MessagingException, IOException {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 
@@ -72,7 +74,7 @@ public class MemberInStudyController {
             @ApiResponse(responseCode = "404", description = "MEMBERINSTUDY_NOT_FOUND"),
     })
     @PatchMapping("accept")
-    public ResponseEntity<MemberInStudyDto> acceptMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<MemberInStudyDto> acceptMember(@RequestBody MemberInStudyChangeAuthDto requestDto, HttpServletRequest request) throws MessagingException, IOException {
 
         String loginMember = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
 

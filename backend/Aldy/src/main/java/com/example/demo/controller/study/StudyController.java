@@ -20,7 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -144,7 +146,7 @@ public class StudyController {
             @ApiResponse(responseCode = "500", description = "뭔가 잘못됨"),
     })
     @PostMapping("/mail/send")
-    public String sendMail(MailDto mailDto) throws InterruptedException {
+    public String sendMail(MailDto mailDto) throws InterruptedException, MessagingException, IOException {
         emailServiceImpl.sendSimpleMessage(mailDto);
         System.out.println("메일 전송 완료");
         return "AfterMail.html";
