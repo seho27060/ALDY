@@ -30,9 +30,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -93,7 +91,7 @@ public class CodeServiceImpl implements CodeService {
 
 //    첨삭된 코드는 3단계 코드에 종속되어야 함.
     @Override
-    public EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto, HttpServletRequest request) throws MessagingException, IOException {
+    public EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto, HttpServletRequest request) {
         // 첨삭한 코드 내용
         String text = codeReviewReplyDto.getCode();
 
@@ -200,7 +198,7 @@ public class CodeServiceImpl implements CodeService {
         return new CodeDto(code);
     }
     @Override
-    public List<RequestedCodeDto> requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) throws MessagingException, IOException {
+    public List<RequestedCodeDto> requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) {
 
         String baekjoonId = jwtTokenProvider.getBaekjoonId(request.getHeader("Authorization"));
         Member sender = memberRepository.findByBaekjoonId(baekjoonId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));

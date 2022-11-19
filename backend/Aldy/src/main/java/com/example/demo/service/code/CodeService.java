@@ -5,9 +5,7 @@ import com.example.demo.domain.dto.study.ProblemDto;
 import com.example.demo.domain.dto.study.StudyStatusDto;
 import org.springframework.data.domain.Page;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 // edited, request 모두 여기서 처리할 것.
@@ -16,11 +14,11 @@ public interface CodeService {
 
     CodeReviewPageResponseDto getCodesByMember_id(HttpServletRequest request);
 
-    EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto, HttpServletRequest request) throws MessagingException, IOException;
+    EditedCodeDto replyEditedCode(CodeReviewReplyDto codeReviewReplyDto, HttpServletRequest request);
 
     CodeDto saveCode(CodeSaveRequestDto codeSaveRequestDto, HttpServletRequest request);
 
-    List<RequestedCodeDto> requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request) throws MessagingException, IOException;
+    List<RequestedCodeDto> requestCode(CodeReviewRequestDto codeReviewRequestDto, HttpServletRequest request);
 
     List<EditedCodeDto> getEditedCodes(long studyId, int problemId, HttpServletRequest request);
 
