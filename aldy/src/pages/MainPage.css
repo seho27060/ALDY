@@ -32,7 +32,7 @@ section.main-page-description {
 }
 
 section.main-page-description-aldylist {
-  background-color: #373737;
+  background-color: #e7fdb6;
   color: white;
   padding: 50px 15% 80px 15%;
   display: flex;
@@ -121,7 +121,7 @@ h1 {
 }
 
 .main-page-highlight {
-  color: #c8e687;
+  color: #435f07;
   font-size: 20px;
 }
 
@@ -144,7 +144,7 @@ h1 {
 }
 .aldy_step_info_text {
   color: #373737;
-  font-family: "kotra";
+  font-family: "uhbeeBold";
   font-size: 30px;
   padding-bottom: 15px;
 }
@@ -204,6 +204,34 @@ section.main-page-tutorial-description {
 }
 
 .main-page-study-description {
+  height: 1000px;
+  background-color: #373737;
+  color: white;
+  padding: 50px;
+}
+
+.main-page-study-description-flex {
   display: flex;
   justify-content: center;
+  height: 800px;
+  background-color: #373737;
+  color: white;
+}
+
+.TutorialChangeLogin {
+  font-size: 20px;
+}
+
+.main-page-green-title {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  color: #373737;
+  position: relative;
+  z-index: 1;
+  background-color: #e7fdb6;
+  user-select: none;
 }
