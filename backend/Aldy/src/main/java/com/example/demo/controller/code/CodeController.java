@@ -17,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -58,7 +60,7 @@ public class CodeController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
     })
-    private ResponseEntity code03(HttpServletRequest request, @RequestBody CodeReviewReplyDto codeReviewReplyDto){
+    private ResponseEntity code03(HttpServletRequest request, @RequestBody CodeReviewReplyDto codeReviewReplyDto) throws MessagingException, IOException {
         EditedCodeDto editedCodeDto = codeService.replyEditedCode(codeReviewReplyDto, request);
         return new ResponseEntity(editedCodeDto, HttpStatus.OK);
     }
@@ -80,7 +82,7 @@ public class CodeController {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "404", description = "실패"),
     })
-    private ResponseEntity code05(HttpServletRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto){
+    private ResponseEntity code05(HttpServletRequest request, @RequestBody CodeReviewRequestDto codeReviewRequestDto) throws MessagingException, IOException {
 
         List<RequestedCodeDto> requestedCodeDtoList = codeService.requestCode(codeReviewRequestDto, request);
         return new ResponseEntity(requestedCodeDtoList, HttpStatus.OK);
