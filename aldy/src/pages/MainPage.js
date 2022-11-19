@@ -245,6 +245,7 @@ const MainPage = () => {
               style={{ margin: "10px" }}
             ></img>
           </div>
+          <div>알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡</div>
         </div>
         <div data-aos="zoom-in-left">
           <img
@@ -254,11 +255,10 @@ const MainPage = () => {
           ></img>
           <div
             className="aldy_step_info_text"
-            style={{ fontSize: "25px", color: " #435f07" }}
+            style={{ fontSize: "30px", color: " #435f07" }}
           >
             지루한 스터디는 NO~~🙅🏻‍♀️🙅🏻‍♂️
-            <br />
-            알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡
+            {/* 알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡ */}
             <br />
             진화하는 공룡과 함께 알고리즘 실력도 UP! UP!
           </div>
