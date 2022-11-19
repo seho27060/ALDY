@@ -453,6 +453,13 @@ const MainPage = () => {
                 <br></br>
                 스터디장이시라면 달력에서 요일을 눌러 문제 선정이 가능해요!
                 <br></br>
+                <img
+                  src={process.env.PUBLIC_URL + "/mainSearch.gif"}
+                  alt=""
+                  width="700px"
+                  style={{ margin: "10px" }}
+                ></img>
+                <br></br>
                 팀원들이 안 푼 문제를 유형별, 티어별로 선정할 수 있어요! 👍🏼
               </div>
             ) : null}
@@ -484,7 +491,7 @@ const MainPage = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/mainReview2.gif"}
                     alt=""
-                    width="350px"
+                    width="550px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>
@@ -496,7 +503,7 @@ const MainPage = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/mainReview3.gif"}
                     alt=""
-                    width="350px"
+                    width="450px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>
