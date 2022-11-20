@@ -471,7 +471,10 @@ const MainPage = () => {
           data-aos="zoom-in-left"
         >
           <div className="main-page-description-title"></div>
-          <div className="codeReview-title" style={{ margin: "25px" }}>
+          <div
+            className="codeReview-title"
+            style={{ margin: "10px", fontSize: "50px" }}
+          >
             알디의 3단계 <span>코드 리뷰</span>
           </div>
 
@@ -498,7 +501,7 @@ const MainPage = () => {
             <img
               src={process.env.PUBLIC_URL + "/codeReviewtext.png"}
               alt=""
-              width="600px"
+              width="650px"
               style={{ margin: "10px" }}
             ></img>
           </div>
@@ -513,7 +516,10 @@ const MainPage = () => {
         <div className="tutorial-table">
           {" "}
           {/* 이용 방법표를 작성할거야 */}
-          <div style={{ fontSize: "25px", marginBottom: "20px" }}>
+          <div
+            className="main-page-description-title"
+            style={{ fontSize: "50px", marginBottom: "20px" }}
+          >
             <img
               src={process.env.PUBLIC_URL + "/aldyhead7.png"}
               alt=""
