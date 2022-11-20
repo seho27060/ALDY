@@ -202,10 +202,11 @@ section.main-page-tutorial-description {
   padding: 80px 15%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .main-page-study-description {
-  height: 1000px;
+  height: 850px;
   background-color: #373737;
   color: white;
   padding: 50px;
@@ -241,4 +242,45 @@ section.main-page-tutorial-description {
 .main-page-highlight-light {
   color: #d7f792;
   font-size: 20px;
+}
+
+.lottie-codeReview-3steps {
+  width: 500px;
+  height: 500px;
+  margin-left: 220px;
+  margin-top: 100px;
+}
+
+.codeReview-3steps-div {
+  width: 800px;
+  height: 800px;
+  display: flex;
+  background-repeat: no-repeat;
+  background-image: url(../../public/codeReview3Step.gif);
+}
+
+.codeReview-title {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  color: #373737;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+}
+
+.codeReview-title > span {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+  color: #435f07;
 }

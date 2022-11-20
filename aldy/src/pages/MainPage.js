@@ -213,7 +213,7 @@ const MainPage = () => {
       </section>
       <section
         className="aldy_step_info"
-        style={{ display: "flex", justifyContent: "space-between" }}
+        style={{ display: "flex", justifyContent: "center" }}
       >
         <div data-aos="zoom-in-right">
           <div className="aldy_step_info_title">Game + Education </div>
@@ -245,24 +245,31 @@ const MainPage = () => {
               style={{ margin: "10px" }}
             ></img>
           </div>
-          <div>알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡</div>
-        </div>
-        <div data-aos="zoom-in-left">
-          <img
-            src={process.env.PUBLIC_URL + "/joystick.gif"}
-            alt=""
-            style={{ width: "100px", margin: "25px" }}
-          ></img>
-          <div
-            className="aldy_step_info_text"
-            style={{ fontSize: "30px", color: " #435f07" }}
-          >
+          <div>
+            알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡
+            <br />
             지루한 스터디는 NO~~🙅🏻‍♀️🙅🏻‍♂️
             {/* 알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡ */}
             <br />
             진화하는 공룡과 함께 알고리즘 실력도 UP! UP!
           </div>
         </div>
+        {/* <div data-aos="zoom-in-left"> */}
+        {/* <img
+            src={process.env.PUBLIC_URL + "/joystick.gif"}
+            alt=""
+            style={{ width: "100px", margin: "25px" }}
+          ></img> */}
+        {/* <div
+            className="aldy_step_info_text"
+            style={{ fontSize: "30px", color: " #435f07" }}
+          >
+            지루한 스터디는 NO~~🙅🏻‍♀️🙅🏻‍♂️
+           
+            <br />
+            진화하는 공룡과 함께 알고리즘 실력도 UP! UP!
+          </div> */}
+        {/* </div> */}
       </section>
 
       <div className="main-page-green-title">
@@ -377,7 +384,7 @@ const MainPage = () => {
             <div className="main-page-description-text">
               <p>
                 <span style={{ fontSize: "25px", margin: "60px" }}>
-                  스터디 설명
+                  {/* 스터디 설명 */}
                 </span>
               </p>
             </div>
@@ -420,14 +427,25 @@ const MainPage = () => {
       <section className="main-page-description-codereview">
         <div className="section1-left" data-aos="zoom-in-right">
           <div className="main-page-description-text">
-            <p>
-              <span>코드리뷰 설명</span>
-            </p>
+            <p>{/* <span>코드리뷰 설명</span> */}</p>
             {/* <Lottie
               animationData={codingReview}
               style={{ width: "500px" }}
             ></Lottie> */}
-            <img
+            {/* <img
+              src={process.env.PUBLIC_URL + "/codeReview3Step.gif"}
+              alt=""
+              width="500px"
+              style={{ margin: "10px" }}
+            ></img> */}
+            <div className="codeReview-3steps-div">
+              <Lottie
+                animationData={onlineStudy}
+                className="lottie-codeReview-3steps"
+                // style={{ width: "500px" }}
+              ></Lottie>
+            </div>
+            {/* <img
               src={process.env.PUBLIC_URL + "/mainReview1.gif"}
               alt=""
               width="250px"
@@ -444,20 +462,45 @@ const MainPage = () => {
               alt=""
               width="250px"
               style={{ margin: "10px" }}
-            ></img>
+            ></img> */}
           </div>
         </div>
-        <div className="section1-right">
+        <div
+          className="section1-right"
+          style={{ marginTop: "100px" }}
+          data-aos="zoom-in-left"
+        >
           <div className="main-page-description-title"></div>
-          <div className="main-page-description-text" data-aos="zoom-in-left">
+          <div className="codeReview-title" style={{ margin: "25px" }}>
+            알디의 3단계 <span>코드 리뷰</span>
+          </div>
+
+          <div
+            className="main-page-description-text"
+            style={{ fontSize: "25px" }}
+          >
             <p>
-              <span>알디의 3단계 </span>
-              <span className="main-page-highlight">코드 리뷰</span>
+              <span>알디의 </span>
+              <span className="main-page-highlight">가이드 라인</span>
+              <span>에 맞춰 진행해봐요! </span>
             </p>
-            <Lottie
+            {/* <Lottie
               animationData={onlineStudy}
               style={{ width: "500px" }}
-            ></Lottie>
+            ></Lottie> */}
+            {/* 📍 1 단계 초안 제출
+            <br />
+            📍 2 단계 리팩토링
+            <br />
+            📤 코드 리뷰 요청 및 응답 📥
+            <br />
+            📍 3 단계 최종 제출 */}
+            <img
+              src={process.env.PUBLIC_URL + "/codeReviewtext.png"}
+              alt=""
+              width="600px"
+              style={{ margin: "10px" }}
+            ></img>
           </div>
         </div>
       </section>
