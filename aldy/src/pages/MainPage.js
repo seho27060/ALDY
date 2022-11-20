@@ -377,10 +377,51 @@ const MainPage = () => {
       <section className="main-page-study-description">
         {/* 이곳에 스터디 설명을 작성하세요 */}
         <span style={{ fontSize: "35px", fontFamily: "uhbeeBold" }}>
-          알디 스터디 규칙 🎈
+          {/* 알디 스터디 규칙 🎈 */}
         </span>
         <div className="main-page-study-description-flex">
           <div className="section1-left" data-aos="fade-up">
+            <div>
+              <div
+                className="main-page-description-title"
+                style={{ fontSize: "50px", marginBottom: "20px" }}
+              >
+                알디 스터디 규칙{" "}
+              </div>
+              <div style={{ marginTop: "100px" }}>
+                <img
+                  src={process.env.PUBLIC_URL + "/mainStudyManage.gif"}
+                  alt=""
+                  width="450px"
+                  style={{ margin: "10px" }}
+                ></img>
+                <br></br>
+                🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
+                코드 리뷰를 안했다면 경고가 쌓여요!
+                <br></br>
+                🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
+                <br></br>
+                <img
+                  src={process.env.PUBLIC_URL + "/aldyhead3.png"}
+                  alt=""
+                  width="80px"
+                  style={{ margin: "10px" }}
+                ></img>
+                <img
+                  src={process.env.PUBLIC_URL + "/aldyhead9.png"}
+                  alt=""
+                  width="80px"
+                  style={{ margin: "10px" }}
+                ></img>
+                <img
+                  src={process.env.PUBLIC_URL + "/aldyhead6.png"}
+                  alt=""
+                  width="80px"
+                  style={{ margin: "10px" }}
+                ></img>
+              </div>
+            </div>
+
             <div className="main-page-description-text">
               <p>
                 <span style={{ fontSize: "25px", margin: "60px" }}>
@@ -388,40 +429,15 @@ const MainPage = () => {
                 </span>
               </p>
             </div>
-            <Lottie
+            {/* <Lottie
               animationData={codingReview}
               style={{ width: "500px" }}
-            ></Lottie>
+            ></Lottie> */}
           </div>
           <Lottie
             animationData={trafficLight}
             style={{ width: "300px" }}
           ></Lottie>
-          <div style={{ marginTop: "100px" }}>
-            🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br> 코드
-            리뷰를 안했다면 경고가 쌓여요!
-            <br></br>
-            🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
-            <br></br>
-            <img
-              src={process.env.PUBLIC_URL + "/aldyhead3.png"}
-              alt=""
-              width="80px"
-              style={{ margin: "10px" }}
-            ></img>
-            <img
-              src={process.env.PUBLIC_URL + "/aldyhead9.png"}
-              alt=""
-              width="80px"
-              style={{ margin: "10px" }}
-            ></img>
-            <img
-              src={process.env.PUBLIC_URL + "/aldyhead6.png"}
-              alt=""
-              width="80px"
-              style={{ margin: "10px" }}
-            ></img>
-          </div>
         </div>
       </section>
       <section className="main-page-description-codereview">
@@ -653,6 +669,13 @@ const MainPage = () => {
             {tutorialPenaltyShow ? (
               <div className="tutorial-content">
                 <div>
+                  <img
+                    src={process.env.PUBLIC_URL + "/mainStudyManage.gif"}
+                    alt=""
+                    width="550px"
+                    style={{ margin: "10px" }}
+                  ></img>
+                  <br></br>
                   🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나 코드
                   리뷰를 안했다면 경고가 쌓여요!
                   <br></br>
