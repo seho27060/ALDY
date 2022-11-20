@@ -1,0 +1,177 @@
+.login-page-main {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.login-page-bg {
+  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
+  height: calc(100vh - 73px);
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  overflow-x: hidden;
+}
+
+.login-page-left {
+  margin-left: 10%;
+  margin-right: 15%;
+  user-select: none;
+  width: 40%;
+}
+
+.login-title {
+  padding-bottom: 40px;
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 45px;
+  line-height: 58px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.login-page-right {
+  margin: 0 7%;
+  /* align-items: center; */
+  align-items: center;
+  user-select: none;
+  width: 40%;
+}
+
+.login-page-right-title {
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 65px;
+  line-height: 69px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #dcf0be;
+  padding-bottom: 10px;
+  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.login-page-right-text {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #ffffff;
+  width: 300px;
+  margin-left: 20px;
+  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
+}
+
+.login-form-title {
+  text-align: left;
+  /* padding: 20px; */
+  color: #787878;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.form-title-id {
+  display: flex;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid #787878;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+}
+
+.login-submit-btn {
+  padding: 30px;
+}
+
+.login-page-join {
+  display: flex;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.login-page-link {
+  display: flex;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  padding-left: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.join-btn {
+  width: 120px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid red;
+  outline: none;
+  color: red;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  font-size: 15px;
+}
+
+.login-page-right-item {
+  width: 100%;
+  user-select: none;
+}
+
+.login_img {
+  width: 350px;
+  margin-right: 150px;
+  user-select: none;
+}
+
+.login-page-right-sub-title {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  color: white;
+  padding-bottom: 70px;
+}
+
+@keyframes vibration {
+  from {
+    transform: rotate(7deg);
+  }
+  to {
+    transform: rotate(-7deg);
+  }
+}
+.box-vibration {
+  animation: vibration 0.3s infinite;
+  font-size: 20px;
+  padding-bottom: 2px;
+}
+
+.login-page-right-sub-title > span {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  color: white;
+  padding-bottom: 70px;
+  animation: vibration 0.3s infinite;
+}

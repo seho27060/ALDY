@@ -1,0 +1,346 @@
+/* banner (top) */
+.study-detail-top {
+  display: flex;
+  flex-direction: column;
+  padding: 80px 15%;
+  background-color: #fffaf0;
+}
+
+.study-detail-top > .top {
+  display: flex;
+  gap: 20px;
+  margin-top: -20px;
+}
+
+.study-detail-number {
+  margin-left: auto;
+  margin-right: 10px;
+  color: #28500f;
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.study-detail-description {
+  color: #649655;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.study-description-detail > img {
+  margin: -15px 0 0 0;
+  width: 150px;
+}
+
+.study-title {
+  text-shadow: 0px 4px 4px rgba(100, 100, 100, 0.25);
+  margin-bottom: 30px;
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-weight: 900;
+  font-size: 50px;
+}
+
+.study-detail-banner {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.study-description-detail {
+  width: 100%;
+  background-color: white;
+  box-shadow: 5px 10px 10px #c2c2d6;
+  padding: 20px;
+  margin: 10px 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.study-detail-top-info > span {
+  width: 80%;
+  margin: auto;
+  user-select: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(220, 240, 190, 1) 40%
+  );
+  font-weight: 900;
+}
+
+/* middle */
+.study-detail-middle {
+  display: flex;
+  padding: 70px 15% 50px 15%;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.study-detail-img {
+  width: 250px;
+  margin: 30px;
+}
+
+.dinosaur-description {
+  font-size: 20px;
+}
+
+/* bottom */
+.study-detail-bottom {
+  display: flex;
+  padding: 20px 15% 40px 15%;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.study-detail-bottom-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.study-detail-info {
+  background: #fffaf0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 60px 60px 60px;
+  width: 50%;
+}
+
+.study-title-orange > span {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 225, 170, 1) 40%
+  );
+  font-weight: 900;
+  /* text-shadow: 0px 4px 4px rgba(150, 150, 150, 0.25); */
+}
+.study-title-orange {
+  margin-bottom: 20px;
+}
+
+.study-detail-rank {
+  /* color: #d28c00; */
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.tier-image {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.study-detail-info > .description {
+  text-align: start;
+}
+
+.study-detail-info > .description > div {
+  text-align: start;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.study-detail-graph-box {
+  background: #fffaf0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  margin-top: 25px;
+}
+
+.study-detail-graph {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.study-title-graph {
+  margin-bottom: -20px;
+}
+
+/* Modal */
+.join-message {
+  width: 100%;
+  min-height: 200px;
+  margin: 20px 0 0 0;
+  padding: 15px;
+
+  border: none;
+  outline: none;
+}
+
+.study-join-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* Modal - Problem */
+.problem-list-box {
+  margin-top: 30px;
+}
+
+.problem-list-item {
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.problem-list-title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.problem-name {
+  margin: 0 10px;
+}
+
+.problem-list-right {
+  display: flex;
+  gap: 10px;
+}
+
+.problem-list-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-right: 35px;
+  padding-top: 10px;
+  margin-top: 10px;
+  display: none;
+  border-top: 1px dashed #4b3200;
+}
+
+.content-active {
+  display: flex;
+}
+
+.problem-none {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.study-out {
+  margin-left: auto;
+  margin-right: 60px;
+  margin-top: 20px;
+}
+
+.dot-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: inline-block;
+  justify-content: center;
+}
+
+.highlight > abbr {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 225, 170, 1) 50%
+  );
+}
+
+.study-detail-calendar {
+  width: 50%;
+}
+
+.calendar-description {
+  text-align: start;
+  font-size: 13px;
+  color: rgb(150, 150, 150);
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+/* 코드리뷰단계 상황 */
+.stage-table {
+  text-align: center;
+}
+
+.stage-table tbody tr td {
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.stage-table tbody tr td:nth-child(1) {
+  padding-top: 18px;
+}
+
+.stage-table tbody tr td div {
+  color: rgb(100, 100, 100);
+  font-size: 12px;
+  margin-top: -3px;
+  /* margin-left: 5px; */
+}
+
+.black {
+  color: black;
+  font-weight: 700;
+}
+
+.gray {
+  color: rgb(200, 200, 200);
+}
+
+/* lock */
+.calendar-lock {
+  height: 355px;
+  min-height: 100%;
+  background: #f0e6d1;
+  box-shadow: 4px 4px 10px rgb(0 0 0 / 10%);
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.study-detail-aldy {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.aldy-bg-night {
+  background-image: url(../../../public/AldyBg.gif);
+  background-color: #fcebd9;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: 550px;
+}
+
+.aldy-bg {
+  background-image: url(../../../public/maintreefix.gif);
+  background-color: #fcebd9;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: cover;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}

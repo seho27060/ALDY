@@ -1,0 +1,105 @@
+.study-list-item {
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.study-list-title {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+}
+
+.study-id {
+  background: none;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.study-name {
+  font-weight: 700;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 20px;
+  align-self: center;
+  transition: all 200ms ease-in;
+}
+
+.big-size {
+  font-size: 23px;
+  transition: all 200ms ease-in;
+}
+
+.study-number {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.down-icon {
+  width: 25px;
+  height: 25px;
+  color: #4b3200;
+  cursor: pointer;
+}
+
+.down-icon:hover {
+  color: rgba(75, 50, 0, 0.3);
+}
+
+.study-list-content {
+  flex-direction: column;
+  text-align: start;
+  align-items: flex-start;
+  width: calc(100% - 120px);
+  margin: 7px 0;
+  display: none;
+}
+
+.study-rank {
+  display: flex;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 7px;
+  margin-top: 5px;
+}
+
+.content-active {
+  display: flex;
+}
+
+.study-rank > img {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.secret-study {
+  font-size: 10x;
+  color: white;
+  background-color: #4b3200;
+  border-radius: 3px;
+  width: 50px;
+  font-family: "uhbeeBold";
+  border: 2px solid #4b3200;
+}
+
+.not-secret-study {
+  font-size: 10x;
+  background-color: white;
+  color: #4b3200;
+  border-radius: 3px;
+  border: 2px solid #4b3200;
+  width: 50px;
+  font-family: "uhbeeBold";
+}

@@ -1,0 +1,14 @@
+.notfound-border {
+    height: 650px;
+    padding: 50px;
+}
+
+.notfound-img {
+    width: 350px;
+}
+
+.notfound-text {
+    font-size: 70px;
+    font-weight: bold;
+    font-family: 'uhbeen';
+}

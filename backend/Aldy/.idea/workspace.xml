@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a677cd7c-a24c-43d2-90e0-938a4d87c584" name="Changes" comment="[BE] fix : 로그인 유저 티어 갱신시, 추천문제도 갱신되도록 수정" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="backend" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="backend-redisConfig" />
+                    <option name="lastUsedInstant" value="1668223860" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="backend-fixCode05" />
+                    <option name="lastUsedInstant" value="1668043327" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="backend-probelmRecommend" />
+                    <option name="lastUsedInstant" value="1667958055" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="backend-fix_codeRequestAndcodeSave" />
+                    <option name="lastUsedInstant" value="1667957858" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Auth" />
+                    <option name="lastUsedInstant" value="1667480595" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$/../.." />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/config/RedisConfig.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/service/code/CodeServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/service/member/AuthServiceImpl.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/service/solvedac/SolvedacService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/demo/service/solvedac/SolvedacServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2GHw8ZOtdTyYaQRXHulDGjzNT3q" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Git.Branch.Popup.ShowAllRemotes": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "last_opened_file_path": "C:/Users/seho2/Desktop/싸피/TIL/querydsl/querydsl",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.example.demo.config.jwt" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.demo.service.member" />
+      <recent name="com.example.demo.domain.entity" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.demo.domain.dto.member.request" />
+      <recent name="com.example.demo.domain.dto.member.response" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.AldyApplication">
+    <configuration name="AldyApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.AldyApplication" />
+      <module name="Aldy.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Aldy.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.domain.entity.Member.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.demo.domain.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.domain.entity.StudyTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudyTest.saveStudy" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Aldy.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.domain.entity.Member.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.demo.domain.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.domain.entity.StudyTest" />
+      <option name="METHOD_NAME" value="saveStudy" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AldyApplication" />
+        <item itemvalue="JUnit.StudyTest.saveStudy" />
+        <item itemvalue="JUnit.StudyTest" />
+        <item itemvalue="Application.AldyApplication" />
+        <item itemvalue="JUnit.StudyTest.saveStudy" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a677cd7c-a24c-43d2-90e0-938a4d87c584" name="Changes" comment="" />
+      <created>1666058659444</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1666058659444</updated>
+    </task>
+    <task id="LOCAL-00001" summary="feat: entity 생성">
+      <created>1666079604032</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666079604032</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[BE] feat : JWT 인증 필터 생성중">
+      <created>1666710070392</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666710070392</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[BE] feat : JWT 회원가입 완료, 인증 구현중">
+      <created>1666800743664</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666800743665</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[BE] feat : 회원가입, 로그인, 회원탈퇴 완료">
+      <created>1666884731941</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666884731941</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[BE] fix : accessToken, refreshToken 만료시 재발급 수정">
+      <created>1667314199676</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667314199676</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[BE] feat : solved.ac 연동 인증 API에 redis cache 적용">
+      <created>1667401575704</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667401575704</updated>
+    </task>
+    <task id="LOCAL-00007" summary="[BE] feat : solved.ac 연동 인증 API에 redis cache 적용">
+      <created>1667401634026</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667401634026</updated>
+    </task>
+    <task id="LOCAL-00008" summary="[BE] feat : 마이페이지 api 추가, 응답한 코드 리뷰, 응답 받은 코드 리뷰">
+      <created>1667485878623</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1667485878623</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[BE] fix : 마이페이지 api 추가, 응답한 코드 리뷰, 응답 받은 코드 리뷰">
+      <created>1667486760286</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1667486760286</updated>
+    </task>
+    <task id="LOCAL-00010" summary="[BE] feat : 로그인 유저 개인별 문제 추천 api 구현">
+      <created>1667663108155</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1667663108155</updated>
+    </task>
+    <task id="LOCAL-00011" summary="[BE] feat : 회원정보 수정 api 아래 2개로 분할&#10;1. 회원 nickname 수정 api&#10;2. 회원 email 수정 api">
+      <created>1667721984866</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1667721984866</updated>
+    </task>
+    <task id="LOCAL-00012" summary="[BE] fix : 문제추천 api 랜덤 index 값 수정">
+      <created>1667725733818</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1667725733818</updated>
+    </task>
+    <task id="LOCAL-00013" summary="[BE] fix : code 저장, code 요청 수정&#10;1. 코드리뷰 단계 3단계로 축소&#10;2. 코드 요청시 여러명에게 한번에 보내도록 수정&#10;3. 문제 추천 수정중 작동안됨">
+      <created>1667957917470</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667957917470</updated>
+    </task>
+    <task id="LOCAL-00014" summary="[BE] fix : 문제 추천 api 캐시 적용 및 정상화">
+      <created>1667978892943</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1667978892943</updated>
+    </task>
+    <task id="LOCAL-00015" summary="[BE] fix : 코드 관련 api 필요 process 수정 및 process 3 코드 반환&#10;1. 코드 응답 등 api에서 필요한 process 단계 수정&#10;2. 로그인 사용자가 제출한 코드 중 3단계 코드 리스트 반환">
+      <created>1668067488911</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1668067488911</updated>
+    </task>
+    <task id="LOCAL-00016" summary="[BE] fix : redis 관련 api 수정">
+      <created>1668250122460</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1668250122460</updated>
+    </task>
+    <task id="LOCAL-00017" summary="[BE] fix : 로그인 유저 티어 갱신시, 추천문제도 갱신되도록 수정">
+      <created>1668331047072</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1668331047072</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:io.projectreactor:reactor-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: entity 생성" />
+    <MESSAGE value="[BE] feat : JWT 인증 필터 생성중" />
+    <MESSAGE value="[BE] feat : JWT 회원가입 완료, 인증 구현중" />
+    <MESSAGE value="[BE] feat : 회원가입, 로그인, 회원탈퇴 완료" />
+    <MESSAGE value="[BE] fix : accessToken, refreshToken 만료시 재발급 수정" />
+    <MESSAGE value="[BE] feat : solved.ac 연동 인증 API에 redis cache 적용" />
+    <MESSAGE value="[BE] feat : 마이페이지 api 추가, 응답한 코드 리뷰, 응답 받은 코드 리뷰" />
+    <MESSAGE value="[BE] fix : 마이페이지 api 추가, 응답한 코드 리뷰, 응답 받은 코드 리뷰" />
+    <MESSAGE value="[BE] feat : 로그인 유저 개인별 문제 추천 api 구현" />
+    <MESSAGE value="[BE] feat : 회원정보 수정 api 아래 2개로 분할&#10;1. 회원 nickname 수정 api&#10;2. 회원 email 수정 api" />
+    <MESSAGE value="[BE] fix : 문제추천 api 랜덤 index 값 수정" />
+    <MESSAGE value="[BE] fix : code 저장, code 요청 수정&#10;1. 코드리뷰 단계 3단계로 축소&#10;2. 코드 요청시 여러명에게 한번에 보내도록 수정&#10;3. 문제 추천 수정중 작동안됨" />
+    <MESSAGE value="[BE] fix : 문제 추천 api 캐시 적용 및 정상화" />
+    <MESSAGE value="[BE] fix : 코드 관련 api 필요 process 수정 및 process 3 코드 반환&#10;1. 코드 응답 등 api에서 필요한 process 단계 수정&#10;2. 로그인 사용자가 제출한 코드 중 3단계 코드 리스트 반환" />
+    <MESSAGE value="[BE] fix : redis 관련 api 수정" />
+    <MESSAGE value="[BE] fix : 로그인 유저 티어 갱신시, 추천문제도 갱신되도록 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="[BE] fix : 로그인 유저 티어 갱신시, 추천문제도 갱신되도록 수정" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.MappingException" package="org.hibernate" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

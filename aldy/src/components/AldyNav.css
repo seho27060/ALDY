@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap");
+
+.navbar {
+  padding: 0;
+  min-width: 1526px;
+  /* border-bottom: 1px solid rgb(200,200,200); */
+}
+
+.navbar-nav {
+  align-items: flex-start;
+}
+
+.navbar > .container-fluid {
+  padding: 0;
+}
+
+.navbar-brand {
+  padding-bottom: 0;
+  margin-left: 1rem;
+}
+
+.nav-title {
+  font-family: "Teko", sans-serif;
+  /* font-family: "KOFIHDrLEEJWTTF-B"; */
+  cursor: pointer;
+  font-size: 45px;
+  color: rgb(40, 80, 15);
+  text-align: center;
+  font-weight: 900;
+  padding-left: 15px;
+}
+
+.nav-title:hover {
+  color: rgb(40, 80, 15, 0.8);
+}
+
+.nav-link {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 12px;
+  margin-right: 13px;
+  user-select: none;
+}
+
+.nav-link:focus-visible {
+  outline: none;
+}
+
+.nav-link-active {
+  color: rgb(230, 50, 70);
+}
+
+.nav-link:hover {
+  color: black;
+}
+
+/* offcanvas */
+.offcanvas-header {
+  align-items: baseline;
+}
+
+.nav_info {
+  display: flex;
+  user-select: none;
+}
+
+.nav_info > img {
+  margin-left: 20px;
+  margin-right: -10px;
+}
+
+.dropdown-item > svg {
+  margin-right: 10px;
+}

@@ -1,0 +1,237 @@
+section.main-page-banner {
+  background-image: url(../../public/maintreefix.gif);
+  background-size: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  position: relative;
+  min-height: 650px;
+  padding: 110px;
+  user-select: none;
+  height: 800px;
+}
+
+.main-page-banner > h1 {
+  font-family: "Teko", sans-serif;
+  cursor: pointer;
+  font-size: 60px;
+  color: rgb(40, 80, 15);
+  text-align: center;
+  user-select: none;
+}
+
+section.main-page-description {
+  background-color: #373737;
+  color: white;
+  padding: 150px 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+section.main-page-description-aldylist {
+  background-color: #e7fdb6;
+  color: white;
+  padding: 50px 15% 80px 15%;
+  display: flex;
+  justify-content: space-evenly;
+  user-select: none;
+}
+
+.main-page-banner-text {
+  font-weight: 800;
+  font-size: 25px;
+  line-height: 27px;
+  letter-spacing: -0.005em;
+  color: #649655;
+  font-family: "uhbeeBold";
+  padding-bottom: 5px;
+}
+
+h1 {
+  font-weight: bold;
+  user-select: none;
+  color: #28500f;
+}
+
+.board {
+  position: relative;
+  height: 97px;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.board-image {
+  position: absolute;
+}
+
+.board-title {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  /* -webkit-align-items: center; */
+  -webkit-box-align: center;
+  /* -ms-flex-align: center; */
+  align-items: center;
+  padding: 6px 14px 7px;
+  background: #1e5b24;
+  border-radius: 81.7073px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 40px;
+  font-family: "uhbeeBold";
+}
+
+.board-text {
+  position: relative;
+  font-weight: 800;
+  text-align: center;
+  color: #ffffff;
+  font-size: 37px;
+  font-family: "uhbeeBold";
+  margin-top: 5px;
+}
+
+.main-page-description-title {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+  background-color: #373737;
+  user-select: none;
+}
+
+.main-page-highlight {
+  color: #435f07;
+  font-size: 20px;
+}
+
+.main-page-description-text > p > span {
+  font-family: "uhbeeBold";
+  font-size: 25px;
+  margin-top: 10px;
+  white-space: nowrap;
+}
+.aldy_step_info {
+  background-color: #e7fdb6;
+  user-select: none;
+  padding: 80px 15%;
+}
+.aldy_step_info_title {
+  color: #373737;
+  font-family: "onemobile";
+  font-size: 35px;
+  padding-top: 15px;
+}
+.aldy_step_info_text {
+  color: #373737;
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  padding-bottom: 15px;
+}
+
+.main-page-description-aldy {
+  justify-content: flex-start;
+}
+
+section.main-page-tutorial-description {
+  background-color: #373737;
+  color: white;
+  padding: 150px 15%;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.main-page-tutorial-title {
+  font-family: "uhbeeBold";
+  font-size: 35px;
+  margin-top: 10px;
+  white-space: nowrap;
+  margin-bottom: 30px;
+}
+
+.main-page-tutorial-title > span {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  margin-top: 10px;
+  white-space: nowrap;
+  color: #c8e687;
+}
+
+.tutorial-table {
+  align-items: center;
+  /* border: 1px solid white; */
+  border-radius: 3px;
+}
+.TutorialChangeLogin {
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 7px;
+}
+
+.tutorial-content {
+  background-color: white;
+  color: black;
+  padding: 7px;
+}
+
+.main-page-description-codereview {
+  background-color: #e7fdb6;
+  user-select: none;
+  padding: 80px 15%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-page-study-description {
+  height: 1000px;
+  background-color: #373737;
+  color: white;
+  padding: 50px;
+}
+
+.main-page-study-description-flex {
+  display: flex;
+  justify-content: center;
+  height: 800px;
+  background-color: #373737;
+  color: white;
+}
+
+.TutorialChangeLogin {
+  font-size: 20px;
+}
+
+.main-page-green-title {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  color: #373737;
+  position: relative;
+  z-index: 1;
+  background-color: #e7fdb6;
+  user-select: none;
+}

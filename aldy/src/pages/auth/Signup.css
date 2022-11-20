@@ -1,0 +1,171 @@
+.signup-page-main {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.signup-page-bg {
+  /* height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
+  background-size: cover; */
+  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
+  height: calc(100vh - 73px);
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  overflow-x: hidden;
+}
+
+.signup-page-left {
+  padding-left: 7%;
+  padding-right: 12%;
+  user-select: none;
+  width: 50%;
+}
+
+.sign-title {
+  padding-bottom: 10px;
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 45px;
+  line-height: 58px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sign-title-info {
+  text-align: start;
+  margin-bottom: 45px;
+}
+
+.signup-page-right {
+  /* padding-left: 12%; */
+  /* align-items: center; */
+  user-select: none;
+}
+
+.signup-page-right-title {
+  font-family: "Merriweather Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 65px;
+  line-height: 69px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #dcf0be;
+  padding-bottom: 30px;
+  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
+}
+
+.signup-page-right-text {
+  font-family: "Merriweather Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #ffffff;
+  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.25);
+  padding-bottom: 15%;
+}
+
+.signup-form-title {
+  text-align: left;
+  padding: 10px;
+  color: #787878;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 29px;
+}
+
+.form-title-id {
+  display: flex;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid #787878;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+}
+
+.signup-submit-btn {
+  padding: 30px;
+}
+
+.solved-btn {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 15px;
+}
+
+.beakjonn-modal-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration-line: underline;
+  text-decoration-color: #ffe1aa;
+  text-decoration-thickness: 10px;
+  text-underline-offset: -5px;
+  margin: auto;
+  font-family: "KOFIHDrLEEJWTTF-B";
+}
+
+.beakjonn-modal-title > span {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  font-family: "KOFIHDrLEEJWTTF-B";
+}
+
+#tier {
+  width: 20%;
+  margin-right: 20px;
+}
+
+#tier + label {
+  color: black;
+  cursor: default;
+}
+
+.CopyToClipboard-Btn {
+  color: #ffe1aa;
+}
+
+.signup-page-right-sub-title {
+  font-family: "uhbeeBold";
+  font-size: 30px;
+  color: white;
+  padding-bottom: 35px;
+}
+
+.sign-form-title {
+  text-align: left;
+  margin-bottom: 30px;
+  color: rgb(100, 100, 100);
+  font-family: "GmarketSansMedium";
+  font-weight: 500;
+  width: 100%;
+}

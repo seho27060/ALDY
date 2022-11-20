@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  /* font-family: "Noto Sans KR", sans-serif; */
+  /* font-family: 'uhbeeBold'; */
+  font-family: "GmarketSansMedium";
+}
+
+@font-face {
+  font-family: "kotra";
+  src: url("./fonts/KOTRA\ HOPE.ttf");
+}
+
+@font-face {
+  font-family: "onemobile";
+  src: url("./fonts/ONE\ Mobile\ POP.ttf");
+}
+
+@font-face {
+  font-family: "uhbeeBold";
+  src: url("./fonts/UhBee\ jung\ BOLD.ttf");
+}
+
+@font-face {
+  font-family: "uhbee";
+  src: url("./fonts/UhBee\ jung.ttf");
+}
+
+@font-face {
+  font-family: "uhbeen";
+  src: url("./fonts/UhBee\ ann.ttf");
+}
+
+@font-face {
+  font-family: "gwedu";
+  src: url("./fonts/강원교육새음.ttf");
+}
+
+@font-face {
+  font-family: "KOFIHDrLEEJWTTF-B";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+}
+
+.App {
+  text-align: center;
+}
+
+main {
+  min-width: 1526px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px white;
+}

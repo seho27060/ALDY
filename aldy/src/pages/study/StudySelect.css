@@ -1,0 +1,280 @@
+.study-select-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+}
+
+/* title */
+.study-select-title-box {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 15%;
+}
+
+.study-select-title-box > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.study-select-small-title {
+  color: #646464;
+}
+
+.study-select-date {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 250, 240, 1) 40%
+  );
+  /* text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  color: black;
+  font-weight: 700;
+}
+
+/* search - 검색 */
+.study-select-search-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 15% 10px;
+}
+
+.study-select-option {
+  border: 5px solid #dcf0be;
+  border-radius: 30px;
+  width: 32%;
+  padding: 5px 20px 10px 20px;
+}
+
+.green-line {
+  border-bottom: 1px solid rgba(220, 240, 190, 1);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.green-line > div {
+  padding-bottom: 15px;
+  color: #28500f;
+  font-weight: 700;
+}
+
+.imgbox {
+  width: 40px;
+  height: 40px;
+  margin-left: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff0b4;
+  border-radius: 50%;
+  margin: 10px;
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+.codeImg {
+  width: 60px;
+  margin-left: 1%;
+}
+
+.tierImg {
+  width: 20px;
+}
+
+/* checkbox */
+tr > th > input[type="checkbox"] {
+  display: none;
+}
+tr > td > input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background-color: rgba(220, 220, 220, 1);
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background-color: rgba(40, 80, 15, 0.5);
+}
+
+label {
+  cursor: pointer;
+}
+
+/* scroll */
+.option-scroll {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.option-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+
+.option-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(220, 240, 190, 1);
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+
+.option-scroll::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+/* 담긴 문제 */
+.study-select-problem-box {
+  margin: 30px 15%;
+  border: 5px solid #dcf0be;
+  border-radius: 30px;
+  padding: 15px 20px 10px 20px;
+  background-color: rgba(245, 255, 230, 1);
+}
+
+.problem-number-box {
+  display: flex;
+}
+
+.problem-number {
+  background: #ffffff;
+  border: 3px solid #dcf0be;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin: 7px;
+  display: flex;
+  align-items: center;
+}
+
+/* 문제 선택 */
+.study-select-result {
+  margin: 30px 15%;
+  border: 5px solid #dcf0be;
+  border-radius: 30px;
+  padding: 5px 20px 10px 20px;
+}
+
+.right {
+  color: #646464;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: end;
+  margin-left: auto;
+}
+
+.second-row {
+  width: 100%;
+}
+
+.problem-search-none {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(100, 100, 100);
+  margin: 20px;
+}
+
+.problem-item {
+  display: flex;
+  align-items: center;
+}
+
+.problem-text {
+  margin-left: 12px;
+}
+
+.problem-small-text {
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+}
+
+.problem-text-line {
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+  margin: 0px 10px;
+}
+
+.problem-text-margin {
+  margin-left: auto;
+}
+
+.problem-tier-image {
+  width: 15px;
+  margin-right: 5px;
+}
+
+.delete-problem {
+  margin-left: 5px;
+  font-size: 10px;
+  font-weight: 900;
+  border-radius: 50%;
+  color: rgba(40, 80, 15, 0.5);
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+.study-problem-button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 15%;
+}
+
+.select-search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 15%;
+}
+
+.slect-search-form:focus {
+  color: rgb(0, 0, 0);
+  background-color: #fff;
+  border: 1px solid #28500f;
+  outline: 0;
+  box-shadow: none;
+}
+
+.select-search-button {
+  background-color: white;
+  color: #28500f;
+  border-color: #28500f;
+  border-width: 2px;
+  white-space: nowrap;
+}
+
+.select-search-button:hover,
+.select-search-button:active {
+  background-color: #28500f;
+  color: white;
+  border-color: #28500f;
+}
+
+.select-search-box > div > .btn-outline-success {
+  --bs-btn-color: #28500f;
+  --bs-btn-border-color: #28500f;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #28500f;
+  --bs-btn-hover-border-color: #28500f;
+  --bs-btn-focus-shadow-rgb: 25, 135, 84;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #28500f;
+  --bs-btn-active-border-color: #28500f;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #28500f;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #28500f;
+  --bs-gradient: none;
+}
+
+.study-select-info {
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-size: 21px;
+}

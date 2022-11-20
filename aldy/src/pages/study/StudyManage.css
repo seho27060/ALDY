@@ -1,0 +1,127 @@
+/* top */
+.study-manage-top {
+  background-image: url(../../../public/background.jpg);
+  background-size: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-position-x: center;
+  position: relative;
+  /* min-height: 500px; */
+  padding: 80px 50px 50px;
+}
+
+.delete-study > button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  white-space: nowrap;
+  width: 90px;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.study-manage-top > h1 {
+  color: rgba(40, 80, 15);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 900;
+  margin: auto;
+}
+
+.study-manage-top > h5 {
+  color: rgba(40, 80, 15, 0.7);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 700;
+}
+
+.study-manage-img {
+  width: 400px;
+  z-index: 1;
+  margin-right: -170px;
+}
+
+.study-manage-blackboard-box {
+  display: flex;
+  margin: 0px auto;
+  justify-content: center;
+  padding-right: 250px;
+}
+
+.balckboard-box {
+  display: flex;
+  align-items: center;
+}
+
+.study-manage-blackboard {
+  background: #2b6e30;
+  border: 10px solid #d9ae81;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  padding-left: 12%;
+  max-width: 1200px;
+  min-width: 1000px;
+}
+
+.study-manage-blackboard > table {
+  width: 100%;
+}
+
+.study-manage-blackboard > table > tbody > tr > td {
+  padding: 5px 15px;
+  color: #ffffff;
+}
+
+.study-manage-blackboard > table > tbody > tr > td:nth-child(1) {
+  font-weight: 700;
+  text-align: start;
+  white-space: nowrap;
+  width: 20%;
+}
+
+.study-manage-blackboard > table > tbody > tr > td:nth-child(2) {
+  font-weight: 700;
+  text-align: start;
+  width: 30%;
+  border-right: 1px dashed rgb(250, 250, 250);
+}
+
+.study-manage-blackboard > table > tbody > tr > td:nth-child(3) {
+  width: 50%;
+  text-align: center;
+}
+
+/* info */
+
+/* member */
+.study-manage-member {
+  background: #fffaf0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+
+  margin: 50px 15%;
+}
+
+.penalty-white {
+  background-color: white;
+}
+.penalty-green {
+  background-color: rgba(35, 255, 0, 0.3);
+}
+.penalty-orange {
+  background-color: rgba(255, 170, 0, 0.3);
+}
+.penalty-red {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.study-manage-info {
+  font-family: "KOFIHDrLEEJWTTF-B";
+  font-size: 18px;
+}
+/* join */

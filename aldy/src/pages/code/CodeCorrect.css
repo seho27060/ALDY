@@ -1,0 +1,132 @@
+.correct-main {
+  background-color: #dcf0be;
+  padding: 40px;
+  min-height: 100vh;
+}
+
+.correct-orange {
+  text-decoration-line: underline;
+  text-decoration-color: #ffe1aa;
+  text-decoration-thickness: 10px;
+  text-underline-offset: -5px;
+  margin: auto;
+}
+
+.correct-title {
+  background-color: white;
+  width: 70%;
+  margin: auto;
+  font-size: 18px;
+  border-radius: 20px;
+  padding: 12px 0;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.correct-board {
+  background-color: #2b6e30;
+  width: 80%;
+  margin: auto;
+  padding: 40px 0;
+  border: 10px solid #ffe1aa;
+  border-radius: 14px;
+}
+
+.correct-board-title {
+  display: flex;
+  justify-content: center;
+  background-color: #28500f;
+  width: fit-content;
+  margin: auto;
+  border-radius: 20px;
+  color: white;
+  font-size: 28px;
+  margin-bottom: 18px;
+  padding: 5px 50px;
+  font-family: "uhbeeBold";
+  color: #ffe1aa;
+}
+
+.correct-content {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding: 20px;
+  height: 500px;
+}
+
+.correct-your-code-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  margin-right: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 80%;
+  height: 450px;
+}
+
+.correct-my-code-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  margin-left: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 80%;
+  height: 450px;
+}
+
+.correct-your-code {
+  background-color: #28500f;
+  height: 100%;
+  width: 100%;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.correct-my-code {
+  background-color: #28500f;
+  height: 100%;
+  width: 100%;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.correct-btns {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+
+.correctBtn {
+  padding: 5px;
+}
+
+.correct-language-select {
+  display: flex;
+  justify-content: flex-end;
+  color: black;
+  margin-right: 30px;
+}
+
+.correct-code-type {
+  border-radius: 10px;
+  padding: 3px 18px;
+  /* background-color: white; */
+  margin-bottom: 10px;
+  font-family: "uhbeeBold";
+  color: white;
+  font-size: 25px;
+}
+
+.correct-header > p > span {
+  font-size: 30px;
+  font-family: "KOFIHDrLEEJWTTF-B";
+}
+
+.correct-header {
+  margin: 3.5vh 0px;
+}

@@ -1,0 +1,105 @@
+.study-list-item {
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.study-list-title {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+}
+
+.study-id {
+  background-color: #4b3200;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+.study-name {
+  font-weight: 700;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 20px;
+  align-self: center;
+  transition: all 200ms ease-in;
+}
+
+.big-size {
+  font-size: 25px;
+  transition: all 200ms ease-in;
+  padding-top: 5px;
+}
+
+.study-number {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.down-icon {
+  width: 25px;
+  height: 25px;
+  color: #4b3200;
+  cursor: pointer;
+}
+
+.down-icon:hover {
+  color: rgba(75, 50, 0, 0.3);
+}
+
+.my-study-list-content {
+  text-align: start;
+  align-items: flex-start;
+  width: calc(100% - 120px);
+  margin: 7px 0;
+  display: none;
+}
+
+.content-active {
+  display: flex;
+}
+
+.my-study-description1 {
+  flex-direction: column;
+  width: 50%;
+  /* border-right: 1px dashed #4b3200; */
+  margin-right: 7px;
+}
+
+.my-study-description2 {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  height: 100%;
+  width: 50%;
+  border-left: 1px dashed #4b3200;
+  padding-left: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.content-active {
+  display: flex;
+}
+
+.study-rank > img {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.Join-btns {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
