@@ -380,7 +380,7 @@ const MainPage = () => {
           {/* 알디 스터디 규칙 🎈 */}
         </span>
         <div className="main-page-study-description-flex">
-          <div className="section1-left" data-aos="fade-up">
+          <div className="section1-left" data-aos="zoom-in-right">
             <div>
               <div
                 className="main-page-description-title"
@@ -388,19 +388,31 @@ const MainPage = () => {
               >
                 알디 스터디 규칙{" "}
               </div>
-              <div style={{ marginTop: "100px" }}>
-                <img
+              <div
+                className="main-page-tutorial-title"
+                style={{ fontSize: "30px" }}
+              >
+                자동 <span>강퇴 기능</span>으로 스터디원 관리가 편해요
+              </div>
+              <div style={{ marginTop: "50px" }}>
+                <div className="study-bg-div">
+                  {" "}
+                  <Lottie
+                    animationData={trafficLight}
+                    style={{ width: "300px" }}
+                  ></Lottie>
+                </div>
+                {/* <img
                   src={process.env.PUBLIC_URL + "/mainStudyManage.gif"}
                   alt=""
                   width="450px"
                   style={{ margin: "10px" }}
-                ></img>
-                <br></br>
-                🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
+                ></img> */}
+                {/* 🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
                 코드 리뷰를 안했다면 경고가 쌓여요!
                 <br></br>
                 🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
-                <br></br>
+                <br></br> */}
                 <img
                   src={process.env.PUBLIC_URL + "/aldyhead3.png"}
                   alt=""
@@ -429,14 +441,12 @@ const MainPage = () => {
                 </span>
               </p>
             </div>
-            {/* <Lottie
-              animationData={codingReview}
-              style={{ width: "500px" }}
-            ></Lottie> */}
           </div>
+
           <Lottie
-            animationData={trafficLight}
-            style={{ width: "300px" }}
+            animationData={codingReview}
+            style={{ width: "400px" }}
+            data-aos="zoom-in-left"
           ></Lottie>
         </div>
       </section>
