@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb5788cb-cba9-414e-b502-4cee5b91ae94" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aldy/src/main/java/com/example/demo/service/crawling/CrawlingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aldy/src/main/java/com/example/demo/service/crawling/CrawlingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aldy/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Aldy/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aldy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Aldy/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,18 +60,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Git.Branch.Popup.ShowAllRemotes": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/seho2/Desktop/싸피/프로젝트/자율프로젝트/S07P31C206/backend/Aldy",
-    "settings.editor.selected.configurable": "advanced.settings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/seho2/Desktop/싸피/프로젝트/자율프로젝트/S07P31C206/backend/Aldy&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <module name="backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="backend" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
