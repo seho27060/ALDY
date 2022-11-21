@@ -46,12 +46,12 @@ const Userinfo = () => {
   useEffect(() => {
     getUserInfo()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setNickname(res.data.nickname);
         setEmail(res.data.email);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -109,7 +109,7 @@ const Userinfo = () => {
                   setAlertModalShow(true);
                   setSendEmail((sendEmail.email = emailInput.current.value));
                   updateEmail(sendEmail).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                   });
                   // alert("이메일 변경 완료");
                   // window.location.reload(); //새로고침
@@ -156,7 +156,7 @@ const Userinfo = () => {
                   (sendNickname.nickname = nicknameInput.current.value)
                 );
                 updateNickname(sendNickname).then((res) => {
-                  console.log(res);
+                  // console.log(res);
                 });
                 // alert("닉네임 변경 완료");
                 // console.log(nicknameInput.current.value);
