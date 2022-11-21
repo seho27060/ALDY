@@ -156,7 +156,7 @@ const CodeCorrect = () => {
           <button
             className="correctBtn"
             onClick={() => {
-              console.log(reply);
+              // console.log(reply);
               codeReply(reply)
                 .then(() => {
                   setMessage("답장을 보냈습니다.");
