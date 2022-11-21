@@ -75,30 +75,30 @@ const Mypage = () => {
   useEffect(() => {
     getUserInfo()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setBaekjoonId(res.data.baekjoonId);
         setNickname(res.data.nickname);
         setEmail(res.data.email);
         setTier(res.data.tier);
-        console.log(baekjoonId);
+        // console.log(baekjoonId);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     mypageCode().then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setAnswerCodeReviewNumber(res.data.answerCodeReviewNumber);
       setReplyCodeReviewNumber(res.data.replyCodeReviewNumber);
     });
     recommendation().then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setAcceptedUserCount(res.data.acceptedUserCount);
       setAlgorithm(res.data.algorithm);
       setAverageTries(res.data.averageTries);
       setLevel(res.data.level);
       setProblemId(res.data.problemId);
       setTitleKo(res.data.titleKo);
-      console.log("문제추천 잘 뜨는지 확인");
+      // console.log("문제추천 잘 뜨는지 확인");
     });
   }, []);
 
@@ -106,12 +106,12 @@ const Mypage = () => {
     getMyStudy(myStudyPageNum)
       .then((res) => {
         const data = res.data.myStudyDtoPage;
-        console.log(data);
+        // console.log(data);
         setMyStudyList(data.content);
         setMyStudyTotal(data.totalElements);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [myStudyPageNum]);
 
@@ -129,18 +129,18 @@ const Mypage = () => {
   };
 
   const onRenew = () => {
-    console.log("티어 갱신");
+    // console.log("티어 갱신");
     tierRenewApi()
       .then((res) => {
         sessionStorage.setItem("tier", res.data.tier);
-        console.log(res.data);
+        // console.log(res.data);
         // alert("티어가 갱신되었습니다.");
         // window.location.reload(); //새로고침
         setMessage("티어가 갱신되었습니다.");
         setAlertRefreshModalShow(true); //새로고침
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         // alert("갱신에 실패하였습니다. 다시 시도해주세요.");
         // window.location.reload(); //새로고침
         setMessage("갱신에 실패하였습니다. 다시 시도해주세요.");
@@ -156,7 +156,7 @@ const Mypage = () => {
       setLevel(res.data.level);
       setProblemId(res.data.problemId);
       setTitleKo(res.data.titleKo);
-      console.log("새로운 문제 갱신 잘 뜨는지 확인");
+      // console.log("새로운 문제 갱신 잘 뜨는지 확인");
     });
   };
 
