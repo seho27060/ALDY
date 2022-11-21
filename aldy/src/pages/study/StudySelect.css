@@ -44,6 +44,7 @@
   border-radius: 30px;
   width: 32%;
   padding: 5px 20px 10px 20px;
+  user-select: none;
 }
 
 .green-line {

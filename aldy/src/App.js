@@ -27,7 +27,6 @@ function App() {
   const [nav] = useRecoilState(isNav);
 
   const params = useParams();
-  console.log(params, "네브");
 
   return (
     <div className="App">
