@@ -33,7 +33,7 @@ const StudyManage = () => {
 
   const location = useLocation();
   const studyDetail = location.state.studyDetail;
-  console.log(studyDetail);
+  // console.log(studyDetail);
   const createdDate = new Date(studyDetail.createdDate);
   const myId = sessionStorage.getItem("userName");
   // 모달

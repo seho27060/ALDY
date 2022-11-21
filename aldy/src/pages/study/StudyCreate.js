@@ -83,11 +83,11 @@ const StudyCreate = () => {
     ) {
       await createStudy(newStudy)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           navigate(`/study/detail/${res.data.id}`);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } else {
       setMessage("스터디 정보를 모두 입력해주세요.");

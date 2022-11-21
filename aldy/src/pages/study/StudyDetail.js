@@ -100,7 +100,7 @@ const StudyDetail = () => {
     activationLevel: 0,
   });
   const keys = Object.keys(studyDetail.statsByTag);
-  console.log(studyDetail);
+  // console.log(studyDetail);
 
   // 달력 날짜
   const [date, setDate] = useState(new Date());
@@ -137,10 +137,10 @@ const StudyDetail = () => {
       .then((res) => {
         setMessage(`${studyDetail.name}에서 탈퇴되었습니다.`);
         setAlertModalShow(true);
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -148,14 +148,14 @@ const StudyDetail = () => {
   const [problemList, setProblemList] = useState([]);
   useEffect(() => {
     handleProblemModalShow();
-    console.log(date, "방금찍음");
+    // console.log(date, "방금찍음");
     getProblem(id, date.getFullYear(), date.getMonth() + 1, date.getDate())
       .then((res) => {
         // console.log(res.data);
         setProblemList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [id, date]);
 
@@ -167,22 +167,22 @@ const StudyDetail = () => {
         sessionStorage.setItem("sendLeaderId", res.data.leaderBaekjoonId);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [id]);
 
   useEffect(() => {
     getSelectedDay(id, date.getFullYear(), date.getMonth() + 1)
       .then((res) => {
-        console.log(res.data.dayss);
+        // console.log(res.data.dayss);
         setMark(res.data.days);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [date]);
 
-  console.log(studyDetail.statsByTag, "아");
+  // console.log(studyDetail.statsByTag, "아");
 
   return (
     <main style={{ userSelect: "none" }}>

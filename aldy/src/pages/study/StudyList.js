@@ -83,7 +83,7 @@ const StudyList = () => {
           setMessage("검색결과가 없습니다.");
           setAlertModalShow(true);
           setSearchShow(false);
-          console.log(err);
+          // console.log(err);
         });
     } else {
       setMessage("검색어를 입력해주세요.");
@@ -100,7 +100,7 @@ const StudyList = () => {
         setStudyTotal(data.totalElements);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [studyPageNum]);
 
@@ -113,7 +113,7 @@ const StudyList = () => {
         setMyStudyTotal(data.totalElements);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [myStudyPageNum]);
 

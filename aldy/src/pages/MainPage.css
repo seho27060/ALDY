@@ -214,7 +214,7 @@ section.main-page-tutorial-description {
 
 .main-page-study-description-flex {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   height: 800px;
   background-color: #373737;
   color: white;
@@ -283,4 +283,12 @@ section.main-page-tutorial-description {
   z-index: 1;
   user-select: none;
   color: #435f07;
+}
+
+.study-bg-div {
+  width: 550px;
+  height: 400px;
+  display: flex;
+  background-repeat: no-repeat;
+  background-image: url(../../public/mainStudyManage.gif);
 }
