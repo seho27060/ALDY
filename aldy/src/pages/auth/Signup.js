@@ -265,17 +265,17 @@ const Signup = () => {
                   <RedButtonSmall
                     onClick={() => {
                       setSendId((sendId.baekjoonId = idInput.current.value));
-                      console.log(idInput.current.value);
-                      console.log(sendId);
+                      // console.log(idInput.current.value);
+                      // console.log(sendId);
                       baekjoonVerify(sendId)
                         .then((res) => {
                           setBojValidationCode(res.data.authString);
                           handleBojModalShow();
-                          console.log(res.data.authString);
+                          // console.log(res.data.authString);
                         })
                         .catch((err) => {
-                          console.log(err);
-                          console.log(err.response.status);
+                          // console.log(err);
+                          // console.log(err.response.status);
 
                           err.response.status === 409
                             ? // alert("백준 회원이 아닙니다.");
@@ -327,7 +327,7 @@ const Signup = () => {
                   <RedButtonSmall
                     onClick={() => {
                       if (checkIt()) {
-                        console.log(emailInput.current.value);
+                        // console.log(emailInput.current.value);
                         emailValid(emailInput.current.value).then((res) => {
                           if (res.data.doubleCheck === true) {
                             setEmailChecked(true);
@@ -368,7 +368,7 @@ const Signup = () => {
                 {!nicknameChecked ? (
                   <RedButtonSmall
                     onClick={() => {
-                      console.log(nicknameInput.current.value);
+                      // console.log(nicknameInput.current.value);
                       nicknameValid(nicknameInput.current.value).then((res) => {
                         if (res.data.doubleCheck === true) {
                           setNicknameChecked(true);
@@ -405,7 +405,7 @@ const Signup = () => {
                   setCredentials(
                     (credentials.nickname = nicknameInput.current.value)
                   );
-                  console.log(credentials);
+                  // console.log(credentials);
                   if (passwordDoubleCheck()) {
                     allInputCheck(credentials);
                   } else {
