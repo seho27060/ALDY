@@ -7,7 +7,7 @@ section.main-page-banner {
   background-position-x: center;
   position: relative;
   min-height: 650px;
-  padding: 110px;
+  padding: 150px 110px 110px;
   user-select: none;
   height: 800px;
 }
@@ -82,7 +82,7 @@ h1 {
   -webkit-box-align: center;
   /* -ms-flex-align: center; */
   align-items: center;
-  padding: 6px 14px 7px;
+  padding: 13px 15px 10px;
   background: #1e5b24;
   border-radius: 81.7073px;
   font-family: "Pretendard";
@@ -92,7 +92,7 @@ h1 {
   line-height: 17px;
   text-align: center;
   color: #ffffff;
-  margin-top: 40px;
+  margin-top: 30px;
   font-family: "uhbeeBold";
 }
 
@@ -187,13 +187,13 @@ section.main-page-tutorial-description {
 .TutorialChangeLogin {
   cursor: pointer;
   border: 1px solid white;
-  padding: 7px;
+  padding: 10px;
 }
 
 .tutorial-content {
   background-color: white;
   color: black;
-  padding: 7px;
+  padding: 20px;
 }
 
 .main-page-description-codereview {

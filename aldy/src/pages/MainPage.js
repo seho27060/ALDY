@@ -27,7 +27,7 @@ const RedButton = styled.button`
 `;
 
 const WhiteButton = styled.button`
-  width: 180px;
+  width: 200px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid red;
@@ -38,6 +38,8 @@ const WhiteButton = styled.button`
   font-size: 24px;
   margin: 4px;
   font-family: "uhbeeBold";
+  white-space: nowrap;
+  padding: 5px 10px
   &:hover {
     background-color: red;
     color: white;
@@ -118,13 +120,11 @@ const MainPage = () => {
       <MoveBar></MoveBar>
       <section className="main-page-banner">
         <img src={process.env.PUBLIC_URL + "/MainDinosaur.png"} alt=""></img>
-        <br></br>
-        <br></br>
-        <br></br>
-        <div className="main-page-banner-text">코드리뷰를 통해 공룡 키우기</div>
-        <br></br>
-        <h1>ALDY</h1>
-        <div className="board" style={{ margin: "30px" }}>
+        <div className="main-page-banner-text" style={{ marginTop: "50px" }}>
+          코드리뷰를 통해 공룡 키우기
+        </div>
+        <h1 style={{ fontSize: "80px" }}>ALDY</h1>
+        <div className="board" style={{ margin: "20px" }}>
           <div className="board-image">
             <span>
               <img
@@ -384,17 +384,17 @@ const MainPage = () => {
             <div>
               <div
                 className="main-page-description-title"
-                style={{ fontSize: "50px", marginBottom: "20px" }}
+                style={{ fontSize: "50px", marginTop: "30px" }}
               >
                 알디 스터디 규칙{" "}
               </div>
               <div
                 className="main-page-tutorial-title"
-                style={{ fontSize: "30px" }}
+                style={{ fontSize: "30px", margin: "0px" }}
               >
                 자동 <span>강퇴 기능</span>으로 스터디원 관리가 편해요
               </div>
-              <div style={{ marginTop: "50px" }}>
+              <div style={{ marginTop: "20px" }}>
                 <div className="study-bg-div">
                   {" "}
                   <Lottie
@@ -408,12 +408,12 @@ const MainPage = () => {
                   width="450px"
                   style={{ margin: "10px" }}
                 ></img> */}
-                {/* 🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
+                🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
                 코드 리뷰를 안했다면 경고가 쌓여요!
                 <br></br>
                 🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
-                <br></br> */}
-                <img햣ㅅ
+                <br></br>
+                <img
                   src={process.env.PUBLIC_URL + "/aldyhead3.png"}
                   alt=""
                   width="80px"
