@@ -95,19 +95,19 @@ const StudySelect = () => {
       getSearchProblem(searchInput.current.value)
         .then((res) => {
           const data = res.data;
-          console.log(data.items.length);
+          // console.log(data.items.length);
           if (data.items.length > 0) {
             setResult(data.items);
           } else {
             setMessage("검색결과가 없습니다.");
             setSearchAlertModalShow(true);
           }
-          console.log(data.items);
+          // console.log(data.items);
         })
         .catch((err) => {
           setMessage("검색결과가 없습니다.");
           setSearchAlertModalShow(true);
-          console.log(err);
+          // console.log(err);
         });
     } else {
       setMessage("검색어를 입력해주세요.");
@@ -123,7 +123,7 @@ const StudySelect = () => {
         setBaekjoonIdOption(data.memberHash);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [studyId]);
 
@@ -138,10 +138,10 @@ const StudySelect = () => {
       .then((res) => {
         const data = res.data;
         setResult(data.items);
-        console.log(data.items);
+        // console.log(data.items);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -160,12 +160,12 @@ const StudySelect = () => {
     };
     addProblem(data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMessage("문제선정이 완료되었습니다!");
         setAlertModalShow(true);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
