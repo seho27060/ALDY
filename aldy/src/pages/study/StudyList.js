@@ -1,8 +1,6 @@
 import "./StudyList.css";
 import { useState, useEffect, useRef } from "react";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import StudyListItem from "../../components/study/StudyListItem";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
@@ -12,26 +10,7 @@ import AlertModal from "../../components/AlertModal";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
-const WhiteRedButton = styled.button`
-  width: 170px;
-  border-radius: 8px;
-  background-color: white;
-  outline: none;
-  border: 2px solid red;
-  color: red;
-  font-family: "GmarketSansMedium";
-  font-weight: bold;
-  font-size: 15px;
-  padding: 5px 0px 3px 0px;
-  transition: all 200ms ease-in;
-  margin-top: 20px;
-  user-select: none;
-  &:hover {
-    background-color: red;
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import Button from "../../components/styled/Button";
 
 const StudyList = () => {
   const [nav, setNav] = useRecoilState(isNav);
@@ -145,15 +124,12 @@ const StudyList = () => {
           <span className="study-highlight-green">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <div
-          className="study-underline-green"
-          style={{ margin: "auto", fontSize: "45px" }}
-        >
+        <div className="study-underline-green study-list-create">
           지금 바로 스터디를 만들어보세요!
         </div>
-        <WhiteRedButton onClick={navigateStudyCreate} className="study-button">
+        <Button redLine medium onClick={navigateStudyCreate}>
           스터디 생성하기
-        </WhiteRedButton>
+        </Button>
       </section>
       <section className="study-search">
         <p>
@@ -179,11 +155,7 @@ const StudyList = () => {
               ref={searchInput}
               onKeyPress={onKeypress}
             />
-            <Button
-              variant="outline-success"
-              className="search-button"
-              onClick={studySearch}
-            >
+            <Button brown medium onClick={studySearch}>
               Search
             </Button>
           </div>

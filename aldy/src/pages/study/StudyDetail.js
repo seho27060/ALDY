@@ -2,7 +2,6 @@ import "./StudyDetail.css";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getStudyDetail,
@@ -24,44 +23,7 @@ import { FcLock } from "react-icons/fc";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
-const RedButton = styled.button`
-  width: 90px;
-  border-radius: 8px;
-  background-color: red;
-  border: 2px solid red;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  padding: 4px 0px 2px 0px;
-  font-size: 12px;
-  transition: all 200ms ease-in;
-  user-select: none;
-  &:hover {
-    background-color: white;
-    color: red;
-    transition: all 200ms ease-in;
-    border: 2px solid red;
-  }
-`;
-
-const WhiteButton = styled.button`
-  width: 110px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid red;
-  outline: none;
-  color: red;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 4px 0px 2px 0px;
-  transition: all 200ms ease-in;
-  user-select: none;
-  &:hover {
-    background-color: red;
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import Button from "../../components/styled/Button";
 
 const StudyDetail = () => {
   const [nav, setNav] = useRecoilState(isNav);
@@ -238,12 +200,14 @@ const StudyDetail = () => {
         <div className="top">
           {studyDetail.countMember < studyDetail.upperLimit &&
             !studyDetail.isMember && (
-              <WhiteButton onClick={handleStudyJoinModalShow}>
+              <Button redLine small onClick={handleStudyJoinModalShow}>
                 스터디 가입
-              </WhiteButton>
+              </Button>
             )}
           {myId === studyDetail.leaderBaekjoonId && (
-            <WhiteButton onClick={navigateStudyManage}>스터디 관리</WhiteButton>
+            <Button redLine small onClick={navigateStudyManage}>
+              스터디 관리
+            </Button>
           )}
         </div>
         <div className="study-detail-description">
@@ -310,7 +274,9 @@ const StudyDetail = () => {
         </div>
         {studyDetail.isMember && myId !== studyDetail.leaderBaekjoonId && (
           <div className="study-out">
-            <RedButton onClick={studyOut}>스터디 탈퇴</RedButton>
+            <Button red small onClick={studyOut}>
+              스터디 탈퇴
+            </Button>
           </div>
         )}
       </section>

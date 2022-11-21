@@ -9,25 +9,7 @@ import AlertModal from "../../components/AlertModal";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
-const GreenButton = styled.button`
-  margin: 30px;
-  width: 200px;
-  border-radius: 8px;
-  background-color: white;
-  outline: none;
-  border: 1px solid rgba(40, 80, 15, 1);
-  color: rgba(40, 80, 15, 1);
-  font-family: "KOFIHDrLEEJWTTF-B";
-  font-weight: bold;
-  font-size: 18px;
-  padding: 7px 0px 5px 0px;
-  transition: all 200ms ease-in;
-  &:hover {
-    background-color: rgba(40, 80, 15, 1);
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import Button from "../../components/styled/Button";
 
 const StudyCreate = () => {
   const navigate = useNavigate();
@@ -195,14 +177,10 @@ const StudyCreate = () => {
                 rows={2}
               ></textarea>
             </div>
-
             <div className="study-create-submit-btn">
-              <GreenButton
-                className="study-create-btn"
-                onClick={createNewStudy}
-              >
+              <Button greenLine large onClick={createNewStudy}>
                 스터디 생성하기
-              </GreenButton>
+              </Button>
             </div>
           </form>
         </section>

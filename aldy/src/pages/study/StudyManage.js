@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./StudyManage.css";
 import { useLocation } from "react-router-dom";
 import TierData from "../../data/tier";
-import styled from "styled-components";
 import StudyMember from "../../components/study/StudyMember";
 import StudyJoin from "../../components/study/StudyJoin";
 import StudyDeleteAlert from "../../components/StudyDeleteAlert";
@@ -10,22 +9,7 @@ import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 import ActivationLevel from "../../data/ActivationLevel";
 
-const RedButton = styled.button`
-  border-radius: 8px;
-  background-color: red;
-  border: 2px solid red;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  transition: all 200ms ease-in;
-  margin-left: auto;
-  &:hover {
-    background-color: white;
-    color: red;
-    transition: all 200ms ease-in;
-    border: 2px solid red;
-  }
-`;
+import Button from "../../components/styled/Button";
 
 const StudyManage = () => {
   const [nav, setNav] = useRecoilState(isNav);
@@ -50,13 +34,15 @@ const StudyManage = () => {
       <section className="study-manage-top">
         {myId === studyDetail.leaderBaekjoonId && (
           <div className="delete-study">
-            <RedButton
+            <Button
+              red
+              small
               onClick={() => {
                 setStudyDeleteAlertShow(true);
               }}
             >
               스터디 삭제
-            </RedButton>
+            </Button>
           </div>
         )}
         <h5>{studyDetail.name} 스터디원 살펴보기</h5>

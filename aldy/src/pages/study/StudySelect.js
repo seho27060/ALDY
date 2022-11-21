@@ -12,7 +12,7 @@ import {
   getSearchProblem,
 } from "../../api/study";
 import AlertModal from "../../components/AlertModal";
-import Button from "react-bootstrap/Button";
+import Button from "../../components/styled/Button";
 import Form from "react-bootstrap/Form";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
@@ -250,7 +250,9 @@ const StudySelect = () => {
         </div>
       </section>
       <div style={{ margin: "0px 15%", textAlign: "end" }}>
-        <WhiteButton onClick={searchProblem}>필터 검색</WhiteButton>
+        <Button greenLine small onClick={searchProblem}>
+          필터 검색
+        </Button>
       </div>
       <div className="select-search-box">
         <div className="d-flex search-bar">
@@ -262,11 +264,7 @@ const StudySelect = () => {
             ref={searchInput}
             onKeyPress={onKeypress}
           />
-          <Button
-            variant="outline-success"
-            className="select-search-button"
-            onClick={problemSearch}
-          >
+          <Button greenLine small onClick={problemSearch}>
             Search
           </Button>
         </div>
