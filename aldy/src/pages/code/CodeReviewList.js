@@ -292,7 +292,7 @@ const FinalCode = (props) => {
   useEffect(() => {
     getFinalCode(pageNum)
       .then((res) => {
-        console.log(res.data.content, "최종");
+        // console.log(res.data.content, "최종");
         setList(res.data.content);
         setTotalElements(res.data.totalElements);
       })

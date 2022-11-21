@@ -140,7 +140,7 @@ const CodeReview = () => {
   useEffect(() => {
     getCode(studyId, problemId)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         // setStep(res.data.currentProcess+1)
         setCodes(res.data);
         // 1단계 작성해야한다면 step을 1단계로 설정
@@ -542,7 +542,7 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={() => {
-                console.log(submitOneTwoThree);
+                // console.log(submitOneTwoThree);
                 if (submitOneTwoThree.code.length === 0) {
                   setMessage(
                     "코드에 변경사항이 없습니다. 수정 후 제출해주세요"
@@ -583,7 +583,7 @@ const CodeReview = () => {
                       // window.location.reload()
                     })
                     .catch((err) => {
-                      console.log("1단계 제출에러", err);
+                      // console.log("1단계 제출에러", err);
                     });
                 }
               }}
@@ -829,7 +829,7 @@ function StepModal2(props) {
 
 function StepModal3(props) {
   const navigate = useNavigate();
-  const [showNav, setShowNav] = useRecoilState(isNav)
+  const [showNav, setShowNav] = useRecoilState(isNav);
   return (
     <Modal
       {...props}
@@ -858,10 +858,15 @@ function StepModal3(props) {
             <br></br>
             <span>최종코드를 완성해서 제출해보세요.</span>
             <br></br>
-            <button className='go-to-review-list' onClick={() => {
-              setShowNav(true)
-              navigate('/review/list')
-            }}>코드리뷰 리스트로 이동</button>
+            <button
+              className="go-to-review-list"
+              onClick={() => {
+                setShowNav(true);
+                navigate("/review/list");
+              }}
+            >
+              코드리뷰 리스트로 이동
+            </button>
           </p>
         </div>
       </Modal.Body>

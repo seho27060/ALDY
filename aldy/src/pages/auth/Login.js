@@ -80,7 +80,7 @@ const Login = () => {
   const onSubmit = () => {
     setCredentials((credentials.baekjoonId = idInput.current.value));
     setCredentials((credentials.password = passwordInput.current.value));
-    console.log(credentials);
+    // console.log(credentials);
     login(credentials)
       .then((res) => {
         sessionStorage.setItem("accessToken", res.data.accessToken);
