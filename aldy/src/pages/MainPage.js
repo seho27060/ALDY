@@ -408,12 +408,12 @@ const MainPage = () => {
                   width="450px"
                   style={{ margin: "10px" }}
                 ></img> */}
-                {/* 🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
+                🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
                 코드 리뷰를 안했다면 경고가 쌓여요!
                 <br></br>
                 🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
-                <br></br> */}
-                <img햣ㅅ
+                <br></br>
+                <img
                   src={process.env.PUBLIC_URL + "/aldyhead3.png"}
                   alt=""
                   width="80px"
