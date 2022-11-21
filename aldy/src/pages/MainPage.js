@@ -55,15 +55,15 @@ const MainPage = () => {
 
   const userInfoSession = () => {
     if (logged) {
-      console.log("메인페이지 로그인 됨");
+      // console.log("메인페이지 로그인 됨");
       getUserInfo().then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         sessionStorage.setItem("nickname", res.data.nickname);
         sessionStorage.setItem("tier", res.data.tier);
         sessionStorage.setItem("id", res.data.id);
       });
     } else {
-      console.log("메인페이지 로그인 안됨");
+      // console.log("메인페이지 로그인 안됨");
     }
   };
 
@@ -413,7 +413,7 @@ const MainPage = () => {
                 <br></br>
                 🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
                 <br></br> */}
-                <img
+                <img햣ㅅ
                   src={process.env.PUBLIC_URL + "/aldyhead3.png"}
                   alt=""
                   width="80px"
