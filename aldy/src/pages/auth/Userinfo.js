@@ -51,7 +51,6 @@ const Userinfo = () => {
   useEffect(() => {
     getUserInfo()
       .then((res) => {
-        // console.log(res.data);
         setNickname(res.data.nickname);
         setEmail(res.data.email);
       })
@@ -109,25 +108,18 @@ const Userinfo = () => {
             if (checkIt()) {
               emailValid(emailInput.current.value).then((res) => {
                 if (res.data.doubleCheck === true) {
-                  // alert("중복 확인 완료");
                   setMessage("중복 확인이 완료되었습니다.");
                   setAlertModalShow(true);
                   setSendEmail((sendEmail.email = emailInput.current.value));
-                  updateEmail(sendEmail).then((res) => {
-                    // console.log(res);
-                  });
-                  // alert("이메일 변경 완료");
-                  // window.location.reload(); //새로고침
+                  updateEmail(sendEmail).then((res) => {});
                   setMessage("이메일 변경이 완료 되었습니다.");
                   setAlertRefreshModalShow(true);
                 } else {
                   setMessage("중복 된 이메일입니다. 다시 입력해주세요.");
                   setAlertModalShow(true);
-                  // alert("중복 된 이메일입니다. 다시 입력해주세요");
                 }
               });
             } else {
-              // alert("이메일 형식이 올바르지 않습니다.");
               setMessage("이메일 형식이 올바르지 않습니다.");
               setAlertModalShow(true);
             }
@@ -154,23 +146,16 @@ const Userinfo = () => {
           onClick={() => {
             nicknameValid(nicknameInput.current.value).then((res) => {
               if (res.data.doubleCheck === true) {
-                // alert("중복 확인 완료");
                 setMessage("중복 확인이 완료 되었습니다.");
                 setAlertModalShow(true);
                 setSendNickname(
                   (sendNickname.nickname = nicknameInput.current.value)
                 );
-                updateNickname(sendNickname).then((res) => {
-                  // console.log(res);
-                });
-                // alert("닉네임 변경 완료");
-                // console.log(nicknameInput.current.value);
-                // window.location.reload(); //새로고침
+                updateNickname(sendNickname).then((res) => {});
                 setMessage("닉네임 변경이 완료 되었습니다.");
                 sessionStorage.setItem("nickname", sendNickname.nickname);
                 setAlertRefreshModalShow(true);
               } else {
-                // alert("중복 된 닉네임입니다. 다시 입력해주세요.");
                 setMessage("중복 된 닉네임입니다. 다시 입력해주세요.");
                 setAlertModalShow(true);
               }
@@ -199,19 +184,12 @@ const Userinfo = () => {
             setSendPassword(
               (sendPassword.password = passwordInput.current.value)
             );
-            console.log("회원 탈퇴");
             withdrawApi(sendPassword)
               .then((res) => {
-                // alert("탈퇴 되었습니다.");
-                // console.log(res.data);
-                // window.location.reload(); //새로고침
                 setMessage("탈퇴 되었습니다.");
                 setAlertRefreshModalShow(true);
               })
               .catch((err) => {
-                // alert("탈퇴에 실패하였습니다. 다시 시도해주세요.");
-                // console.log(err);
-                // window.location.reload(); //새로고침
                 setMessage("탈퇴에 실패하였습니다. 다시 시도해주세요.");
                 setAlertRefreshModalShow(true);
               });

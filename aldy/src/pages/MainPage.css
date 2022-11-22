@@ -244,7 +244,7 @@ section.main-page-tutorial-description {
 .lottie-codeReview-3steps {
   width: 500px;
   height: 500px;
-  margin-left: 220px;
+  margin-left: 200px;
   margin-top: 100px;
 }
 
@@ -288,4 +288,8 @@ section.main-page-tutorial-description {
   display: flex;
   background-repeat: no-repeat;
   background-image: url(../../public/info/mainStudyManage.gif);
+}
+
+.section1-left {
+  width: 50%;
 }

@@ -16,28 +16,7 @@ import LoginAlert from "./modal/LoginAlert";
 import AlertModal from "../components/modal/AlertModal";
 
 import "./AldyNav.css";
-import styled from "styled-components";
-
-const WhiteRedButton = styled.button`
-  width: 120px;
-  border-radius: 8px;
-  background-color: white;
-  outline: none;
-  border: 2px solid red;
-  color: red;
-  font-family: "GmarketSansMedium";
-  font-weight: bold;
-  font-size: 15px;
-  padding: 5px 0px 3px 0px;
-  transition: all 200ms ease-in;
-  margin: 3px 5px 0px 20px;
-  user-select: none;
-  &:hover {
-    background-color: red;
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import Button from "./styled/Button";
 
 const AldyNav = () => {
   const navigate = useNavigate();
@@ -58,9 +37,6 @@ const AldyNav = () => {
       navigate("/study/list");
     } else {
       setLoginAlertShow(true);
-      // if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
-      //   navigate('/login')
-      // }
     }
   };
   const navigateReview = () => {
@@ -68,9 +44,6 @@ const AldyNav = () => {
       navigate("/review/list");
     } else {
       setLoginAlertShow(true);
-      // if (window.confirm('로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
-      //   navigate('/login')
-      // }
     }
   };
   const navigateMypage = () => {
@@ -79,8 +52,6 @@ const AldyNav = () => {
   const navigateLogin = () => {
     navigate("/login");
   };
-
-  const [userObject, setUserObject] = useState(true);
 
   const [activeMain, setActiveMain] = useState(false);
   const [activeStudy, setActiveStudy] = useState(false);
@@ -168,7 +139,7 @@ const AldyNav = () => {
               {logged ? (
                 <div className="nav_info">
                   <img
-                    src={process.env.PUBLIC_URL + "/navzookeeper.png"}
+                    src={process.env.PUBLIC_URL + "/icon/navzookeeper.png"}
                     alt=""
                     width="37px"
                     height="40px"
@@ -197,16 +168,18 @@ const AldyNav = () => {
                   </NavDropdown>
                 </div>
               ) : (
-                <WhiteRedButton
+                <Button
+                  redLine
+                  medium
                   onClick={() => {
                     navigateLogin();
                   }}
+                  style={{ marginLeft: "15px" }}
                 >
                   로그인
-                </WhiteRedButton>
+                </Button>
               )}
             </Nav>
-            {!userObject ? <WhiteRedButton>로그인</WhiteRedButton> : ""}
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>

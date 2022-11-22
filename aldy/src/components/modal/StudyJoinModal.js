@@ -5,25 +5,8 @@ import { useState, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import { studyRegister } from "../../api/study";
 
-import styled from "styled-components";
+import Button from "../styled/Button";
 import "../../pages/study/StudyDetail.css";
-
-const RedButton = styled.button`
-  width: 170px;
-  border-radius: 8px;
-  background-color: red;
-  border: 2px solid red;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  padding: 4px 0px 2px 0px;
-  &:hover {
-    background-color: white;
-    color: red;
-    transition: all 200ms ease-in;
-    border: 2px solid red;
-  }
-`;
 
 const StudyJoinModal = ({ studyDetail, modal, handleModal }) => {
   const navigate = useNavigate();
@@ -31,7 +14,6 @@ const StudyJoinModal = ({ studyDetail, modal, handleModal }) => {
   const navigateStudy = () => {
     navigate("/study/list");
   };
-  // console.log(studyDetail, "안녕하세요, 저는 모달창입니다.");
   const messageInput = useRef(null);
   const [sendJoin, setSendJoin] = useState({
     studyId: studyDetail.id,
@@ -46,18 +28,13 @@ const StudyJoinModal = ({ studyDetail, modal, handleModal }) => {
     setSendJoin((sendJoin.message = messageInput.current.value));
     studyRegister(sendJoin)
       .then((res) => {
-        // alert("가입 신청이 완료되었습니다.");
-        // navigateStudy();
         setMessage("가입 신청이 완료되었습니다.");
         setAlertModalShow(true);
       })
       .catch((err) => {
-        // alert("가입 신청을 다시 진행해주세요.");
         setMessage("가입 신청을 다시 진행해주세요.");
         setAlertRefreshModalShow(true);
       });
-    // console.log(messageInput.current.value, "제출");
-    // console.log(studyDetail.id, "I'm study id number.");
   };
   return (
     <Modal size="lg" show={modal} onHide={handleModal}>
@@ -104,7 +81,9 @@ const StudyJoinModal = ({ studyDetail, modal, handleModal }) => {
           ></textarea>
         </div>
         <div className="study-join-btn">
-          <RedButton onClick={onSubmit}>가입 신청하기</RedButton>
+          <Button red medium onClick={onSubmit}>
+            가입 신청하기
+          </Button>
         </div>
       </Modal.Body>
     </Modal>

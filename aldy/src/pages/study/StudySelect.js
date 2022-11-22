@@ -14,47 +14,8 @@ import {
 import Form from "react-bootstrap/Form";
 import { isNav } from "../../store/states";
 
-import styled from "styled-components";
 import Button from "../../components/styled/Button";
 import "./StudySelect.css";
-
-const RedButton = styled.button`
-  width: 200px;
-  height: 50px;
-  border-radius: 8px;
-  background-color: #28500f;
-  border: 2px solid #28500f;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  transition: all 200ms ease-in;
-  font-size: 20px;
-  font-family: "KOFIHDrLEEJWTTF-B";
-  padding-top: 4px;
-  &:hover {
-    background-color: white;
-    color: #28500f;
-    transition: all 200ms ease-in;
-    border: 2px solid #28500f;
-  }
-`;
-
-const WhiteButton = styled.button`
-  width: 90px;
-  border-radius: 6px;
-  background-color: white;
-  border: 2px solid #28500f;
-  outline: none;
-  color: #28500f;
-  transition: all 200ms ease-in;
-  padding: 6px 0 2px;
-  &:hover {
-    background-color: #28500f;
-    color: white;
-    transition: all 200ms ease-in;
-    border: 2px solid #28500f;
-  }
-`;
 
 const StudySelect = () => {
   const [nav, setNav] = useRecoilState(isNav);
@@ -76,14 +37,14 @@ const StudySelect = () => {
   const [baekjoonIdList, setBaekjoonIdList] = useState([]);
   // 검색 결과
   const [result, setResult] = useState([]);
-  // 체크된 문제
+  // 선정된 문제
   const [problem, setProblem] = useState([]);
+  // 문제 검색
+  const searchInput = useRef("");
   // 모달
   const [message, setMessage] = useState("");
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [searchAlertModalShow, setSearchAlertModalShow] = useState(false);
-  // 문제 검색
-  const searchInput = useRef("");
 
   const onKeypress = (e) => {
     if (e.key === "Enter") {
@@ -96,19 +57,16 @@ const StudySelect = () => {
       getSearchProblem(searchInput.current.value)
         .then((res) => {
           const data = res.data;
-          // console.log(data.items.length);
           if (data.items.length > 0) {
             setResult(data.items);
           } else {
             setMessage("검색결과가 없습니다.");
             setSearchAlertModalShow(true);
           }
-          // console.log(data.items);
         })
         .catch((err) => {
           setMessage("검색결과가 없습니다.");
           setSearchAlertModalShow(true);
-          // console.log(err);
         });
     } else {
       setMessage("검색어를 입력해주세요.");
@@ -139,7 +97,6 @@ const StudySelect = () => {
       .then((res) => {
         const data = res.data;
         setResult(data.items);
-        // console.log(data.items);
       })
       .catch((err) => {
         // console.log(err);
@@ -148,7 +105,6 @@ const StudySelect = () => {
 
   const deleteProblem = (item) => {
     setProblem(problem.filter((el) => el !== item));
-    // console.log(problem);
   };
 
   const choiceProblem = () => {
@@ -161,7 +117,6 @@ const StudySelect = () => {
     };
     addProblem(data)
       .then((res) => {
-        // console.log(res);
         setMessage("문제선정이 완료되었습니다!");
         setAlertModalShow(true);
       })
@@ -171,7 +126,7 @@ const StudySelect = () => {
   };
 
   return (
-    <main style={{ textAlign: "start" }} className="study-select-main">
+    <main className="study-select-main">
       <AlertModal
         show={alertModalShow}
         onHide={() => {
@@ -203,7 +158,7 @@ const StudySelect = () => {
         <div className="study-select-option">
           <div className="green-line">
             <img
-              src="/code_person.png"
+              src="/icon/code_person.png"
               alt="코딩하는사람"
               className="codeImg"
             ></img>
@@ -250,7 +205,7 @@ const StudySelect = () => {
           </div>
         </div>
       </section>
-      <div style={{ margin: "0px 15%", textAlign: "end" }}>
+      <div className="filter-search-box">
         <Button greenLine small onClick={searchProblem}>
           필터 검색
         </Button>
@@ -305,7 +260,9 @@ const StudySelect = () => {
         </div>
       </section>
       <section className="study-problem-button study-select-info">
-        <RedButton onClick={choiceProblem}>문제 선정하기</RedButton>
+        <Button green large onClick={choiceProblem}>
+          문제 선정하기
+        </Button>
       </section>
     </main>
   );

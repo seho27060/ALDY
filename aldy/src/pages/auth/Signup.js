@@ -266,22 +266,16 @@ const Signup = () => {
                   <RedButtonSmall
                     onClick={() => {
                       setSendId((sendId.baekjoonId = idInput.current.value));
-                      // console.log(idInput.current.value);
-                      // console.log(sendId);
                       baekjoonVerify(sendId)
                         .then((res) => {
                           setBojValidationCode(res.data.authString);
                           handleBojModalShow();
-                          // console.log(res.data.authString);
                         })
                         .catch((err) => {
                           // console.log(err);
-                          // console.log(err.response.status);
 
                           err.response.status === 409
-                            ? // alert("백준 회원이 아닙니다.");
-                              // window.location.reload(); //새로고침
-                              setMessage("이미 가입된 회원입니다.")
+                            ? setMessage("이미 가입된 회원입니다.")
                             : setMessage("백준 회원이 아닙니다.");
                           setAlertRefreshModalShow(true);
                         });
@@ -328,21 +322,17 @@ const Signup = () => {
                   <RedButtonSmall
                     onClick={() => {
                       if (checkIt()) {
-                        // console.log(emailInput.current.value);
                         emailValid(emailInput.current.value).then((res) => {
                           if (res.data.doubleCheck === true) {
                             setEmailChecked(true);
-                            // alert("중복 확인 완료");
                             setMessage("중복 확인이 완료 되었습니다.");
                             setAlertModalShow(true);
                           } else {
-                            // alert("중복 된 이메일입니다.");
                             setMessage("중복 된 이메일입니다.");
                             setAlertModalShow(true);
                           }
                         });
                       } else {
-                        // alert("이메일형식이 올바르지 않습니다.");
                         setMessage("이메일형식이 올바르지 않습니다.");
                         setAlertModalShow(true);
                       }
@@ -369,15 +359,12 @@ const Signup = () => {
                 {!nicknameChecked ? (
                   <RedButtonSmall
                     onClick={() => {
-                      // console.log(nicknameInput.current.value);
                       nicknameValid(nicknameInput.current.value).then((res) => {
                         if (res.data.doubleCheck === true) {
                           setNicknameChecked(true);
-                          // alert("중복 확인 완료");
                           setMessage("중복 확인 완료 되었습니다.");
                           setAlertModalShow(true);
                         } else {
-                          // alert("중복 된 닉네임입니다.");
                           setMessage("중복 된 닉네임입니다.");
                           setAlertModalShow(true);
                         }
@@ -406,11 +393,9 @@ const Signup = () => {
                   setCredentials(
                     (credentials.nickname = nicknameInput.current.value)
                   );
-                  // console.log(credentials);
                   if (passwordDoubleCheck()) {
                     allInputCheck(credentials);
                   } else {
-                    // alert("비밀번호가 일치하지 않습니다.");
                     setMessage("비밀번호가 일치하지 않습니다.");
                     setAlertModalShow(true);
                   }

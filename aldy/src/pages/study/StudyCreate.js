@@ -52,6 +52,7 @@ const StudyCreate = () => {
       };
     });
   };
+
   // 스터디 생성
   const createNewStudy = async (e) => {
     e.preventDefault();
@@ -64,7 +65,6 @@ const StudyCreate = () => {
     ) {
       await createStudy(newStudy)
         .then((res) => {
-          // console.log(res.data);
           navigate(`/study/detail/${res.data.id}`);
         })
         .catch((err) => {
@@ -190,9 +190,8 @@ const StudyCreate = () => {
               Aldy와 함께 알고리즘 스터디를 키워보세요!
             </div>
           </div>
-
           <img
-            src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}
+            src={process.env.PUBLIC_URL + "/ALDY/signup_dinosaur.png"}
             alt=""
           ></img>
         </section>

@@ -4,25 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 
-import styled from "styled-components";
+import Button from "../styled/Button";
 import "../../pages/study/StudyDetail.css";
-
-const RedButton = styled.button`
-  width: 170px;
-  border-radius: 8px;
-  background-color: red;
-  border: 2px solid red;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  padding: 4px 0px 2px 0px;
-  &:hover {
-    background-color: white;
-    color: red;
-    transition: all 200ms ease-in;
-    border: 2px solid red;
-  }
-`;
 
 const ProblemModal = ({
   studyDetail,
@@ -121,7 +104,9 @@ const ProblemModal = ({
           </div>
           <div className="study-join-btn">
             {myId === sendLeaderId && (
-              <RedButton onClick={navigateStudySelect}>문제 선정하기</RedButton>
+              <Button red medium onClick={navigateStudySelect}>
+                문제 선정하기
+              </Button>
             )}
           </div>
         </Modal.Body>

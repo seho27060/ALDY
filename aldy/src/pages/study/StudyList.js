@@ -74,7 +74,6 @@ const StudyList = () => {
     getStudyList(studyPageNum)
       .then((res) => {
         const data = res.data.studyDtoPage;
-        // console.log(data);
         setStudyList(data.content);
         setStudyTotal(data.totalElements);
       })
@@ -114,7 +113,7 @@ const StudyList = () => {
       <section className="study-list-banner">
         <img
           className="study-main-img"
-          src="/dinosaur.png"
+          src="/ALDY/dinosaur.png"
           alt="스터디 메인 이미지"
         ></img>
         <p>
@@ -139,10 +138,7 @@ const StudyList = () => {
           <span className="study-highlight-orange">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <div
-          className="study-underline-orange "
-          style={{ margin: "auto", fontSize: "30px" }}
-        >
+        <div className="study-underline-orange study-list-subtitle">
           원하는 스터디 페이지로 들어가 가입신청을 해주세요!
         </div>
         <div className="search-box">
@@ -167,8 +163,7 @@ const StudyList = () => {
                 <div className="study-search-top">
                   <div className="study-search-result-title">검색결과</div>
                   <button
-                    className="review-modal-close-btn"
-                    style={{ margin: "5px" }}
+                    className="study-search-result-close-btn"
                     onClick={() => {
                       setSearchShow(false);
                     }}

@@ -5,6 +5,7 @@ import { acceptMemberApi, rejectMemberApi } from "../../api/study";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 
 import styled from "styled-components";
+import Button from "../styled/Button";
 import "./MyStudyListItem.css";
 
 const RedButton = styled.button`
@@ -63,18 +64,12 @@ const StudyJoinItem = (props) => {
     setCredentials((credentials.memberId = props.item.memberId));
     setCredentials((credentials.studyId = props.item.studyId));
 
-    console.log(credentials, "멤버 가입 수락");
     acceptMemberApi(credentials)
       .then((res) => {
-        // alert(`${props.item.nickname}님 가입이 수락 되었습니다`);
-        // window.location.reload(); //새로고침
         setMessage(`${props.item.nickname}님 가입이 수락 되었습니다`);
         setAlertRefreshModalShow(true); //새로고침
       })
       .catch((err) => {
-        // alert(
-        //   `에러입니다. ${props.item.nickname}님 가입 수락을 다시 실행해주세요`
-        // );
         setMessage(
           `에러입니다. ${props.item.nickname}님 가입 수락을 다시 실행해주세요`
         );
@@ -85,19 +80,13 @@ const StudyJoinItem = (props) => {
   const onReject = () => {
     setCredentials((credentials.memberId = props.item.memberId));
     setCredentials((credentials.studyId = props.item.studyId));
-    console.log(credentials, "멤버 가입 거절");
     rejectMemberApi(credentials)
       .then((res) => {
-        // alert(`${props.item.nickname}님 가입이 거절 되었습니다`);
-        // window.location.reload(); //새로고침
         setMessage(`${props.item.nickname}님 가입이 거절 되었습니다.`);
         setAlertRefreshModalShow(true); //새로고침
       })
       .catch((err) => {
-        console.log(err);
-        // alert(
-        //   `에러입니다. ${props.item.nickname}님 가입 거절을 다시 실행해주세요`
-        // );
+        // console.log(err);
         setMessage(
           `에러입니다. ${props.item.nickname}님 가입 거절을 다시 실행해주세요`
         );
@@ -157,8 +146,12 @@ const StudyJoinItem = (props) => {
         <div>백준 아이디 : {props.item.baekjoonId}</div>
         <div>가입 신청 메시지 : {props.item.message}</div>
         <div className="Join-btns">
-          <GreenButton onClick={onAccept}>수락</GreenButton>
-          <RedButton onClick={onReject}>거절</RedButton>
+          <Button green xsmall onClick={onAccept}>
+            수락
+          </Button>
+          <Button red xsmall onClick={onReject}>
+            거절
+          </Button>
         </div>
       </div>
     </div>

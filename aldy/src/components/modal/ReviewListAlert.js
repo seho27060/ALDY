@@ -1,14 +1,10 @@
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { isFooter, isNav } from "../../store/states";
 
 import "./AlertModal.css";
 
 const ReviewListAlert = (props) => {
   const navigate = useNavigate();
-  const [footer, setFooter] = useRecoilState(isFooter);
-  const [nav, setNav] = useRecoilState(isNav);
   return (
     <Modal
       {...props}
@@ -25,8 +21,6 @@ const ReviewListAlert = (props) => {
             onClick={() => {
               props.onHide();
               navigate("/review/list");
-              setFooter(true);
-              setNav(true);
             }}
           >
             확인
@@ -34,11 +28,15 @@ const ReviewListAlert = (props) => {
         </div>
         <div className="alert-footer">
           <img
-            src="/dinosaur_left.png"
+            src="/ALDY/dinosaur_left.png"
             alt="공룡이미지"
             className="img-left"
           ></img>
-          <img src="/dinosaur.png" alt="공룡이미지" className="img-right"></img>
+          <img
+            src="/ALDY/dinosaur.png"
+            alt="공룡이미지"
+            className="img-right"
+          ></img>
         </div>
       </Modal.Body>
     </Modal>

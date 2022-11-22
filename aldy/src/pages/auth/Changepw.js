@@ -52,12 +52,9 @@ const Changepw = () => {
 
   const onChangePassword = () => {
     setSendPw((sendPw.password = passwordInput.current.value));
-    // console.log(sendPw);
     if (passwordDoubleCheck()) {
-      // console.log("성공");
       changepassword(sendPw)
         .then((res) => {
-          // alert("비밀번호가 변경 되었습니다.");
           setMessage("비밀번호가 변경 되었습니다.");
           setAlertModalShow(true);
         })
@@ -65,7 +62,6 @@ const Changepw = () => {
           // console.log(err, "에러ㅠㅠ");
         });
     } else {
-      // alert("비밀번호가 일치하지 않습니다.");
       setMessage("비밀번호가 일치하지 않습니다");
       setAlertRefreshModalShow(true); //새로고침
     }

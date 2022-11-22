@@ -25,11 +25,15 @@ const AlertRefreshModal = (props) => {
         </div>
         <div className="alert-footer">
           <img
-            src="/dinosaur_left.png"
+            src="/ALDY/dinosaur_left.png"
             alt="공룡이미지"
             className="img-left"
           ></img>
-          <img src="/dinosaur.png" alt="공룡이미지" className="img-right"></img>
+          <img
+            src="/ALDY/dinosaur.png"
+            alt="공룡이미지"
+            className="img-right"
+          ></img>
         </div>
       </Modal.Body>
     </Modal>

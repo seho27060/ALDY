@@ -18,7 +18,7 @@ const StudyListItem = (props) => {
       <div className="study-list-title">
         <div className="study-id">
           <img
-            src={process.env.PUBLIC_URL + `/aldyhead${props.num + 1}.png`}
+            src={process.env.PUBLIC_URL + `/ALDY/aldyhead${props.num + 1}.png`}
             alt=""
             width="100%"
           ></img>

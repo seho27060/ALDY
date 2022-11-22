@@ -133,8 +133,6 @@ const CodeReview = () => {
   useEffect(() => {
     getCode(studyId, problemId)
       .then((res) => {
-        // console.log(res.data);
-        // setStep(res.data.currentProcess+1)
         setCodes(res.data);
         // 1단계 작성해야한다면 step을 1단계로 설정
         if (res.data.currentProcess === 0) {
@@ -167,7 +165,6 @@ const CodeReview = () => {
   //   const problemId = sessionStorage.getItem('problemId')
   //   getEditedCodes(studyId, problemId)
   //   .then((res)=>{
-  //     console.log(res.data)
   //     setEditedCodeList(res.data)
   //   })
   // }, [])
@@ -535,7 +532,6 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={() => {
-                // console.log(submitOneTwoThree);
                 if (submitOneTwoThree.code.length === 0) {
                   setMessage(
                     "코드에 변경사항이 없습니다. 수정 후 제출해주세요"
@@ -572,12 +568,8 @@ const CodeReview = () => {
                     .then((res) => {
                       setMessage("코드를 제출하였습니다.");
                       setAlertRefreshModalShow(true);
-                      // alert('코드를 제출하였습니다.')
-                      // window.location.reload()
                     })
-                    .catch((err) => {
-                      // console.log("1단계 제출에러", err);
-                    });
+                    .catch((err) => {});
                 }
               }}
             >

@@ -172,26 +172,14 @@ const RequestToMe = () => {
   const [list, setList] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
-  // useEffect(()=>{
-  //   // 서버에서 내게 요청온 목록 가져와서 list에 저장하기
-  //   getReviewList()
-  //   .then((res)=>{
-  //     setList(res.data.requestedCodeList)
-  //     console.log(res)
-  //   }).catch((err)=>{
-  //     console.log(err)
-  //     alert('코드 리스트를 불러올 수 없습니다.')
-  //   })
-  // }, [])
+
   useEffect(() => {
     getRequestedCode(pageNum)
       .then((res) => {
         setList(res.data.content);
         setTotalElements(res.data.totalElements);
       })
-      .catch((err) => {
-        // alert('코드 리스트를 불러올 수 없습니다.')
-      });
+      .catch((err) => {});
   }, [pageNum]);
   return (
     <div>
@@ -211,15 +199,6 @@ const RequestByMe = () => {
   const [list, setList] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
-  // useEffect(()=>{
-  //   getReviewList()
-  //   .then((res)=>{
-  //     setList(res.data.requestingCodeList)
-  //   }).catch((err)=>{
-  //     console.log(err)
-  //     alert('코드 리스트를 불러올 수 없습니다.')
-  //   })
-  // }, [])
   useEffect(() => {
     getRequestingCode(pageNum)
       .then((res) => {
@@ -249,16 +228,7 @@ const ReviewedCode = () => {
   const [list, setList] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
-  // useEffect(()=>{
-  //   getReviewList()
-  //   .then((res)=>{
-  //     setList(res.data.editedCodeList)
-  //     console.log('리뷰받은', res.data.editedCodeList)
-  //   }).catch((err)=>{
-  //     console.log(err)
-  //     alert('코드 리스트를 불러올 수 없습니다.')
-  //   })
-  // }, [])
+
   useEffect(() => {
     getEditedCode(pageNum)
       .then((res) => {
@@ -292,7 +262,6 @@ const FinalCode = (props) => {
   useEffect(() => {
     getFinalCode(pageNum)
       .then((res) => {
-        // console.log(res.data.content, "최종");
         setList(res.data.content);
         setTotalElements(res.data.totalElements);
       })
@@ -320,7 +289,6 @@ const FinalCode = (props) => {
 // 리뷰 요청받은 코드 카드 컴포넌트
 const CardRequestToMe = (props) => {
   const item = props.item;
-  // const [code, setCode] = useRecoilState(correctCode)
   const navigate = useNavigate();
   return (
     <Container className="review-list-item">
@@ -358,7 +326,6 @@ const CardRequestToMe = (props) => {
                 sessionStorage.setItem("receiverId", item.sender.nickname);
                 sessionStorage.setItem("studyId", item.codeDto.studyDto.id);
                 sessionStorage.setItem("previousCode", item.codeDto.code);
-                // setCode(item.codeDto.code)
                 navigate("/correct");
               }}
             >

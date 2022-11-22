@@ -17,10 +17,9 @@ const StudyDeleteAlert = (props) => {
       .then((res) => {
         setMessage(`스터디(${props.name})가 삭제되었습니다.`);
         setAlertModalShow(true);
-        // console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -68,12 +67,12 @@ const StudyDeleteAlert = (props) => {
           </div>
           <div className="alert-footer">
             <img
-              src="/dinosaur_left.png"
+              src="/ALDY/dinosaur_left.png"
               alt="공룡이미지"
               className="img-left"
             ></img>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               alt="공룡이미지"
               className="img-right"
             ></img>

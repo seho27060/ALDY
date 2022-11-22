@@ -33,15 +33,12 @@ const MainPage = () => {
 
   const userInfoSession = () => {
     if (logged) {
-      // console.log("메인페이지 로그인 됨");
       getUserInfo().then((res) => {
-        // console.log(res.data);
         sessionStorage.setItem("nickname", res.data.nickname);
         sessionStorage.setItem("tier", res.data.tier);
         sessionStorage.setItem("id", res.data.id);
       });
     } else {
-      // console.log("메인페이지 로그인 안됨");
     }
   };
 

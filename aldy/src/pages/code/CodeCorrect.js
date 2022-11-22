@@ -152,18 +152,14 @@ const CodeCorrect = () => {
           <button
             className="correctBtn"
             onClick={() => {
-              // console.log(reply);
               codeReply(reply)
                 .then(() => {
                   setMessage("답장을 보냈습니다.");
                   setReviewAlertShow(true);
-                  // alert('답장을 보냈습니다.')
-                  // navigate('/review/list')
                 })
                 .catch((err) => {
                   setMessage("답장 보내기에 실패했습니다.");
                   setAlertModalShow(true);
-                  // alert('답장 보내기에 실패했습니다.')
                 });
             }}
           >
