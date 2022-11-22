@@ -274,7 +274,7 @@
 
 | 문제 선정 페이지                                                                               |
 |:---------------------------------------------------------------------------------------:|
-| ![문제선정.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\문제선정.gif) |
+| ![문제선정.gif](/uploads/515acfeeabdb274f7d527d78f64d04e0/문제선정.gif) |
 
 - 알고리즘 분류, 난이도를 선택하여 검색 기준 추가
 
@@ -284,13 +284,13 @@
 
 | 코드리뷰 페이지                                                                                                                                       |
 |:----------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/코드리뷰_목록별확인.gif" title="" alt="코드리뷰_목록별확인.gif" width="640"> |
+| <img src="/uploads/dca87b8dcc22a8bd258afde3d1288797/코드리뷰_목록별확인.gif" title="" alt="코드리뷰_목록별확인.gif" width="640"> |
 
 - 내개 온 요청 목록, 리뷰 받은 코드, 내가 보낸 요청, 최종 제출 코드 탭 클릭시 관련 정보출력
 
 | 내게 온 요청 목록 & 코드 리뷰 응답                                                                                                                                |
 |:----------------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/코드리뷰_요청받은코드확인.gif" title="" alt="코드리뷰_요청받은코드확인.gif" width="716"> |
+| <img src="/uploads/9899f2cf6485e05f68f2ed5de5469dc3/코드리뷰_요청받은코드확인.gif" title="" alt="코드리뷰_요청받은코드확인.gif" width="716"> |
 
 - 스터디 이름, 요청한 사람, 문제 번호, 문제 이름, 요청 날짜, 진행 상황 출력
 
@@ -300,13 +300,13 @@
 
 | 코드리뷰 1단계                                                                                                                                   |
 |:------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/코드리뷰_1단계.gif" title="" alt="코드리뷰_1단계.gif" width="634"> |
+| <img src="/uploads/34674ca983af2a4c792bc593b469e042/코드리뷰_1단계.gif" title="" alt="코드리뷰_1단계.gif" width="634"> |
 
 - 코드리뷰 1단계 : 문제를 풀이한 코드의 초안 등록
 
 | 코드리뷰 2단계 및 요청                                                                                                                              |
 |:------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/코드리뷰_2단계.gif" title="" alt="코드리뷰_2단계.gif" width="680"> |
+| <img src="/uploads/8c273960398021fb5a90868a8bb0e958/코드리뷰_2단계.gif" title="" alt="코드리뷰_2단계.gif" width="680"> |
 
 - 코드리뷰 2단계 : 1단계에 등록된 코드에 주석을 추가하여 코드리뷰를 요청할 코드로 수정하여 등록
 
@@ -314,7 +314,7 @@
 
 | 코드리뷰 3단계 & 최종 코드 확인                                                                                                                                      |
 |:--------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/코드리뷰_첨삭받은코드최종제출.gif" title="" alt="코드리뷰_첨삭받은코드최종제출.gif" width="684"> |
+| <img src="/uploads/296144969432fdb00f8f16c6d573cd38/코드리뷰_첨삭받은코드최종제출.gif" title="" alt="코드리뷰_첨삭받은코드최종제출.gif" width="684"> |
 
 - 코드리뷰 3단계 : 요청에 응답된 코드리뷰를 참고하여 최종 코드를 수정하여 제출
 
@@ -332,7 +332,7 @@
 
 | 프로필 페이지                                                                                     |
 |:-------------------------------------------------------------------------------------------:|
-| ![프로필_메인.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\프로필_메인.png) |
+| ![프로필_메인.png](/uploads/a474ee638455114e48129e541c3770d6/프로필_메인.png) |
 
 - 로그인 유저의 정보, 리뷰 코드 수, 리뷰 받은 코드 수 확인
 
@@ -340,13 +340,13 @@
 
 | 오늘의 문제 추천                                                                                             |
 |:-----------------------------------------------------------------------------------------------------:|
-| ![프로필_오늘의문제추천.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\프로필_오늘의문제추천.gif) |
+| ![프로필_오늘의문제추천.gif](/uploads/4954fa371e1944e077cdf7d63e40e2dc/프로필_오늘의문제추천.gif) |
 
 - 로그인 유저가 최근 푼 20개 문제의 유형에 따라 아직 풀이하지 못한 문제를 추천
 
 | 내가 가입한 스터디 목록                                                                                           |
 |:-------------------------------------------------------------------------------------------------------:|
-| ![프로필_내가가입한스터디.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\프로필_내가가입한스터디.gif) |
+| ![프로필_내가가입한스터디.gif](/uploads/58249192a5a0abbb4e0b6e9af96d7e57/프로필_내가가입한스터디.gif) |
 
 - 로그인 유저가 가입한 스터디 목록 출력
 
@@ -362,15 +362,15 @@
 
 #### :ledger:[[ Notion ]](https://www.notion.so/ALDY-df5e982ec94d4924b5d7708161072c07)
 
-![notionman.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\notionman.png)  
+![notionman.png](/uploads/432e69b4493e71862639a60d73700096/notionman.png)  
 
 #### :pencil2:[[ GitLab ]]([SSAFY](https://lab.ssafy.com/s07-final/S07P31C206))
 
-![gitlabmain.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\gitlabmain.png)
+![gitlabmain.png](/uploads/a6a6ceab15010dba84ee64ac0e656261/gitlabmain.png)
 
 #### 🗓[[ Jira ]]([Log in with Atlassian account](https://ssafy.atlassian.net/jira/software/c/projects/S07P31C206/boards/99))
 
-![jiramin.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\jiramin.png)
+![jiramin.png](/uploads/834997acd36a684203756676ed3c57e2/jiramin.png)
 
 <br />
 
@@ -380,19 +380,19 @@
 
 | [ERD](https://www.erdcloud.com/d/3pHMWRmDsWoxXKzxa)                                                                       |
 |:-------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/erd.png" title="" alt="erd.png" width="668"> |
+| <img src="/uploads/220f1987a40dd9ba4e2b4b5c5e387225/erd.png" title="" alt="erd.png" width="668"> |
 
 #### 2. 와이어프레임(Figma)
 
 | **[와이어프레임(Figma)](https://www.figma.com/file/axN4nHiKTfC5UtcT4zrBg5/ALDY?node-id=331%3A587&t=a34eTfn5myLOetTh-1)** |
 |:------------------------------------------------------------------------------------------------------------------:|
-| ![와이어프레임.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\와이어프레임.png)                               |
+| ![와이어프레임.png](/uploads/0488aed07258f8364336ec8aa8750f46/와이어프레임.png)                               |
 
 #### 3. Wiki
 
 | [개발일지 (wiki)](/wiki)                                                             |
 |:--------------------------------------------------------------------------------:|
-| ![wiki.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\wiki.png) |
+| ![wiki.png](/uploads/4ef667c35fd8e4fbc22ea9dad2c24f0d/wiki.png) |
 
 #### 4. 포팅매뉴얼
 
