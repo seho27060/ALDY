@@ -2,13 +2,13 @@
 
 # ✏ALDY
 
-![readme_main.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\readme_main.png)
+![readme_main.png](/uploads/d56a1736feac3575f5364e0221c94141/readme_main.png)
 
 ## :family: 프로젝트 팀원 소개
 
 | [문서희](https://github.com/seohmoon)                                             | [박세은](https://github.com/seniing) | 이동주                                                                            | 알디                                                                                                   | [박세호](https://github.com/seho27060)                                   | [조성민](https://github.com/WeedInGist)                                           | 홍석호                                                                            |
 |:------------------------------------------------------------------------------:|:---------------------------------:|:------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|
-| ![문서희.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\문서희.png) | ![박세은.jpg](images\박세은.jpg)        | ![이동주.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\이동주.png) | ![dinosaur_hello.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\dinosaur_hello.gif) | <img title="" src="file:///images/박세호.png" alt="박세호.png" width="142"> | ![조성민.jpg](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\조성민.jpg) | ![홍석호.jpg](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\홍석호.jpg) |
+| ![문서희.png](/uploads/d2eaab13b4eae6d5d2b114a1a2e8b9db/문서희.png) | ![박세은.jpg](/uploads/e715fbb185fc7820a48f88cbabe5de7e/박세은.jpg)       | ![이동주.png]() | ![dinosaur_hello.gif](/uploads/b274c31f9ceb32397e47c62a5ab91603/dinosaur_hello.gif) | <img title="" src="" alt="박세호.png" width="142"> | ![조성민.jpg](/uploads/8ee9ec907876b963dce4384c5561cdce/조성민.jpg) | ![홍석호.jpg](/uploads/5227223c472bc968fbf2a45bb0c523fd/홍석호.jpg) |
 | Frontend                                                                       | Frontend                          | Frontend                                                                       | Mascot                                                                                               | Backend                                                               | Backend                                                                        | Backend                                                                        |
 
 <br />
@@ -68,37 +68,37 @@
 
 #### Front-End
 
-| <img title="" src="images/react.png" alt="react.png" width="70"> | <img title="" src="images/recoil.png" alt="" width="72"> | <img title="" src="images/javascript.png" alt="" width="67"> |
+| <img title="" src="/uploads/a8f6f3edd62ccb5fee8446f71f5c7ab4/react.png" alt="react.png" width="70"> | <img title="" src="/uploads/b0e4d870fda3910b8b410d1a6a386c12/recoil.png" alt="" width="72"> | <img title="" src="/uploads/ac17b32c6eeddd41d7a0a5d7069eb2c9/javascript.png" alt="" width="67"> |
 | ---------------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------ |
 | React                                                            | Recoil                                                   | JavaScript                                                   |
 
 #### Back-End
 
-| <img title="" src="images/springboot.png" alt="" width="89"> | <img title="" src="images/springbatch.png" alt="" width="109"> |
+| <img title="" src="/uploads/e6444a302281265e4fdaa20f269c8505/springboot.png" alt="" width="89"> | <img title="" src="/uploads/1e4a3b83a3f5f104f15fb658f3bb7d6b/springbatch.png" alt="" width="109"> |
 | ------------------------------------------------------------ | -------------------------------------------------------------- |
 | Springboot                                                   | Springbatch                                                    |
 
 #### Data
 
-| <img title="" src="images/redis.png" alt="redis.png" width="98"> | <img title="" src="images/mariadb.png" alt="" width="106"> |
+| <img title="" src="/uploads/92d2d5bcbea05ee7b7214955d62b64fe/redis.png" alt="redis.png" width="98"> | <img title="" src="/uploads/16e325ec81403458a8a5addc8d58ad7d/mariadb.png" alt="" width="106"> |
 |:----------------------------------------------------------------:|:----------------------------------------------------------:|
 | redis                                                            | mariaDB                                                    |
 
 #### Infra
 
-| <img title="" src="images/docker.webp" alt="" width="113"> | <img title="" src="images/jenkins.png" alt="" width="70"> |
+| <img title="" src="/uploads/a01aca2b5b24e2852151b11b7981fe30/docker.webp" alt="" width="113"> | <img title="" src="/uploads/6cbc7bcab5d47aec32a201643370c1e5/jenkins.png" alt="" width="70"> |
 |:----------------------------------------------------------:|:---------------------------------------------------------:|
 | docker                                                     | jenkins                                                   |
 
 #### IDE
 
-| <img title="" src="images/IntelliJ_IDEA_Icon.svg.png" alt="" width="96"> | <img title="" src="images/Visual_Studio_Code_1.35_icon.svg.png" alt="" width="86"> |
+| <img title="" src="/uploads/6afb4b36ed38c724d0340152f2c07a21/IntelliJ_IDEA_Icon.svg.png" alt="" width="96"> | <img title="" src="/uploads/a2b728efec476344779c2d45ed877697/Visual_Studio_Code_1.35_icon.svg.png" alt="" width="86"> |
 |:------------------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
 | intellij                                                                 | VScode                                                                             |
 
 #### Tool
 
-| <img title="" src="images/mattermost.png" alt="" width="86"> | <img title="" src="images/gitlab.png" alt="" width="97"> | <img title="" src="images/Notion_app_logo.png" alt="" width="112"> | <img title="" src="images/figma.png" alt="" width="72"> | <img title="" src="images/jira.png" alt="" width="96"> |
+| <img title="" src="/uploads/002ad00b329e9ebdd0952837618d9130/mattermost.png" alt="" width="86"> | <img title="" src="/uploads/80ba640762d06cc9b21882fdaf07d36d/gitlab.png" alt="" width="97"> | <img title="" src="/uploads/6684084f0a0d71b645418a704170d27b/Notion_app_logo.png" alt="" width="112"> | <img title="" src="/uploads/883842118f9e3067be6f879e2513c9a3/figma.png" alt="" width="72"> | <img title="" src="/uploads/2e08e800ed41004f026758ee2328da74/jira.png" alt="" width="96"> |
 | ------------------------------------------------------------ |:--------------------------------------------------------:|:------------------------------------------------------------------:| ------------------------------------------------------- | ------------------------------------------------------ |
 | Mattermost                                                   | gitlab                                                   | Notion                                                             | figma                                                   | jira                                                   |
 
@@ -141,7 +141,7 @@
 
 | 구성도                                                                              |
 |:--------------------------------------------------------------------------------:|
-| ![아키텍쳐.png](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\아키텍쳐.png) |
+| ![아키텍쳐.png](/uploads/a85e9db9b6fae36fccca5b3e82f34cb0/아키텍쳐.png) |
 
 <br />
 
@@ -151,7 +151,7 @@
 
 | **로그인 페이지**                                                                                                                      |
 |:--------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/로그인.gif" title="" alt="로그인.gif" width="653"> |
+| <img src="/uploads/4282db581101a958de413331aa75922b/로그인.gif" title="" alt="로그인.gif" width="653"> |
 
 - 서비스 로그인
 
@@ -161,7 +161,7 @@
 
 | 인증 코드 발급 및 연동 확인                                                                                                                             |
 |:--------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img title="" src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/회원가입_백준연동.gif" alt="회원가입_백준연동.gif" width="722"> |
+| <img title="" src="/uploads/b30664c66557977270d1e69e99e1da92/회원가입_백준연동.gif" alt="회원가입_백준연동.gif" width="722"> |
 
 - solved.ac 의 api를 활용하여 백준과 연동합니다.
 
@@ -175,7 +175,7 @@
 
 | 가입 정보 입력                                                                                                                                     |
 |:--------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="file:///C:/Users/multicampus/Desktop/SEHO/자율프로젝트/S07P31C206/images/페이지이미지/회원가입_정보입력.gif" title="" alt="회원가입_정보입력.gif" width="644"> |
+| <img src="/uploads/1c4a3a7a5cf79b7831a490d99f9d8125/회원가입_정보입력.gif" title="" alt="회원가입_정보입력.gif" width="644"> |
 
 - 비밀번호 입력
 
@@ -187,7 +187,7 @@
 
 | **메인페이지**                                                                                 |
 |:-----------------------------------------------------------------------------------------:|
-| ![메인_소개.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\메인_소개.gif) |
+| ![메인_소개.gif](/uploads/6d7302d1fdeaac49bfa081444e539c7c/메인_소개.gif) |
 
 - 왼쪽 하단의 메뉴 바를 통해 서비스에 대한 간단한 소개를 확인할 수 있습니다.
 - 상단의 네이게이션 바를 통해 스터디, 코드리뷰,마이페이지 로 이동가능합니다.
@@ -196,7 +196,7 @@
 
 | 스터디 페이지                                                                                           |
 |:-------------------------------------------------------------------------------------------------:|
-| ![스터디_스터디상세.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\스터디_스터디상세.gif) |
+| ![스터디_스터디상세.gif](/uploads/89c5f33d158cf521588f67305ed8ed05/스터디_스터디상세.gif) |
 
 - 서비스에 등록된 스터디 리스트
   - 각 스터디 클릭시 스터디 레벨, 스터디 소개를 확인 가능합니다.
@@ -204,7 +204,7 @@
 
 | **내 스터디 목록**                                                                                        |
 |:---------------------------------------------------------------------------------------------------:|
-| ![스터디_내스터디상세.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\스터디_내스터디상세.gif) |
+| ![스터디_내스터디상세.gif](/uploads/a51b21e0c830532fce453aadf99f356a/스터디_내스터디상세.gif) |
 
 - 로그인 유저가 속한 스터디 리스트
   
@@ -230,7 +230,7 @@
 
 | 스터디 생성 페이지                                                                                        |
 |:-------------------------------------------------------------------------------------------------:|
-| ![스터디_스터디생성.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\스터디_스터디생성.gif) |
+| ![스터디_스터디생성.gif](/uploads/0314bc358bae7bffee2ea7f233f8bea1/스터디_스터디생성.gif) |
 
 - 스터디 이름, 제한 인원, 공개 범위, 가입 요건, 설명 입력 후 스터디 생성
 
@@ -238,13 +238,13 @@
 
 | 오늘의 문제 풀어보기                                                                                       |
 |:-------------------------------------------------------------------------------------------------:|
-| ![스터디_오늘의문제.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\스터디_오늘의문제.gif) |
+| ![스터디_오늘의문제.gif](/uploads/635dd9f553599d63164d97616318cfe7/스터디_오늘의문제.gif) |
 
 - 현재 날짜에 선정된 문제 확인 
 
 | 스터디원 살펴보기                                                                                               |
 |:-------------------------------------------------------------------------------------------------------:|
-| ![스터디_스터디원사펴보기.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\스터디_스터디원사펴보기.gif) |
+| ![스터디_스터디원사펴보기.gif](/uploads/db8909e0692ca3609b62ab099a89a1f8/스터디_스터디원사펴보기.gif) |
 
 - 스터디에 속한 스터디원 리스트 출력
 
@@ -254,7 +254,7 @@
 
 | 스터디 캘린더 & 통계                                                                                        |
 |:---------------------------------------------------------------------------------------------------:|
-| ![스터디_캘린더_통계.gif](C:\Users\multicampus\Desktop\SEHO\자율프로젝트\S07P31C206\images\페이지이미지\스터디_캘린더_통계.gif) |
+| ![스터디_캘린더_통계.gif](/uploads/9916fbf0fe2ec61c6e06ebd71277de1e/스터디_캘린더_통계.gif) |
 
 - 스터디 캘린더
   
