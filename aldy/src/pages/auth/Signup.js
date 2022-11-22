@@ -14,66 +14,8 @@ import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { isNav } from "../../store/states";
 
-import styled from "styled-components";
+import Button from "../../components/styled/Button";
 import "./Signup.css";
-
-const RedButtonSmall = styled.button`
-  width: 100px;
-  height: 32px;
-  border-radius: 8px;
-  background-color: red;
-  border: none;
-  outline: none;
-  color: white;
-  transition: transform 30ms ease-in;
-  padding: 2px 0px 0px 0px;
-  font-size: 15px;
-  margin-top: 5px;
-`;
-
-const RedButton = styled.button`
-  width: 160px;
-  border-radius: 8px;
-  background-color: red;
-  border: 2px solid red;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  transition: all 200ms ease-in;
-  padding: 8px 0px 6px 0px;
-  &:hover {
-    background-color: white;
-    border: 2px solid red;
-    color: red;
-    transition: all 200ms ease-in;
-  }
-`;
-
-const YellowButton = styled.button`
-  width: 50px;
-  border-radius: 8px;
-  background-color: lightgoldenrodyellow;
-  border: none;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  transition: transform 30ms ease-in;
-  margin-left: 5px;
-`;
-
-const GrayButton = styled.button`
-  width: 100px;
-  height: 32px;
-  border-radius: 8px;
-  background-color: gray;
-  border: none;
-  outline: none;
-  color: white;
-  transition: transform 30ms ease-in;
-  padding: 2px 0px 0px 0px;
-  font-size: 15px;
-  margin-top: 5px;
-`;
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -81,6 +23,7 @@ const Signup = () => {
   const navigateMain = () => {
     navigate("/");
   };
+
   function checkIt() {
     const email = emailInput.current.value;
     const exptext = /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+.[A-Za-z0-9-]+/;
@@ -101,7 +44,6 @@ const Signup = () => {
   const [idChecked, setIdChecked] = useState(false);
   const [emailChecked, setEmailChecked] = useState(false);
   const [nicknameChecked, setNicknameChecked] = useState(false);
-
   // 모달
   const [message, setMessage] = useState("");
   const [alertModalShow, setAlertModalShow] = useState(false);
@@ -131,6 +73,71 @@ const Signup = () => {
     return false;
   };
 
+  // 백준 인증하기
+  const checkBaekjoon = () => {
+    interLock(idInput.current.value).then((res) => {
+      if (res.data.interlock === true) {
+        setIdChecked(true);
+        setMessage("인증이 성공하였습니다.");
+        setAlertModalShow(true);
+        handleBojModalShow(); //모달창 닫기
+      } else {
+        setMessage("인증에 실패하였습니다. 다시 인증해주세요.");
+        setAlertRefreshModalShow(true);
+      }
+    });
+  };
+
+  // 아이디 중복 체크
+  const checkId = () => {
+    setSendId((sendId.baekjoonId = idInput.current.value));
+    baekjoonVerify(sendId)
+      .then((res) => {
+        setBojValidationCode(res.data.authString);
+        handleBojModalShow();
+      })
+      .catch((err) => {
+        err.response.status === 409
+          ? setMessage("이미 가입된 회원입니다.")
+          : setMessage("백준 회원이 아닙니다.");
+        setAlertRefreshModalShow(true);
+      });
+  };
+
+  // 이메일 중복 체크
+  const checkEmail = () => {
+    if (checkIt()) {
+      emailValid(emailInput.current.value).then((res) => {
+        if (res.data.doubleCheck === true) {
+          setEmailChecked(true);
+          setMessage("중복 확인이 완료 되었습니다.");
+          setAlertModalShow(true);
+        } else {
+          setMessage("중복 된 이메일입니다.");
+          setAlertModalShow(true);
+        }
+      });
+    } else {
+      setMessage("이메일형식이 올바르지 않습니다.");
+      setAlertModalShow(true);
+    }
+  };
+
+  // 닉네임 중복 체크
+  const checkNickname = () => {
+    nicknameValid(nicknameInput.current.value).then((res) => {
+      if (res.data.doubleCheck === true) {
+        setNicknameChecked(true);
+        setMessage("중복 확인 완료 되었습니다.");
+        setAlertModalShow(true);
+      } else {
+        setMessage("중복 된 닉네임입니다.");
+        setAlertModalShow(true);
+      }
+    });
+  };
+
+  // 회원가입 input 값 체크
   const allInputCheck = (credentials) => {
     if (idChecked && emailChecked && nicknameChecked) {
       join(credentials).then(() => {
@@ -138,20 +145,31 @@ const Signup = () => {
       });
     } else {
       if (!idChecked) {
-        // alert("아이디 인증을 해주세요.");
         setMessage("아이디 인증을 해주세요.");
         setAlertModalShow(true);
       }
       if (!emailChecked) {
-        // alert("이메일 중복 확인을 해주세요.");
         setMessage("이메일 중복 확인을 해주세요.");
         setAlertModalShow(true);
       }
       if (!nicknameChecked) {
-        // alert("닉네임 중복 확인을 해주세요.");
         setMessage("닉네임 중복 확인을 해주세요.");
         setAlertModalShow(true);
       }
+    }
+  };
+
+  // 회원 가입
+  const userSignUp = () => {
+    setCredentials((credentials.baekjoonId = idInput.current.value));
+    setCredentials((credentials.password = passwordInput.current.value));
+    setCredentials((credentials.email = emailInput.current.value));
+    setCredentials((credentials.nickname = nicknameInput.current.value));
+    if (passwordDoubleCheck()) {
+      allInputCheck(credentials);
+    } else {
+      setMessage("비밀번호가 일치하지 않습니다.");
+      setAlertModalShow(true);
     }
   };
 
@@ -185,13 +203,13 @@ const Signup = () => {
               <p className="beakjonn-modal-title">
                 인증 코드 : <span>{bojValidationCode}</span>
                 <CopyToClipboard text={bojValidationCode}>
-                  <YellowButton className="CopyToClipboard-Btn">
+                  <button className="CopyToClipboard-Btn">
                     <img
-                      src={process.env.PUBLIC_URL + "/copyIcon.png"}
+                      src={process.env.PUBLIC_URL + "/icon/copyIcon.png"}
                       alt=""
-                      style={{ width: "30px" }}
+                      width={"30px"}
                     ></img>
-                  </YellowButton>
+                  </button>
                 </CopyToClipboard>
               </p>
               <p style={{ fontSize: "16px", color: "#646464" }}>
@@ -206,7 +224,6 @@ const Signup = () => {
                   handleBojModalShow();
                   window.location.reload();
                 }}
-                style={{ padding: "1px 0 0" }}
               >
                 X
               </button>
@@ -214,33 +231,18 @@ const Signup = () => {
           </div>
           <div className="review-modal-content">
             <img
-              src={process.env.PUBLIC_URL + "/solved.png"}
+              src={process.env.PUBLIC_URL + "/info/solved.png"}
               alt=""
               style={{ width: "100%", marginBottom: "30px" }}
             ></img>
           </div>
           <div className="solved-btn">
-            <RedButton onClick={solvedAc}>solved.ac로 이동</RedButton>
-            <RedButton
-              onClick={() => {
-                interLock(idInput.current.value).then((res) => {
-                  if (res.data.interlock === true) {
-                    setIdChecked(true);
-                    // alert("인증이 성공하였습니다.");
-                    setMessage("인증이 성공하였습니다.");
-                    setAlertModalShow(true);
-                    handleBojModalShow(); //모달창 닫기
-                  } else {
-                    // alert("인증에 실패하였습니다. 다시 인증해주세요.");
-                    // window.location.reload(); //새로고침
-                    setMessage("인증에 실패하였습니다. 다시 인증해주세요.");
-                    setAlertRefreshModalShow(true);
-                  }
-                });
-              }}
-            >
+            <Button red medium onClick={solvedAc}>
+              solved.ac로 이동
+            </Button>
+            <Button red medium onClick={checkBaekjoon}>
               인증완료 하기
-            </RedButton>
+            </Button>
           </div>
         </Modal.Body>
       </Modal>
@@ -263,28 +265,11 @@ const Signup = () => {
                   className="study-create-input"
                 ></input>
                 {!idChecked ? (
-                  <RedButtonSmall
-                    onClick={() => {
-                      setSendId((sendId.baekjoonId = idInput.current.value));
-                      baekjoonVerify(sendId)
-                        .then((res) => {
-                          setBojValidationCode(res.data.authString);
-                          handleBojModalShow();
-                        })
-                        .catch((err) => {
-                          // console.log(err);
-
-                          err.response.status === 409
-                            ? setMessage("이미 가입된 회원입니다.")
-                            : setMessage("백준 회원이 아닙니다.");
-                          setAlertRefreshModalShow(true);
-                        });
-                    }}
-                  >
+                  <button className="check-button" onClick={checkId}>
                     인증하기
-                  </RedButtonSmall>
+                  </button>
                 ) : (
-                  <GrayButton>인증 완료</GrayButton>
+                  <button className="check-done-button">인증 완료</button>
                 )}
               </div>
             </div>
@@ -319,29 +304,11 @@ const Signup = () => {
                   className="study-create-input"
                 ></input>
                 {!emailChecked ? (
-                  <RedButtonSmall
-                    onClick={() => {
-                      if (checkIt()) {
-                        emailValid(emailInput.current.value).then((res) => {
-                          if (res.data.doubleCheck === true) {
-                            setEmailChecked(true);
-                            setMessage("중복 확인이 완료 되었습니다.");
-                            setAlertModalShow(true);
-                          } else {
-                            setMessage("중복 된 이메일입니다.");
-                            setAlertModalShow(true);
-                          }
-                        });
-                      } else {
-                        setMessage("이메일형식이 올바르지 않습니다.");
-                        setAlertModalShow(true);
-                      }
-                    }}
-                  >
+                  <button className="check-button" onClick={checkEmail}>
                     중복 확인
-                  </RedButtonSmall>
+                  </button>
                 ) : (
-                  <GrayButton>확인 완료</GrayButton>
+                  <button className="check-done-button">확인 완료</button>
                 )}
               </div>
             </div>
@@ -357,52 +324,18 @@ const Signup = () => {
                   className="study-create-input"
                 ></input>
                 {!nicknameChecked ? (
-                  <RedButtonSmall
-                    onClick={() => {
-                      nicknameValid(nicknameInput.current.value).then((res) => {
-                        if (res.data.doubleCheck === true) {
-                          setNicknameChecked(true);
-                          setMessage("중복 확인 완료 되었습니다.");
-                          setAlertModalShow(true);
-                        } else {
-                          setMessage("중복 된 닉네임입니다.");
-                          setAlertModalShow(true);
-                        }
-                      });
-                    }}
-                  >
+                  <button className="check-button" onClick={checkNickname}>
                     중복 확인
-                  </RedButtonSmall>
+                  </button>
                 ) : (
-                  <GrayButton>확인 완료</GrayButton>
+                  <button className="check-done-button">확인 완료</button>
                 )}
               </div>
             </div>
             <div className="signup-submit-btn">
-              <RedButton
-                onClick={() => {
-                  setCredentials(
-                    (credentials.baekjoonId = idInput.current.value)
-                  );
-                  setCredentials(
-                    (credentials.password = passwordInput.current.value)
-                  );
-                  setCredentials(
-                    (credentials.email = emailInput.current.value)
-                  );
-                  setCredentials(
-                    (credentials.nickname = nicknameInput.current.value)
-                  );
-                  if (passwordDoubleCheck()) {
-                    allInputCheck(credentials);
-                  } else {
-                    setMessage("비밀번호가 일치하지 않습니다.");
-                    setAlertModalShow(true);
-                  }
-                }}
-              >
+              <Button red medium onClick={userSignUp}>
                 SIGN UP
-              </RedButton>
+              </Button>
             </div>
           </div>
         </section>
@@ -415,7 +348,7 @@ const Signup = () => {
             </div>
           </div>
           <img
-            src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}
+            src={process.env.PUBLIC_URL + "/ALDY/signup_dinosaur.png"}
             alt=""
           ></img>
         </section>

@@ -230,9 +230,10 @@ const CodeReview = () => {
               이용방법
             </button>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               className="review-header-step-img review-header-special-img"
               style={{ marginRight: "40px" }}
+              alt=""
             ></img>
           </div>
         )}
@@ -271,9 +272,10 @@ const CodeReview = () => {
               이용방법
             </button>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               className="review-header-step-img review-header-special-img"
               style={{ marginRight: "40px" }}
+              alt=""
             ></img>
           </div>
         )}
@@ -312,9 +314,10 @@ const CodeReview = () => {
               이용방법
             </button>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               className="review-header-step-img review-header-special-img"
               style={{ marginRight: "40px" }}
+              alt=""
             ></img>
           </div>
         )}
@@ -397,8 +400,9 @@ const CodeReview = () => {
               }}
             >
               <img
-                src="/star.png"
+                src="/icon/star.png"
                 className={`${step === 1 ? "star" : "none"}`}
+                alt=""
               ></img>
               1단계
             </button>
@@ -411,8 +415,9 @@ const CodeReview = () => {
             >
               {" "}
               <img
-                src="/star.png"
+                src="/icon/star.png"
                 className={`${step === 2 ? "star" : "none"}`}
+                alt=""
               ></img>
               2단계
             </button>
@@ -434,8 +439,9 @@ const CodeReview = () => {
             >
               {" "}
               <img
-                src="/star.png"
+                src="/icon/star.png"
                 className={`${step === 3 ? "star" : "none"}`}
+                alt=""
               ></img>
               3단계
             </button>

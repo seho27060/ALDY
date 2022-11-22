@@ -6,24 +6,8 @@ import { changepassword } from "../../api/user";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
-import styled from "styled-components";
+import Button from "../../components/styled/Button";
 import "./ChangePW.css";
-
-const RedButton = styled.button`
-  width: 200px;
-  border-radius: 8px;
-  background-color: rgb(40, 80, 15);
-  border: 2px solid rgb(40, 80, 15);
-  outline: none;
-  color: white;
-  font-weight: bold;
-  transition: all 200ms ease-in;
-  padding: 10px 0 7px;
-  &:hover {
-    background-color: white;
-    color: rgb(40, 80, 15);
-  }
-`;
 
 const Changepw = () => {
   const navigate = useNavigate();
@@ -112,9 +96,9 @@ const Changepw = () => {
               ></input>
             </div>
             <div className="Changepw-submit-btn">
-              <RedButton onClick={onChangePassword}>
+              <Button green large onClick={onChangePassword}>
                 비밀번호 변경하기
-              </RedButton>
+              </Button>
             </div>
           </div>
         </section>
@@ -124,7 +108,7 @@ const Changepw = () => {
             Aldy와 함께 알고리즘 스터디를 키워보세요!
           </div>
           <img
-            src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}
+            src={process.env.PUBLIC_URL + "/ALDY/signup_dinosaur.png"}
             alt=""
           ></img>
         </section>

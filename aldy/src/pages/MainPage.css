@@ -207,6 +207,7 @@ section.main-page-tutorial-description {
   background-color: #373737;
   color: white;
   padding: 50px;
+  user-select: none;
 }
 
 .main-page-study-description-flex {

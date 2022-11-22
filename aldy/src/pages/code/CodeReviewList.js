@@ -38,7 +38,7 @@ const CodeReviewList = () => {
       <section className="main-banner">
         <img
           className="main-img"
-          src="/studyIcon.png"
+          src="/icon/studyIcon.png"
           alt="코드리뷰 메인 이미지"
         ></img>
         <p>
@@ -52,7 +52,7 @@ const CodeReviewList = () => {
       </section>
       <section className="description">
         <div className="study-description-detail">
-          <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
+          <img src="/icon/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
           <div>다른 사람에게서</div>
           <div
             className="study-underline-green"
@@ -67,7 +67,7 @@ const CodeReviewList = () => {
           </div>
         </div>
         <div className="study-description-detail">
-          <img src="/book.png" alt="공책 이미지"></img>
+          <img src="/icon/book.png" alt="공책 이미지"></img>
           <div>스터디원들에게</div>
           <div
             className="study-underline-green"
@@ -82,7 +82,7 @@ const CodeReviewList = () => {
           </div>
         </div>
         <div className="study-description-detail">
-          <img src="/pencil.png" alt="연필 이미지"></img>
+          <img src="/icon/pencil.png" alt="연필 이미지"></img>
           <div>스터디 문제를 푼 후</div>
           <div
             className="study-underline-green"

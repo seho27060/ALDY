@@ -16,43 +16,7 @@ import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
 import "./Mypage.css";
-import styled from "styled-components";
-
-const WhiteButton = styled.button`
-  width: 110px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid rgb(40, 80, 15);
-  outline: none;
-  color: rgb(40, 80, 15);
-  font-weight: bold;
-  transition: transform 30ms ease-in;
-  margin: 4px;
-  &:hover {
-    background-color: rgb(40, 80, 15);
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
-
-const WhiteButtonL = styled.button`
-  width: 203px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid rgb(40, 80, 15);
-  outline: none;
-  color: rgb(40, 80, 15);
-  font-weight: bold;
-  transition: transform 30ms ease-in;
-  font-size: 20px;
-  margin: 10px;
-  padding-top: 5px;
-  &:hover {
-    background-color: rgb(40, 80, 15);
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import Button from "../../components/styled/Button";
 
 const Mypage = () => {
   const [nav, setNav] = useRecoilState(isNav);
@@ -161,9 +125,9 @@ const Mypage = () => {
       <section className="myPage-list-banner">
         <img
           className="mb-2"
-          src="/pinkAldy.gif"
+          src="/ALDY/pinkAldy.gif"
           alt="마이 페이지"
-          style={{ width: "350px" }}
+          width={"350px"}
         ></img>
         <p>
           <span>✨내가 활동하고 있는 </span>
@@ -184,16 +148,26 @@ const Mypage = () => {
               <b>{nickname}</b>님 안녕하세요
             </h2>
           </div>
-          <div>
-            <WhiteButton onClick={navigateUserinfo} className="study-button">
+          <div className="mypage-btn-box">
+            <Button
+              greenLine
+              small
+              onClick={navigateUserinfo}
+              className="study-button"
+            >
               회원정보 수정
-            </WhiteButton>
-            <WhiteButton onClick={navigateChangePw} className="study-button">
+            </Button>
+            <Button
+              greenLine
+              small
+              onClick={navigateChangePw}
+              className="study-button"
+            >
               비밀번호 수정
-            </WhiteButton>
-            <WhiteButton onClick={onRenew} className="study-button">
+            </Button>
+            <Button greenLine small onClick={onRenew} className="study-button">
               티어 갱신
-            </WhiteButton>
+            </Button>
           </div>
         </div>
         <div>
@@ -218,7 +192,7 @@ const Mypage = () => {
       <section style={{ margin: "30px" }}>
         <img
           className="Mypage-icon"
-          src={process.env.PUBLIC_URL + "/mypageRecommend.png"}
+          src={process.env.PUBLIC_URL + "/icon/mypageRecommend.png"}
           alt=""
         ></img>
         <h2 className="Mypage-underline-orange">
@@ -245,30 +219,32 @@ const Mypage = () => {
               <div>👩🏻‍💻맞힌 사람 : {acceptedUserCount}명</div>
               <div>🧮알고리즘 종류 : {algorithm}</div>
               <div>📊평균 시도 : {averageTries}회</div>
-              {/* <div>티어 : {level}</div> */}
-              {/* <div>문제 번호 : {problemId}번</div> */}
             </div>
           </div>
         </div>
         <div className="mypage-reload-Btn">
-          <WhiteButtonL
+          <Button
+            greenLine
+            large
             onClick={newRecommend}
-            style={{ display: "flex", paddingLeft: "12px" }}
+            style={{ display: "flex", justifyContent: "center" }}
           >
             새로운 문제 추천
             <Lottie
               animationData={reload}
               onClick={newRecommend}
-              style={{ width: "30px", cursor: "pointer" }}
+              className="reload-icon"
             ></Lottie>
-          </WhiteButtonL>
-          <WhiteButtonL onClick={mvBoj}>문제 풀러 가기!</WhiteButtonL>
+          </Button>
+          <Button greenLine large onClick={mvBoj}>
+            문제 풀러 가기!
+          </Button>
         </div>
       </section>
       <section className="study-search">
         <img
           className="Mypage-icon"
-          src={process.env.PUBLIC_URL + "/mypageStudyList.png"}
+          src={process.env.PUBLIC_URL + "/icon/mypageStudyList.png"}
           alt=""
         ></img>
         <h2 className="Mypage-underline-orange">
@@ -282,7 +258,6 @@ const Mypage = () => {
       </section>
       <section className="study-list">
         <div>
-          {/* <StudyListMy /> */}
           <div className="Mypage-study-list-box">
             <div className="mystudy-search-result-title">내 스터디 목록</div>
             {myStudyList?.map((item, i) => (

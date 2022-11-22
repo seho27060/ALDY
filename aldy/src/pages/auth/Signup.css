@@ -152,7 +152,14 @@ input:focus {
 }
 
 .CopyToClipboard-Btn {
-  color: #ffe1aa;
+  width: 50px;
+  border-radius: 8px;
+  background-color: lightgoldenrodyellow;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  transition: transform 30ms ease-in;
+  margin-left: 5px;
 }
 
 .signup-page-right-sub-title {
@@ -169,4 +176,32 @@ input:focus {
   font-family: "GmarketSansMedium";
   font-weight: 500;
   width: 100%;
+}
+
+.check-button {
+  width: 100px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: red;
+  border: none;
+  outline: none;
+  color: white;
+  transition: transform 30ms ease-in;
+  padding: 2px 0px 0px 0px;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.check-done-button {
+  width: 100px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: gray;
+  border: none;
+  outline: none;
+  color: white;
+  transition: transform 30ms ease-in;
+  padding: 2px 0px 0px 0px;
+  font-size: 15px;
+  margin-top: 5px;
 }
