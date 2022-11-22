@@ -1,17 +1,22 @@
-import "./Mypage.css";
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { getUserInfo, mypageCode, tierRenewApi } from "../../api/user";
-import { getMyStudy } from "../../api/study";
-import { recommendation } from "../../api/user";
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  getUserInfo,
+  mypageCode,
+  tierRenewApi,
+  recommendation,
+} from "../../api/user";
+import { getMyStudy } from "../../api/study";
 import Paging from "../../components/Paging";
-import AlertRefreshModal from "../../components/AlertRefreshModal";
 import Lottie from "lottie-react";
 import reload from "../../lotties/reload.json";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
+
+import "./Mypage.css";
+import styled from "styled-components";
 
 const WhiteButton = styled.button`
   width: 110px;

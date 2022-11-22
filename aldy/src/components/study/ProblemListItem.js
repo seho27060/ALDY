@@ -1,10 +1,11 @@
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import styled from "styled-components";
+import AlertRefreshModal from "../modal/AlertRefreshModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { deleteProblem, getProblemStage } from "../../api/study";
+
 import "../../pages/study/StudyDetail.css";
-import AlertRefreshModal from "../AlertRefreshModal";
+import styled from "styled-components";
 
 const WhiteButton = styled.button`
   width: 75px;

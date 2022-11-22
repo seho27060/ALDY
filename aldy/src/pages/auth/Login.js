@@ -1,12 +1,13 @@
-import "./Login.css";
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import styled from "styled-components";
 import { FcLike } from "react-icons/fc";
 import { login } from "../../api/auth";
 import { useRecoilState } from "recoil";
 import { isLoggedIn, userName, isNav } from "../../store/states";
-import AlertRefreshModal from "../../components/AlertRefreshModal";
+
+import styled from "styled-components";
+import "./Login.css";
 
 const WhiteRedButton = styled.button`
   width: 120px;

@@ -1,12 +1,13 @@
-import "./ChangePW.css";
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useState, useRef } from "react";
+import AlertModal from "../../components/modal/AlertModal";
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
 import { useNavigate } from "react-router-dom";
 import { changepassword } from "../../api/user";
-import AlertModal from "../../components/AlertModal";
-import AlertRefreshModal from "../../components/AlertRefreshModal";
 import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
+
+import styled from "styled-components";
+import "./ChangePW.css";
 
 const RedButton = styled.button`
   width: 200px;

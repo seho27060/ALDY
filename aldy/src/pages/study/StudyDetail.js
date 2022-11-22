@@ -1,28 +1,28 @@
-import "./StudyDetail.css";
+import StudyJoinModal from "../../components/modal/StudyJoinModal.js";
+import ProblemModal from "../../components/modal/ProblemModal";
+import AlertModal from "../../components/modal/AlertModal";
+import StudyMember from "../../components/study/StudyMember";
+import StudyChart from "../../components/study/StudyChart";
+import StudyChartTier from "../../components/study/StudyChartTier";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import {
   getStudyDetail,
   getProblem,
   studyWithdrawal,
   getSelectedDay,
 } from "../../api/study";
+import Calendar from "react-calendar";
 import TierData from "../../data/tier";
 import ActivationLevel from "../../data/ActivationLevel";
-import "./Calendar.css";
-import StudyJoinModal from "../../components/study/StudyJoinModal.js";
-import ProblemModal from "../../components/study/ProblemModal";
-import StudyMember from "../../components/study/StudyMember";
 import moment from "moment";
-import StudyChart from "../../components/study/StudyChart";
-import StudyChartTier from "../../components/study/StudyChartTier";
-import AlertModal from "../../components/AlertModal";
 import { FcLock } from "react-icons/fc";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
+import "./Calendar.css";
+import "./StudyDetail.css";
 import Button from "../../components/styled/Button";
 
 const StudyDetail = () => {

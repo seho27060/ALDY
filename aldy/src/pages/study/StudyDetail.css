@@ -325,7 +325,7 @@
 }
 
 .aldy-bg-night {
-  background-image: url(../../../public/AldyBg.gif);
+  background-image: url(../../../public/background/AldyBg.gif);
   background-color: #fcebd9;
   background-repeat: no-repeat;
   background-position-x: center;
@@ -333,7 +333,7 @@
 }
 
 .aldy-bg {
-  background-image: url(../../../public/maintreefix.gif);
+  background-image: url(../../../public/background/maintreefix.gif);
   background-color: #fcebd9;
   background-repeat: no-repeat;
   background-position-x: center;

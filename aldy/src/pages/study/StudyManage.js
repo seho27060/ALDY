@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import "./StudyManage.css";
-import { useLocation } from "react-router-dom";
-import TierData from "../../data/tier";
 import StudyMember from "../../components/study/StudyMember";
 import StudyJoin from "../../components/study/StudyJoin";
-import StudyDeleteAlert from "../../components/StudyDeleteAlert";
+import StudyDeleteAlert from "../../components/modal/StudyDeleteAlert";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import TierData from "../../data/tier";
 import { isNav } from "../../store/states";
 import ActivationLevel from "../../data/ActivationLevel";
 
+import "./StudyManage.css";
 import Button from "../../components/styled/Button";
 
 const StudyManage = () => {

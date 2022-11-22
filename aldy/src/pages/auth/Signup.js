@@ -1,8 +1,7 @@
-import "./Signup.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import Modal from "react-bootstrap/Modal";
-import styled from "styled-components";
 import {
   join,
   emailValid,
@@ -10,11 +9,13 @@ import {
   nicknameValid,
   baekjoonVerify,
 } from "../../api/auth";
-import AlertModal from "../../components/AlertModal";
-import AlertRefreshModal from "../../components/AlertRefreshModal";
+import AlertModal from "../../components/modal/AlertModal";
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
+
+import styled from "styled-components";
+import "./Signup.css";
 
 const RedButtonSmall = styled.button`
   width: 100px;

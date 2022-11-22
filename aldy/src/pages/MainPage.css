@@ -1,5 +1,5 @@
 section.main-page-banner {
-  background-image: url(../../public/maintreefix.gif);
+  background-image: url(../../public/background/maintreefix.gif);
   background-size: 100%;
   -webkit-background-size: cover;
   background-size: cover;
@@ -78,9 +78,7 @@ h1 {
   flex-direction: row;
   -webkit-box-pack: center;
   justify-content: center;
-  /* -webkit-align-items: center; */
   -webkit-box-align: center;
-  /* -ms-flex-align: center; */
   align-items: center;
   padding: 13px 15px 10px;
   background: #1e5b24;
@@ -181,7 +179,6 @@ section.main-page-tutorial-description {
 
 .tutorial-table {
   align-items: center;
-  /* border: 1px solid white; */
   border-radius: 3px;
 }
 .TutorialChangeLogin {
@@ -256,7 +253,7 @@ section.main-page-tutorial-description {
   height: 800px;
   display: flex;
   background-repeat: no-repeat;
-  background-image: url(../../public/codeReview3Step.gif);
+  background-image: url(../../public/info/codeReview3Step.gif);
 }
 
 .codeReview-title {
@@ -290,5 +287,5 @@ section.main-page-tutorial-description {
   height: 400px;
   display: flex;
   background-repeat: no-repeat;
-  background-image: url(../../public/mainStudyManage.gif);
+  background-image: url(../../public/info/mainStudyManage.gif);
 }

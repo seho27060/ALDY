@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
-import "./MyStudyListItem.css";
+import AlertModal from "../modal/AlertModal";
+import AlertRefreshModal from "../modal/AlertRefreshModal";
+import { useState } from "react";
 import { acceptMemberApi, rejectMemberApi } from "../../api/study";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+
 import styled from "styled-components";
-import AlertModal from "../../components/AlertModal";
-import AlertRefreshModal from "../../components/AlertRefreshModal";
+import "./MyStudyListItem.css";
 
 const RedButton = styled.button`
   width: 70px;

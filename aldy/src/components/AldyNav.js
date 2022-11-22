@@ -1,6 +1,4 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -14,11 +12,11 @@ import { BsPerson, BsPower } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { isLoggedIn, userName } from "../store/states";
 
-import LoginAlert from "./LoginAlert";
+import LoginAlert from "./modal/LoginAlert";
+import AlertModal from "../components/modal/AlertModal";
 
 import "./AldyNav.css";
 import styled from "styled-components";
-import AlertModal from "../components/AlertModal";
 
 const WhiteRedButton = styled.button`
   width: 120px;

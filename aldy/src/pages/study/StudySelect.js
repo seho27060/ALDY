@@ -1,21 +1,22 @@
-import "./StudySelect.css";
+import AlertModal from "../../components/modal/AlertModal";
+import Option from "../../components/study/Option";
+import Problem from "../../components/study/Problem";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import { useRecoilState } from "recoil";
 import TierData from "../../data/tier";
-import Option from "../../components/Option";
-import Problem from "../../components/Problem";
 import {
   getStudyProblem,
   getOptionList,
   addProblem,
   getSearchProblem,
 } from "../../api/study";
-import AlertModal from "../../components/AlertModal";
-import Button from "../../components/styled/Button";
 import Form from "react-bootstrap/Form";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
+
+import styled from "styled-components";
+import Button from "../../components/styled/Button";
+import "./StudySelect.css";
 
 const RedButton = styled.button`
   width: 200px;

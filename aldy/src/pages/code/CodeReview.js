@@ -1,26 +1,20 @@
-import "./CodeReview.css";
-import { useState, useRef, useEffect } from "react";
-import AlertModal from "../../components/AlertModal"; // alert 정의
-import AlertRefreshModal from "../../components/AlertRefreshModal";
+import AlertModal from "../../components/modal/AlertModal"; // alert 정의
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
+import ReviewListAlert from "../../components/modal/ReviewListAlert";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import Editor from "@monaco-editor/react";
-import { useRecoilState } from "recoil";
-import { recoilMyCode, recoilStep, isFooter, isNav } from "../../store/states";
-import {
-  getEditedCodes,
-  saveCode,
-  getCode,
-  reviewRequest,
-} from "../../api/code";
-import { useNavigate } from "react-router-dom";
+import { isNav } from "../../store/states";
+import { saveCode, getCode, reviewRequest } from "../../api/code";
 import { getStudyMember } from "../../api/study";
-import ReviewListAlert from "../../components/ReviewListAlert";
+
+import "./CodeReview.css";
 
 const CodeReview = () => {
-  const [footer, setFooter] = useRecoilState(isFooter);
   const [nav, setNav] = useRecoilState(isNav);
-  setFooter(false);
   setNav(false);
   // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
   // const convertCodes = {2:"firstProcessCode"}
@@ -57,7 +51,6 @@ const CodeReview = () => {
   const navigateMain = () => {
     navigate("/");
     setNav(true);
-    setFooter(true);
   };
 
   useEffect(() => {

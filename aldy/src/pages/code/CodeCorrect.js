@@ -1,20 +1,16 @@
-import "./CodeCorrect.css";
-import { useState, useEffect, useRef } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import AlertModal from "../../components/modal/AlertModal";
+import ReviewListAlert from "../../components/modal/ReviewListAlert";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import { useRecoilState } from "recoil";
-import { correctCode, isFooter, isNav } from "../../store/states";
+import { isNav } from "../../store/states";
 import { codeReply } from "../../api/code";
-import { useNavigate } from "react-router-dom";
-import AlertModal from "../../components/AlertModal";
-import ReviewListAlert from "../../components/ReviewListAlert";
+
+import "./CodeCorrect.css";
 
 const CodeCorrect = () => {
-  const [footer, setFooter] = useRecoilState(isFooter);
   const [nav, setNav] = useRecoilState(isNav);
-  setFooter(false);
   setNav(false);
 
   const [alertModalShow, setAlertModalShow] = useState(false);

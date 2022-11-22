@@ -1,8 +1,9 @@
-import "./MyStudyListItem.css";
 import TierData from "../../data/tier";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+
+import "./MyStudyListItem.css";
 
 const MyStudyListItem = (props) => {
   const [dropdown, setDropdown] = useState("none");

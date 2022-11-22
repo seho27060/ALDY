@@ -1,8 +1,9 @@
+import AlertRefreshModal from "../modal/AlertRefreshModal";
 import { useState, useEffect } from "react";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { kickMemberApi } from "../../api/study";
+
 import styled from "styled-components";
-import AlertRefreshModal from "../AlertRefreshModal";
 
 const RedButton = styled.button`
   width: 55px;

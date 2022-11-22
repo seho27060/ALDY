@@ -1,15 +1,15 @@
-import "./StudyList.css";
-import { useState, useEffect, useRef } from "react";
-import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
 import StudyListItem from "../../components/study/StudyListItem";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
+import AlertModal from "../../components/modal/AlertModal";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import Form from "react-bootstrap/Form";
 import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
-import AlertModal from "../../components/AlertModal";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
+import "./StudyList.css";
 import Button from "../../components/styled/Button";
 
 const StudyList = () => {

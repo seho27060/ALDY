@@ -1,13 +1,18 @@
-import "./Userinfo.css";
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { updateEmail, updateNickname, withdrawApi } from "../../api/user";
-import { getUserInfo } from "../../api/user";
-import { emailValid, nicknameValid } from "../../api/auth";
-import AlertModal from "../../components/AlertModal";
-import AlertRefreshModal from "../../components/AlertRefreshModal";
 import { useRecoilState } from "recoil";
+import {
+  updateEmail,
+  updateNickname,
+  withdrawApi,
+  getUserInfo,
+} from "../../api/user";
+import { emailValid, nicknameValid } from "../../api/auth";
+import AlertModal from "../../components/modal/AlertModal";
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
 import { isNav } from "../../store/states";
+
+import styled from "styled-components";
+import "./Userinfo.css";
 
 const RedButton = styled.button`
   width: 120px;

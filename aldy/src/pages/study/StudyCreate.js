@@ -1,14 +1,13 @@
-import TierSelect from "../../data/tierSelect";
+import AlertModal from "../../components/modal/AlertModal";
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import "./StudyCreate.css";
-import styled from "styled-components";
+import TierSelect from "../../data/tierSelect";
 import { createStudy } from "../../api/study";
 import Select from "react-select";
-import AlertModal from "../../components/AlertModal";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
+import "./StudyCreate.css";
 import Button from "../../components/styled/Button";
 
 const StudyCreate = () => {

@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-
-import { getStudyMember } from "../../api/study";
 import StudyMemberItem from "./StudyMemberItem";
+import { useState, useEffect } from "react";
+import { getStudyMember } from "../../api/study";
 
 const StudyMember = (props) => {
   const [studyMember, setStudyMember] = useState(null);
