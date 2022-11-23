@@ -24,7 +24,8 @@
 }
 
 .study-create-page-bg {
-  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
+  background: url(../../../public/background/auth_background.png) no-repeat 50%
+    50%;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -191,4 +192,8 @@ input[type="radio"] {
 
 .study-create-page-right > img {
   width: 500px;
+}
+
+.study-create-submit-btn {
+  margin: 50px auto 30px;
 }

@@ -1,33 +1,14 @@
-import TierSelect from "../../data/tierSelect";
+import AlertModal from "../../components/modal/AlertModal";
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import "./StudyCreate.css";
-import styled from "styled-components";
+import TierSelect from "../../data/tierSelect";
 import { createStudy } from "../../api/study";
 import Select from "react-select";
-import AlertModal from "../../components/AlertModal";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
-const GreenButton = styled.button`
-  margin: 30px;
-  width: 200px;
-  border-radius: 8px;
-  background-color: white;
-  outline: none;
-  border: 1px solid rgba(40, 80, 15, 1);
-  color: rgba(40, 80, 15, 1);
-  font-family: "KOFIHDrLEEJWTTF-B";
-  font-weight: bold;
-  font-size: 18px;
-  padding: 7px 0px 5px 0px;
-  transition: all 200ms ease-in;
-  &:hover {
-    background-color: rgba(40, 80, 15, 1);
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import "./StudyCreate.css";
+import Button from "../../components/styled/Button";
 
 const StudyCreate = () => {
   const navigate = useNavigate();
@@ -71,6 +52,7 @@ const StudyCreate = () => {
       };
     });
   };
+
   // 스터디 생성
   const createNewStudy = async (e) => {
     e.preventDefault();
@@ -83,11 +65,10 @@ const StudyCreate = () => {
     ) {
       await createStudy(newStudy)
         .then((res) => {
-          console.log(res.data);
           navigate(`/study/detail/${res.data.id}`);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } else {
       setMessage("스터디 정보를 모두 입력해주세요.");
@@ -195,14 +176,10 @@ const StudyCreate = () => {
                 rows={2}
               ></textarea>
             </div>
-
             <div className="study-create-submit-btn">
-              <GreenButton
-                className="study-create-btn"
-                onClick={createNewStudy}
-              >
+              <Button greenLine large onClick={createNewStudy}>
                 스터디 생성하기
-              </GreenButton>
+              </Button>
             </div>
           </form>
         </section>
@@ -213,9 +190,8 @@ const StudyCreate = () => {
               Aldy와 함께 알고리즘 스터디를 키워보세요!
             </div>
           </div>
-
           <img
-            src={process.env.PUBLIC_URL + "/signup_dinosaur.png"}
+            src={process.env.PUBLIC_URL + "/ALDY/signup_dinosaur.png"}
             alt=""
           ></img>
         </section>

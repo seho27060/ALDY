@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   min-height: calc(100vh - 80px);
+  text-align: start;
 }
 
 /* title */
@@ -44,6 +45,7 @@
   border-radius: 30px;
   width: 32%;
   padding: 5px 20px 10px 20px;
+  user-select: none;
 }
 
 .green-line {
@@ -153,6 +155,12 @@ label {
   margin: 7px;
   display: flex;
   align-items: center;
+}
+
+/* 필터 검색 박스 */
+.filter-search-box {
+  margin: 0px 15%;
+  text-align: end;
 }
 
 /* 문제 선택 */

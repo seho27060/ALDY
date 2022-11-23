@@ -1,37 +1,16 @@
-import "./StudyList.css";
-import { useState, useEffect, useRef } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import StudyListItem from "../../components/study/StudyListItem";
 import MyStudyListItem from "../../components/study/MyStudyListItem";
+import AlertModal from "../../components/modal/AlertModal";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import Form from "react-bootstrap/Form";
 import Paging from "../../components/Paging";
 import { getStudyList, getMyStudy } from "../../api/study";
-import AlertModal from "../../components/AlertModal";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
-const WhiteRedButton = styled.button`
-  width: 170px;
-  border-radius: 8px;
-  background-color: white;
-  outline: none;
-  border: 2px solid red;
-  color: red;
-  font-family: "GmarketSansMedium";
-  font-weight: bold;
-  font-size: 15px;
-  padding: 5px 0px 3px 0px;
-  transition: all 200ms ease-in;
-  margin-top: 20px;
-  user-select: none;
-  &:hover {
-    background-color: red;
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import "./StudyList.css";
+import Button from "../../components/styled/Button";
 
 const StudyList = () => {
   const [nav, setNav] = useRecoilState(isNav);
@@ -83,7 +62,7 @@ const StudyList = () => {
           setMessage("검색결과가 없습니다.");
           setAlertModalShow(true);
           setSearchShow(false);
-          console.log(err);
+          // console.log(err);
         });
     } else {
       setMessage("검색어를 입력해주세요.");
@@ -95,12 +74,11 @@ const StudyList = () => {
     getStudyList(studyPageNum)
       .then((res) => {
         const data = res.data.studyDtoPage;
-        // console.log(data);
         setStudyList(data.content);
         setStudyTotal(data.totalElements);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [studyPageNum]);
 
@@ -113,7 +91,7 @@ const StudyList = () => {
         setMyStudyTotal(data.totalElements);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [myStudyPageNum]);
 
@@ -135,7 +113,7 @@ const StudyList = () => {
       <section className="study-list-banner">
         <img
           className="study-main-img"
-          src="/dinosaur.png"
+          src="/ALDY/dinosaur.png"
           alt="스터디 메인 이미지"
         ></img>
         <p>
@@ -145,15 +123,12 @@ const StudyList = () => {
           <span className="study-highlight-green">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <div
-          className="study-underline-green"
-          style={{ margin: "auto", fontSize: "45px" }}
-        >
+        <div className="study-underline-green study-list-create">
           지금 바로 스터디를 만들어보세요!
         </div>
-        <WhiteRedButton onClick={navigateStudyCreate} className="study-button">
+        <Button redLine medium onClick={navigateStudyCreate}>
           스터디 생성하기
-        </WhiteRedButton>
+        </Button>
       </section>
       <section className="study-search">
         <p>
@@ -163,10 +138,7 @@ const StudyList = () => {
           <span className="study-highlight-orange">공룡</span>
           <span>을 키워볼 기회</span>
         </p>
-        <div
-          className="study-underline-orange "
-          style={{ margin: "auto", fontSize: "30px" }}
-        >
+        <div className="study-underline-orange study-list-subtitle">
           원하는 스터디 페이지로 들어가 가입신청을 해주세요!
         </div>
         <div className="search-box">
@@ -179,11 +151,7 @@ const StudyList = () => {
               ref={searchInput}
               onKeyPress={onKeypress}
             />
-            <Button
-              variant="outline-success"
-              className="search-button"
-              onClick={studySearch}
-            >
+            <Button brown medium onClick={studySearch}>
               Search
             </Button>
           </div>
@@ -195,8 +163,7 @@ const StudyList = () => {
                 <div className="study-search-top">
                   <div className="study-search-result-title">검색결과</div>
                   <button
-                    className="review-modal-close-btn"
-                    style={{ margin: "5px" }}
+                    className="study-search-result-close-btn"
                     onClick={() => {
                       setSearchShow(false);
                     }}

@@ -1,28 +1,9 @@
+import AlertRefreshModal from "../modal/AlertRefreshModal";
 import { useState, useEffect } from "react";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { kickMemberApi } from "../../api/study";
-import styled from "styled-components";
-import AlertRefreshModal from "../AlertRefreshModal";
 
-const RedButton = styled.button`
-  width: 55px;
-  border-radius: 8px;
-  background-color: red;
-  border: 2px solid red;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  margin-left: auto;
-  font-size: 13px;
-  padding-top: 3px;
-  transition: all 200ms ease-in;
-  &:hover {
-    background-color: white;
-    color: red;
-    transition: all 200ms ease-in;
-    border: 2px solid red;
-  }
-`;
+import Button from "../styled/Button";
 
 const StudyMemberItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
@@ -57,18 +38,12 @@ const StudyMemberItem = (props) => {
   const onKickMember = () => {
     setCredentials((credentials.memberId = props.item.memberId));
     setCredentials((credentials.studyId = props.item.studyId));
-    console.log("멤버 강퇴");
-    console.log(credentials);
     kickMemberApi(credentials)
       .then((res) => {
-        // alert("강퇴되었습니다");
-        // window.location.reload(); //새로고침
         setMessage("강퇴되었습니다");
         setAlertRefreshModalShow(true);
       })
       .catch((err) => {
-        console.log(err);
-        // alert("에러입니다. 다시 실행해주세요.");
         setMessage("에러입니다. 다시 실행해주세요.");
         setAlertRefreshModalShow(true);
       });
@@ -121,9 +96,13 @@ const StudyMemberItem = (props) => {
         <div>백준 아이디 : {props.item.baekjoonId}</div>
         <div>함께 푼 문제 수 : {props.item.solvedTogether}개</div>
         <div>경고 누적 {props.item.numberOfAlerts}회</div>
-        {myId === sendLeaderId && !("Leader" === props.item.message) && (
-          <RedButton onClick={onKickMember}>강퇴</RedButton>
-        )}
+        <div className="problem-delete-box">
+          {myId === sendLeaderId && !("Leader" === props.item.message) && (
+            <Button red xsmall onClick={onKickMember}>
+              강퇴
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
-import "./MyStudyListItem.css";
 import TierData from "../../data/tier";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
+
+import "./MyStudyListItem.css";
 
 const MyStudyListItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
@@ -12,8 +13,6 @@ const MyStudyListItem = (props) => {
     navigate(`/study/detail/${props.item.id}`);
   };
 
-  console.log(props);
-
   return (
     <div className="study-list-item">
       <div className="study-list-title">
@@ -21,7 +20,7 @@ const MyStudyListItem = (props) => {
           <img
             src={
               process.env.PUBLIC_URL +
-              `/aldyhead${((props.num + 3) % 10) + 1}.png`
+              `/ALDY/aldyhead${((props.num + 3) % 10) + 1}.png`
             }
             alt=""
             width="100%"
