@@ -8,8 +8,7 @@ const StudyChartTier = ({ studyData }) => {
     return e;
   });
   const data = Object.values(studyData);
-  console.log(labels, "label");
-  console.log(data, "data");
+
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const expData = {

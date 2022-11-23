@@ -2,14 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 * {
-  /* font-family: "Noto Sans KR", sans-serif; */
-  /* font-family: 'uhbeeBold'; */
   font-family: "GmarketSansMedium";
-}
-
-@font-face {
-  font-family: "kotra";
-  src: url("./fonts/KOTRA\ HOPE.ttf");
 }
 
 @font-face {
@@ -23,18 +16,8 @@
 }
 
 @font-face {
-  font-family: "uhbee";
-  src: url("./fonts/UhBee\ jung.ttf");
-}
-
-@font-face {
   font-family: "uhbeen";
   src: url("./fonts/UhBee\ ann.ttf");
-}
-
-@font-face {
-  font-family: "gwedu";
-  src: url("./fonts/강원교육새음.ttf");
 }
 
 @font-face {

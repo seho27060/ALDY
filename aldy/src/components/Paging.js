@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Paging.css";
 import Pagination from "react-js-pagination";
-import { FiChevronRight, FiChevronLeft, FiChevronsRight, FiChevronsLeft } from "react-icons/fi";
 
 const Paging = ({ page, setPage, totalElements }) => {
   return (

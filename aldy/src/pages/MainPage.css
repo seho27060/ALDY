@@ -1,5 +1,5 @@
 section.main-page-banner {
-  background-image: url(../../public/maintreefix.gif);
+  background-image: url(../../public/background/maintreefix.gif);
   background-size: 100%;
   -webkit-background-size: cover;
   background-size: cover;
@@ -7,7 +7,7 @@ section.main-page-banner {
   background-position-x: center;
   position: relative;
   min-height: 650px;
-  padding: 110px;
+  padding: 150px 110px 110px;
   user-select: none;
   height: 800px;
 }
@@ -34,7 +34,7 @@ section.main-page-description {
 section.main-page-description-aldylist {
   background-color: #e7fdb6;
   color: white;
-  padding: 50px 15% 80px 15%;
+  padding: 50px 15% 40px 15%;
   display: flex;
   justify-content: space-evenly;
   user-select: none;
@@ -78,11 +78,9 @@ h1 {
   flex-direction: row;
   -webkit-box-pack: center;
   justify-content: center;
-  /* -webkit-align-items: center; */
   -webkit-box-align: center;
-  /* -ms-flex-align: center; */
   align-items: center;
-  padding: 6px 14px 7px;
+  padding: 13px 15px 10px;
   background: #1e5b24;
   border-radius: 81.7073px;
   font-family: "Pretendard";
@@ -92,7 +90,7 @@ h1 {
   line-height: 17px;
   text-align: center;
   color: #ffffff;
-  margin-top: 40px;
+  margin-top: 30px;
   font-family: "uhbeeBold";
 }
 
@@ -123,6 +121,7 @@ h1 {
 .main-page-highlight {
   color: #435f07;
   font-size: 20px;
+  font-family: "uhbeeBold";
 }
 
 .main-page-description-text > p > span {
@@ -134,12 +133,12 @@ h1 {
 .aldy_step_info {
   background-color: #e7fdb6;
   user-select: none;
-  padding: 80px 15%;
+  padding: 80px 15% 30px 15%;
 }
 .aldy_step_info_title {
   color: #373737;
   font-family: "onemobile";
-  font-size: 35px;
+  font-size: 40px;
   padding-top: 15px;
 }
 .aldy_step_info_text {
@@ -180,19 +179,18 @@ section.main-page-tutorial-description {
 
 .tutorial-table {
   align-items: center;
-  /* border: 1px solid white; */
   border-radius: 3px;
 }
 .TutorialChangeLogin {
   cursor: pointer;
   border: 1px solid white;
-  padding: 7px;
+  padding: 10px;
 }
 
 .tutorial-content {
   background-color: white;
   color: black;
-  padding: 7px;
+  padding: 20px;
 }
 
 .main-page-description-codereview {
@@ -201,18 +199,20 @@ section.main-page-tutorial-description {
   padding: 80px 15%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .main-page-study-description {
-  height: 1000px;
+  height: 850px;
   background-color: #373737;
   color: white;
   padding: 50px;
+  user-select: none;
 }
 
 .main-page-study-description-flex {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   height: 800px;
   background-color: #373737;
   color: white;
@@ -234,4 +234,63 @@ section.main-page-tutorial-description {
   z-index: 1;
   background-color: #e7fdb6;
   user-select: none;
+  padding-top: 40px;
+}
+
+.main-page-highlight-light {
+  color: #d7f792;
+  font-size: 20px;
+}
+
+.lottie-codeReview-3steps {
+  width: 500px;
+  height: 500px;
+  margin-left: 200px;
+  margin-top: 100px;
+}
+
+.codeReview-3steps-div {
+  width: 800px;
+  height: 800px;
+  display: flex;
+  background-repeat: no-repeat;
+  background-image: url(../../public/info/codeReview3Step.gif);
+}
+
+.codeReview-title {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  color: #373737;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+}
+
+.codeReview-title > span {
+  font-family: "onemobile";
+  font-style: normal;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.04em;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+  color: #435f07;
+}
+
+.study-bg-div {
+  width: 550px;
+  height: 400px;
+  display: flex;
+  background-repeat: no-repeat;
+  background-image: url(../../public/info/mainStudyManage.gif);
+}
+
+.section1-left {
+  width: 50%;
 }

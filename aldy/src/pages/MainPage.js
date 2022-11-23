@@ -1,49 +1,19 @@
-import "./MainPage.css";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { getUserInfo } from "../api/user";
-import { useRecoilState } from "recoil";
 import { isLoggedIn } from "../store/states";
-import MoveBar from "../components/MobeBar";
+import MoveBar from "../components/MoveBar";
 import Lottie from "lottie-react";
 import codeTyping from "../lotties/codeTyping.json";
-import recommend from "../lotties/recommend.json";
 import codingReview from "../lotties/codingReview.json";
 import trafficLight from "../lotties/trafficLight.json";
 import onlineStudy from "../lotties/onlineStudy.json";
 
-const RedButton = styled.button`
-  width: 170px;
-  border-radius: 8px;
-  background-color: red;
-  border: none;
-  outline: none;
-  color: white;
-  font-weight: bold;
-  transition: transform 30ms ease-in;
-`;
-
-const WhiteButton = styled.button`
-  width: 180px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid red;
-  outline: none;
-  color: red;
-  font-weight: bold;
-  transition: transform 30ms ease-in;
-  font-size: 24px;
-  margin: 4px;
-  font-family: "uhbeeBold";
-  &:hover {
-    background-color: red;
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import "./MainPage.css";
+import Button from "../components/styled/Button";
 
 const MainPage = () => {
   useEffect(() => {
@@ -53,70 +23,75 @@ const MainPage = () => {
 
   const [logged, setLogged] = useRecoilState(isLoggedIn);
 
+  const navigate = useNavigate();
+  const navigateSignUp = () => {
+    navigate("/signup");
+  };
+  const navigateStudy = () => {
+    navigate("study/list");
+  };
+
   const userInfoSession = () => {
     if (logged) {
-      console.log("메인페이지 로그인 됨");
       getUserInfo().then((res) => {
-        console.log(res.data);
         sessionStorage.setItem("nickname", res.data.nickname);
         sessionStorage.setItem("tier", res.data.tier);
         sessionStorage.setItem("id", res.data.id);
       });
     } else {
-      console.log("메인페이지 로그인 안됨");
     }
   };
 
-  const navigate = useNavigate();
-
-  const navigateSignUp = () => {
-    navigate("/signup");
-  };
-
-  const navigateStudy = () => {
-    navigate("study/list");
-  };
-
-  const navigateMyPage = () => {
-    navigate("mypage");
-  };
   const [tutorialLoginShow, setTutorialLoginShow] = useState(true);
   const [tutorialStudyShow, setTutorialStudyShow] = useState(false);
   const [tutorialCodeReviewShow, setTutorialCodeReviewShow] = useState(false);
   const [tutorialPenaltyShow, setTutorialPenaltyShow] = useState(false);
 
   const TutorialChangeLogin = () => {
-    setTutorialLoginShow((prev) => !prev);
+    setTutorialLoginShow(true);
+    setTutorialStudyShow(false);
+    setTutorialCodeReviewShow(false);
+    setTutorialPenaltyShow(false);
   };
 
   const TutorialChangeStudy = () => {
-    setTutorialStudyShow((prev) => !prev);
+    setTutorialLoginShow(false);
+    setTutorialStudyShow(true);
+    setTutorialCodeReviewShow(false);
+    setTutorialPenaltyShow(false);
   };
 
   const TutorialChangeCodeReview = () => {
-    setTutorialCodeReviewShow((prev) => !prev);
+    setTutorialLoginShow(false);
+    setTutorialStudyShow(false);
+    setTutorialCodeReviewShow(true);
+    setTutorialPenaltyShow(false);
   };
 
   const TutorialChangePenalty = () => {
-    setTutorialPenaltyShow((prev) => !prev);
+    setTutorialLoginShow(false);
+    setTutorialStudyShow(false);
+    setTutorialCodeReviewShow(false);
+    setTutorialPenaltyShow(true);
   };
 
   return (
     <main>
       <MoveBar></MoveBar>
       <section className="main-page-banner">
-        <img src={process.env.PUBLIC_URL + "/MainDinosaur.png"} alt=""></img>
-        <br></br>
-        <br></br>
-        <br></br>
-        <div className="main-page-banner-text">코드리뷰를 통해 공룡 키우기</div>
-        <br></br>
-        <h1>ALDY</h1>
-        <div className="board" style={{ margin: "30px" }}>
+        <img
+          src={process.env.PUBLIC_URL + "/icon/MainDinosaur.png"}
+          alt=""
+        ></img>
+        <div className="main-page-banner-text" style={{ marginTop: "50px" }}>
+          코드리뷰를 통해 공룡 키우기
+        </div>
+        <h1 style={{ fontSize: "80px" }}>ALDY</h1>
+        <div className="board" style={{ margin: "20px" }}>
           <div className="board-image">
             <span>
               <img
-                src={process.env.PUBLIC_URL + "/mainboardLL.png"}
+                src={process.env.PUBLIC_URL + "/background/mainboardLL.png"}
                 alt=""
               ></img>
             </span>
@@ -127,31 +102,29 @@ const MainPage = () => {
           <div className="board-text">
             <div className="board-text">스터디원들과 함께 공룡을 키워봐요!</div>
             {logged ? (
-              <WhiteButton onClick={navigateStudy}>스터디하러 가기</WhiteButton>
+              <Button redLine medium onClick={navigateStudy}>
+                스터디하러 가기
+              </Button>
             ) : (
-              <WhiteButton onClick={navigateSignUp}>
+              <Button redLine medium onClick={navigateSignUp}>
                 회원가입 하러가기
-              </WhiteButton>
+              </Button>
             )}
           </div>
         </div>
       </section>
       <section className="main-page-description">
         <div className="section1-left">
-          <div
-            className="main-page-description-title"
-            data-aos="fade-up"
-            // data-aos-anchor-placement="bottom-center"
-          >
+          <div className="main-page-description-title" data-aos="fade-up">
             ALDY만의 코드리뷰 이용하기
           </div>
           <div className="main-page-description-text" data-aos="fade-up">
             <p>
               <span>문제풀이 과정을 </span>
-              <span className="main-page-highlight">3단계로 세분화!</span>
+              <span className="main-page-highlight-light">3단계로 세분화!</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/mainReview3.gif"}
+              src={process.env.PUBLIC_URL + "/info/mainReview3.gif"}
               alt=""
               width="500px"
               data-aos="fade-right"
@@ -165,25 +138,18 @@ const MainPage = () => {
         <div className="section1-right" data-aos="fade-left">
           <div>
             <div>
-              <div
-                className="main-page-description-title"
-                data-aos="fade-up"
-                // data-aos-anchor-placement="bottom-center"
-              >
-                {/* <Lottie
-                  animationData={recommend}
-                  style={{ width: "400px" }}
-                  data-aos="fade-right"
-                ></Lottie> */}
+              <div className="main-page-description-title" data-aos="fade-up">
                 나만을 위한 문제 추천
               </div>
               <div className="main-page-description-text" data-aos="fade-up">
                 <p>
                   <span>최근 푼 문제를 바탕으로 유사한 유형의 </span>
-                  <span className="main-page-highlight">안 푼 문제 추천!</span>
+                  <span className="main-page-highlight-light">
+                    안 푼 문제 추천!
+                  </span>
                 </p>
                 <img
-                  src={process.env.PUBLIC_URL + "/mainRecommend.gif"}
+                  src={process.env.PUBLIC_URL + "/info/mainRecommend.gif"}
                   alt=""
                   width="500px"
                   style={{ paddingBottom: "30px" }}
@@ -191,28 +157,74 @@ const MainPage = () => {
                 ></img>
               </div>
             </div>
-            {/* <WhiteButton onClick={navigateMyPage} data-aos="fade-up">
-              추천 문제 풀기
-            </WhiteButton> */}
           </div>
         </div>
       </section>
-      <section className="aldy_step_info">
-        <div className="aldy_step_info_title">Game + Education </div>
-        <img
-          src={process.env.PUBLIC_URL + "/joystick.gif"}
-          alt=""
-          style={{ width: "150px", margin: "25px" }}
-        ></img>
-        <div className="aldy_step_info_text">
-          알디는 게이미피케이션을 활용하여 스터디를 진행합니다.
+      <section
+        className="aldy_step_info"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <div data-aos="zoom-in-right">
+          <div className="aldy_step_info_title">Game + Education </div>
+          <div className="aldy_step_info_text" style={{ fontSize: "25px" }}>
+            알디는{" "}
+            <span className="main-page-highlight" style={{ fontSize: "25px" }}>
+              게이미피케이션
+            </span>
+            을 활용하여 <br />
+            스터디를 진행합니다.
+          </div>
+          <div>
+            <img
+              src={process.env.PUBLIC_URL + "/ALDY/aldyhead2.png"}
+              alt=""
+              width="80px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/ALDY/aldyhead6.png"}
+              alt=""
+              width="80px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/ALDY/aldyhead5.png"}
+              alt=""
+              width="80px"
+              style={{ margin: "10px" }}
+            ></img>
+          </div>
+          <div>
+            알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡
+            <br />
+            지루한 스터디는 NO~~🙅🏻‍♀️🙅🏻‍♂️
+            {/* 알디와 함께 알고리즘 스터디를 하면서 공룡을 길러보세요♡ */}
+            <br />
+            진화하는 공룡과 함께 알고리즘 실력도 UP! UP!
+          </div>
         </div>
+        {/* <div data-aos="zoom-in-left"> */}
+        {/* <img
+            src={process.env.PUBLIC_URL + "/joystick.gif"}
+            alt=""
+            style={{ width: "100px", margin: "25px" }}
+          ></img> */}
+        {/* <div
+            className="aldy_step_info_text"
+            style={{ fontSize: "30px", color: " #435f07" }}
+          >
+            지루한 스터디는 NO~~🙅🏻‍♀️🙅🏻‍♂️
+           
+            <br />
+            진화하는 공룡과 함께 알고리즘 실력도 UP! UP!
+          </div> */}
+        {/* </div> */}
       </section>
 
       <div className="main-page-green-title">
         <div
           className="main-page-green-title"
-          style={{ paddingTop: "150px" }}
+          // style={{ paddingTop: "150px" }}
           data-aos="fade-up"
         >
           ALDY의 메인 캐릭터 소개
@@ -229,7 +241,7 @@ const MainPage = () => {
               <span className="main-page-highlight">알에서 깬 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/step1.gif"}
+              src={process.env.PUBLIC_URL + "/ALDY/step1.gif"}
               alt=""
               width="300px"
             ></img>
@@ -243,7 +255,7 @@ const MainPage = () => {
               <span className="main-page-highlight">아기 공룡 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/step2.gif"}
+              src={process.env.PUBLIC_URL + "/ALDY/step2.gif"}
               alt=""
               width="300px"
             ></img>
@@ -257,7 +269,7 @@ const MainPage = () => {
               <span className="main-page-highlight">인사하는 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/step3.gif"}
+              src={process.env.PUBLIC_URL + "/ALDY/step3.gif"}
               alt=""
               width="200px"
               style={{ paddingTop: "41px" }}
@@ -272,7 +284,7 @@ const MainPage = () => {
               <span className="main-page-highlight">불 뿜는 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/step4.gif"}
+              src={process.env.PUBLIC_URL + "/ALDY/step4.gif"}
               alt=""
               width="300px"
             ></img>
@@ -290,7 +302,7 @@ const MainPage = () => {
               <span className="main-page-highlight">울고있는 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/end1.gif"}
+              src={process.env.PUBLIC_URL + "/ALDY/end1.gif"}
               alt=""
               width="300px"
             ></img>
@@ -304,7 +316,7 @@ const MainPage = () => {
               <span className="main-page-highlight">화석이 된 알디</span>
             </p>
             <img
-              src={process.env.PUBLIC_URL + "/end2.gif"}
+              src={process.env.PUBLIC_URL + "/ALDY/end2.gif"}
               alt=""
               width="300px"
             ></img>
@@ -313,73 +325,160 @@ const MainPage = () => {
       </section>
       <section className="main-page-study-description">
         {/* 이곳에 스터디 설명을 작성하세요 */}
-        알디 스터디 규칙 🎈
+        <span style={{ fontSize: "35px", fontFamily: "uhbeeBold" }}>
+          {/* 알디 스터디 규칙 🎈 */}
+        </span>
         <div className="main-page-study-description-flex">
-          <div className="section1-left" data-aos="fade-up">
+          <div className="section1-left" data-aos="zoom-in-right">
+            <div>
+              <div
+                className="main-page-description-title"
+                style={{ fontSize: "50px", marginTop: "30px" }}
+              >
+                알디 스터디 규칙{" "}
+              </div>
+              <div
+                className="main-page-tutorial-title"
+                style={{ fontSize: "30px", margin: "0px" }}
+              >
+                자동 <span>강퇴 기능</span>으로 스터디원 관리가 편해요
+              </div>
+              <div style={{ marginTop: "20px" }}>
+                <div className="study-bg-div">
+                  {" "}
+                  <Lottie
+                    animationData={trafficLight}
+                    style={{ width: "300px" }}
+                  ></Lottie>
+                </div>
+                {/* <img
+                  src={process.env.PUBLIC_URL + "/mainStudyManage.gif"}
+                  alt=""
+                  width="450px"
+                  style={{ margin: "10px" }}
+                ></img> */}
+                🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나<br></br>{" "}
+                코드 리뷰를 안했다면 경고가 쌓여요!
+                <br></br>
+                🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
+                <br></br>
+                <img
+                  src={process.env.PUBLIC_URL + "/ALDY/aldyhead3.png"}
+                  alt=""
+                  width="80px"
+                  style={{ margin: "10px" }}
+                ></img>
+                <img
+                  src={process.env.PUBLIC_URL + "/ALDY/aldyhead9.png"}
+                  alt=""
+                  width="80px"
+                  style={{ margin: "10px" }}
+                ></img>
+                <img
+                  src={process.env.PUBLIC_URL + "/ALDY/aldyhead6.png"}
+                  alt=""
+                  width="80px"
+                  style={{ margin: "10px" }}
+                ></img>
+              </div>
+            </div>
+
             <div className="main-page-description-text">
               <p>
                 <span style={{ fontSize: "25px", margin: "60px" }}>
-                  스터디 설명
+                  {/* 스터디 설명 */}
                 </span>
               </p>
-              <Lottie
-                animationData={trafficLight}
-                style={{ width: "300px" }}
-              ></Lottie>
             </div>
           </div>
 
-          <div style={{ marginTop: "100px" }}>
-            🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나 코드 리뷰를
-            안했다면 경고가 쌓여요!
-            <br></br>
-            🚨 경고를 3회 받을 경우 스터디에서 강제 퇴장되니까 조심하세요!
-            <br></br>
-            <img
-              src={process.env.PUBLIC_URL + "/aldyhead3.png"}
-              alt=""
-              width="80px"
-              style={{ margin: "10px" }}
-            ></img>
-            <img
-              src={process.env.PUBLIC_URL + "/aldyhead9.png"}
-              alt=""
-              width="80px"
-              style={{ margin: "10px" }}
-            ></img>
-            <img
-              src={process.env.PUBLIC_URL + "/aldyhead6.png"}
-              alt=""
-              width="80px"
-              style={{ margin: "10px" }}
-            ></img>
-          </div>
+          <Lottie
+            animationData={codingReview}
+            style={{ width: "400px" }}
+            data-aos="zoom-in-left"
+          ></Lottie>
         </div>
       </section>
       <section className="main-page-description-codereview">
-        <div className="section1-left" data-aos="fade-up">
+        <div className="section1-left" data-aos="zoom-in-right">
           <div className="main-page-description-text">
-            <p>
-              <span>코드리뷰 설명</span>
-            </p>
-            <Lottie
+            <p>{/* <span>코드리뷰 설명</span> */}</p>
+            {/* <Lottie
               animationData={codingReview}
               style={{ width: "500px" }}
-            ></Lottie>
+            ></Lottie> */}
+            {/* <img
+              src={process.env.PUBLIC_URL + "/codeReview3Step.gif"}
+              alt=""
+              width="500px"
+              style={{ margin: "10px" }}
+            ></img> */}
+            <div className="codeReview-3steps-div">
+              <Lottie
+                animationData={onlineStudy}
+                className="lottie-codeReview-3steps"
+                // style={{ width: "500px" }}
+              ></Lottie>
+            </div>
+            {/* <img
+              src={process.env.PUBLIC_URL + "/mainReview1.gif"}
+              alt=""
+              width="250px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/mainReview2.gif"}
+              alt=""
+              width="250px"
+              style={{ margin: "10px" }}
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/mainReview3.gif"}
+              alt=""
+              width="250px"
+              style={{ margin: "10px" }}
+            ></img> */}
           </div>
         </div>
-        <div className="section1-right" data-aos="fade-left">
+        <div
+          className="section1-right"
+          style={{ marginTop: "100px" }}
+          data-aos="zoom-in-left"
+        >
           <div className="main-page-description-title"></div>
-          <div className="main-page-description-text">
+          <div
+            className="codeReview-title"
+            style={{ margin: "10px", fontSize: "50px" }}
+          >
+            알디의 3단계 <span>코드 리뷰</span>
+          </div>
+
+          <div
+            className="main-page-description-text"
+            style={{ fontSize: "25px" }}
+          >
             <p>
-              <span>알디의 3단계 </span>
-              <span className="main-page-highlight">코드 리뷰</span>
+              <span>알디의 </span>
+              <span className="main-page-highlight">가이드 라인</span>
+              <span>에 맞춰 진행해봐요! </span>
             </p>
-            <Lottie
+            {/* <Lottie
               animationData={onlineStudy}
               style={{ width: "500px" }}
-              data-aos="fade-right"
-            ></Lottie>
+            ></Lottie> */}
+            {/* 📍 1 단계 초안 제출
+            <br />
+            📍 2 단계 리팩토링
+            <br />
+            📤 코드 리뷰 요청 및 응답 📥
+            <br />
+            📍 3 단계 최종 제출 */}
+            <img
+              src={process.env.PUBLIC_URL + "/info/codeReviewtext.png"}
+              alt=""
+              width="650px"
+              style={{ margin: "10px" }}
+            ></img>
           </div>
         </div>
       </section>
@@ -392,16 +491,19 @@ const MainPage = () => {
         <div className="tutorial-table">
           {" "}
           {/* 이용 방법표를 작성할거야 */}
-          <div style={{ fontSize: "25px", marginBottom: "20px" }}>
+          <div
+            className="main-page-description-title"
+            style={{ fontSize: "50px", marginBottom: "20px" }}
+          >
             <img
-              src={process.env.PUBLIC_URL + "/aldyhead7.png"}
+              src={process.env.PUBLIC_URL + "/ALDY/aldyhead7.png"}
               alt=""
               width="50px"
               style={{ margin: "10px" }}
             ></img>
             ALDY 이용 방법{" "}
             <img
-              src={process.env.PUBLIC_URL + "/aldyhead2.png"}
+              src={process.env.PUBLIC_URL + "/ALDY/aldyhead2.png"}
               alt=""
               width="50px"
               style={{ margin: "5px" }}
@@ -418,7 +520,7 @@ const MainPage = () => {
                   저희 사이트는 백준과 연동하는 회원가입이 필수예요! 🙏
                   <br></br>
                   <img
-                    src={process.env.PUBLIC_URL + "/mainSignup.gif"}
+                    src={process.env.PUBLIC_URL + "/info/mainSignup.gif"}
                     alt=""
                     width="550px"
                     style={{ margin: "10px" }}
@@ -439,7 +541,7 @@ const MainPage = () => {
                 마음에 드는 스터디가 없으신가요? 그렇다면 스터디를 만들어보세요!
                 <br></br>
                 <img
-                  src={process.env.PUBLIC_URL + "/mainStudyCreate.gif"}
+                  src={process.env.PUBLIC_URL + "/info/mainStudyCreate.gif"}
                   alt=""
                   width="350px"
                   style={{ margin: "10px" }}
@@ -452,6 +554,13 @@ const MainPage = () => {
                 📅📅
                 <br></br>
                 스터디장이시라면 달력에서 요일을 눌러 문제 선정이 가능해요!
+                <br></br>
+                <img
+                  src={process.env.PUBLIC_URL + "/info/mainSearch.gif"}
+                  alt=""
+                  width="500px"
+                  style={{ margin: "10px" }}
+                ></img>
                 <br></br>
                 팀원들이 안 푼 문제를 유형별, 티어별로 선정할 수 있어요! 👍🏼
               </div>
@@ -473,7 +582,7 @@ const MainPage = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/mainReview1.gif"}
                     alt=""
-                    width="350px"
+                    width="450px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>
@@ -482,9 +591,9 @@ const MainPage = () => {
                   <br></br>
                   <br></br>
                   <img
-                    src={process.env.PUBLIC_URL + "/mainReview2.gif"}
+                    src={process.env.PUBLIC_URL + "/info/mainReview2.gif"}
                     alt=""
-                    width="350px"
+                    width="450px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>
@@ -494,9 +603,9 @@ const MainPage = () => {
                   <br></br>
                   <br></br>
                   <img
-                    src={process.env.PUBLIC_URL + "/mainReview3.gif"}
+                    src={process.env.PUBLIC_URL + "/info/mainReview3.gif"}
                     alt=""
-                    width="350px"
+                    width="450px"
                     style={{ margin: "10px" }}
                   ></img>
                   <br></br>
@@ -519,6 +628,13 @@ const MainPage = () => {
             {tutorialPenaltyShow ? (
               <div className="tutorial-content">
                 <div>
+                  <img
+                    src={process.env.PUBLIC_URL + "/info/mainStudyManage.gif"}
+                    alt=""
+                    width="550px"
+                    style={{ margin: "10px" }}
+                  ></img>
+                  <br></br>
                   🚨 매일 밤 12시, 정해진 날짜까지 문제를 안 풀었거나 코드
                   리뷰를 안했다면 경고가 쌓여요!
                   <br></br>
