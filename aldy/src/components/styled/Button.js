@@ -32,7 +32,7 @@ const StyledButton = styled.button`
         color: red;
       }
     `}
-
+  
   ${(props) =>
     props.greenLine &&
     css`
@@ -42,6 +42,17 @@ const StyledButton = styled.button`
       &:hover {
         background-color: rgba(40, 80, 15, 1);
         color: white;
+      }
+    `}
+  ${(props) =>
+    props.green &&
+    css`
+      background-color: rgba(40, 80, 15, 1);
+      border: 2px solid rgba(40, 80, 15, 1);
+      color: white;
+      &:hover {
+        background-color: white;
+        color: rgba(40, 80, 15, 1);
       }
     `}
 
@@ -59,6 +70,14 @@ const StyledButton = styled.button`
 
 
   // 버튼 크기
+  ${(props) =>
+    props.xsmall &&
+    css`
+      font-family: "GmarketSansMedium";
+      font-size: 13px;
+      width: 75px;
+      padding: 5px 0px 3px 0px;
+    `}
   ${(props) =>
     props.small &&
     css`
@@ -81,7 +100,7 @@ const StyledButton = styled.button`
       font-family: "KOFIHDrLEEJWTTF-B";
       font-size: 19px;
       width: 200px;
-      padding: 12px;
+      padding: 10px;
     `}
 `;
 

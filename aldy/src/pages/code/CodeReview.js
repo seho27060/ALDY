@@ -1,26 +1,20 @@
-import "./CodeReview.css";
-import { useState, useRef, useEffect } from "react";
-import AlertModal from "../../components/AlertModal"; // alert 정의
-import AlertRefreshModal from "../../components/AlertRefreshModal";
+import AlertModal from "../../components/modal/AlertModal"; // alert 정의
+import AlertRefreshModal from "../../components/modal/AlertRefreshModal";
+import ReviewListAlert from "../../components/modal/ReviewListAlert";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import Editor from "@monaco-editor/react";
-import { useRecoilState } from "recoil";
-import { recoilMyCode, recoilStep, isFooter, isNav } from "../../store/states";
-import {
-  getEditedCodes,
-  saveCode,
-  getCode,
-  reviewRequest,
-} from "../../api/code";
-import { useNavigate } from "react-router-dom";
+import { isNav } from "../../store/states";
+import { saveCode, getCode, reviewRequest } from "../../api/code";
 import { getStudyMember } from "../../api/study";
-import ReviewListAlert from "../../components/ReviewListAlert";
+
+import "./CodeReview.css";
 
 const CodeReview = () => {
-  const [footer, setFooter] = useRecoilState(isFooter);
   const [nav, setNav] = useRecoilState(isNav);
-  setFooter(false);
   setNav(false);
   // api에서 받아온 코드들의 키값을 firstProcessCode를 1로 바꿔주는 변환
   // const convertCodes = {2:"firstProcessCode"}
@@ -57,7 +51,6 @@ const CodeReview = () => {
   const navigateMain = () => {
     navigate("/");
     setNav(true);
-    setFooter(true);
   };
 
   useEffect(() => {
@@ -140,8 +133,6 @@ const CodeReview = () => {
   useEffect(() => {
     getCode(studyId, problemId)
       .then((res) => {
-        // console.log(res.data);
-        // setStep(res.data.currentProcess+1)
         setCodes(res.data);
         // 1단계 작성해야한다면 step을 1단계로 설정
         if (res.data.currentProcess === 0) {
@@ -174,7 +165,6 @@ const CodeReview = () => {
   //   const problemId = sessionStorage.getItem('problemId')
   //   getEditedCodes(studyId, problemId)
   //   .then((res)=>{
-  //     console.log(res.data)
   //     setEditedCodeList(res.data)
   //   })
   // }, [])
@@ -240,9 +230,10 @@ const CodeReview = () => {
               이용방법
             </button>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               className="review-header-step-img review-header-special-img"
               style={{ marginRight: "40px" }}
+              alt=""
             ></img>
           </div>
         )}
@@ -281,9 +272,10 @@ const CodeReview = () => {
               이용방법
             </button>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               className="review-header-step-img review-header-special-img"
               style={{ marginRight: "40px" }}
+              alt=""
             ></img>
           </div>
         )}
@@ -322,9 +314,10 @@ const CodeReview = () => {
               이용방법
             </button>
             <img
-              src="/dinosaur.png"
+              src="/ALDY/dinosaur.png"
               className="review-header-step-img review-header-special-img"
               style={{ marginRight: "40px" }}
+              alt=""
             ></img>
           </div>
         )}
@@ -407,8 +400,9 @@ const CodeReview = () => {
               }}
             >
               <img
-                src="/star.png"
+                src="/icon/star.png"
                 className={`${step === 1 ? "star" : "none"}`}
+                alt=""
               ></img>
               1단계
             </button>
@@ -421,8 +415,9 @@ const CodeReview = () => {
             >
               {" "}
               <img
-                src="/star.png"
+                src="/icon/star.png"
                 className={`${step === 2 ? "star" : "none"}`}
+                alt=""
               ></img>
               2단계
             </button>
@@ -444,8 +439,9 @@ const CodeReview = () => {
             >
               {" "}
               <img
-                src="/star.png"
+                src="/icon/star.png"
                 className={`${step === 3 ? "star" : "none"}`}
+                alt=""
               ></img>
               3단계
             </button>
@@ -542,7 +538,6 @@ const CodeReview = () => {
             <button
               className="reviewBtn"
               onClick={() => {
-                // console.log(submitOneTwoThree);
                 if (submitOneTwoThree.code.length === 0) {
                   setMessage(
                     "코드에 변경사항이 없습니다. 수정 후 제출해주세요"
@@ -579,12 +574,8 @@ const CodeReview = () => {
                     .then((res) => {
                       setMessage("코드를 제출하였습니다.");
                       setAlertRefreshModalShow(true);
-                      // alert('코드를 제출하였습니다.')
-                      // window.location.reload()
                     })
-                    .catch((err) => {
-                      // console.log("1단계 제출에러", err);
-                    });
+                    .catch((err) => {});
                 }
               }}
             >

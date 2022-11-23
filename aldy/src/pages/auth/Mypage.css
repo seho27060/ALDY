@@ -106,6 +106,7 @@ section.myPage-list-banner {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 30px;
 }
 
 .mystudy-search-result-title {
@@ -114,4 +115,13 @@ section.myPage-list-banner {
   font-size: 25px;
   text-align: start;
   margin: 10px 0px 20px 20px;
+}
+
+.mypage-btn-box > button {
+  margin-left: 10px;
+}
+
+.reload-icon {
+  width: 30px;
+  cursor: pointer;
 }

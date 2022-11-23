@@ -24,7 +24,8 @@
 }
 
 .study-create-page-bg {
-  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
+  background: url(../../../public/background/auth_background.png) no-repeat 50%
+    50%;
   background-size: cover;
   display: flex;
   align-items: center;

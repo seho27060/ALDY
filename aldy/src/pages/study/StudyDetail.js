@@ -1,28 +1,27 @@
-import "./StudyDetail.css";
-import Modal from "react-bootstrap/Modal";
+import StudyJoinModal from "../../components/modal/StudyJoinModal.js";
+import StudyMemberListModal from "../../components/modal/StudyMemberListModal.js";
+import ProblemModal from "../../components/modal/ProblemModal";
+import AlertModal from "../../components/modal/AlertModal";
+import StudyChart from "../../components/study/StudyChart";
+import StudyChartTier from "../../components/study/StudyChartTier";
 import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import {
   getStudyDetail,
   getProblem,
   studyWithdrawal,
   getSelectedDay,
 } from "../../api/study";
+import Calendar from "react-calendar";
 import TierData from "../../data/tier";
 import ActivationLevel from "../../data/ActivationLevel";
-import "./Calendar.css";
-import StudyJoinModal from "../../components/study/StudyJoinModal.js";
-import ProblemModal from "../../components/study/ProblemModal";
-import StudyMember from "../../components/study/StudyMember";
 import moment from "moment";
-import StudyChart from "../../components/study/StudyChart";
-import StudyChartTier from "../../components/study/StudyChartTier";
-import AlertModal from "../../components/AlertModal";
 import { FcLock } from "react-icons/fc";
-import { useRecoilState } from "recoil";
 import { isNav } from "../../store/states";
 
+import "./Calendar.css";
+import "./StudyDetail.css";
 import Button from "../../components/styled/Button";
 
 const StudyDetail = () => {
@@ -62,7 +61,6 @@ const StudyDetail = () => {
     activationLevel: 0,
   });
   const keys = Object.keys(studyDetail.statsByTag);
-  // console.log(studyDetail);
 
   // 달력 날짜
   const [date, setDate] = useState(new Date());
@@ -99,7 +97,6 @@ const StudyDetail = () => {
       .then((res) => {
         setMessage(`${studyDetail.name}에서 탈퇴되었습니다.`);
         setAlertModalShow(true);
-        // console.log(res);
       })
       .catch((err) => {
         // console.log(err);
@@ -110,10 +107,8 @@ const StudyDetail = () => {
   const [problemList, setProblemList] = useState([]);
   useEffect(() => {
     handleProblemModalShow();
-    // console.log(date, "방금찍음");
     getProblem(id, date.getFullYear(), date.getMonth() + 1, date.getDate())
       .then((res) => {
-        // console.log(res.data);
         setProblemList(res.data);
       })
       .catch((err) => {
@@ -125,7 +120,6 @@ const StudyDetail = () => {
     getStudyDetail(id)
       .then((res) => {
         setStudyDetail(res.data);
-        // setSendLeaderId(res.data.leaderBaekjoonId);
         sessionStorage.setItem("sendLeaderId", res.data.leaderBaekjoonId);
       })
       .catch((err) => {
@@ -136,15 +130,12 @@ const StudyDetail = () => {
   useEffect(() => {
     getSelectedDay(id, date.getFullYear(), date.getMonth() + 1)
       .then((res) => {
-        // console.log(res.data.dayss);
         setMark(res.data.days);
       })
       .catch((err) => {
         // console.log(err);
       });
-  }, [date]);
-
-  // console.log(studyDetail.statsByTag, "아");
+  }, [id, date]);
 
   return (
     <main style={{ userSelect: "none" }}>
@@ -156,33 +147,11 @@ const StudyDetail = () => {
         }}
         message={message}
       />
-      <Modal size="lg" show={memberModalShow} onHide={handleMemberModalShow}>
-        <Modal.Body className="review-modal-body">
-          <div className="review-modal-header">
-            <div>
-              <div
-                className="study-underline-orange"
-                style={{
-                  lineHeight: "35px",
-                  fontSize: "25px",
-                  marginBottom: "10px",
-                }}
-              >
-                <span>✨{studyDetail.name}✨</span>
-              </div>
-            </div>
-            <div>
-              <button
-                className="review-modal-close-btn"
-                onClick={handleMemberModalShow}
-              >
-                X
-              </button>
-            </div>
-          </div>
-          <StudyMember id={id} />
-        </Modal.Body>
-      </Modal>
+      <StudyMemberListModal
+        studyDetail={studyDetail}
+        modal={memberModalShow}
+        handleModal={handleMemberModalShow}
+      ></StudyMemberListModal>
       <StudyJoinModal
         studyDetail={studyDetail}
         modal={studyJoinModalShow}
@@ -221,17 +190,9 @@ const StudyDetail = () => {
               setDate(new Date());
             }}
           >
-            <img src="/pencil.png" alt="연필 이미지"></img>
+            <img src="/icon/pencil.png" alt="연필 이미지"></img>
             <div>알고리즘 코드리뷰</div>
-            <div
-              className="study-underline-green"
-              style={{
-                margin: "auto",
-                lineHeight: "35px",
-                fontSize: "25px",
-                marginBottom: "10px",
-              }}
-            >
+            <div className="study-underline-green study-detail-subtitle">
               오늘의 문제 풀어보기
             </div>
           </div>
@@ -239,17 +200,9 @@ const StudyDetail = () => {
             className="study-description-detail"
             onClick={handleMemberModalShow}
           >
-            <img src="/code_person.png" alt="코딩하는사람"></img>
+            <img src="/icon/code_person.png" alt="코딩하는사람"></img>
             <div>함께 푼 문제 수 확인하기</div>
-            <div
-              className="study-underline-green"
-              style={{
-                margin: "auto",
-                lineHeight: "35px",
-                fontSize: "25px",
-                marginBottom: "10px",
-              }}
-            >
+            <div className="study-underline-green study-detail-subtitle">
               스터디원 살펴보기
             </div>
           </div>
@@ -257,17 +210,9 @@ const StudyDetail = () => {
             className="study-description-detail"
             onClick={navigateReviewList}
           >
-            <img src="/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
+            <img src="/icon/codeReviewIcon.png" alt="코드리뷰 이미지"></img>
             <div>다른 사람에게서</div>
-            <div
-              className="study-underline-green"
-              style={{
-                margin: "auto",
-                lineHeight: "35px",
-                fontSize: "25px",
-                marginBottom: "10px",
-              }}
-            >
+            <div className="study-underline-green study-detail-subtitle">
               내게 요청 온 목록
             </div>
           </div>
@@ -281,10 +226,7 @@ const StudyDetail = () => {
         )}
       </section>
       <section className="study-detail-middle">
-        <div
-          className="study-detail-aldy"
-          style={{ width: "50%", display: "flex", flexDirection: "colunm" }}
-        >
+        <div className="study-detail-aldy">
           <div className="aldy-bg">
             <img
               className="study-detail-img"
@@ -292,26 +234,13 @@ const StudyDetail = () => {
               alt="스터디 메인 이미지"
             ></img>
           </div>
-          <div
-            className="study-underline-green"
-            style={{
-              margin: "10px auto",
-              lineHeight: "35px",
-              fontSize: "35px",
-              marginBottom: "10px",
-            }}
-          >
+          <div className="study-underline-green study-detail-aldy-title">
             안녕하세요 <span style={{ color: "red" }}>반가워요~</span>
           </div>
           <div className="dinosaur-description">
             지금 우리 스터디{" "}
-            <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
-              공룡의 레벨
-            </span>
-            은{" "}
-            <span style={{ color: "rgba(40, 80, 15, 1)", fontWeight: "900" }}>
-              lv.{studyDetail.level}
-            </span>
+            <span className="aldy-green-text">공룡의 레벨</span>은{" "}
+            <span className="aldy-green-text">lv.{studyDetail.level}</span>
             입니다.
           </div>
         </div>
@@ -319,15 +248,7 @@ const StudyDetail = () => {
           <span className="study-detail-number">
             스터디원 : {studyDetail.countMember}/{studyDetail.upperLimit}
           </span>
-          <div
-            className="study-underline-orange"
-            style={{
-              alignSelf: "center",
-              lineHeight: "35px",
-              fontSize: "30px",
-              margin: "10px",
-            }}
-          >
+          <div className="study-underline-orange study-detail-studyname">
             {studyDetail.name}
           </div>
           <div className="study-detail-rank">
@@ -351,7 +272,6 @@ const StudyDetail = () => {
                 <b>✨스터디 소개✨</b>
               </div>
               {studyDetail.introduction.split("\n").map((line) => {
-                //this.props.data.content: 내용
                 return (
                   <span>
                     {line}
@@ -363,13 +283,13 @@ const StudyDetail = () => {
               <div style={{ marginBottom: "5px" }}>
                 <b>🔔스터디 공지🔔</b>
               </div>
-              <div style={{ color: "rgb(80,80,80)", fontSize: "15px" }}>
+              <div className="study-detail-notice">
                 코드 리뷰 요청 혹은 응답 시 알림 메일이 전송됩니다.
               </div>
               <div style={{ color: "red", marginTop: "15px" }}>
                 경고(패널티)🚦
               </div>
-              <div style={{ color: "rgb(80,80,80)", fontSize: "15px" }}>
+              <div className="study-detail-notice">
                 정해진 날짜까지 문제 1단계를 제출 안했을 시<br></br>
                 코드 리뷰 요청을 받고 일주일 안에 응답 안했을 시<br></br>총 경고
                 3회 받을 경우 스터디에서 자동으로 강제 퇴장
@@ -412,15 +332,7 @@ const StudyDetail = () => {
         <div className="study-detail-bottom-right">
           {studyDetail.isMember ? (
             <div className="study-detail-graph-box">
-              <div
-                className="study-underline-orange"
-                style={{
-                  alignSelf: "center",
-                  lineHeight: "35px",
-                  fontSize: "25px",
-                  marginBottom: "20px",
-                }}
-              >
+              <div className="study-underline-orange study-graph-title">
                 선정된 문제
               </div>
               {keys.length ? (

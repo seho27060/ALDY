@@ -1,7 +1,7 @@
 /* Top */
 section.study-list-banner {
   padding: 80px;
-  background-image: url(../../../public/study_list_bg2.png);
+  background-image: url(../../../public/background/study_list_bg2.png);
   min-height: 450px;
   background-color: #fcebd9;
   background-repeat: no-repeat;
@@ -85,6 +85,11 @@ section.study-list-banner {
   font-size: 45px;
 }
 
+.study-list-subtitle {
+  margin: auto;
+  font-size: 30px;
+}
+
 .study-tab-list {
   width: 100%;
   display: flex;
@@ -115,11 +120,8 @@ section.study-list-banner {
 }
 
 /* Pagination */
-/* buttonRedner */
 .pageButtonBox {
   display: flex;
-  /* position: fixed;
-  bottom: 50px; */
 }
 
 .pageButton {
@@ -160,11 +162,29 @@ section.study-list-banner {
   color: rgb(0, 0, 0);
 }
 
+/* 검색 결과 */
 .study-search-result-title {
   color: #4b3200;
   font-weight: bold;
   font-size: 25px;
   margin-left: 15px;
+}
+
+.study-search-result-close-btn {
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px 0;
+  background-color: #e63246;
+  color: white;
+  width: fit-content;
+  transition: all 100ms ease-in;
+  margin: 5px;
+}
+
+.study-search-result-close-btn:hover {
+  transform: scale(1.1);
+  transition: all 100ms ease-in;
 }
 
 .study-search-top {

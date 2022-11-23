@@ -1,47 +1,11 @@
-import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
-import styled from "styled-components";
+import AlertRefreshModal from "../modal/AlertRefreshModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaChevronCircleDown, FaChevronCircleUp } from "react-icons/fa";
 import { deleteProblem, getProblemStage } from "../../api/study";
+
 import "../../pages/study/StudyDetail.css";
-import AlertRefreshModal from "../AlertRefreshModal";
-
-const WhiteButton = styled.button`
-  width: 75px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid rgb(40, 80, 15);
-  outline: none;
-  color: rgb(40, 80, 15);
-  font-size: 13px;
-  transition: transform 30ms ease-in;
-  padding-top: 3px;
-  font-weight: bold;
-  &:hover {
-    background-color: rgb(40, 80, 15);
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
-
-const RedButton = styled.button`
-  width: 75px;
-  border-radius: 8px;
-  background-color: white;
-  border: 2px solid red;
-  outline: none;
-  color: red;
-  transition: transform 30ms ease-in;
-  margin-left: auto;
-  font-size: 13px;
-  padding-top: 3px;
-  font-weight: bold;
-  &:hover {
-    background-color: red;
-    color: white;
-    transition: all 200ms ease-in;
-  }
-`;
+import Button from "../styled/Button";
 
 const ProblemListItem = (props) => {
   const [dropdown, setDropdown] = useState("none");
@@ -66,28 +30,25 @@ const ProblemListItem = (props) => {
   const [alertRefreshModalShow, setAlertRefreshModalShow] = useState(false);
 
   const delProblem = () => {
-    console.log(props.item);
     deleteProblem(props.item.id)
       .then((res) => {
         setMessage(
           `${props.item.problemNum}번 ${props.item.problemName} 문제가 삭제되었습니다.`
         );
         setAlertRefreshModalShow(true);
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
   const codeStage = () => {
     getProblemStage(studyId, props.item.id)
       .then((res) => {
-        console.log(res.data.studyMemberDtoList);
         setProblemStage(res.data.studyMemberDtoList);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -104,7 +65,9 @@ const ProblemListItem = (props) => {
           {props.item.problemName}
         </div>
         <div className="problem-list-right">
-          <WhiteButton
+          <Button
+            greenLine
+            xsmall
             onClick={() => {
               window.open(
                 `https://www.acmicpc.net/problem/${props.item.problemNum}`,
@@ -113,8 +76,10 @@ const ProblemListItem = (props) => {
             }}
           >
             문제 풀기
-          </WhiteButton>
-          <WhiteButton
+          </Button>
+          <Button
+            greenLine
+            xsmall
             onClick={() => {
               sessionStorage.setItem("reviewProblemId", props.item.id);
               sessionStorage.setItem("reviewStudyId", studyId);
@@ -130,7 +95,7 @@ const ProblemListItem = (props) => {
             }}
           >
             코드 리뷰
-          </WhiteButton>
+          </Button>
           {dropdown === "none" && (
             <FaChevronCircleDown
               className="down-icon"
@@ -183,10 +148,13 @@ const ProblemListItem = (props) => {
             )}
           </tbody>
         </table>
-
-        {myId === leader && (
-          <RedButton onClick={delProblem}>문제 삭제</RedButton>
-        )}
+        <div className="problem-delete-box">
+          {myId === leader && (
+            <Button redLine xsmall onClick={delProblem}>
+              문제 삭제
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

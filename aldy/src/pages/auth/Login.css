@@ -4,7 +4,8 @@
 }
 
 .login-page-bg {
-  background: url(../../../public/auth_background.png) no-repeat 50% 50%;
+  background: url(../../../public/background/auth_background.png) no-repeat 50%
+    50%;
   height: calc(100vh - 73px);
   background-size: cover;
   display: flex;
