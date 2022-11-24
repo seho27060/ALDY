@@ -2,7 +2,7 @@
 
 # ✏ALDY
 
-![readme_main.png](/uploads/d56a1736feac3575f5364e0221c94141/readme_main.png)
+![readme_main](https://user-images.githubusercontent.com/81341784/203453027-551ded66-a739-4267-9569-6cdfeb90deb9.png)
 
 ## :family: 프로젝트 팀원 소개
 
